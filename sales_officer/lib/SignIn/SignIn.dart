@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'SignInButton.dart';
 import 'SignInCodeButton.dart';
@@ -15,8 +16,8 @@ class SignIn extends StatelessWidget {
     return Column(
       children: [
         Expanded(child: Container()),
-        Image.asset(
-          "assets/logo1.png",
+        SvgPicture.asset(
+          "icons/logo.svg",
         ),
         SizedBox(
           height: 30,
