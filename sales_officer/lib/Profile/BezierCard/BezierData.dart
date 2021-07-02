@@ -1,42 +1,53 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/Database.dart';
+import 'package:sales_officer/Profile/BezierCard/ExpandableHeader.dart';
+
+import '../../Database.dart';
+
+// ExpandablePanel(
+// header: Text(article.title),
+// collapsed: Text(article.body, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,),
+// expanded: Text(article.body, softWrap: true, ),
+// tapHeaderToExpand: true,
+// hasIcon: true,
+// );
 
 class BezierData extends StatelessWidget {
+  final ExpandableController _expandableController = ExpandableController();
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: products.length,
-      itemBuilder: (context, int index) => Container(
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.black.withOpacity(0.1),
+    return ExpandablePanel(
+      collapsed: Column(
+        children: [
+          Column(
+            children: products
+                .sublist(0, 4)
+                .map((item) => ExpandableHeader(item))
+                .toList(),
+          ),
+          ExpandableButton(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text("SEE ALL"),
             ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0, right: 8, left: 8, bottom: 2),
-          child: Row(
-            children: [
-              Text(
-                "${index + 1}",
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Text(
-                  products[index],
-                ),
-              ),
-              Text(
-                "Rs. ${sales[index]}",
-              )
-            ],
-          ),
-        ),
+        ],
       ),
+      expanded: Column(
+        children: [
+          Column(
+            children: products.map((item) => ExpandableHeader(item)).toList(),
+          ),
+          ExpandableButton(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text("SEE ALL"),
+            ),
+          )
+        ],
+      ),
+      controller: _expandableController,
     );
   }
 }

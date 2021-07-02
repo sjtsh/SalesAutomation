@@ -1,0 +1,25 @@
+BUGS
+1. floater triggers on the distributor
+2. back button takes you to sign in page
+3.
+
+CORRECTION
+1.
+
+IMPROVEMENTS
+1. graph responsive to not any point in line
+2. add the three dots in category wise order
+3. Add Dialog box to cancel when the navigation bar is used during a order is being added
+
+BACKEND REQUIRED
+1. the online button should indicate grey green when not online
+2. the progress bar is fixed
+3. the line graph hasn't been engaged to any data
+4. Oauth into the sign in
+5. notification icon should change if unread notifications are available
+
+IMPROVEMENTS TO CODEBASE
+1. make the color, padding and box shadow dynamic with variables
+2. add comments
+
+

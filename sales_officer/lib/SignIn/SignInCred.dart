@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SignInCred extends StatefulWidget {
-
   final _formKey;
   final TextEditingController _username;
   final TextEditingController _password;
@@ -13,6 +12,9 @@ class SignInCred extends StatefulWidget {
 }
 
 class _SignInCredState extends State<SignInCred> {
+
+  bool visible = false;
+
   @override
   void dispose() {
     widget._username.dispose();
@@ -22,7 +24,6 @@ class _SignInCredState extends State<SignInCred> {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       key: widget._formKey,
       child: Column(
@@ -69,7 +70,8 @@ class _SignInCredState extends State<SignInCred> {
                 ),
               ),
             ),
-          ),SizedBox(
+          ),
+          SizedBox(
             height: 10,
           ),
           Padding(
@@ -82,36 +84,57 @@ class _SignInCredState extends State<SignInCred> {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
-                child: TextFormField(
-                  obscureText: true,
-                  controller: widget._password,
-                  textAlignVertical: TextAlignVertical.center,
-                  enableSuggestions: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: const Text('Please enter your password'),
-                      ));
-                      return '';
-                    }
-                    return null;
-                  },
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter your password here",
-                    hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 14,
+                child: Stack(
+                  children: [
+                    TextFormField(
+                      obscureText: visible ? false: true,
+                      controller: widget._password,
+                      textAlignVertical: TextAlignVertical.center,
+                      enableSuggestions: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text('Please enter your password'),
+                          ));
+                          return '';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Enter your password here",
+                        hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                          fontSize: 14,
+                        ),
+                        icon: Icon(
+                          Icons.vpn_key,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
-                    icon: Icon(
-                      Icons.vpn_key,
-                      color: Colors.black,
+                    Positioned(
+                      right: -30,
+                      top: -3,
+                      child: MaterialButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      height: 60,
+                          onPressed: () {
+                            setState(
+                              () {
+                                visible = !visible;
+                              },
+                            );
+                          },
+                          child: Icon(
+                              visible ? Icons.visibility : Icons.visibility_off)),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

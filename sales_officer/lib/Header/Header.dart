@@ -27,20 +27,27 @@ class Header extends StatelessWidget {
           BoxShadow(
               color: Colors.black.withOpacity(0.1),
               blurRadius: 3,
-              offset: Offset(0, -2))
+              offset: Offset(0, 2))
         ],
       ),
       child: Row(
         children: [
           MaterialButton(
-            onPressed: () {},
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () {
+            Scaffold.of(context).openDrawer();
+            },
             child: Icon(Icons.menu),
           ),
-          Text(index==0 ? "STOCKS": index==1 ? "PENDING" : index==2 ? "PROFILE" :index==3?"DISTRIBUTOR":"NEW ORDER"),
+          Text(index==0 ? "Stocks": index==1 ? "Pending" : index==2 ? "Profile" :index==3?"Distributor":"New Order"),
           Expanded(
             child: Container(),
           ),
           MaterialButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            elevation: 0,
             onPressed: () {},
             child: Icon(Icons.notifications_active_outlined),
           ),

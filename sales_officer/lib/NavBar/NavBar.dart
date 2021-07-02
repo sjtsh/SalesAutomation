@@ -1,6 +1,7 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sales_officer/DialogBox/DialogBox.dart';
 
 class NavBar extends StatefulWidget {
 
@@ -10,7 +11,7 @@ class NavBar extends StatefulWidget {
         blurRadius: 3,
         offset: Offset(0, 2))
   ];
-  static int currentIndex = 0;
+  static int currentIndex = 2;
   final Function _setIndex;
 
   NavBar(this._setIndex);
@@ -43,9 +44,17 @@ class _NavBarState extends State<NavBar> {
         opacity: 1,
         onTap: (int i) {
           print("clicked");
-          print(i);
-          NavBar.onItemTapped(i);
-          widget._setIndex(i);
+          print(NavBar.currentIndex.toString() + " into " + i.toString());
+          if(NavBar.currentIndex!=5){
+            NavBar.onItemTapped(i);
+            widget._setIndex(i);
+          }
+          if(NavBar.currentIndex==5){
+            showDialog(
+              context: context,
+              builder: (_) => DialogBox(widget._setIndex, i),
+            );
+          }
         },
         items: [
           CustomNavigationBarItem(
@@ -86,7 +95,7 @@ class _NavBarState extends State<NavBar> {
                     ? Colors.black
                     : Colors.black.withOpacity(0.5)),
             title: Text(
-              "profile",
+              "Profile",
               style: TextStyle(
                   color: NavBar.currentIndex == 2
                       ? Colors.black
@@ -100,6 +109,7 @@ class _NavBarState extends State<NavBar> {
               color: NavBar.currentIndex == 3
                   ? Colors.black
                   : Colors.black.withOpacity(0.5),
+
             ),
             title: Text(
               "Distributor",

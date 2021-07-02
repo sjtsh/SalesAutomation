@@ -27,6 +27,7 @@ dependencies:
   custom_navigation_bar: ^0.8.1
   fl_chart: ^0.36.2
   bezier_chart: ^1.0.17+1
+  expandable: ^5.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

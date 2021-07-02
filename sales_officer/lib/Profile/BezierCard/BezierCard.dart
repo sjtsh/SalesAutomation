@@ -16,7 +16,7 @@ class BezierCard extends StatelessWidget {
           BoxShadow(
               color: Colors.black.withOpacity(0.1),
               blurRadius: 3,
-              offset: Offset(0, -2))
+              offset: Offset(0, 2))
         ],
       ),
       child: Column(
@@ -30,15 +30,8 @@ class BezierCard extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            height: 175,
             child: BezierData(),
           ),
-          RawMaterialButton(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onPressed: (){},
-          child: Text("SEE ALL"),
-          )
         ],
       ),
     );

@@ -1,39 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/NewOrder/ProductsScreen.dart';
+import 'package:sales_officer/NewOrder/Search.dart';
 
-class NewOrder extends StatelessWidget {
+import '../Database.dart';
+import 'DistributorList.dart';
+
+// class DataList {
+//   DataList(this.title, [this.children = const <DataList>[]]);
+//
+//   final String title;
+//   final List<DataList> children;
+// }
+
+String currentDistributor = "";
+List distributorList = [];
+
+class NewOrder extends StatefulWidget {
+  final Function _setIndex;
+
+  NewOrder(this._setIndex);
+
   @override
-  Widget build(BuildContext context) {
-  return ExpansionTile();
-    // return ExpansionTile(
-    //     key: PageStorageKey(this.widget.headerTitle),
-    //     title: Container(
-    //         width: double.infinity,
-    //
-    //         child: Text("Header",style: TextStyle(fontSize: 18),),
-    //         trailing: Icon(Icons.arrow_drop_down,size: 32,color: Colors.pink,),
-    //         onExpansionChanged: (value){
-    //           setState(() {
-    //             isExpand=value;
-    //           });
-    //         },
-    //         children: [
-    //           Text("Child 1",style: TextStyle(fontSize: 18),),
-    //           Text("Child 2",style: TextStyle(fontSize: 18),),
-    //         ]
-    //     )
-    // );
-  }
+  _NewOrderState createState() => _NewOrderState();
 }
 
-// ExpansionTile: It is a simple and useful widget. This widget lets you create a collapse or expansion view with features similar to ListTile. It is like a ListTile which will expand on tapping the title.
-//
-// ExpansionTile has the following attributes similar to List Tile:
-//
-// Properties: backgroundColor: set the background color to the widget.
-//
-// children: To add a child widget we will use this property
-//
-// initiallyExpanded: if we set true, child will expands default
-//
-// onExpansionChanged: To handle the expansion event
+class _NewOrderState extends State<NewOrder> {
 
+  void setDistributors(List searchedDistributors) {
+    setState(() {
+      distributorList = searchedDistributors;
+    });
+  }
+
+  Widget changeDistributors(List distributorList) {
+    return DistributorList(widget._setIndex);
+  }
+
+  @override
+  void initState() {
+    distributorList = allDistributors;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.symmetric(
+                  horizontal: BorderSide(color: Color(0xffE8E8E8), width: 1))),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xffF5F5F5),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      height: 60,
+                      width: double.infinity,
+                      child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Search Distributors",
+                            hintStyle: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                              fontSize: 16,
+                            ),
+                          ),
+                          onChanged: (_distributor) {
+                            searchDistributor(_distributor, setDistributors);
+                          }),
+                    ),
+                  ),
+                  MaterialButton(
+                    height: 50,
+                    elevation: 0,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onPressed: () {},
+                    child: Icon(Icons.search_outlined),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: changeDistributors(distributorList),
+        ),
+      ],
+    );
+  }
+}
