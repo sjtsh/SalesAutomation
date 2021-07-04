@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/Construction/Construction.dart';
 import 'package:sales_officer/DrawerScreen/DrawerScreen.dart';
 import 'package:sales_officer/Header/Header.dart';
+import 'package:sales_officer/Header/HeaderProductVariationPage.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/NewOrder/NewOrder.dart';
 import 'package:sales_officer/NewOrder/ProductsScreen/ProductsScreen.dart';
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Color(0xffF5F5F5),
             body: Column(
               children: [
-                Header(i),
+                i==5? HeaderProductVariationPage(i): Header(i),
                 Expanded(child: _changeActivity(i)),
               ],
             ),
