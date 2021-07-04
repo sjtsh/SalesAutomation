@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/NewOrder/ProductsScreen.dart';
+import 'package:sales_officer/NewOrder/ProductsScreen/ProductsScreen.dart';
 import 'package:sales_officer/NewOrder/Search.dart';
 
 import '../Database.dart';
@@ -25,15 +25,10 @@ class NewOrder extends StatefulWidget {
 }
 
 class _NewOrderState extends State<NewOrder> {
-
   void setDistributors(List searchedDistributors) {
     setState(() {
       distributorList = searchedDistributors;
     });
-  }
-
-  Widget changeDistributors(List distributorList) {
-    return DistributorList(widget._setIndex);
   }
 
   @override
@@ -82,7 +77,7 @@ class _NewOrderState extends State<NewOrder> {
                             ),
                           ),
                           onChanged: (_distributor) {
-                            searchDistributor(_distributor, setDistributors);
+                            searchForDistributor(_distributor, setDistributors);
                           }),
                     ),
                   ),
@@ -100,7 +95,11 @@ class _NewOrderState extends State<NewOrder> {
           ),
         ),
         Expanded(
-          child: changeDistributors(distributorList),
+          child: ListView(
+            children: distributorList
+                .map((item) => DistributorList(widget._setIndex, item))
+                .toList(),
+          ),
         ),
       ],
     );

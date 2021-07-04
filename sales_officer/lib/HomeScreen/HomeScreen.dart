@@ -5,7 +5,7 @@ import 'package:sales_officer/DrawerScreen/DrawerScreen.dart';
 import 'package:sales_officer/Header/Header.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/NewOrder/NewOrder.dart';
-import 'package:sales_officer/NewOrder/ProductsScreen.dart';
+import 'package:sales_officer/NewOrder/ProductsScreen/ProductsScreen.dart';
 import 'package:sales_officer/Pages/Page1.dart';
 import 'package:sales_officer/Pages/Page2.dart';
 import 'package:sales_officer/Pages/Page3.dart';

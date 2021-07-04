@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 
-import 'NewOrder.dart';
+import '../../Database.dart';
+import '../NewOrder.dart';
+import 'SearchBar.dart';
+import 'SingularProduct.dart';
 
 class ProductsScreen extends StatefulWidget {
   final Function _setIndex;
@@ -16,6 +19,28 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   String dropdownValue = "All Products";
+  List productList = allProducts;
+
+  void _setNewProducts(String newValue) {
+    setState(() {
+      dropdownValue = newValue;
+      if (newValue == 'All Products') {
+        productList = allProducts;
+      } else if (newValue == 'New Products') {
+        productList = newProducts;
+      } else if (newValue == 'Promoted Products') {
+        productList = promotedProducts;
+      } else if (newValue == 'Trending Products') {
+        productList = trendingProducts;
+      }
+    });
+  }
+
+  void _setProducts(List searchedProducts){
+    setState(() {
+      productList = searchedProducts;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +57,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
               top: BorderSide(
                 color: Colors.black.withOpacity(0.1),
               ),
+              bottom: BorderSide(
+                color: Colors.black.withOpacity(0.1),
+              ),
             ),
             boxShadow: [
               BoxShadow(
@@ -45,10 +73,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => DialogBox(widget._setIndex, 4),
-                );
+                  showDialog(
+                    context: context,
+                    builder: (_) => DialogBox(widget._setIndex, 4),
+                  );
                 },
                 child: Text(
                   "Distributor",
@@ -70,51 +98,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ],
           ),
         ),
-        Container(
-          height: 60,
-          width: double.infinity,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 12,
-              ),
-              DropdownButton<String>(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_drop_down_sharp),
-                iconSize: 24,
-                elevation: 0,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue!;
-                  });
-                },
-                items: <String>[
-                  'All Products',
-                  'Promoted Products',
-                  'New Products',
-                  'Trending Products'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Icon(Icons.search_outlined),
-              SizedBox(
-                width: 12,
-              ),
-            ],
-          ),
-        ),
+        SearchBar(_setProducts, _setNewProducts, dropdownValue),
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -123,12 +107,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 3,
-                  offset: Offset(0, -2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
             child: ListView(
-
+              children: productList
+                  .map(
+                    (item) => SingularProduct(item),
+                  )
+                  .toList(),
             ),
           ),
         ),
