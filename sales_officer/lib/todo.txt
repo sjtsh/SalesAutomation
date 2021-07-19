@@ -11,6 +11,7 @@ IMPROVEMENTS
 2. add the three dots in category wise order
 3. Add Dialog box to cancel when the navigation bar is used during a order is being added
 4. make the graph to animate
+5. only one can be expanded
 
 BACKEND REQUIRED
 1. the online button should indicate grey green when not online

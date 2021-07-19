@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/NewOrder/ProductsScreen/FilterProducts.dart';
-import 'package:sales_officer/NewOrder/ProductsScreen/SearchProducts.dart';
+
+import '../Search.dart';
 
 class SearchBar extends StatefulWidget {
   final Function _setProducts;
@@ -14,35 +15,104 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  bool open = false;
-
-  _animateContainer() {
-    setState(() {
-      open = !open;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500,),
-      padding: const EdgeInsets.all(12),
+    return Container(
+      height: 80,
       decoration: BoxDecoration(
-        color: open ? Colors.white : Colors.transparent,
-        border: Border.symmetric(
-          horizontal: BorderSide(color: Color(0xffE8E8E8), width: 1),
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black.withOpacity(0.1),
+          ),
         ),
       ),
-      child: Container(
-        height: 60,
-        decoration: BoxDecoration(
-          color: open ? Color(0xffF5F5F5) : Colors.transparent,
-          borderRadius:
-              open ? BorderRadius.circular(12) : BorderRadius.circular(0),
+      child: Center(
+        child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 12),
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black.withOpacity(0.1),
+            ),
+            color: Color(0xffF5F5F5),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  width: double.infinity,
+                  child: TextField(
+                      cursorColor: Colors.black,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search Distributors",
+                        hintStyle: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                          fontSize: 16,
+                        ),
+                      ),
+                      onChanged: (_products) {
+                        searchForProducts(_products, widget._setProducts);
+                      }),
+                ),
+              ),
+              Container(
+                width: 1,
+                height: 30,
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10,),
+              SizedBox(
+                width: 90,
+                child: DropdownButton<String>(
+                icon: Icon(Icons.keyboard_arrow_down_rounded),
+                isExpanded: true,
+                  value: widget.dropdownValue,
+                  iconSize: 12,
+                  elevation: 0,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                  ),
+                  onChanged: (newValue) {
+                    widget._setNewProducts(newValue);
+                  },
+                  items: <String>[
+                    'All Products',
+                    'Promoted Products',
+                    'New Products',
+                    'Trending Products'
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value, overflow: TextOverflow.ellipsis,),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+            ],
+          ),
         ),
-        child: open
-            ? SearchProducts(widget._setProducts,_animateContainer,)
-            : FilterProducts(_animateContainer, widget._setNewProducts, widget.dropdownValue),
       ),
     );
     // open

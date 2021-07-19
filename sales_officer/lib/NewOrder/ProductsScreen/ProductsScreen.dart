@@ -1,7 +1,11 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
+import 'package:sales_officer/NavBar/ConfirmOrder.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
+import 'package:sales_officer/NewOrder/ProductsScreen/ProductList.dart';
 
 import '../../Database.dart';
 import '../NewOrder.dart';
@@ -10,6 +14,7 @@ import 'SingularProduct.dart';
 
 class ProductsScreen extends StatefulWidget {
   final Function _setIndex;
+  final ScrollController _scrollController = ScrollController();
 
   ProductsScreen(this._setIndex);
 
@@ -20,6 +25,7 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   String dropdownValue = "All Products";
   List productList = allProducts;
+  bool scrollingDown = false;
 
   void _setNewProducts(String newValue) {
     setState(() {
@@ -36,10 +42,41 @@ class _ProductsScreenState extends State<ProductsScreen> {
     });
   }
 
-  void _setProducts(List searchedProducts){
+  void _setProducts(List searchedProducts) {
     setState(() {
       productList = searchedProducts;
     });
+  }
+
+
+  @override
+  void initState() {
+    widget._scrollController.addListener(() {
+      if (widget._scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!scrollingDown) {
+          setState(() {
+            scrollingDown = true;
+          });
+        }
+      }
+      if (widget._scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (scrollingDown) {
+          setState(() {
+            scrollingDown = false;
+          });
+        }
+      }
+    });
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget._scrollController.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -49,7 +86,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         Container(
           padding: EdgeInsets.only(left: 12),
           alignment: Alignment.centerLeft,
-          height: 60,
+          height: 40,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -80,45 +117,47 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 },
                 child: Text(
                   "Distributor",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 12),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.black.withOpacity(0.5),
-                  size: 16,
+                  size: 12,
                 ),
               ),
               Text(
                 currentDistributor,
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 12,
+                ),
               ),
             ],
           ),
         ),
-        SearchBar(_setProducts, _setNewProducts, dropdownValue),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
+          child: ProductList(
+              _setProducts,
+              _setNewProducts,
+              dropdownValue,
+              productList,
+              widget._scrollController,),
+        ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          height: scrollingDown ? 0 : 74,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 3,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: ListView(
-              children: productList
-                  .map(
-                    (item) => SingularProduct(item),
-                  )
-                  .toList(),
-            ),
+                  offset: Offset(0, -2))
+            ],
           ),
+          child: scrollingDown ? Container() : ConfirmOrder(widget._setIndex),
         ),
       ],
     );

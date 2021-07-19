@@ -7,18 +7,46 @@ import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
   final item;
+  final ExpandableController _expandableController;
+  final List<ExpandableController> _expandableControllers;
 
-  SingularProduct(this.item);
+  SingularProduct(
+    this.item,
+    this._expandableController,
+    this._expandableControllers,
+  );
 
   @override
   Widget build(BuildContext context) {
     return ExpandablePanel(
-      collapsed: ExpandableButton(
+      collapsed: GestureDetector(
+        onTap: () {
+          print("into the function now");
+          if(!_expandableController.expanded){
+            for (int i = 0; i < _expandableControllers.length; i++) {
+              _expandableControllers[i].expanded = false;
+            }
+            _expandableController.expanded = true;
+          }else{
+            _expandableController.expanded = false;
+          }
+        },
         child: SingularProductHeader(item),
       ),
       expanded: Column(
         children: [
-          ExpandableButton(
+          GestureDetector(
+            onTap: () {
+              print("into the function now");
+              if(!_expandableController.expanded){
+                for (int i = 0; i < _expandableControllers.length; i++) {
+                  _expandableControllers[i].expanded = false;
+                }
+                _expandableController.expanded = true;
+              }else{
+                _expandableController.expanded = false;
+              }
+            },
             child: SingularProductHeader(item),
           ),
           Column(
@@ -28,6 +56,7 @@ class SingularProduct extends StatelessWidget {
           ),
         ],
       ),
+      controller: _expandableController,
     );
   }
 }

@@ -9,7 +9,9 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Header(),
         BezierCard(),
         Achievements(),

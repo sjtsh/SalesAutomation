@@ -31,16 +31,27 @@ class SingularProductVariation extends StatelessWidget {
             ),
           ),
           Container(
-            height: 50,
+            height: 40,
+            width: 35,
+            decoration: BoxDecoration(
+              color: Colors.red.withOpacity(0.7),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                bottomLeft: Radius.circular(12),
+              ),
+            ),
+            child: Icon(Icons.remove),
+          ),
+          Container(
+            height: 40,
             width: 70,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
             ),
-            padding: const EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(bottom: 5),
             child: TextField(
-            cursorWidth: 1,
-            keyboardType: TextInputType.number,
+              cursorWidth: 1,
+              keyboardType: TextInputType.number,
               cursorColor: Colors.black,
               style: TextStyle(
                 color: Colors.black,
@@ -48,9 +59,23 @@ class SingularProductVariation extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
               decoration: InputDecoration(
+                hintText: "0",
+
                 border: InputBorder.none,
               ),
             ),
+          ),
+          Container(
+            height: 40,
+            width: 35,
+            decoration: BoxDecoration(
+              color: Colors.green.withOpacity(0.7),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+              ),
+            ),
+            child: Icon(Icons.add),
           ),
           SizedBox(
             width: 12,

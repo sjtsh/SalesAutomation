@@ -38,7 +38,7 @@ class HeaderProductVariationPage extends StatelessWidget {
             highlightColor: Colors.transparent,
             elevation: 0,
             onPressed: () {},
-            child: Icon(Icons.keyboard_arrow_right_rounded),
+            child: Icon(Icons.keyboard_arrow_right_rounded, color: Colors.green,),
           ),
         ],
       ),
