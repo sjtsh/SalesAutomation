@@ -5,14 +5,14 @@ import 'package:sales_officer/SignIn/SignIn.dart';
 
 void main() {
   // runApp(SalesOfficer());
-  runApp(SalesOfficer());
+  runApp(Fusers());
 }
 
-class SalesOfficer extends StatelessWidget {
+class Fusers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SalesOfficer',
+      title: 'Fusers',
       debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(

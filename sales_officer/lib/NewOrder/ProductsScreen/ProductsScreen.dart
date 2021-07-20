@@ -39,6 +39,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       } else if (newValue == 'Trending Products') {
         productList = trendingProducts;
       }
+      scrollingDown = false;
     });
   }
 
@@ -47,7 +48,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
       productList = searchedProducts;
     });
   }
-
 
   @override
   void initState() {
@@ -128,6 +128,26 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   size: 12,
                 ),
               ),
+              Container(
+                height: 20,
+                width: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xffEA47B2),
+                ),
+                child: Center(
+                    child: Text(
+                  currentDistributor.split(" ")[0].substring(0, 1) +
+                      currentDistributor.split(" ")[1].substring(0, 1),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12),
+                )),
+              ),
+              SizedBox(
+                width: 5,
+              ),
               Text(
                 currentDistributor,
                 style: TextStyle(
@@ -139,11 +159,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
         Expanded(
           child: ProductList(
-              _setProducts,
-              _setNewProducts,
-              dropdownValue,
-              productList,
-              widget._scrollController,),
+            _setProducts,
+            _setNewProducts,
+            dropdownValue,
+            productList,
+            widget._scrollController,
+          ),
         ),
         AnimatedContainer(
           duration: Duration(milliseconds: 500),

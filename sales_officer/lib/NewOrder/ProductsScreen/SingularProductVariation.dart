@@ -1,9 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SingularProductVariation extends StatelessWidget {
+class SingularProductVariation extends StatefulWidget {
   final item;
 
   SingularProductVariation(this.item);
+
+  @override
+  _SingularProductVariationState createState() =>
+      _SingularProductVariationState();
+}
+
+class _SingularProductVariationState extends State<SingularProductVariation> {
+  String hintableText = "0";
+  bool disable = false;
+  bool disableSub = true;
+  TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +39,64 @@ class SingularProductVariation extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              item,
+              widget.item,
             ),
           ),
-          Container(
-            height: 40,
-            width: 35,
-            decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.7),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
+          GestureDetector(
+            onTap: () {
+              try {
+                if (int.parse(_textEditingController.text) > 1) {
+                  _textEditingController.text =
+                      (int.parse(_textEditingController.text) - 1).toString();
+                } else if (int.parse(_textEditingController.text) == 1) {
+                  _textEditingController.text =
+                      (int.parse(_textEditingController.text) - 1).toString();
+                  setState(() {
+                    disableSub = true;
+                  });
+                }
+              } catch (e) {
+                _textEditingController.text = 0.toString();
+                setState(() {
+                  disableSub = true;
+                });
+              }
+            },
+            child: Container(
+              height: 40,
+              width: 35,
+              decoration: BoxDecoration(
+                color: () {
+                  try {
+                    if (disableSub) {
+                      return Colors.blueGrey;
+                    } else {
+                      return Colors.red.withOpacity(0.7);
+                    }
+                  } catch (e) {
+                    return Colors.red.withOpacity(0.7);
+                  }
+                }(),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
+              ),
+              child: Icon(
+                Icons.remove,
+                color: () {
+                  try {
+                    if (disableSub) {
+                      return Colors.white;
+                    } else {
+                      return Colors.black;
+                    }
+                  } catch (e) {
+                    return Colors.black;
+                  }
+                }(),
               ),
             ),
-            child: Icon(Icons.remove),
           ),
           Container(
             height: 40,
@@ -50,32 +106,109 @@ class SingularProductVariation extends StatelessWidget {
             ),
             padding: const EdgeInsets.only(bottom: 5),
             child: TextField(
-              cursorWidth: 1,
+              controller: _textEditingController,
+              cursorWidth: 0,
               keyboardType: TextInputType.number,
               cursorColor: Colors.black,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 14,
               ),
+              onTap: () {
+                setState(() {
+                  hintableText = "";
+                });
+              },
+              onChanged: (String i) {
+                try {
+                  if (int.parse(i) < 1) {
+                    setState(() {
+                      disableSub = true;
+                      disable = false;
+                    });
+                  } else if (int.parse(i) < 5) {
+                    setState(() {
+                      disable = false;
+                      disableSub = false;
+                    });
+                  } else {
+                    setState(() {
+                      disable = true;
+                    });
+                  }
+                } catch (e) {
+                  setState(() {
+                    disable = false;
+                  });
+                }
+              },
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                hintText: "0",
-
+                hintText: hintableText,
                 border: InputBorder.none,
               ),
             ),
           ),
-          Container(
-            height: 40,
-            width: 35,
-            decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.7),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(12),
-                bottomRight: Radius.circular(12),
+          GestureDetector(
+            onTap: () {
+              if (!disable) {
+                try {
+                  if (int.parse(_textEditingController.text) < 4) {
+                    _textEditingController.text =
+                        (int.parse(_textEditingController.text) + 1).toString();
+                    setState(() {
+                      disableSub = false;
+                    });
+                  } else if (int.parse(_textEditingController.text) == 4) {
+                    _textEditingController.text =
+                        (int.parse(_textEditingController.text) + 1).toString();
+                    setState(() {
+                      disableSub = false;
+                    });
+                  }
+                } catch (e) {
+                  _textEditingController.text = 1.toString();
+                  setState(() {
+                    disableSub = false;
+                  });
+                }
+              }
+            },
+            child: Container(
+              height: 40,
+              width: 35,
+              decoration: BoxDecoration(
+                color: () {
+                  try {
+                    if (int.parse(_textEditingController.text) < 5) {
+                      return Colors.green.withOpacity(0.7);
+                    } else {
+                      return Colors.blueGrey;
+                    }
+                  } catch (e) {
+                    return Colors.green.withOpacity(0.7);
+                  }
+                }(),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              child: Icon(
+                Icons.add,
+                color: () {
+                  try {
+                    if (int.parse(_textEditingController.text) < 5) {
+                      return Colors.black;
+                    } else {
+                      return Colors.white;
+                    }
+                  } catch (e) {
+                    return Colors.black;
+                  }
+                }(),
               ),
             ),
-            child: Icon(Icons.add),
           ),
           SizedBox(
             width: 12,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-
   final int index;
 
   Header(this.index);
@@ -36,11 +35,23 @@ class Header extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onPressed: () {
-            Scaffold.of(context).openDrawer();
+              Scaffold.of(context).openDrawer();
             },
             child: Icon(Icons.menu),
           ),
-          Text(index==0 ? "Stocks": index==1 ? "Pending" : index==2 ? "Profile" :index==3?"Distributor":"New Order"),
+          Text(index == 0
+              ? "Stocks"
+              : index == 1
+                  ? "Pending"
+                  : index == 2
+                      ? "Profile"
+                      : index == 3
+                          ? "Distributor"
+                          : index == 4
+                              ? "New Order"
+                              : index == 5
+                                  ? "New Order"
+                                  : "Order Confirmation"),
           Expanded(
             child: Container(),
           ),

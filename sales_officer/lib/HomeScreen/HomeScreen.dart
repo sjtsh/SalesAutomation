@@ -12,6 +12,7 @@ import 'package:sales_officer/Pages/Page1.dart';
 import 'package:sales_officer/Pages/Page2.dart';
 import 'package:sales_officer/Pages/Page3.dart';
 import 'package:sales_officer/Pages/Page4.dart';
+import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (i == 0) {
       return Page1();
     } else if (i == 1) {
-      return Page2();
+      return PendingScreen();
     } else if (i == 2) {
       return Profile();
     } else if (i == 3) {
