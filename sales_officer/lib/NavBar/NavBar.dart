@@ -81,7 +81,7 @@ class _NavBarState extends State<NavBar> {
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Pending",
+              "Orders",
               style: TextStyle(
                   color: NavBar.currentIndex == 0
                       ? Colors.black

@@ -49,7 +49,7 @@ class DialogContent extends StatelessWidget {
           child: MaterialButton(
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            color: Colors.black,
+            color: Colors.green,
             onPressed: () {
               Navigator.pop(context);
             },

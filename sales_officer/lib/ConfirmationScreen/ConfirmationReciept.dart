@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ConfirmationReciept extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -27,7 +27,7 @@ class HeaderProductVariationPage extends StatelessWidget {
             index == 0
                 ? "Stocks"
                 : index == 1
-                    ? "Pending"
+                    ? "Orders"
                     : index == 2
                         ? "Profile"
                         : index == 3

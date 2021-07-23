@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationReciept.dart';
+import 'package:sales_officer/DialogBox/DialogBox.dart';
 import 'package:sales_officer/Header/Header.dart';
 import 'package:sales_officer/Header/HeaderProductVariationPage.dart';
 import 'package:sales_officer/NewOrder/NewOrder.dart';
 
 class ConfirmationScreen extends StatelessWidget {
+  final _formKey;
+  final _setIndex;
+  ConfirmationScreen(this._formKey, this._setIndex);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,9 +42,17 @@ class ConfirmationScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Text(
-                    "Distributor",
-                    style: TextStyle(fontSize: 12),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => DialogBox(_setIndex, 4),
+                      );
+                    },
+                    child: Text(
+                      "Distributor",
+                      style: TextStyle(fontSize: 12),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),

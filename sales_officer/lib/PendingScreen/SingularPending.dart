@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class SingularPending extends StatelessWidget {
@@ -31,7 +30,7 @@ class SingularPending extends StatelessWidget {
                 children: [
                   Text(
                     e[0] as String,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     width: 20,
@@ -81,29 +80,12 @@ class SingularPending extends StatelessWidget {
               ),
               Text(
                 "Order ID : #${e[1]}",
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(color: Colors.black.withOpacity(0.5)),
               ),
               Text(
                 "Order Amount : ${e[2]}",
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(color: Colors.black.withOpacity(0.5)),
               ),
-              ExpandablePanel(
-                  collapsed: ExpandableButton(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                      padding: EdgeInsets.only(top: 12, bottom: 5),
-                        child: Text(
-                          "See All",
-                        ),
-                      ),
-                    ),
-                  ),
-                  expanded: ExpandableButton(
-                      child: Container(
-                    height: 300,
-                    color: Colors.blue,
-                  )))
             ],
           ),
         ),

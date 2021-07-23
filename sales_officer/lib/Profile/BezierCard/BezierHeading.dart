@@ -7,11 +7,11 @@ class BezierHeading extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.only(top: 8, right: 16, left: 16, bottom: 8),
       child: Text(
-      "Category Wise Order",
-      textAlign: TextAlign.left,
-      style: TextStyle(
-      fontWeight: FontWeight.bold,
-      ),
+        "Category Wise Order",
+        textAlign: TextAlign.left,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

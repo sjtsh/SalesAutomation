@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'DialogContent.dart';
 
 class DialogBox extends StatefulWidget {
-
   final Function _setIndex;
   final int i;
 
@@ -49,9 +48,11 @@ class _DialogBoxState extends State<DialogBox>
             scale: scaleAnimation,
             child: Container(
               decoration: ShapeDecoration(
-                  color: Color(0xffF5F5F5),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20))),
+                color: Color(0xffF5F5F5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
               child: SizedBox(
                 height: 200,
                 width: 250,

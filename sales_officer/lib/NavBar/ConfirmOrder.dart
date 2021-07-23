@@ -8,8 +8,8 @@ import 'NavBar.dart';
 
 class ConfirmOrder extends StatefulWidget {
   final Function _setIndex;
-
-  ConfirmOrder(this._setIndex);
+  final _formKey;
+  ConfirmOrder(this._setIndex, this._formKey);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -19,13 +19,12 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (_) {
-              return ConfirmationScreen();
+              return ConfirmationScreen(widget._formKey, widget._setIndex);
             },
           ),
         );

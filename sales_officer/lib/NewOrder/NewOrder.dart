@@ -17,8 +17,9 @@ List distributorList = [];
 
 class NewOrder extends StatefulWidget {
   final Function _setIndex;
+  final bool isOrder;
 
-  NewOrder(this._setIndex);
+  NewOrder(this._setIndex, this.isOrder);
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -97,7 +98,9 @@ class _NewOrderState extends State<NewOrder> {
         Expanded(
           child: ListView(
             children: distributorList
-                .map((item) => DistributorList(widget._setIndex, item))
+                .map(
+                  (item) => DistributorList(widget._setIndex, item, widget.isOrder),
+                )
                 .toList(),
           ),
         ),

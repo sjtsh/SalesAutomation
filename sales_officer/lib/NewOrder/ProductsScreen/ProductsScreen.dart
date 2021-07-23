@@ -15,6 +15,7 @@ import 'SingularProduct.dart';
 class ProductsScreen extends StatefulWidget {
   final Function _setIndex;
   final ScrollController _scrollController = ScrollController();
+  final _formKey = GlobalKey<FormState>();
 
   ProductsScreen(this._setIndex);
 
@@ -158,12 +159,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ),
         Expanded(
-          child: ProductList(
-            _setProducts,
-            _setNewProducts,
-            dropdownValue,
-            productList,
-            widget._scrollController,
+          child: Form(
+            key: widget._formKey,
+            child: ProductList(
+              _setProducts,
+              _setNewProducts,
+              dropdownValue,
+              productList,
+              widget._scrollController,
+            ),
+
           ),
         ),
         AnimatedContainer(
@@ -178,7 +183,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   offset: Offset(0, -2))
             ],
           ),
-          child: scrollingDown ? Container() : ConfirmOrder(widget._setIndex),
+          child: scrollingDown ? Container() : ConfirmOrder(widget._setIndex, widget._formKey),
         ),
       ],
     );

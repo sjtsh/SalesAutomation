@@ -6,22 +6,30 @@ import 'NewOrder.dart';
 class DistributorList extends StatelessWidget {
   final Function _setIndex;
   final item;
+  final bool isOrder;
 
-  DistributorList(this._setIndex, this.item);
+  DistributorList(this._setIndex, this.item, this.isOrder);
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
             onPressed: () {
-              print("4 into 5");
-              currentDistributor = item;
-              NavBar.onItemTapped(5);
-              _setIndex(5);
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) => ProductsScreen(),
               // )
               // );
+              if(isOrder){
+                print("4 into 5");
+                currentDistributor = item;
+                NavBar.onItemTapped(5);
+                _setIndex(5);
+              }else{
+                print("4 into 5");
+                currentDistributor = item;
+                NavBar.onItemTapped(6);
+                _setIndex(6);
+              }
             },
             child: Container(
               padding: EdgeInsets.only(left: 20),

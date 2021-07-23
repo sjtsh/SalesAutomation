@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Database.dart';
 import 'SingularPending.dart';
 
 class PendingScreen extends StatelessWidget {
@@ -11,21 +12,37 @@ class PendingScreen extends StatelessWidget {
       ),
       child: ListView(
         children: [
-          ["Bihani Suppliers", 1356, 50000, true],
-          ["DS Suppliers", 1357, 40000, false],
-          ["NS Suppliers", 1358, 30000, true],
-          ["Sharma Trading", 1359, 20000, false],
-          ["Bajracharya Suppliers", 1360, 10000, true],
-          ["Bihani Suppliers", 1356, 50000, false],
-          ["DS Suppliers", 1357, 40000, false],
-          ["NS Suppliers", 1358, 30000, true],
-          ["Sharma Trading", 1359, 20000, false],
-          ["Bajracharya Suppliers", 1360, 10000, true],
-        ]
-            .map(
-              (e) => SingularPending(e),
-        )
-            .toList(),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "Pending Orders ",
+              style: TextStyle(backgroundColor: Color(0xffF5F5F5)),
+            ),
+          ),
+          Column(
+            children: forPending
+                .where((element) => element[3])
+                .map(
+                  (e) => SingularPending(e),
+                )
+                .toList(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "Approved Orders ",
+              style: TextStyle(backgroundColor: Color(0xffF5F5F5)),
+            ),
+          ),
+          Column(
+            children: forPending
+                .where((element) => !element[3])
+                .map(
+                  (e) => SingularPending(e),
+            )
+                .toList(),
+          ),
+        ],
       ),
     );
   }

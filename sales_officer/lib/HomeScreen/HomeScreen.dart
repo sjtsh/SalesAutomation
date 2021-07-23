@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/Construction/Construction.dart';
+import 'package:sales_officer/DistributorInfo/DistributorInfo.dart';
 import 'package:sales_officer/DrawerScreen/DrawerScreen.dart';
 import 'package:sales_officer/Header/Header.dart';
 import 'package:sales_officer/Header/HeaderProductVariationPage.dart';
@@ -38,17 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _changeActivity(int i) {
     if (i == 0) {
-      return Page1();
+      return NewOrder(_setIndex, true);
     } else if (i == 1) {
       return PendingScreen();
     } else if (i == 2) {
       return Profile();
     } else if (i == 3) {
-      return Page4();
+      return NewOrder(_setIndex, false);
     } else if (i == 4) {
-      return NewOrder(_setIndex);
+      return NewOrder(_setIndex, true);
     } else if (i == 5) {
       return ProductsScreen(_setIndex);
+    } else if (i == 6) {
+      return DistributorInfo(_setIndex);
     } else {
       return Container();
     }

@@ -24,13 +24,43 @@ List allProducts = [
   ["Corn Flakes", "Corn Flakes Regular", 121],
   ["Corn Flakes", "Corn Flakes Sugar Free", 190]
 ];
+
+List forPending = [
+  ["Bihani Suppliers", 1356, 50000, true],
+  ["DS Suppliers", 1357, 40000, false],
+  ["NS Suppliers", 1358, 30000, true],
+  ["Sharma Trading", 1359, 20000, false],
+  ["Bajracharya Suppliers", 1360, 10000, true],
+  ["Bihani Suppliers", 1356, 50000, false],
+  ["DS Suppliers", 1357, 40000, false],
+  ["NS Suppliers", 1358, 30000, true],
+  ["Sharma Trading", 1359, 20000, false],
+  ["Bajracharya Suppliers", 1360, 10000, true],
+];
+
 List promotedProducts = [
-  ["Chiura", "Kurum Kurum Chiura", 177]
+  [
+    "Chiura",
+    "Kurum Kurum Chiura",
+    177,
+  ]
 ];
 List newProducts = [
-  ["Chiura", "Superfine Chiura", 120]
+  [
+    "Chiura",
+    "Superfine Chiura",
+    120,
+  ]
 ];
 List trendingProducts = [
-  ["Choco Flakes", "Choco Plus", 132]
+  [
+    "Choco Flakes",
+    "Choco Plus",
+    132,
+  ]
 ];
-List productVariations = ["410GM x 45BOX", "500GM x 20POUCH", "800GM x 8JAR"];
+List productVariations = [
+  "410GM x 45BOX",
+  "500GM x 20POUCH",
+  "800GM x 8JAR",
+];

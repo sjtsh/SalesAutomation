@@ -42,7 +42,7 @@ class Header extends StatelessWidget {
           Text(index == 0
               ? "Stocks"
               : index == 1
-                  ? "Pending"
+                  ? "Orders"
                   : index == 2
                       ? "Profile"
                       : index == 3
@@ -51,7 +51,9 @@ class Header extends StatelessWidget {
                               ? "New Order"
                               : index == 5
                                   ? "New Order"
-                                  : "Order Confirmation"),
+                                  : index == 6
+                                      ? "Distributor Info"
+                                      : "Order Confirmation"),
           Expanded(
             child: Container(),
           ),
