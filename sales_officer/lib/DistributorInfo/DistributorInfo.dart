@@ -13,16 +13,26 @@ class DistributorInfo extends StatelessWidget {
         onTap: () {
           _setIndex(4);
         },
-        child: Column(
+        child: ListView(
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(12)),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,),
+                  ),
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: Text(
+                      "Bihani Suppliers",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -35,11 +45,11 @@ class DistributorInfo extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0, top: 5),
-                      child: Text("Bihani Suppliers", style: TextStyle(fontWeight: FontWeight.bold),),
-                    ),
+                      SizedBox(
+                        height: 12,
+                      ),
                       Column(
                         children: [
                           ["Name: ", "Bihani Suppliers"],
@@ -48,7 +58,7 @@ class DistributorInfo extends StatelessWidget {
                           ["PAN: ", "1234567"],
                           ["Address: ", "Durbar Sq, Bhaktapur"],
                           ["Type: ", "Distributor A"],
-                          ["Assigned Beat: ", "Dhumbarahi Beat 1"],
+                          ["Account: ", "21902083719"],
                         ]
                             .map((e) => Column(
                                   children: [
@@ -56,20 +66,73 @@ class DistributorInfo extends StatelessWidget {
                                       children: [
                                         Text(e[0]),
                                         Expanded(child: Container()),
-                                        Text(e[1], style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                        Text(
+                                          e[1],
+                                          style: TextStyle(
+                                              color: Colors.black
+                                                  .withOpacity(0.7)),
+                                        ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0),
                                       child: Divider(
                                         thickness: 2,
                                         color: Colors.black.withOpacity(0.1),
-
                                       ),
                                     ),
                                   ],
                                 ))
                             .toList(),
+                      ),
+                    Row(
+                      children: [
+                        Text("Assigned Beat: "),
+                        Expanded(child: Container()),
+                        Text(
+                          "Dhumbarahi Beat 1",
+                          style: TextStyle(
+                              color: Colors.black
+                                  .withOpacity(0.7)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 14,),
+                      Wrap(
+                        children: [
+                          "Beat1",
+                          "Beat2",
+                          "Beat3",
+                          "Beat4",
+                          "Beat5",
+                          "Beat6"
+                        ]
+                            .map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color(0xffe0e0e0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 8),
+                                    child: Text(e, style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5.0),
+                        child: Divider(
+                          thickness: 2,
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ),
                     ],
                   ),
