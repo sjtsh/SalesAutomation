@@ -3,11 +3,6 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 
 class DialogContent extends StatelessWidget {
 
-  final Function _setIndex;
-  final int i;
-
-  DialogContent(this._setIndex, this.i);
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,8 +22,7 @@ class DialogContent extends StatelessWidget {
             splashColor: Colors.transparent,
             color: Colors.blueGrey,
             onPressed: () {
-              NavBar.onItemTapped(i);
-              _setIndex(i);
+              Navigator.pop(context);
               Navigator.pop(context);
             },
             child: Padding(

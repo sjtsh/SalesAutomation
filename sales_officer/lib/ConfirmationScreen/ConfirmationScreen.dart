@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationReciept.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
-import 'package:sales_officer/Header/Header.dart';
-import 'package:sales_officer/Header/HeaderProductVariationPage.dart';
-import 'package:sales_officer/NewOrder/NewOrder.dart';
+import 'package:sales_officer/Header.dart';
+import 'package:sales_officer/DistributorList/NewOrder.dart';
 
 class ConfirmationScreen extends StatelessWidget {
-  final _formKey;
-  final _setIndex;
-  ConfirmationScreen(this._formKey, this._setIndex);
+  final String currentDistributor;
+
+  ConfirmationScreen(this.currentDistributor);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            HeaderProductVariationPage(6),
-            Container(
+    return Scaffold(
+      body: Column(
+        children: [
+          Header(2, false),
+          Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,
               height: 40,
@@ -40,82 +39,11 @@ class ConfirmationScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => DialogBox(_setIndex, 4),
-                      );
-                    },
-                    child: Text(
-                      "Distributor",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black.withOpacity(0.5),
-                      size: 12,
-                    ),
-                  ),
-                  Container(
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xffEA47B2),
-                    ),
-                    child: Center(
-                      child: Text(
-                        currentDistributor.split(" ")[0].substring(0, 1) +
-                            currentDistributor.split(" ")[1].substring(0, 1),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      currentDistributor,
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black.withOpacity(0.5),
-                      size: 12,
-                    ),
-                  ),
-                  Text(
-                    "Order Confirmation",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ConfirmationReciept(),
-            ),
-          ],
-        ),
+              child: BreadCrum3("Distributor", currentDistributor)),
+          Expanded(
+            child: ConfirmationReciept(),
+          ),
+        ],
       ),
     );
   }

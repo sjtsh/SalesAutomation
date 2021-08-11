@@ -85,6 +85,7 @@ class _SearchBarState extends State<SearchBar> {
                 icon: Icon(Icons.keyboard_arrow_down_rounded),
                 isExpanded: true,
                   value: widget.dropdownValue,
+                  underline: Container(),
                   iconSize: 12,
                   elevation: 0,
                   style: const TextStyle(
@@ -115,19 +116,5 @@ class _SearchBarState extends State<SearchBar> {
         ),
       ),
     );
-    // open
-    //     ? Container(
-    //     padding: const EdgeInsets.all(12.0),
-    //
-    //     child:
-    // )
-    //     : Container(
-    //   padding: EdgeInsets.all(12),
-    //   width: double.infinity,
-    //   child: Container(
-    //     height: 60,
-    //     child: SearchProducts(_animateContainer, widget.dropdownValue),
-    //   ),
-    // );
   }
 }

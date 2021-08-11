@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sales_officer">
    <application
-        android:label="sales_officer"
+        android:label="Fusers"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

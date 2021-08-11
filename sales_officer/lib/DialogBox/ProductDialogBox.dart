@@ -1,16 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/DialogBox/ProductDialogContent.dart';
 
 import 'DialogContent.dart';
 
-class DialogBox extends StatefulWidget {
+class ProductDialogBox extends StatefulWidget {
+  final List index;
+
+  ProductDialogBox(this.index);
 
   @override
-  _DialogBoxState createState() => _DialogBoxState();
+  _ProductDialogBoxState createState() => _ProductDialogBoxState();
 }
 
-class _DialogBoxState extends State<DialogBox>
+class _ProductDialogBoxState extends State<ProductDialogBox>
     with SingleTickerProviderStateMixin {
   final bool status = true;
 
@@ -50,11 +54,11 @@ class _DialogBoxState extends State<DialogBox>
                 ),
               ),
               child: SizedBox(
-                height: 200,
-                width: 250,
+                height: 500,
+                width: 300,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: DialogContent(),
+                  child: ProductDialogContent(widget.index),
                 ),
               ),
             ),

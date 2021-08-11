@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/HomeScreen/HomeScreen.dart';
+import 'package:sales_officer/HomeScreen.dart';
 
 class SignInButton extends StatelessWidget {
 
@@ -11,7 +11,6 @@ class SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: MaterialButton(

@@ -1,15 +1,10 @@
-import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationScreen.dart';
-import 'package:sales_officer/DialogBox/DialogBox.dart';
-
-import 'NavBar.dart';
 
 class ConfirmOrder extends StatefulWidget {
-  final Function _setIndex;
-  final _formKey;
-  ConfirmOrder(this._setIndex, this._formKey);
+  final String currentDistributor;
+
+  ConfirmOrder(this.currentDistributor,);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -24,12 +19,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           context,
           MaterialPageRoute(
             builder: (_) {
-              return ConfirmationScreen(widget._formKey, widget._setIndex);
+              return ConfirmationScreen(widget.currentDistributor);
             },
           ),
         );
       },
       child: Container(
+      height: 40,
         margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.green,

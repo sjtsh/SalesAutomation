@@ -22,6 +22,7 @@ class BezierCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: 6,),
           BezierHeading(),
           Container(
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),

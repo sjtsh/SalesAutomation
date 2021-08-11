@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'AchievementsHeader.dart';
 
@@ -10,6 +9,7 @@ class Achievements extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: EdgeInsets.only(top: 6),
         height: 150,
         decoration: BoxDecoration(
           color: Colors.white,

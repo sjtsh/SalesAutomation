@@ -1,10 +1,8 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sales_officer/DialogBox/DialogBox.dart';
 
 class NavBar extends StatefulWidget {
-
   final boxShadow = [
     BoxShadow(
         color: Colors.black.withOpacity(0.1),
@@ -37,65 +35,57 @@ class _NavBarState extends State<NavBar> {
       child: CustomNavigationBar(
         strokeColor: Colors.black,
         iconSize: 25,
-        currentIndex: NavBar.currentIndex > 3 ? 3 : NavBar.currentIndex,
-        selectedColor: NavBar.currentIndex > 3 ? Colors.black.withOpacity(0.5): Colors.black,
+        currentIndex: NavBar.currentIndex,
+        selectedColor: Colors.black,
         unSelectedColor: Colors.black.withOpacity(0.5),
         backgroundColor: Colors.white,
         opacity: 1,
         onTap: (int i) {
-          print("clicked");
-          print(NavBar.currentIndex.toString() + " into " + i.toString());
-          if(NavBar.currentIndex!=5){
-            NavBar.onItemTapped(i);
-            widget._setIndex(i);
-          }
-          if(NavBar.currentIndex==5){
-            showDialog(
-              context: context,
-              builder: (_) => DialogBox(widget._setIndex, i),
-            );
-          }
+          NavBar.onItemTapped(i);
+          widget._setIndex(i);
         },
         items: [
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
-              "icons/updatestock.svg",
+              "icons/distributor.svg",
               color: NavBar.currentIndex == 0
+                  ? Colors.black
+                  : Colors.black.withOpacity(0.5),
+            ),
+            title: Text(
+              "Distributor",
+              style: TextStyle(
+                  color: NavBar.currentIndex == 0
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5),
+                  fontSize: 12),
+            ),
+          ),
+          CustomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "icons/updatestock.svg",
+              color: NavBar.currentIndex == 1
                   ? Colors.black
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Stocks",
               style: TextStyle(
-                  color: NavBar.currentIndex == 0
+                  color: NavBar.currentIndex == 1
                       ? Colors.black
                       : Colors.black.withOpacity(0.5),
                   fontSize: 12),
             ),
           ),
           CustomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "icons/pendingorder.svg",
-              color: NavBar.currentIndex == 1
+            icon: Icon(
+              Icons.add,
+              color: NavBar.currentIndex == 2
                   ? Colors.black
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Orders",
-              style: TextStyle(
-                  color: NavBar.currentIndex == 0
-                      ? Colors.black
-                      : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
-            ),
-          ),
-          CustomNavigationBarItem(
-            icon: Icon(Icons.person,
-                color: NavBar.currentIndex == 2
-                    ? Colors.black
-                    : Colors.black.withOpacity(0.5)),
-            title: Text(
-              "Profile",
+              "New",
               style: TextStyle(
                   color: NavBar.currentIndex == 2
                       ? Colors.black
@@ -105,16 +95,31 @@ class _NavBarState extends State<NavBar> {
           ),
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
-              "icons/distributor.svg",
+              "icons/pendingorder.svg",
               color: NavBar.currentIndex == 3
                   ? Colors.black
                   : Colors.black.withOpacity(0.5),
-
             ),
             title: Text(
-              "Distributor",
+              "Pending",
               style: TextStyle(
-                  color: NavBar.currentIndex == 0
+                  color: NavBar.currentIndex == 3
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5),
+                  fontSize: 12),
+            ),
+          ),
+          CustomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "icons/dashboard.svg",
+              color: NavBar.currentIndex == 4
+                  ? Colors.black
+                  : Colors.black.withOpacity(0.5),
+            ),
+            title: Text(
+              "Dashboard",
+              style: TextStyle(
+                  color: NavBar.currentIndex == 4
                       ? Colors.black
                       : Colors.black.withOpacity(0.5),
                   fontSize: 12),

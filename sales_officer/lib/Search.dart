@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../Database.dart';
+import 'Database.dart';
 
 searchForDistributor(String distributor, Function setDistributors) {
   List distributors = [];

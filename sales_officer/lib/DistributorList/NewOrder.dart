@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/NewOrder/ProductsScreen/ProductsScreen.dart';
-import 'package:sales_officer/NewOrder/Search.dart';
+import 'package:sales_officer/Search.dart';
 
 import '../Database.dart';
 import 'DistributorList.dart';
 
-// class DataList {
-//   DataList(this.title, [this.children = const <DataList>[]]);
-//
-//   final String title;
-//   final List<DataList> children;
-// }
-
-String currentDistributor = "";
-List distributorList = [];
 
 class NewOrder extends StatefulWidget {
   final Function _setIndex;
   final bool isOrder;
+  final int index;
 
-  NewOrder(this._setIndex, this.isOrder);
+  NewOrder(this._setIndex, this.isOrder, this.index);
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -44,15 +35,27 @@ class _NewOrderState extends State<NewOrder> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
+          height: 80,
           decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.symmetric(
-                  horizontal: BorderSide(color: Color(0xffE8E8E8), width: 1))),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.black.withOpacity(0.1),
+              ),
+              top: BorderSide(
+                color: Colors.black.withOpacity(0.1),
+              ),
+            ),
+          ),
+          child: Center(
             child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12.0),
+              height: 50,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.1),
+                ),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -61,25 +64,26 @@ class _NewOrderState extends State<NewOrder> {
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
                       alignment: Alignment.centerLeft,
-                      height: 60,
+                      height: 50,
                       width: double.infinity,
                       child: TextField(
-                          textAlignVertical: TextAlignVertical.center,
-                          style: TextStyle(
-                            color: Colors.black,
+                        textAlignVertical: TextAlignVertical.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Search Distributors",
+                          hintStyle: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
                             fontSize: 16,
                           ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Search Distributors",
-                            hintStyle: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 16,
-                            ),
-                          ),
-                          onChanged: (_distributor) {
-                            searchForDistributor(_distributor, setDistributors);
-                          }),
+                        ),
+                        onChanged: (_distributor) {
+                          searchForDistributor(_distributor, setDistributors);
+                        },
+                      ),
                     ),
                   ),
                   MaterialButton(
@@ -99,7 +103,8 @@ class _NewOrderState extends State<NewOrder> {
           child: ListView(
             children: distributorList
                 .map(
-                  (item) => DistributorList(widget._setIndex, item, widget.isOrder),
+                  (item) => DistributorList(
+                      item, widget.isOrder, widget.index),
                 )
                 .toList(),
           ),

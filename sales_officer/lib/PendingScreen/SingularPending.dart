@@ -3,6 +3,7 @@ import 'package:sales_officer/PendingScreen/ApproveOrderScreen.dart';
 
 class SingularPending extends StatelessWidget {
   final List e;
+
   SingularPending(this.e);
 
   @override
@@ -32,12 +33,13 @@ class SingularPending extends StatelessWidget {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
                   child: Row(
                     children: [
                       Container(
@@ -54,7 +56,7 @@ class SingularPending extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 10),
+                              fontSize: 8),
                         )),
                       ),
                       SizedBox(
@@ -111,41 +113,50 @@ class SingularPending extends StatelessWidget {
                   color: Colors.black.withOpacity(0.1),
                   thickness: 1,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Order ID :",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                    ),
-                    Expanded(child: Container()),
-                    Text(
-                      "#${e[1]}",
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Order ID :",
+                        style: TextStyle(color: Colors.black.withOpacity(0.5),),
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        "#${e[1]}",
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Order Date :",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                    ),
-                    Expanded(child: Container()),
-                    Text(
-                      "${e[2]}",
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Order Date :",
+                        style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        "${e[2]}",
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Order Amount :",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                    ),
-                    Expanded(child: Container()),
-                    Text(
-                      "Rs ${e[3]}",
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Order Amount :",
+                        style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        "Rs ${e[3]}",
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

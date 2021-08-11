@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import '../Database.dart';
 import 'SingularPending.dart';
 
-List headers = ["Pending Orders","Approved Orders"];
+List headers = ["Pending Orders", "Approved Orders"];
 
 class PendingScreen extends StatefulWidget {
+  final ScrollController _scrollController = ScrollController();
 
-  ScrollController _scrollController = ScrollController();
   @override
   _PendingScreenState createState() => _PendingScreenState();
 }
 
 class _PendingScreenState extends State<PendingScreen> {
-
   int index = 0;
 
   @override
@@ -42,16 +40,21 @@ class _PendingScreenState extends State<PendingScreen> {
               color: Color(0xffF5F5F5),
             ),
             child: NotificationListener(
-              onNotification: (t){
+              onNotification: (t) {
                 if (t is ScrollEndNotification) {
-                  if(widget._scrollController.position.pixels>130*forPending.where((element) => element[4]).length){
-                    setState(() {
-                      index = 1;
-                    });
-                  }else{
-                    setState(() {
-                      index = 0;
-                    });
+                  if (widget._scrollController.position.pixels >
+                      130 * forPending.where((element) => element[4]).length) {
+                    setState(
+                      () {
+                        index = 1;
+                      },
+                    );
+                  } else {
+                    setState(
+                      () {
+                        index = 0;
+                      },
+                    );
                   }
                   print(widget._scrollController.position.pixels);
                 }
@@ -60,6 +63,7 @@ class _PendingScreenState extends State<PendingScreen> {
               child: ListView(
                 controller: widget._scrollController,
                 children: [
+                  SizedBox(height: 7),
                   Column(
                     children: forPending
                         .where((element) => element[4])
@@ -83,6 +87,7 @@ class _PendingScreenState extends State<PendingScreen> {
                         )
                         .toList(),
                   ),
+                  SizedBox(height: 7),
                 ],
               ),
             ),
