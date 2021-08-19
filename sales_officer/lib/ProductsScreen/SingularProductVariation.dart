@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 
 class SingularProductVariation extends StatefulWidget {
-  final item;
+  final SKU item;
+  final TextEditingController _textEditingController;
 
-  SingularProductVariation(this.item);
+  SingularProductVariation(this.item, this._textEditingController);
 
   @override
   _SingularProductVariationState createState() =>
@@ -15,7 +17,6 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
   String hintableText = "0";
   bool disable = false;
   bool disableSub = true;
-  TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +40,24 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
           ),
           Expanded(
             child: Text(
-              widget.item,
+              widget.item.SKUName,
             ),
           ),
           GestureDetector(
             onTap: () {
               try {
-                if (int.parse(_textEditingController.text) > 1) {
-                  _textEditingController.text =
-                      (int.parse(_textEditingController.text) - 1).toString();
-                } else if (int.parse(_textEditingController.text) == 1) {
-                  _textEditingController.text =
-                      (int.parse(_textEditingController.text) - 1).toString();
+                if (int.parse(widget._textEditingController.text) > 1) {
+                  widget._textEditingController.text =
+                      (int.parse(widget._textEditingController.text) - 1).toString();
+                } else if (int.parse(widget._textEditingController.text) == 1) {
+                  widget._textEditingController.text =
+                      (int.parse(widget._textEditingController.text) - 1).toString();
                   setState(() {
                     disableSub = true;
                   });
                 }
               } catch (e) {
-                _textEditingController.text = 0.toString();
+                widget._textEditingController.text = 0.toString();
                 setState(() {
                   disableSub = true;
                 });
@@ -106,7 +107,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
             ),
             padding: const EdgeInsets.only(bottom: 5),
             child: TextField(
-              controller: _textEditingController,
+              controller: widget._textEditingController,
               cursorWidth: 0,
               keyboardType: TextInputType.number,
               cursorColor: Colors.black,
@@ -134,6 +135,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                   } else {
                     setState(() {
                       disable = true;
+                      disableSub = false;
                     });
                   }
                 } catch (e) {
@@ -153,21 +155,21 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
             onTap: () {
               if (!disable) {
                 try {
-                  if (int.parse(_textEditingController.text) < 4) {
-                    _textEditingController.text =
-                        (int.parse(_textEditingController.text) + 1).toString();
+                  if (int.parse(widget._textEditingController.text) < 4) {
+                    widget._textEditingController.text =
+                        (int.parse(widget._textEditingController.text) + 1).toString();
                     setState(() {
                       disableSub = false;
                     });
-                  } else if (int.parse(_textEditingController.text) == 4) {
-                    _textEditingController.text =
-                        (int.parse(_textEditingController.text) + 1).toString();
+                  } else if (int.parse(widget._textEditingController.text) == 4) {
+                    widget._textEditingController.text =
+                        (int.parse(widget._textEditingController.text) + 1).toString();
                     setState(() {
                       disableSub = false;
                     });
                   }
                 } catch (e) {
-                  _textEditingController.text = 1.toString();
+                  widget._textEditingController.text = 1.toString();
                   setState(() {
                     disableSub = false;
                   });
@@ -180,7 +182,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
               decoration: BoxDecoration(
                 color: () {
                   try {
-                    if (int.parse(_textEditingController.text) < 5) {
+                    if (int.parse(widget._textEditingController.text) < 5) {
                       return Colors.green.withOpacity(0.7);
                     } else {
                       return Colors.blueGrey;
@@ -198,7 +200,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 Icons.add,
                 color: () {
                   try {
-                    if (int.parse(_textEditingController.text) < 5) {
+                    if (int.parse(widget._textEditingController.text) < 5) {
                       return Colors.black;
                     } else {
                       return Colors.white;

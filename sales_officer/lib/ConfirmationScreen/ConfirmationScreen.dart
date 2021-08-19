@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationReciept.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
@@ -6,9 +7,12 @@ import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 
 class ConfirmationScreen extends StatelessWidget {
-  final String currentDistributor;
+  final Distributor currentDistributor;
+  final List<TextEditingController> _textEditingControllers;
+  final List receiptData;
 
-  ConfirmationScreen(this.currentDistributor);
+  ConfirmationScreen(
+      this.currentDistributor, this._textEditingControllers, this.receiptData);
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +43,14 @@ class ConfirmationScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: BreadCrum3("Distributor", currentDistributor)),
+              child: BreadCrum3(
+                  "Distributor", currentDistributor.distributorName)),
           Expanded(
-            child: ConfirmationReciept(),
+            child: ConfirmationReciept(
+              currentDistributor,
+              _textEditingControllers,
+              receiptData,
+            ),
           ),
         ],
       ),

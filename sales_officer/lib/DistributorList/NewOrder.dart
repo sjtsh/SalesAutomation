@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
+import 'package:sales_officer/Skeletons/DistributorListSkeleton.dart';
 import 'package:sales_officer/Search.dart';
 
 import '../Database.dart';
 import 'DistributorList.dart';
 
-
 class NewOrder extends StatefulWidget {
   final Function _setIndex;
   final bool isOrder;
   final int index;
+
+  final DistributorService distributorService = DistributorService();
 
   NewOrder(this._setIndex, this.isOrder, this.index);
 
@@ -17,16 +21,17 @@ class NewOrder extends StatefulWidget {
 }
 
 class _NewOrderState extends State<NewOrder> {
-  void setDistributors(List searchedDistributors) {
-    setState(() {
-      distributorList = searchedDistributors;
-    });
-  }
+  bool isSearching = false;
 
-  @override
-  void initState() {
-    distributorList = allDistributors;
-    super.initState();
+  void setDistributors(List<Distributor> searchedDistributors) {
+    setState(() {
+      searchedDistributorsLocal = searchedDistributors;
+      if (searchedDistributorsLocal.length > 0) {
+        isSearching = true;
+      } else {
+        isSearching = false;
+      }
+    });
   }
 
   @override
@@ -86,13 +91,12 @@ class _NewOrderState extends State<NewOrder> {
                       ),
                     ),
                   ),
-                  MaterialButton(
-                    height: 50,
-                    elevation: 0,
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    onPressed: () {},
+                  GestureDetector(
+                    onTap: () {},
                     child: Icon(Icons.search_outlined),
+                  ),
+                  SizedBox(
+                    width: 12,
                   ),
                 ],
               ),
@@ -100,14 +104,43 @@ class _NewOrderState extends State<NewOrder> {
           ),
         ),
         Expanded(
-          child: ListView(
-            children: distributorList
-                .map(
-                  (item) => DistributorList(
-                      item, widget.isOrder, widget.index),
+          child: !isSearching
+              ? FutureBuilder(
+                  future: widget.distributorService.fetchDistributor(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Distributor>> snapshot) {
+                    if (snapshot.hasData) {
+                      List<Distributor>? syncedDistributors = snapshot.data;
+                      allDistributorsLocal = syncedDistributors!;
+                      return ListView(
+                        children: syncedDistributors
+                            .map(
+                              (item) => DistributorList(
+                                  item, widget.isOrder, widget.index),
+                            )
+                            .toList(),
+                      );
+                    }
+                    return ListView(
+                      children: List.generate(
+                        5,
+                        (index) => index)
+                          .map(
+                            (item) => DistributorListSkeleton(
+                                widget.index),
+                          )
+                          .toList(),
+                    );
+                  },
                 )
-                .toList(),
-          ),
+              : ListView(
+                  children: searchedDistributorsLocal
+                      .map(
+                        (item) =>
+                            DistributorList(item, widget.isOrder, widget.index),
+                      )
+                      .toList(),
+                ),
         ),
       ],
     );

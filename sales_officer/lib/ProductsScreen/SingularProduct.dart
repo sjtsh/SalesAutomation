@@ -1,30 +1,31 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/Database.dart';
 
 import 'SingularProductHeader.dart';
 import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
-  final item;
-  final ExpandableController _expandableController;
+  final SubGroup item;
+  final int expandableControllerIndex;
   final List<ExpandableController> _expandableControllers;
+  final List<TextEditingController> _textEditingControllers;
 
-  SingularProduct(
-    this.item,
-    this._expandableController,
-    this._expandableControllers,
-  );
+  SingularProduct(this.item, this.expandableControllerIndex,
+      this._expandableControllers, this._textEditingControllers);
 
   unExpand() {
-    print("into the function now");
-    if(!_expandableController.expanded){
+    if (!_expandableControllers[expandableControllerIndex].expanded) {
       for (int i = 0; i < _expandableControllers.length; i++) {
-        _expandableControllers[i].expanded = false;
+        if (i != expandableControllerIndex) {
+          _expandableControllers[i].expanded = false;
+        } else {
+          _expandableControllers[i].expanded = true;
+        }
       }
-      _expandableController.expanded = true;
-    }else{
-      _expandableController.expanded = false;
+    } else {
+      _expandableControllers[expandableControllerIndex].expanded = false;
     }
   }
 
@@ -36,13 +37,15 @@ class SingularProduct extends StatelessWidget {
         children: [
           SingularProductHeader(item, unExpand),
           Column(
-            children: productVariations
-                .map((item) => SingularProductVariation(item))
+            children: allSKULocal
+                .where((element) => element.subGroupID == item.subGroupID)
+                .map((item) => SingularProductVariation(
+                    item, _textEditingControllers[allSKULocal.indexOf(item)]))
                 .toList(),
           ),
         ],
       ),
-      controller: _expandableController,
+      controller: _expandableControllers[expandableControllerIndex],
     );
   }
 }

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
+import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/PendingScreen/ApproveOrderScreen.dart';
 
 class SingularPending extends StatelessWidget {
-  final List e;
+  final DistributorOrder e;
 
   SingularPending(this.e);
 
   @override
   Widget build(BuildContext context) {
+    Distributor distributor = allDistributorsLocal
+        .where((element) => element.distributorID == e.distributorID)
+        .first;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
       child: RawMaterialButton(
@@ -51,8 +58,7 @@ class SingularPending extends StatelessWidget {
                         ),
                         child: Center(
                             child: Text(
-                          e[0].split(" ")[0].substring(0, 1) +
-                              e[0].split(" ")[1].substring(0, 1),
+                          getInitials(distributor.distributorName),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -63,7 +69,7 @@ class SingularPending extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        e[0] as String,
+                        distributor.distributorName,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -71,7 +77,7 @@ class SingularPending extends StatelessWidget {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: e[4] as bool
+                          color: e.orderStatus
                               ? Color(0xffFFCE31)
                               : Color(0xff60D74D),
                           borderRadius: BorderRadius.circular(10),
@@ -79,7 +85,7 @@ class SingularPending extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            e[4] as bool ? "PENDING" : "APPROVED",
+                            e.orderStatus ? "PENDING" : "APPROVED",
                             style: TextStyle(
                               fontSize: 10,
                             ),
@@ -113,50 +119,32 @@ class SingularPending extends StatelessWidget {
                   color: Colors.black.withOpacity(0.1),
                   thickness: 1,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Order ID :",
-                        style: TextStyle(color: Colors.black.withOpacity(0.5),),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "#${e[1]}",
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Order Date :",
-                        style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "${e[2]}",
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Order Amount :",
-                        style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                      ),
-                      Expanded(child: Container()),
-                      Text(
-                        "Rs ${e[3]}",
-                      ),
-                    ],
-                  ),
+                Column(
+                  children: [
+                    ["Order ID :", "#OR${e.distributorOrderID}"],
+                    ["Date :", "${e.dateAndTime}"],
+                  ]
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 5),
+                          child: Row(
+                            children: [
+                              Text(
+                                e[0],
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                              ),
+                              Expanded(child: Container()),
+                              Text(
+                                e[1],
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ],
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 
 class ProductDialogContent extends StatelessWidget {
-  final List item;
+  final SubGroup subGroup;
 
-  ProductDialogContent(this.item);
+  ProductDialogContent(this.subGroup);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +25,44 @@ class ProductDialogContent extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                item[0],
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
-                  fontSize: 12,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    subGroup.productGroupName,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 1),
+                      child: Text(
+                        subGroup.productLineName.substring(0, 1) +
+                            subGroup.productLineName.substring(
+                                subGroup.productLineName.length - 1,
+                                subGroup.productLineName.length),
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Text(
-                item[1],
+                subGroup.subGroupName,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 16,
@@ -43,7 +72,7 @@ class ProductDialogContent extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "Stock: ${item[2]} Pcs",
+                "Stock: 100 Pcs",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 12,

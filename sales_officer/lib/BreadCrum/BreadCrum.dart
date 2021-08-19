@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 
@@ -43,8 +45,7 @@ class BreadCrum2 extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-            currentDistributor.split(" ")[0].substring(0, 1) +
-                currentDistributor.split(" ")[1].substring(0, 1),
+              getInitials(currentDistributor),
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8),
           )),

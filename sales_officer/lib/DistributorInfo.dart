@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Header.dart';
 
+import 'BACKEND/Entities/Distributor.dart';
+import 'BACKEND/Methods/method.dart';
+
 class DistributorInfo extends StatelessWidget {
 
-  final String currentDistributor;
+  final Distributor currentDistributor;
   DistributorInfo(this.currentDistributor);
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +26,15 @@ class DistributorInfo extends StatelessWidget {
                       Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Colors.green,
                         ),
+                        child: Center(child: Text(getInitials(currentDistributor.distributorName), style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.5)),),),
                       ),
                       Positioned(
                         bottom: 12,
                         left: 12,
                         child: Text(
-                          currentDistributor,
+                          currentDistributor.distributorName,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -57,13 +61,17 @@ class DistributorInfo extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              ["Name: ", "Bihani Suppliers"],
-                              ["Location: ", "34.222, 98.234"],
-                              ["Phone Number: ", "9863643493"],
-                              ["PAN: ", "1234567"],
-                              ["Address: ", "Durbar Sq, Bhaktapur"],
-                              ["Type: ", "Distributor A"],
-                              ["Account: ", "21902083719"],
+                              ["Name: ", currentDistributor.distributorName],
+                              ["Owner Name: ", currentDistributor.ownerName],
+                              ["Phone Number: ", currentDistributor.phone.toString()],
+                              ["Mobile Number: ", currentDistributor.mobileNumber.toString()],
+                              ["PAN Number: ", currentDistributor.PAN.toString()],
+                              ["Address: ", currentDistributor.location],
+                              ["Bank Account Name: ", currentDistributor.bankAccountName],
+                              ["Bank Account Number: ", currentDistributor.bankAccountNumber.toString()],
+                              ["Bank Address: ", currentDistributor.bankAddress],
+                              ["VAT Number: ", currentDistributor.VAT.toString()],
+                              ["Geo: ", currentDistributor.lat.toString() + currentDistributor.lng.toString()],
                             ]
                                 .map((e) => Column(
                                       children: [

@@ -1,16 +1,21 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/Header.dart';
 
 class ApproveOrderScreen extends StatelessWidget {
-  final List e;
+  final DistributorOrder e;
 
   ApproveOrderScreen(this.e);
 
   @override
   Widget build(BuildContext context) {
+    Distributor distributor = allDistributorsLocal
+        .where((element) => element.distributorID == e.distributorID)
+        .first;
     return Scaffold(
       body: Column(
         children: [
@@ -38,7 +43,7 @@ class ApproveOrderScreen extends StatelessWidget {
                 ),
               ],
             ),
-            child: BreadCrum2("Pending Orders", e[0]),
+            child: BreadCrum2("Pending Orders", distributor.distributorName),
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -73,8 +78,12 @@ class ApproveOrderScreen extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    e[0].split(" ")[0].substring(0, 1) +
-                                        e[0].split(" ")[1].substring(0, 1),
+                                    distributor.distributorName
+                                            .split(" ")[0]
+                                            .substring(0, 1) +
+                                        distributor.distributorName
+                                            .split(" ")[1]
+                                            .substring(0, 1),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -86,7 +95,7 @@ class ApproveOrderScreen extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                e[0],
+                                distributor.distributorName,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -94,7 +103,7 @@ class ApproveOrderScreen extends StatelessWidget {
                               Expanded(child: Container()),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: e[4] as bool
+                                  color: e.orderStatus
                                       ? Color(0xffFFCE31)
                                       : Color(0xff60D74D),
                                   borderRadius: BorderRadius.circular(10),
@@ -102,7 +111,7 @@ class ApproveOrderScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    e[4] as bool ? "PENDING" : "APPROVED",
+                                    e.orderStatus ? "PENDING" : "APPROVED",
                                     style: TextStyle(
                                       fontSize: 10,
                                     ),
@@ -116,39 +125,41 @@ class ApproveOrderScreen extends StatelessWidget {
                           color: Colors.black.withOpacity(0.1),
                           thickness: 1,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 12),
-                          child: Row(
-                            children: [
-                              Text("Order ID"),
-                              Expanded(child: Container()),
-                              Text(
-                                "#${e[1]}",
-                              ),
+                        Column(
+                          children: [
+                            ["Order ID :", "#OR${e.distributorOrderID}"],
+                            ["Date :", "${e.dateAndTime}"],
+                            [
+                              "Status :",
+                              e.orderStatus ? "Pending" : "Approved"
                             ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black.withOpacity(0.1),
-                          thickness: 1,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 12),
-                          child: Row(
-                            children: [
-                              Text("Order Date"),
-                              Expanded(child: Container()),
-                              Text(
-                                "${e[2]}",
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black.withOpacity(0.1),
-                          thickness: 1,
+                            ["Representation :", e.joint ? "Joint" : "Single"],
+                            ["Remarks :", "${e.remarks}"],
+                          ]
+                              .map(
+                                (e) => Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 12),
+                                      child: Row(
+                                        children: [
+                                          Text(e[0]),
+                                          Expanded(child: Container()),
+                                          Text(
+                                            e[1],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      color: Colors.black.withOpacity(0.1),
+                                      thickness: 1,
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
                         ),
                         ExpandablePanel(
                           collapsed: Column(
@@ -192,7 +203,7 @@ class ApproveOrderScreen extends StatelessWidget {
                                 ),
                               ),
                               Column(
-                                children: allProducts
+                                children: allSubGroupsLocal
                                     .sublist(0, 3)
                                     .map(
                                       (e) => Container(
@@ -200,8 +211,8 @@ class ApproveOrderScreen extends StatelessWidget {
                                           color: Color(0xffF5F5F5),
                                           border: Border(
                                             bottom: BorderSide(
-                                              color: Colors.black
-                                                  .withOpacity(0.1),
+                                              color:
+                                                  Colors.black.withOpacity(0.1),
                                             ),
                                           ),
                                         ),
@@ -214,7 +225,7 @@ class ApproveOrderScreen extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  e[1],
+                                                  e.subGroupName,
                                                   style:
                                                       TextStyle(fontSize: 12),
                                                 ),
@@ -227,7 +238,7 @@ class ApproveOrderScreen extends StatelessWidget {
                                             ),
                                             Expanded(child: Container()),
                                             Text(
-                                              e[2].toString() + " Pcs",
+                                               "10 Pcs",
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -250,7 +261,7 @@ class ApproveOrderScreen extends StatelessWidget {
                               Text("Total Amount"),
                               Expanded(child: Container()),
                               Text(
-                                "Rs ${e[3]}",
+                                "Rs 1000}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -265,41 +276,46 @@ class ApproveOrderScreen extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Color(0xff60D74D),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Text(
-                "Approve Order",
-                style: TextStyle(
-                  color: Colors.white,
+          e.orderStatus? Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Color(0xff60D74D),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    "Approve Order",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Color(0xffE85050),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Text("Reject Order",
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-            ),
-          ),
-          SizedBox(
-            height: 6,
-          ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Color(0xffE85050),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text("Reject Order",
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                ),
+              ),
+              SizedBox(
+                height: 6,
+              ),
+            ],
+          ):Container(),
+
         ],
       ),
     );

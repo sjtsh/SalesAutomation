@@ -18,16 +18,20 @@ class SignInButton extends StatelessWidget {
         highlightColor: Colors.transparent,
         onPressed: () {
 
-          final username = _username.text;
-          final password = _password.text;
-
-          if(_formKey.currentState!.validate()){
-            print("username: $username \npassword: $password");
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
-          }
+          // final username = _username.text;
+          // final password = _password.text;
+          //
+          // if(_formKey.currentState!.validate()){
+          //   print("username: $username \npassword: $password");
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => HomeScreen()),
+          //   );
+          // }
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
         },
         child: Container(
           height: 60,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/DistributorInfo.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 
@@ -7,17 +10,27 @@ import 'NewOrder.dart';
 import '../ProductsScreen/ProductsScreen.dart';
 
 List colors = [Color(0xff7DDF5B), Color(0xffE86068), Color(0xff61ABEF)];
+
 class DistributorList extends StatelessWidget {
-  final item;
+  final Distributor distributor;
   final bool isOrder;
   final int index;
 
-  DistributorList(this.item, this.isOrder, this.index);
+  DistributorList(this.distributor, this.isOrder, this.index);
+
+  getInitials() {
+    if (distributor.distributorName.split(" ").length >= 2) {
+      return distributor.distributorName.split(" ")[0].substring(0, 1).toUpperCase() +
+          distributor.distributorName.split(" ")[1].substring(0, 1).toUpperCase();
+    } else {
+      return distributor.distributorName.split(" ")[0].substring(0, 1).toUpperCase();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {
+      onPressed: () async {
         if (isOrder) {
           print("4 into 5");
           NavBar.onItemTapped(5);
@@ -25,7 +38,7 @@ class DistributorList extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) {
-                return ProductsScreen(item, index);
+                return ProductsScreen(distributor, index);
               },
             ),
           );
@@ -36,7 +49,7 @@ class DistributorList extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) {
-                return DistributorInfo(item);
+                return DistributorInfo(distributor);
               },
             ),
           );
@@ -73,8 +86,7 @@ class DistributorList extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                item.split(" ")[0].substring(0, 1) +
-                    item.split(" ")[1].substring(0, 1),
+                getInitials(),
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -86,7 +98,7 @@ class DistributorList extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                "$item",
+                "${distributor.distributorName}",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 16,

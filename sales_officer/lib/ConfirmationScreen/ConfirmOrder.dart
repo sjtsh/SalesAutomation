@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationScreen.dart';
+import 'package:sales_officer/Database.dart';
 
 class ConfirmOrder extends StatefulWidget {
-  final String currentDistributor;
+  final Distributor currentDistributor;
+  final List<TextEditingController> _textEditingControllers;
 
-  ConfirmOrder(this.currentDistributor,);
+  ConfirmOrder(this.currentDistributor, this._textEditingControllers);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -15,17 +21,32 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        List receiptData = [];
+        widget._textEditingControllers.forEach(
+          (element) {
+            if (element.text != "") {
+              receiptData.add([
+                allSKULocal[widget._textEditingControllers.indexOf(element)],
+                int.parse(element.text),
+              ]);
+            }
+          },
+        );
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (_) {
-              return ConfirmationScreen(widget.currentDistributor);
+              return ConfirmationScreen(
+                widget.currentDistributor,
+                widget._textEditingControllers,
+                receiptData,
+              );
             },
           ),
         );
       },
       child: Container(
-      height: 40,
+        height: 40,
         margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.green,

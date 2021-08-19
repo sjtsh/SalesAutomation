@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
 class SingularProductHeader extends StatelessWidget {
-  final List item;
+  final SubGroup subGroup;
   final Function unExpand;
 
-  SingularProductHeader(this.item, this.unExpand);
+  SingularProductHeader(this.subGroup, this.unExpand);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class SingularProductHeader extends StatelessWidget {
         ),
       ),
       child: Container(
-        height: 52,
+        height: 60,
         margin: EdgeInsets.all(12),
         child: Row(
           children: [
@@ -27,14 +28,14 @@ class SingularProductHeader extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (_) {
-                    return ProductDialogBox(item);
+                    return ProductDialogBox(subGroup);
                   },
                 );
               },
               child: Row(
                 children: [
                   Container(
-                    height: 52,
+                    height: 60,
                     width: 52,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -65,16 +66,43 @@ class SingularProductHeader extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            item[0],
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 12,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                subGroup.productGroupName,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0, vertical: 1),
+                                  child: Text(
+                                    subGroup.productLineName.substring(0, 1) +
+                                        subGroup.productLineName.substring(
+                                            subGroup.productLineName.length - 1,
+                                            subGroup.productLineName.length),
+                                    style: TextStyle(
+                                      fontSize: 8,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Text(
-                            item[1],
+                            subGroup.subGroupName,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 16,
@@ -84,7 +112,7 @@ class SingularProductHeader extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            "Stock: ${item[2]} Pcs",
+                            "Stock: 1000 Pcs",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 12,

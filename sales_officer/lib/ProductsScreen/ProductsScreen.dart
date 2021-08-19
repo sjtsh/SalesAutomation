@@ -1,19 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Services/SKUService.dart';
+import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmOrder.dart';
 import 'package:sales_officer/ProductsScreen/ProductList.dart';
+import 'package:sales_officer/Skeletons/ProductListSkeleton.dart';
 
+import '../Database.dart';
+import '../Database.dart';
 import '../Database.dart';
 import '../DistributorList/NewOrder.dart';
 import 'SearchBar.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final String currentDistributor;
+  final Distributor currentDistributor;
   final int index;
+
+  final SubGroupService subGroupService = SubGroupService();
+
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
@@ -25,26 +35,27 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
   String dropdownValue = "All Products";
-  List productList = allProducts;
+  List<SubGroup> productList = [];
   bool scrollingDown = false;
+  List<TextEditingController> _textEditingControllers = [];
 
   void _setNewProducts(String newValue) {
     setState(() {
       dropdownValue = newValue;
-      if (newValue == 'All Products') {
-        productList = allProducts;
-      } else if (newValue == 'New Products') {
-        productList = newProducts;
-      } else if (newValue == 'Promoted Products') {
-        productList = promotedProducts;
-      } else if (newValue == 'Trending Products') {
-        productList = trendingProducts;
-      }
+      // if (newValue == 'All Products') {
+      //   productList = allSubGroupsLocal;
+      // } else if (newValue == 'New Products') {
+      //   productList = allSubGroupsLocal.sublist(0, 2);
+      // } else if (newValue == 'Promoted Products') {
+      //   productList = allSubGroupsLocal.sublist(2, 4);
+      // } else if (newValue == 'Trending Products') {
+      //   productList = allSubGroupsLocal.sublist(4, 6);
+      // }
       scrollingDown = false;
     });
   }
 
-  void _setProducts(List searchedProducts) {
+  void _setProducts(List<SubGroup> searchedProducts) {
     setState(() {
       productList = searchedProducts;
     });
@@ -52,6 +63,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   void initState() {
+    allSKULocal = [];
+    super.initState();
+    SKUService skuService = SKUService();
+    skuService.fetchSKUs().then(
+      (value) {
+        setState(() {
+          allSKULocal = value;
+        });
+        _textEditingControllers = List.generate(
+            value.length,
+            (index) => TextEditingController());
+      },
+    );
     widget._scrollController.addListener(() {
       if (widget._scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -70,8 +94,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
         }
       }
     });
-    // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -109,7 +131,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   ),
                 ],
               ),
-              child: BreadCrum2("Distributor", widget.currentDistributor)),
+              child: BreadCrum2(
+                  "Distributor", widget.currentDistributor.distributorName)),
           Expanded(
             child: Form(
               key: widget._formKey,
@@ -127,16 +150,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: Column(
                   children: [
                     AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 200),
                       height: scrollingDown ? 0 : 80,
-                      child: scrollingDown
-                          ? Container()
-                          : SearchBar(
-                          _setProducts, _setNewProducts, dropdownValue),),
+                      child: SearchBar(
+                          _setProducts, _setNewProducts, dropdownValue),
+                    ),
                     Expanded(
-                      child: ProductList(
-                        productList,
-                        widget._scrollController,
+                      child: FutureBuilder(
+                        future: widget.subGroupService.fetchSubGroups(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.hasData) {
+                            productList = snapshot.data;
+                            allSubGroupsLocal = snapshot.data;
+                            return ProductList(
+                              productList,
+                              widget._scrollController,
+                              _textEditingControllers,
+                            );
+                          }
+                          return ListView(
+                            children: List.generate(10, (index) => "")
+                                .map((item) => ProductListSkeleton())
+                                .toList(),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -156,6 +194,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             child: ConfirmOrder(
               widget.currentDistributor,
+              _textEditingControllers,
             ),
           ),
         ],

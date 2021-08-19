@@ -1,14 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogContent.dart';
 
 import 'DialogContent.dart';
 
 class ProductDialogBox extends StatefulWidget {
-  final List index;
+  final SubGroup subGroup;
 
-  ProductDialogBox(this.index);
+  ProductDialogBox(this.subGroup);
 
   @override
   _ProductDialogBoxState createState() => _ProductDialogBoxState();
@@ -58,7 +59,7 @@ class _ProductDialogBoxState extends State<ProductDialogBox>
                 width: 300,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: ProductDialogContent(widget.index),
+                  child: ProductDialogContent(widget.subGroup),
                 ),
               ),
             ),

@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onWillPop: _onBackPressed,
         child: Scaffold(
           drawer: DrawerScreen(),
-          bottomNavigationBar: i<5 ? NavBar(_setIndex): null,
+          bottomNavigationBar: i<5 ? NavBar(_setIndex): Container(),
           backgroundColor: Color(0xffF5F5F5),
           body: Column(
             children: [

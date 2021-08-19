@@ -1,26 +1,27 @@
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
+
 import 'Database.dart';
 
 searchForDistributor(String distributor, Function setDistributors) {
-  List distributors = [];
-  for(int i=0; i<allDistributors.length;i++){
+  List<Distributor> distributors = [];
+  for(int i=0; i<allDistributorsLocal.length;i++){
     int numOfCharacters = distributor.length;
-    if(distributor.toLowerCase() == allDistributors[i].substring(0, numOfCharacters).toLowerCase()){
-      distributors.add(allDistributors[i]);
+    if(distributor.toLowerCase() == allDistributorsLocal[i].distributorName.substring(0, numOfCharacters).toLowerCase()){
+      distributors.add(allDistributorsLocal[i]);
     }
   }
-  print(distributors);
   setDistributors(distributors);
 }
 
 searchForProducts(String product, Function setProducts){
-  List products = [];
-  for(int i=0; i<allProducts.length;i++){
+  List<SubGroup> products = [];
+  for(int i=0; i<allSubGroupsLocal.length;i++){
     int numOfCharacters = product.length;
-    if(product.toLowerCase() == allProducts[i][1].substring(0, numOfCharacters).toLowerCase()){
-      print("found " + allProducts[i][1]);
-      products.add(allProducts[i]);
+    if(product.toLowerCase() == allSubGroupsLocal[i].subGroupName.substring(0, numOfCharacters).toLowerCase()){
+      products.add(allSubGroupsLocal[i]);
     }
   }
-  print(products);
   setProducts(products);
 }
