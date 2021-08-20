@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/Notification/NotificationScreen.dart';
 
 List heading = [
   "Distributor",
@@ -6,6 +7,7 @@ List heading = [
   "New Order",
   "Orders",
   "Dashboard",
+  "Notifications",
 ];
 
 class Header extends StatelessWidget {
@@ -51,7 +53,9 @@ class Header extends StatelessWidget {
             child: Container(),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Icon(Icons.notifications_active_outlined),

@@ -4,8 +4,19 @@ import 'package:sales_officer/ActivationCode/ActivateButtton.dart';
 
 import 'EnterActivation.dart';
 
-class ActivationCode extends StatelessWidget {
-  const ActivationCode({Key? key}) : super(key: key);
+class ActivationCode extends StatefulWidget {
+  @override
+  _ActivationCodeState createState() => _ActivationCodeState();
+}
+
+class _ActivationCodeState extends State<ActivationCode> {
+  bool _isTyped = false;
+
+  void setTyped(bool condition) {
+    setState(() {
+      _isTyped = condition;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +31,11 @@ class ActivationCode extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          EnterActivation(),
+          EnterActivation(setTyped),
           SizedBox(
             height: 50,
           ),
-          ActivateButton(),
+          ActivateButton(_isTyped),
           Expanded(child: Container()),
           Expanded(child: Container()),
         ],

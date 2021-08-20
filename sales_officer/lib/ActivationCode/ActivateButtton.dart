@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ActivateButton extends StatelessWidget {
-  const ActivateButton({Key? key}) : super(key: key);
+final bool _isTyped;
+
+ActivateButton(this._isTyped);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,7 @@ class ActivateButton extends StatelessWidget {
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.red,
+          color: _isTyped ? Colors.red : Colors.black.withOpacity(0.1),
         ),
         child: Center(
           child: Text(
