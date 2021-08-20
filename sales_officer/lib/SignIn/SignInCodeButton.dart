@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/ActivationCode/ActivationCode.dart';
 
 class SignInCodeButton extends StatelessWidget {
   @override
@@ -10,6 +11,10 @@ class SignInCodeButton extends StatelessWidget {
           highlightColor: Colors.transparent,
           onPressed: () {
           print("logged in with activation code");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ActivationCode()),
+            );
           },
           child: Container(
             height: 60,

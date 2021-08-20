@@ -17,14 +17,10 @@ Future<bool> createOrder(int distributorID,
   DistributorOrderService distributorOrderService = DistributorOrderService();
   bool condition1 = await distributorOrderService.insertDistributorOrder(
       _distributorID, _SOID, _joint, _orderStatus, _remarks, _dateAndTime);
-  // if(!condition1){
-  //   conditionOnly = false;
-  // }
-  //____________________________________________________________
-  //insert the distributor Order  here
-  //DistributorOrder(distributorOrderID, distributorID, SOID, joint, orderStatus, remarks, amount, dateAndTime)
-  //____________________________________________________________
-
+  print("inserting distributor order was " + condition1.toString());
+  if(!condition1){
+    conditionOnly = false;
+  }
   List<DistributorOrder> distributorOrders =
   await distributorOrderService.fetchDistributorOrders();
   int distributorOrderID = distributorOrders
@@ -44,22 +40,22 @@ Future<bool> createOrder(int distributorID,
             .insertDistributorOrderItem(
             distributorOrderID, SKUID, primaryItemCount, alternativeItemCount,
             secondaryAlternativeItemCount);
-        // if (!condition2) {
-        //   conditionOnly = false;
-        // }
-        //____________________________________________________________
-        //insert the distributor order item here
-        //DistributorOrderItem(distributorOrderItemID, distributorOrderID, SKUID, primaryItemCount, secondaryItemCount, secondaryAlternativeItemCount)
-        //____________________________________________________________
+        print("inserting distributor order item was" + condition2.toString());
+        if (!condition2) {
+          conditionOnly = false;
+        }
       }
     },
   );
-  // if (conditionOnly) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text("Order was successfully punched")));
-  //   return true;
-  // }
-  Navigator.pop(context);
-  Navigator.pop(context);
-  return true;
+  if (conditionOnly) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Order was successfully punched")));
+    return true;
+  }else {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Order was not successful")));
+    return false;
+  }
 }

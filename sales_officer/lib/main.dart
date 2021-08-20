@@ -23,6 +23,9 @@ class _FusersState extends State<Fusers> {
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
+      routes: {
+        // '': (context) => const FirstScreen(),
+      },
       title: 'Fusers',
       debugShowCheckedModeBanner: false,
       home: Scaffold(

@@ -40,7 +40,7 @@ class DistributorOrderItemService {
             secondaryAlternativeItemCount.toString(),
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return true;
     }
     return false;

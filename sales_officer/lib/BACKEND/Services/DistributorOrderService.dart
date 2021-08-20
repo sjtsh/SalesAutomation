@@ -35,7 +35,7 @@ class DistributorOrderService {
         'dateAndTime': dateAndTime.toString().substring(0,19),
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return true;
     }
     return false;
