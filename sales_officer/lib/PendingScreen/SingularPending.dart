@@ -57,13 +57,14 @@ class SingularPending extends StatelessWidget {
                           color: Color(0xffEA47B2),
                         ),
                         child: Center(
-                            child: Text(
-                          getInitials(distributor.distributorName),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 8),
-                        )),
+                          child: Text(
+                            getInitials(distributor.distributorName),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 8),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: 10,
@@ -78,14 +79,14 @@ class SingularPending extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           color: e.orderStatus
-                              ? Color(0xffFFCE31)
-                              : Color(0xff60D74D),
+                              ? Color(0xff60D74D)
+                              : Color(0xffFFCE31),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            e.orderStatus ? "PENDING" : "APPROVED",
+                            e.orderStatus ? "APPROVED" : "PENDING",
                             style: TextStyle(
                               fontSize: 10,
                             ),

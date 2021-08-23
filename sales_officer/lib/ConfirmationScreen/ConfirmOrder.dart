@@ -9,8 +9,9 @@ import 'package:sales_officer/Database.dart';
 class ConfirmOrder extends StatefulWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
+  final int index;
 
-  ConfirmOrder(this.currentDistributor, this._textEditingControllers);
+  ConfirmOrder(this.currentDistributor, this._textEditingControllers, this.index);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -40,6 +41,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 widget.currentDistributor,
                 widget._textEditingControllers,
                 receiptData,
+                widget.index,
               );
             },
           ),

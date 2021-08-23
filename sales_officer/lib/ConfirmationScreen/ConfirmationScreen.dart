@@ -10,16 +10,17 @@ class ConfirmationScreen extends StatelessWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final List receiptData;
+  final int index;
 
   ConfirmationScreen(
-      this.currentDistributor, this._textEditingControllers, this.receiptData);
+      this.currentDistributor, this._textEditingControllers, this.receiptData, this.index);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Header(2, false),
+          Header(index, false),
           Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,

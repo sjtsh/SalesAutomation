@@ -26,8 +26,10 @@ class EnterActivation extends StatelessWidget {
                 setTyped(false);
               }
             },
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
               border: InputBorder.none,
+              isCollapsed: true,
               hintText: "Enter activation",
               hintStyle: TextStyle(
                 color: Colors.black.withOpacity(0.5),

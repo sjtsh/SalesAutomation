@@ -8,13 +8,12 @@ import '../Database.dart';
 import 'DistributorList.dart';
 
 class NewOrder extends StatefulWidget {
-  final Function _setIndex;
   final bool isOrder;
   final int index;
 
   final DistributorService distributorService = DistributorService();
 
-  NewOrder(this._setIndex, this.isOrder, this.index);
+  NewOrder(this.isOrder, this.index);
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -78,6 +77,7 @@ class _NewOrderState extends State<NewOrder> {
                           fontSize: 16,
                         ),
                         decoration: InputDecoration(
+                          isCollapsed: true,
                           border: InputBorder.none,
                           hintText: "Search Distributors",
                           hintStyle: TextStyle(

@@ -57,7 +57,7 @@ class _PendingScreenState extends State<PendingScreen> {
                         if (widget._scrollController.position.pixels >
                             160 *
                                     distributorOrders!
-                                        .where((element) => element.orderStatus)
+                                        .where((element) => !element.orderStatus)
                                         .length +
                                 12) {
                           setState(
@@ -82,7 +82,7 @@ class _PendingScreenState extends State<PendingScreen> {
                         SizedBox(height: 7),
                         Column(
                           children: distributorOrders!
-                              .where((element) => element.orderStatus)
+                              .where((element) => !element.orderStatus)
                               .map(
                                 (e) => SingularPending(e),
                               )
@@ -98,7 +98,7 @@ class _PendingScreenState extends State<PendingScreen> {
                         ),
                         Column(
                           children: distributorOrders
-                              .where((element) => !element.orderStatus)
+                              .where((element) => element.orderStatus)
                               .map(
                                 (e) => SingularPending(e),
                               )

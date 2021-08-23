@@ -195,6 +195,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             child: ConfirmOrder(
               widget.currentDistributor,
               _textEditingControllers,
+              widget.index
             ),
           ),
         ],

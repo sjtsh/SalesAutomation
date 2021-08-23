@@ -21,8 +21,8 @@ class DistributorOrder {
       json['0'],
       json['1'],
       json['2'],
-      json['3'] == 0 ? true : false,
-      json['4'] == 0 ? true : false,
+      json['3'] == 0 ? false : true,
+      json['4'] == 0 ? false : true,
       json['5'],
       json['6'],
     );

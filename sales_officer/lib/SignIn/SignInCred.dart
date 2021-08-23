@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
 
 class SignInCred extends StatefulWidget {
   final _formKey;
@@ -12,7 +16,6 @@ class SignInCred extends StatefulWidget {
 }
 
 class _SignInCredState extends State<SignInCred> {
-
   bool visible = false;
 
   @override
@@ -87,7 +90,7 @@ class _SignInCredState extends State<SignInCred> {
                 child: Stack(
                   children: [
                     TextFormField(
-                      obscureText: visible ? false: true,
+                      obscureText: visible ? false : true,
                       controller: widget._password,
                       textAlignVertical: TextAlignVertical.center,
                       enableSuggestions: true,
@@ -121,9 +124,9 @@ class _SignInCredState extends State<SignInCred> {
                       right: -30,
                       top: -3,
                       child: MaterialButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      height: 60,
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          height: 60,
                           onPressed: () {
                             setState(
                               () {
@@ -131,8 +134,9 @@ class _SignInCredState extends State<SignInCred> {
                               },
                             );
                           },
-                          child: Icon(
-                              visible ? Icons.visibility : Icons.visibility_off)),
+                          child: Icon(visible
+                              ? Icons.visibility
+                              : Icons.visibility_off)),
                     ),
                   ],
                 ),

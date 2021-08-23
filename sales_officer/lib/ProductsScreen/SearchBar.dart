@@ -55,6 +55,7 @@ class _SearchBarState extends State<SearchBar> {
                         fontSize: 16,
                       ),
                       decoration: InputDecoration(
+                        isCollapsed: true,
                         border: InputBorder.none,
                         hintText: "Search Distributors",
                         hintStyle: TextStyle(

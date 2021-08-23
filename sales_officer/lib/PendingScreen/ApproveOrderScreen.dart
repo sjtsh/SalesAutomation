@@ -261,7 +261,7 @@ class ApproveOrderScreen extends StatelessWidget {
                               Text("Total Amount"),
                               Expanded(child: Container()),
                               Text(
-                                "Rs 1000}",
+                                "Rs 1000",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -276,46 +276,6 @@ class ApproveOrderScreen extends StatelessWidget {
               ),
             ),
           ),
-          e.orderStatus? Column(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xff60D74D),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text(
-                    "Approve Order",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xffE85050),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: Text("Reject Order",
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 6,
-              ),
-            ],
-          ):Container(),
-
         ],
       ),
     );

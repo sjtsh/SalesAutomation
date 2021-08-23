@@ -28,11 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   Widget _changeActivity(int i) {
     if (i == 0) {
-      return NewOrder(_setIndex, false, i);
+      return NewOrder(false, i);
     } else if (i == 1) {
-      return NewOrder(_setIndex, true, i);
+      return NewOrder(true, i);
     } else if (i == 2) {
-      return NewOrder(_setIndex, true, i);
+      return NewOrder(true, i);
     } else if (i == 3) {
       return PendingScreen();
     } else if (i == 4) {
