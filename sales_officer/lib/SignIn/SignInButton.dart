@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/HomeScreen.dart';
+import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 
 class SignInButton extends StatelessWidget {
 
@@ -30,7 +31,7 @@ class SignInButton extends StatelessWidget {
           // }
           Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (context) => LogInScreen()),
                 );
         },
         child: Container(
