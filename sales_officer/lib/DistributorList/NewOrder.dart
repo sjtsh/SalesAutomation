@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/Skeletons/DistributorListSkeleton.dart';
-import 'package:sales_officer/Search.dart';
+import 'package:sales_officer/BACKEND/Methods/Search.dart';
 
 import '../Database.dart';
 import 'DistributorList.dart';

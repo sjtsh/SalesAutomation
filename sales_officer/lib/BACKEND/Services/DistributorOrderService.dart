@@ -18,7 +18,7 @@ class DistributorOrderService {
   }
 
   // {"distributorID": "6", "SOID": "2","joint" : "true", "orderStatus" : "true", "remarks" : "remarks", "dateAndTime" : "dateAndTime"}
-  Future<bool> insertDistributorOrder(int distributorID, int SOID, bool joint,
+  Future<int> insertDistributorOrder(int distributorID, int SOID, bool joint,
       bool orderStatus, String remarks, String dateAndTime) async {
     final response = await http.post(
       Uri.parse(
@@ -35,9 +35,12 @@ class DistributorOrderService {
         'dateAndTime': dateAndTime.toString().substring(0,19),
       }),
     );
+    List<dynamic> aList =  jsonDecode(response.body);
+    int distributorID2 = aList[0]["0"];
+    print("response gave the distributorID as " + distributorID2.toString());
     if (response.statusCode == 200) {
-      return true;
+      return distributorID2;
     }
-    return false;
+    return -1;
   }
 }

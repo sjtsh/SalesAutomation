@@ -3,7 +3,7 @@ import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/Database.dart';
-import 'package:sales_officer/PendingScreen/ApproveOrderScreen.dart';
+import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
 
 class SingularPending extends StatelessWidget {
   final DistributorOrder e;

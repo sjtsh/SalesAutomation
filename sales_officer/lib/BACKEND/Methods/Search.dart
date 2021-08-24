@@ -2,7 +2,7 @@ import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 
-import 'Database.dart';
+import '../../Database.dart';
 
 searchForDistributor(String distributor, Function setDistributors) {
   List<Distributor> distributors = [];

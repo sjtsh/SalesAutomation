@@ -2,19 +2,60 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/Header.dart';
+import 'package:sales_officer/PendingScreen/OrderItemsExpanded.dart';
+import 'package:sales_officer/PendingScreen/OrderItemsHeader.dart';
 
-class ApproveOrderScreen extends StatelessWidget {
+class ApproveOrderScreen extends StatefulWidget {
   final DistributorOrder e;
 
   ApproveOrderScreen(this.e);
 
   @override
+  _ApproveOrderScreenState createState() => _ApproveOrderScreenState();
+}
+
+class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
+  List<DistributorOrderItem> distributorOrderItems = [];
+  double totalAmount = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SKUService skuService = SKUService();
+    skuService.fetchSKUs().then((value) {
+      allSKULocal = value;
+      DistributorOrderItemService distributorOrderItemService =
+          DistributorOrderItemService();
+      distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+        List<DistributorOrderItem> aList = [];
+        value.forEach((element) {
+          if (element.distributorOrderID == widget.e.distributorOrderID) {
+            aList.add(element);
+            SKU sku = allSKULocal.firstWhere((i) => i.SKUID==element.SKUID);
+            totalAmount += element.primaryItemCount*sku.primaryCF*sku.MRP;
+            totalAmount += element.secondaryItemCount*sku.alternativeCF*sku.MRP;
+            totalAmount += element.secondaryAlternativeItemCount*sku.secondaryAlternativeCF*sku.MRP;
+          }
+        });
+        setState(() {
+          distributorOrderItems = aList;
+        });
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Distributor distributor = allDistributorsLocal
-        .where((element) => element.distributorID == e.distributorID)
+        .where((element) => element.distributorID == widget.e.distributorID)
         .first;
     return Scaffold(
       body: Column(
@@ -103,15 +144,17 @@ class ApproveOrderScreen extends StatelessWidget {
                               Expanded(child: Container()),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: e.orderStatus
-                                      ? Color(0xffFFCE31)
-                                      : Color(0xff60D74D),
+                                  color: widget.e.orderStatus
+                                      ? Color(0xff60D74D)
+                                      : Color(0xffFFCE31),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    e.orderStatus ? "PENDING" : "APPROVED",
+                                    widget.e.orderStatus
+                                        ? "APPROVED"
+                                        : "PENDING",
                                     style: TextStyle(
                                       fontSize: 10,
                                     ),
@@ -127,14 +170,17 @@ class ApproveOrderScreen extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            ["Order ID :", "#OR${e.distributorOrderID}"],
-                            ["Date :", "${e.dateAndTime}"],
+                            ["Order ID :", "#OR${widget.e.distributorOrderID}"],
+                            ["Date :", "${widget.e.dateAndTime}"],
                             [
                               "Status :",
-                              e.orderStatus ? "Pending" : "Approved"
+                              widget.e.orderStatus ? "Pending" : "Approved"
                             ],
-                            ["Representation :", e.joint ? "Joint" : "Single"],
-                            ["Remarks :", "${e.remarks}"],
+                            [
+                              "Representation :",
+                              widget.e.joint ? "Joint" : "Single"
+                            ],
+                            ["Remarks :", "${widget.e.remarks}"],
                           ]
                               .map(
                                 (e) => Column(
@@ -162,96 +208,8 @@ class ApproveOrderScreen extends StatelessWidget {
                               .toList(),
                         ),
                         ExpandablePanel(
-                          collapsed: Column(
-                            children: [
-                              ExpandableButton(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 12),
-                                  child: Row(
-                                    children: [
-                                      Text("Order List"),
-                                      Expanded(
-                                        child: Container(),
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down_rounded),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                color: Colors.black.withOpacity(0.1),
-                                thickness: 1,
-                              ),
-                            ],
-                          ),
-                          expanded: Column(
-                            children: [
-                              ExpandableButton(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 12),
-                                  child: Row(
-                                    children: [
-                                      Text("Order List"),
-                                      Expanded(
-                                        child: Container(),
-                                      ),
-                                      Icon(Icons.keyboard_arrow_down_rounded),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                children: allSubGroupsLocal
-                                    .sublist(0, 3)
-                                    .map(
-                                      (e) => Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffF5F5F5),
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              color:
-                                                  Colors.black.withOpacity(0.1),
-                                            ),
-                                          ),
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 12),
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  e.subGroupName,
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                ),
-                                                Text(
-                                                  productVariations[1],
-                                                  style:
-                                                      TextStyle(fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            Expanded(child: Container()),
-                                            Text(
-                                               "10 Pcs",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            ],
-                          ),
+                          collapsed: OrderItemsHeader(),
+                          expanded: OrderItemsExpanded(distributorOrderItems),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -261,7 +219,7 @@ class ApproveOrderScreen extends StatelessWidget {
                               Text("Total Amount"),
                               Expanded(child: Container()),
                               Text(
-                                "Rs 1000",
+                                "Rs $totalAmount",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

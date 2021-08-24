@@ -133,6 +133,25 @@ class _SignInCredState extends State<SignInCred> {
                                 visible = !visible;
                               },
                             );
+                          //   try {
+                          //     final res = await http.delete(
+                          //       Uri.parse(
+                          //           "https://asia-south1-hilifedb.cloudfunctions.net/deleteDistributorOrderItem"),
+                          //       headers: <String, String>{
+                          //         'Content-Type': 'application/json; charset=UTF-8',
+                          //       },
+                          //       body: jsonEncode(
+                          //         <String, String>{
+                          //           'distributorOrderItemID': "33",
+                          //         },
+                          //       ),
+                          //     );
+                          //     print(res.body.toString() +
+                          //         "________________________________________________________");
+                          //   }
+                          //   catch(e) {
+                          //     print("the http request wasn't successful");
+                          //   }
                           },
                           child: Icon(visible
                               ? Icons.visibility

@@ -71,9 +71,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
         setState(() {
           allSKULocal = value;
         });
-        _textEditingControllers = List.generate(
-            value.length,
-            (index) => TextEditingController());
+        _textEditingControllers =
+            List.generate(value.length, (index) => TextEditingController());
       },
     );
     widget._scrollController.addListener(() {
@@ -192,11 +191,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     offset: Offset(0, -2))
               ],
             ),
-            child: ConfirmOrder(
-              widget.currentDistributor,
-              _textEditingControllers,
-              widget.index
-            ),
+            child: ConfirmOrder(widget.currentDistributor,
+                _textEditingControllers, widget.index),
           ),
         ],
       ),
