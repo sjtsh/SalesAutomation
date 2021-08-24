@@ -46,7 +46,12 @@ class _PendingScreenState extends State<PendingScreen> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<DistributorOrder>> snapshot) {
               if (snapshot.hasData) {
-                List<DistributorOrder>? distributorOrders = snapshot.data;
+                List<DistributorOrder> distributorOrders = [];
+                snapshot.data!.forEach((element) {
+                  if (element.SOID == 1) {
+                    distributorOrders.add(element);
+                  }
+                });
                 return Container(
                   decoration: BoxDecoration(
                     color: Color(0xffF5F5F5),
@@ -56,8 +61,9 @@ class _PendingScreenState extends State<PendingScreen> {
                       if (t is ScrollEndNotification) {
                         if (widget._scrollController.position.pixels >
                             160 *
-                                    distributorOrders!
-                                        .where((element) => !element.orderStatus)
+                                    distributorOrders
+                                        .where(
+                                            (element) => !element.orderStatus)
                                         .length +
                                 12) {
                           setState(
@@ -81,7 +87,7 @@ class _PendingScreenState extends State<PendingScreen> {
                       children: [
                         SizedBox(height: 7),
                         Column(
-                          children: distributorOrders!
+                          children: distributorOrders
                               .where((element) => !element.orderStatus)
                               .map(
                                 (e) => SingularPending(e),
@@ -118,12 +124,12 @@ class _PendingScreenState extends State<PendingScreen> {
                   children: [
                     SizedBox(height: 7),
                     Column(
-                      children:
-                          List.generate(2, (index) => Shimmer(
+                      children: List.generate(
+                          2,
+                          (index) => Shimmer(
                               gradient: LinearGradient(
                                   colors: [Colors.white, Colors.grey]),
-                              child: PendingOrderSkeleton()))
-                              .toList(),
+                              child: PendingOrderSkeleton())).toList(),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),

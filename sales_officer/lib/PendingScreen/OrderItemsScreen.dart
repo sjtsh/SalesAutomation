@@ -4,7 +4,9 @@ import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Database.dart';
@@ -32,17 +34,25 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
       allSKULocal = value;
+    });
+    SKUDistributorWiseService skuDistributorWiseService =
+    SKUDistributorWiseService();
+    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
+      allSKUDistributorWiseLocal = value;
       DistributorOrderItemService distributorOrderItemService =
-          DistributorOrderItemService();
+      DistributorOrderItemService();
       distributorOrderItemService.fetchDistributorOrderItems().then((value) {
         List<DistributorOrderItem> aList = [];
         value.forEach((element) {
           if (element.distributorOrderID == widget.e.distributorOrderID) {
             aList.add(element);
-            SKU sku = allSKULocal.firstWhere((i) => i.SKUID==element.SKUID);
-            totalAmount += element.primaryItemCount*sku.primaryCF*sku.MRP;
-            totalAmount += element.secondaryItemCount*sku.alternativeCF*sku.MRP;
-            totalAmount += element.secondaryAlternativeItemCount*sku.secondaryAlternativeCF*sku.MRP;
+            SKUDistributorWise skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((i) => i.SKUID == element.SKUID && i.distributorID==widget.e.distributorID);
+            totalAmount += element.primaryItemCount * skuDistributorWise.primaryCF * skuDistributorWise.MRP;
+            totalAmount +=
+                element.secondaryItemCount * skuDistributorWise.alternativeCF * skuDistributorWise.MRP;
+            totalAmount += element.secondaryAlternativeItemCount *
+                skuDistributorWise.secondaryAlternativeCF *
+                skuDistributorWise.MRP;
           }
         });
         setState(() {

@@ -4,22 +4,29 @@ import 'package:flutter/material.dart';
 import '../../Database.dart';
 
 class BezierChartPersonal extends StatefulWidget {
-  // List sales = [30233, 20003, 19000, 10003, 9003];
-
   @override
   _BezierChartPersonalState createState() => _BezierChartPersonalState();
 }
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
-
   List salesTaken = [0, 0, 0, 0, 0];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      salesTaken = sales;
-    });
+      salesTaken
+          .asMap()
+          .entries
+          .forEach((e) {
+        for (int i = 0; i < sales[e.key]; i++) {
+            Future.delayed(Duration(seconds: 2), () {
+              setState(() {
+                salesTaken[e.key]++;
+              });
+          });
+        }
+      });
   }
 
   @override
@@ -30,8 +37,10 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
         lineBarsData: [
           LineChartBarData(
             spots: salesTaken
-                .map((content) =>
-                    FlSpot(sales.indexOf(content) + 1.0, content + 0.0))
+                .asMap()
+                .entries
+                .map(
+                    (content) => FlSpot(content.key + 1.0, content.value + 0.0))
                 .toList(),
             isCurved: false,
             colors: [
@@ -71,9 +80,8 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           show: false,
         ),
       ),
-      swapAnimationDuration: Duration(milliseconds: 2000), // Optional
+      swapAnimationDuration: Duration(milliseconds: 500), // Optional
       swapAnimationCurve: Curves.easeIn,
     );
   }
-
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
@@ -38,6 +39,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   List<SubGroup> productList = [];
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
+  bool isSearching = false;
 
   void _setNewProducts(String newValue) {
     setState(() {
@@ -55,9 +57,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
     });
   }
 
-  void _setProducts(List<SubGroup> searchedProducts) {
+  void _setProducts(List<SubGroup> searchedSubGroup) {
     setState(() {
-      productList = searchedProducts;
+      allSubGroupsLocal = searchedSubGroup;
+      if (allSubGroupsLocal.length > 0) {
+        isSearching = true;
+      } else {
+        isSearching = false;
+      }
     });
   }
 
@@ -75,6 +82,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
             List.generate(value.length, (index) => TextEditingController());
       },
     );
+    SKUDistributorWiseService skuDistributorWiseService =
+        SKUDistributorWiseService();
+    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
+      setState(() {
+        allSKUDistributorWiseLocal = value;
+      });
+    });
+
     widget._scrollController.addListener(() {
       if (widget._scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -155,27 +170,31 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           _setProducts, _setNewProducts, dropdownValue),
                     ),
                     Expanded(
-                      child: FutureBuilder(
-                        future: widget.subGroupService.fetchSubGroups(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            productList = snapshot.data;
-                            allSubGroupsLocal = snapshot.data;
-                            return ProductList(
-                              productList,
-                              widget._scrollController,
-                              _textEditingControllers,
-                            );
-                          }
-                          return ListView(
-                            children: List.generate(10, (index) => "")
-                                .map((item) => ProductListSkeleton())
-                                .toList(),
-                          );
-                        },
-                      ),
-                    ),
+                        child: !isSearching
+                            ? FutureBuilder(
+                                future: widget.subGroupService.fetchSubGroups(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<dynamic> snapshot) {
+                                  if (snapshot.hasData) {
+                                    productList = snapshot.data;
+                                    allSubGroupsLocal = snapshot.data;
+                                    return ProductList(
+                                      productList,
+                                      widget._scrollController,
+                                      _textEditingControllers,
+                                    );
+                                  }
+                                  return ListView(
+                                    children: List.generate(10, (index) => "")
+                                        .map((item) => ProductListSkeleton())
+                                        .toList(),
+                                  );
+                                },
+                              )
+                            : ProductList(
+                                allSubGroupsLocal,
+                                widget._scrollController,
+                                _textEditingControllers)),
                   ],
                 ),
               ),

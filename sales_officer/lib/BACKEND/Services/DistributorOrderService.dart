@@ -17,7 +17,6 @@ class DistributorOrderService {
     }
   }
 
-  // {"distributorID": "6", "SOID": "2","joint" : "true", "orderStatus" : "true", "remarks" : "remarks", "dateAndTime" : "dateAndTime"}
   Future<int> insertDistributorOrder(int distributorID, int SOID, bool joint,
       bool orderStatus, String remarks, String dateAndTime) async {
     final response = await http.post(
