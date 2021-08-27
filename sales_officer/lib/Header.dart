@@ -54,11 +54,16 @@ class Header extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+              if(condition){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Icon(Icons.notifications_active_outlined),
+              child: condition? Icon(Icons.notifications_active_outlined):Container(),
             ),
           ),
         ],

@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/LogInScreen/JointWorking.dart';
 import 'package:sales_officer/LogInScreen/SelectBeat.dart';
 
-class LogInScreen extends StatelessWidget {
+class LogInScreen extends StatefulWidget {
+  @override
+  _LogInScreenState createState() => _LogInScreenState();
+}
+
+class _LogInScreenState extends State<LogInScreen> {
+  bool isSelected = false;
+
+  select() {
+    setState(() {
+      isSelected = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,145 +34,66 @@ class LogInScreen extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(child: Container()),
-          Center(
-            child: Container(
-              height: 130,
-              width: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black,
-              ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    height: 130,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "John Doe",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Sales Officer",
+                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "John Doe",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "Sales Officer",
-            style: TextStyle(color: Colors.grey, fontSize: 18),
-          ),
-          Expanded(child: Container()),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    offset: Offset(0, 2),
-                    blurRadius: 3,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => SelectBeat()));
-                    },
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.grey),),
-                          color: Colors.white,),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Start Retailing",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black),
-                          ),
-                          Expanded(child: Container()),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
+          Column(
+            children: [
+              isSelected
+                  ? Text(
+                      "Please select your today's beat",
+                      style: TextStyle(fontSize: 18),
+                    )
+                  : Container(),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  clipBehavior: Clip.hardEdge,
+                  height: isSelected ? 60 * 6: null,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
                       ),
-                    ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide(color: Colors.grey),),
-                        color:  Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Joint Working",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black),
-                          ),
-                          Expanded(child: Container()),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                          color: Colors.white,),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Leave/weak off",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color:Colors.black),
-                          ),
-                          Expanded(child: Container()),
-                          Icon(Icons.arrow_forward,
-                              color: Colors.black),
-                          SizedBox(
-                            width: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                  child: isSelected ? SelectBeat() : JointWorking(select) ,
+                ),
+              )
+            ],
           ),
         ],
       ),
