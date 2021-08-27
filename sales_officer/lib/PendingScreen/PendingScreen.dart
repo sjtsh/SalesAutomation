@@ -10,7 +10,6 @@ import 'SingularPending.dart';
 List headers = ["Pending Orders", "Approved Orders"];
 
 class PendingScreen extends StatefulWidget {
-  final ScrollController _scrollController = ScrollController();
   final DistributorOrderService distributorOrderService =
       DistributorOrderService();
 
@@ -56,63 +55,35 @@ class _PendingScreenState extends State<PendingScreen> {
                   decoration: BoxDecoration(
                     color: Color(0xffF5F5F5),
                   ),
-                  child: NotificationListener(
-                    onNotification: (t) {
-                      if (t is ScrollEndNotification) {
-                        if (widget._scrollController.position.pixels >
-                            160 *
-                                    distributorOrders
-                                        .where(
-                                            (element) => !element.orderStatus)
-                                        .length +
-                                12) {
-                          setState(
-                            () {
-                              index = 1;
-                            },
-                          );
-                        } else {
-                          setState(
-                            () {
-                              index = 0;
-                            },
-                          );
-                        }
-                        print(widget._scrollController.position.pixels);
-                      }
-                      return false;
-                    },
-                    child: ListView(
-                      controller: widget._scrollController,
-                      children: [
-                        SizedBox(height: 7),
-                        Column(
-                          children: distributorOrders
-                              .where((element) => !element.orderStatus)
-                              .map(
-                                (e) => SingularPending(e),
-                              )
-                              .toList(),
+                  child: ListView(
+                    children: [
+                      SizedBox(height: 7),
+                      Column(
+                        children: distributorOrders
+                            .where((element) => !element.orderStatus)
+                            .map(
+                              (e) => SingularPending(e),
+                            )
+                            .toList(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Approved Orders ",
+                          style:
+                              TextStyle(backgroundColor: Color(0xffF5F5F5)),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Approved Orders ",
-                            style:
-                                TextStyle(backgroundColor: Color(0xffF5F5F5)),
-                          ),
-                        ),
-                        Column(
-                          children: distributorOrders
-                              .where((element) => element.orderStatus)
-                              .map(
-                                (e) => SingularPending(e),
-                              )
-                              .toList(),
-                        ),
-                        SizedBox(height: 7),
-                      ],
-                    ),
+                      ),
+                      Column(
+                        children: distributorOrders
+                            .where((element) => element.orderStatus)
+                            .map(
+                              (e) => SingularPending(e),
+                            )
+                            .toList(),
+                      ),
+                      SizedBox(height: 7),
+                    ],
                   ),
                 );
               }
