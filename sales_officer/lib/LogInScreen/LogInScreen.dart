@@ -50,6 +50,7 @@ class LogInScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Container(
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -71,11 +72,8 @@ class LogInScreen extends StatelessWidget {
                     child: Container(
                       height: 60,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          )),
+                        border: Border(bottom: BorderSide(color: Colors.grey),),
+                          color: Colors.white,),
                       child: Row(
                         children: [
                           SizedBox(
@@ -105,6 +103,7 @@ class LogInScreen extends StatelessWidget {
                     child: Container(
                       height: 60,
                       decoration: BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.grey),),
                         color:  Colors.white,
                       ),
                       child: Row(
@@ -136,11 +135,7 @@ class LogInScreen extends StatelessWidget {
                     child: Container(
                       height: 60,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                          )),
+                          color: Colors.white,),
                       child: Row(
                         children: [
                           SizedBox(

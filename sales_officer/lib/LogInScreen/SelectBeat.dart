@@ -104,6 +104,7 @@ class _SelectBeatState extends State<SelectBeat> {
                               child: Container(
                                 height: 60,
                                 decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(color: Colors.grey),),
                                   color: Colors.white,
                                 ),
                                 child: Row(

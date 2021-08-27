@@ -43,23 +43,29 @@ class _ProductDialogBoxState extends State<ProductDialogBox>
     return Center(
       child: Material(
         color: Colors.transparent,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-          child: ScaleTransition(
-            scale: scaleAnimation,
-            child: Container(
-              decoration: ShapeDecoration(
-                color: Color(0xffF5F5F5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: SizedBox(
-                height: 500,
-                width: 300,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: ProductDialogContent(widget.subGroup),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+            child: ScaleTransition(
+              scale: scaleAnimation,
+              child: Center(
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Color(0xffF5F5F5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: SizedBox(
+                    height: 500,
+                    width: 300,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ProductDialogContent(widget.subGroup),
+                    ),
+                  ),
                 ),
               ),
             ),

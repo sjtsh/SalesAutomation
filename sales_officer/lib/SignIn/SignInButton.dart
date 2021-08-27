@@ -13,33 +13,32 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: MaterialButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: () {
+      padding: const EdgeInsets.symmetric(horizontal: 36.0),
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.red,
+        ),
+        child: MaterialButton(
+          onPressed: () {
 
-          // final username = _username.text;
-          // final password = _password.text;
-          //
-          // if(_formKey.currentState!.validate()){
-          //   print("username: $username \npassword: $password");
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => HomeScreen()),
-          //   );
-          // }
-          Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LogInScreen()),
-                );
-        },
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.red,
-          ),
+            // final username = _username.text;
+            // final password = _password.text;
+            //
+            // if(_formKey.currentState!.validate()){
+            //   print("username: $username \npassword: $password");
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => HomeScreen()),
+            //   );
+            // }
+            Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LogInScreen()),
+                  );
+          },
           child: Center(
             child: Text(
               "Log In",

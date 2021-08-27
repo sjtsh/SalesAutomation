@@ -196,23 +196,26 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
               SizedBox(
                 height: 20,
               ),
-              RawMaterialButton(
-                onPressed: () {
-                  createOrder(widget.currentDistributor.distributorID, widget._textEditingControllers, context);
-                },
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  clipBehavior: Clip.hardEdge,
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                        color: Colors.white,
+                  child: MaterialButton(
+                    onPressed: () {
+                      createOrder(widget.currentDistributor.distributorID, widget._textEditingControllers, context);
+                    },
+                    child: Center(
+                      child: Text(
+                        "CONFIRM",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

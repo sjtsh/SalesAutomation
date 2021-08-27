@@ -82,18 +82,21 @@ class ProductDialogContent extends StatelessWidget {
             ],
           ),
         ),
-        RawMaterialButton(
-          onPressed: () {},
-          child: Container(
-            height: 40,
-            width: 150,
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(12),
-            ),
+        Container(
+          clipBehavior: Clip.hardEdge,
+          height: 40,
+          width: 150,
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: RawMaterialButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Center(
               child: Text(
-                "Back",
+                "BACK",
                 style: TextStyle(
                   color: Colors.white,
                 ),

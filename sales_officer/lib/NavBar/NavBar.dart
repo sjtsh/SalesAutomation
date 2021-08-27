@@ -33,7 +33,7 @@ class _NavBarState extends State<NavBar> {
             offset: Offset(0, -2))
       ]),
       child: CustomNavigationBar(
-        strokeColor: Colors.black,
+        strokeColor: Colors.blue.withOpacity(0.5),
         iconSize: 25,
         currentIndex: NavBar.currentIndex,
         selectedColor: Colors.black,
@@ -49,80 +49,80 @@ class _NavBarState extends State<NavBar> {
             icon: SvgPicture.asset(
               "icons/distributor.svg",
               color: NavBar.currentIndex == 0
-                  ? Colors.black
+                  ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Distributor",
               style: TextStyle(
                   color: NavBar.currentIndex == 0
-                      ? Colors.black
+                      ? Colors.blue
                       : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
+                  fontSize: 10),
             ),
           ),
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/updatestock.svg",
               color: NavBar.currentIndex == 1
-                  ? Colors.black
+                  ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Stocks",
               style: TextStyle(
                   color: NavBar.currentIndex == 1
-                      ? Colors.black
+                      ? Colors.blue
                       : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
+                  fontSize: 10),
             ),
           ),
           CustomNavigationBarItem(
             icon: Icon(
               Icons.add,
               color: NavBar.currentIndex == 2
-                  ? Colors.black
+                  ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "New",
               style: TextStyle(
                   color: NavBar.currentIndex == 2
-                      ? Colors.black
+                      ? Colors.blue
                       : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
+                  fontSize: 10),
             ),
           ),
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/pendingorder.svg",
               color: NavBar.currentIndex == 3
-                  ? Colors.black
+                  ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Pending",
               style: TextStyle(
                   color: NavBar.currentIndex == 3
-                      ? Colors.black
+                      ? Colors.blue
                       : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
+                  fontSize: 10),
             ),
           ),
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/dashboard.svg",
               color: NavBar.currentIndex == 4
-                  ? Colors.black
+                  ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Dashboard",
               style: TextStyle(
                   color: NavBar.currentIndex == 4
-                      ? Colors.black
+                      ? Colors.blue
                       : Colors.black.withOpacity(0.5),
-                  fontSize: 12),
+                  fontSize: 10),
             ),
           ),
         ],

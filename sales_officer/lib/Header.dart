@@ -47,7 +47,7 @@ class Header extends StatelessWidget {
             ),
           ),
           Text(
-            heading[index],
+            heading[index],style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Container(),

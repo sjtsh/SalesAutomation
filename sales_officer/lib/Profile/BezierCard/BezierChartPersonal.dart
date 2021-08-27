@@ -9,25 +9,25 @@ class BezierChartPersonal extends StatefulWidget {
 }
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
-  List salesTaken = [0, 0, 0, 0, 0];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-      salesTaken
-          .asMap()
-          .entries
-          .forEach((e) {
-        for (int i = 0; i < sales[e.key]; i++) {
-            Future.delayed(Duration(seconds: 2), () {
-              setState(() {
-                salesTaken[e.key]++;
-              });
-          });
-        }
-      });
-  }
+  // List salesTaken = [0, 0, 0, 0, 0];
+  //
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //     salesTaken
+  //         .asMap()
+  //         .entries
+  //         .forEach((e) {
+  //       for (int i = 0; i < sales[e.key]; i++) {
+  //           Future.delayed(Duration(seconds: 2), () {
+  //             setState(() {
+  //               salesTaken[e.key]++;
+  //             });
+  //         });
+  //       }
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
         lineTouchData: LineTouchData(enabled: true),
         lineBarsData: [
           LineChartBarData(
-            spots: salesTaken
+            spots: sales
                 .asMap()
                 .entries
                 .map(
@@ -80,8 +80,8 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           show: false,
         ),
       ),
-      swapAnimationDuration: Duration(milliseconds: 500), // Optional
-      swapAnimationCurve: Curves.easeIn,
+      // swapAnimationDuration: Duration(milliseconds: 500), // Optional
+      // swapAnimationCurve: Curves.easeIn,
     );
   }
 }

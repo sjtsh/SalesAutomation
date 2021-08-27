@@ -81,7 +81,7 @@ class _SearchBarState extends State<SearchBar> {
               ),
               SizedBox(width: 10,),
               SizedBox(
-                width: 90,
+                width: 140,
                 child: DropdownButton<String>(
                 icon: Icon(Icons.keyboard_arrow_down_rounded),
                 isExpanded: true,

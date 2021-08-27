@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
@@ -11,7 +12,8 @@ class ConfirmOrder extends StatefulWidget {
   final List<TextEditingController> _textEditingControllers;
   final int index;
 
-  ConfirmOrder(this.currentDistributor, this._textEditingControllers, this.index);
+  ConfirmOrder(
+      this.currentDistributor, this._textEditingControllers, this.index);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -20,60 +22,52 @@ class ConfirmOrder extends StatefulWidget {
 class _ConfirmOrderState extends State<ConfirmOrder> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        List receiptData = [];
-        widget._textEditingControllers.forEach(
-          (element) {
-            if (element.text != "") {
-              receiptData.add([
-                allSKULocal[widget._textEditingControllers.indexOf(element)],
-                int.parse(element.text),
-              ]);
-            }
-          },
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) {
-              return ConfirmationScreen(
-                widget.currentDistributor,
-                widget._textEditingControllers,
-                receiptData,
-                widget.index,
-              );
-            },
-          ),
-        );
-      },
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       child: Container(
+        clipBehavior: Clip.hardEdge,
         height: 40,
-        margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: BoxDecoration(
-          color: Colors.green,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Next",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+        child: MaterialButton(
+          color: Colors.green,
+          // splashColor: Color(0xff1e5612),
+          onPressed: () {
+            List receiptData = [];
+            widget._textEditingControllers.forEach(
+              (element) {
+                if (element.text != "") {
+                  receiptData.add([
+                    allSKULocal[widget._textEditingControllers.indexOf(element)],
+                    int.parse(element.text),
+                  ]);
+                }
+              },
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) {
+                  return ConfirmationScreen(
+                    widget.currentDistributor,
+                    widget._textEditingControllers,
+                    receiptData,
+                    widget.index,
+                  );
+                },
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
+            );
+          },
+          child: Center(
+            child: Text(
+              "NEXT",
+              style: TextStyle(
                 color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
-            ],
+            ),
           ),
         ),
       ),
