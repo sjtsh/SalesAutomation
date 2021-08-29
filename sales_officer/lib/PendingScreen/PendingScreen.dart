@@ -127,28 +127,12 @@ class _PendingScreenState extends State<PendingScreen> {
               SizedBox(height: 7),
               Column(
                 children: List.generate(
-                    2,
+                    7,
                     (index) => Shimmer(
                         gradient:
                             LinearGradient(colors: [Colors.white, Colors.grey]),
                         child: PendingOrderSkeleton())).toList(),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Approved Orders ",
-                  style: TextStyle(backgroundColor: Color(0xffF5F5F5)),
-                ),
-              ),
-              Column(
-                children: List.generate(
-                    2,
-                    (index) => Shimmer(
-                        gradient:
-                            LinearGradient(colors: [Colors.white, Colors.grey]),
-                        child: PendingOrderSkeleton())).toList(),
-              ),
-              SizedBox(height: 7),
             ],
           ),
         );

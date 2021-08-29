@@ -12,8 +12,8 @@ class ConfirmationScreen extends StatelessWidget {
   final List receiptData;
   final int index;
 
-  ConfirmationScreen(
-      this.currentDistributor, this._textEditingControllers, this.receiptData, this.index);
+  ConfirmationScreen(this.currentDistributor, this._textEditingControllers,
+      this.receiptData, this.index);
 
   @override
   Widget build(BuildContext context) {

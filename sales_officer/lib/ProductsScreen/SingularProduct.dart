@@ -40,7 +40,9 @@ class SingularProduct extends StatelessWidget {
             children: allSKULocal
                 .where((element) => element.subGroupID == item.subGroupID)
                 .map((item) => SingularProductVariation(
-                    item, _textEditingControllers[allSKULocal.indexOf(item)]))
+                    item,
+                    _textEditingControllers[allSKULocal.indexOf(item) * 2],
+                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]))
                 .toList(),
           ),
         ],

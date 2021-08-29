@@ -22,25 +22,36 @@ Future<void> createOrder(int distributorID,
     int distributorOrderID = value;
     _textEditingControllers.forEach(
       (element) async {
-        if (element.text != "") {
+        if (_textEditingControllers.indexOf(element) % 2 == 0) {
           int SKUID =
-              allSKULocal[_textEditingControllers.indexOf(element)].SKUID;
-          int primaryItemCount = int.parse(element.text);
+              allSKULocal[_textEditingControllers.indexOf(element) ~/ 2].SKUID;
+          int primaryItemCount = 0;
           int alternativeItemCount = 0;
           int secondaryAlternativeItemCount = 0;
-
-          DistributorOrderItemService distributorOrderItemService =
-              DistributorOrderItemService();
-          bool condition2 =
-              await distributorOrderItemService.insertDistributorOrderItem(
-                  distributorOrderID,
-                  SKUID,
-                  primaryItemCount,
-                  alternativeItemCount,
-                  secondaryAlternativeItemCount);
-          print("inserting distributor order item was" + condition2.toString());
-          if (!condition2) {
-            conditionOnly = false;
+          if (element.text != "") {
+            primaryItemCount = int.parse(element.text);
+          }
+          if (_textEditingControllers[
+                      _textEditingControllers.indexOf(element) + 1]
+                  .text !=
+              "") {
+            alternativeItemCount = int.parse(_textEditingControllers[
+                    _textEditingControllers.indexOf(element) + 1]
+                .text);
+          }
+          if (primaryItemCount != 0 || alternativeItemCount != 0) {
+            DistributorOrderItemService distributorOrderItemService =
+                DistributorOrderItemService();
+            bool condition2 =
+                await distributorOrderItemService.insertDistributorOrderItem(
+                    distributorOrderID,
+                    SKUID,
+                    primaryItemCount,
+                    alternativeItemCount,
+                    secondaryAlternativeItemCount);
+            if (!condition2) {
+              conditionOnly = false;
+            }
           }
         }
       },

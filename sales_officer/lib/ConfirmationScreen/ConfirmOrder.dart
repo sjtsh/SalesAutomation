@@ -35,16 +35,33 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           // splashColor: Color(0xff1e5612),
           onPressed: () {
             List receiptData = [];
-            widget._textEditingControllers.forEach(
-              (element) {
+            widget._textEditingControllers.forEach((element) {
+              int primaryCount = 0;
+              int alternativeCount = 0;
+              if (widget._textEditingControllers.indexOf(element) % 2 == 0) {
                 if (element.text != "") {
+                  primaryCount = int.parse(element.text);
+                }
+                if (widget
+                        ._textEditingControllers[
+                            widget._textEditingControllers.indexOf(element) + 1]
+                        .text !=
+                    "") {
+                  alternativeCount = int.parse(widget
+                      ._textEditingControllers[
+                          widget._textEditingControllers.indexOf(element) + 1]
+                      .text);
+                }
+                if(primaryCount !=0 || alternativeCount!=0){
                   receiptData.add([
-                    allSKULocal[widget._textEditingControllers.indexOf(element)],
-                    int.parse(element.text),
+                    allSKULocal[
+                        widget._textEditingControllers.indexOf(element) ~/ 2],
+                    primaryCount,
+                    alternativeCount
                   ]);
                 }
-              },
-            );
+              }
+            });
             Navigator.push(
               context,
               MaterialPageRoute(

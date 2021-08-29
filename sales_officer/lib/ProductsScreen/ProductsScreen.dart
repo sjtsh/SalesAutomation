@@ -79,7 +79,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           allSKULocal = value;
         });
         _textEditingControllers =
-            List.generate(value.length, (index) => TextEditingController());
+            List.generate(value.length*2, (index) => TextEditingController());
       },
     );
     SKUDistributorWiseService skuDistributorWiseService =

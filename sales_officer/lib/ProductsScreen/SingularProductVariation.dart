@@ -4,9 +4,10 @@ import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 
 class SingularProductVariation extends StatefulWidget {
   final SKU item;
-  final TextEditingController _textEditingController;
+  final TextEditingController _textEditingControllerPrimary;
+  final TextEditingController _textEditingControllerSecondary;
 
-  SingularProductVariation(this.item, this._textEditingController);
+  SingularProductVariation(this.item, this._textEditingControllerPrimary, this._textEditingControllerSecondary);
 
   @override
   _SingularProductVariationState createState() =>
@@ -14,9 +15,6 @@ class SingularProductVariation extends StatefulWidget {
 }
 
 class _SingularProductVariationState extends State<SingularProductVariation> {
-  String hintableText = "0";
-  bool disable = false;
-  bool disableSub = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,238 +41,64 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
               widget.item.SKUName,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              try {
-                if (int.parse(widget._textEditingController.text) > 1) {
-                  widget._textEditingController.text =
-                      (int.parse(widget._textEditingController.text) - 1)
-                          .toString();
-                } else if (int.parse(widget._textEditingController.text) == 1) {
-                  widget._textEditingController.text =
-                      (int.parse(widget._textEditingController.text) - 1)
-                          .toString();
-                  setState(() {
-                    disableSub = true;
-                  });
-                }
-              } catch (e) {
-                widget._textEditingController.text = 0.toString();
-                setState(() {
-                  disableSub = true;
-                });
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              height: 40,
-              width: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // color: () {
-                //   try {
-                //     if (disableSub) {
-                //       return Colors.blueGrey;
-                //     } else {
-                //       return Colors.red.withOpacity(0.7);
-                //     }
-                //   } catch (e) {
-                //     return Colors.red.withOpacity(0.7);
-                //   }
-                // }(),
-                borderRadius: BorderRadius.circular(12),
+          SizedBox(
+            width: 12,
+          ),
+          Container(
+            height: 40,
+            width: 70,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.black.withOpacity(0.1)),
+            ),
+            padding: const EdgeInsets.only(bottom: 5),
+            child: TextField(
+              controller: widget._textEditingControllerPrimary,
+              cursorWidth: 1,
+              keyboardType: TextInputType.number,
+              cursorColor: Colors.blue,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
               ),
-              child: TextField(
-                cursorWidth: 0,
-                keyboardType: TextInputType.number,
-                cursorColor: Colors.black,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: "Cartons",
-                  contentPadding: EdgeInsets.only(left: 8),
-                ),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                hintText: "carton",
+                border: InputBorder.none,
               ),
             ),
           ),
           SizedBox(
-            width: 20,
+            width: 12,
           ),
-          GestureDetector(
-            onTap: () {
-              try {
-                if (int.parse(widget._textEditingController.text) > 1) {
-                  widget._textEditingController.text =
-                      (int.parse(widget._textEditingController.text) - 1)
-                          .toString();
-                } else if (int.parse(widget._textEditingController.text) == 1) {
-                  widget._textEditingController.text =
-                      (int.parse(widget._textEditingController.text) - 1)
-                          .toString();
-                  setState(() {
-                    disableSub = true;
-                  });
-                }
-              } catch (e) {
-                widget._textEditingController.text = 0.toString();
-                setState(() {
-                  disableSub = true;
-                });
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              height: 40,
-              width: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // color: () {
-                //   try {
-                //     if (disableSub) {
-                //       return Colors.blueGrey;
-                //     } else {
-                //       return Colors.red.withOpacity(0.7);
-                //     }
-                //   } catch (e) {
-                //     return Colors.red.withOpacity(0.7);
-                //   }
-                // }(),
-                borderRadius: BorderRadius.circular(12),
-              ),
+          Container(
+            height: 40,
+            width: 70,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black.withOpacity(0.1)),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Center(
               child: TextField(
-                cursorWidth: 0,
+                controller: widget._textEditingControllerSecondary,
+                cursorWidth: 1,
                 keyboardType: TextInputType.number,
-                cursorColor: Colors.black,
+                cursorColor: Colors.blue,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                 ),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
+                  hintText: "pcs",
                   border: InputBorder.none,
-                  labelText: "Pieces",
-                  contentPadding: EdgeInsets.only(left: 12),
                 ),
               ),
             ),
           ),
-          // Container(
-          //   height: 40,
-          //   width: 70,
-          //   decoration: BoxDecoration(
-          //     color: Colors.white,
-          //   ),
-          //   padding: const EdgeInsets.only(bottom: 5),
-          //   child: TextField(
-          //     controller: widget._textEditingController,
-          //     cursorWidth: 0,
-          //     keyboardType: TextInputType.number,
-          //     cursorColor: Colors.black,
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: 14,
-          //     ),
-          //     onTap: () {
-          //       setState(() {
-          //         hintableText = "";
-          //       });
-          //     },
-          //     onChanged: (String i) {
-          //       try {
-          //         if (int.parse(i) < 1) {
-          //           setState(() {
-          //             disableSub = true;
-          //             disable = false;
-          //           });
-          //         } else if (int.parse(i) < 5) {
-          //           setState(() {
-          //             disable = false;
-          //             disableSub = false;
-          //           });
-          //         } else {
-          //           setState(() {
-          //             disable = true;
-          //             disableSub = false;
-          //           });
-          //         }
-          //       } catch (e) {
-          //         setState(() {
-          //           disable = false;
-          //         });
-          //       }
-          //     },
-          //     textAlign: TextAlign.center,
-          //     decoration: InputDecoration(
-          //       hintText: hintableText,
-          //       border: InputBorder.none,
-          //     ),
-          //   ),
-          // ),
-          // GestureDetector(
-          //   onTap: () {
-          //     if (!disable) {
-          //       try {
-          //         if (int.parse(widget._textEditingController.text) < 4) {
-          //           widget._textEditingController.text =
-          //               (int.parse(widget._textEditingController.text) + 1).toString();
-          //           setState(() {
-          //             disableSub = false;
-          //           });
-          //         } else if (int.parse(widget._textEditingController.text) == 4) {
-          //           widget._textEditingController.text =
-          //               (int.parse(widget._textEditingController.text) + 1).toString();
-          //           setState(() {
-          //             disableSub = false;
-          //           });
-          //         }
-          //       } catch (e) {
-          //         widget._textEditingController.text = 1.toString();
-          //         setState(() {
-          //           disableSub = false;
-          //         });
-          //       }
-          //     }
-          //   },
-          //   child: Container(
-          //     height: 40,
-          //     width: 35,
-          //     decoration: BoxDecoration(
-          //       color: () {
-          //         try {
-          //           if (int.parse(widget._textEditingController.text) < 5) {
-          //             return Colors.green.withOpacity(0.7);
-          //           } else {
-          //             return Colors.blueGrey;
-          //           }
-          //         } catch (e) {
-          //           return Colors.green.withOpacity(0.7);
-          //         }
-          //       }(),
-          //       borderRadius: BorderRadius.only(
-          //         topRight: Radius.circular(12),
-          //         bottomRight: Radius.circular(12),
-          //       ),
-          //     ),
-          //     child: Icon(
-          //       Icons.add,
-          //       color: () {
-          //         try {
-          //           if (int.parse(widget._textEditingController.text) < 5) {
-          //             return Colors.black;
-          //           } else {
-          //             return Colors.white;
-          //           }
-          //         } catch (e) {
-          //           return Colors.black;
-          //         }
-          //       }(),
-          //     ),
-          //   ),
-          // ),
           SizedBox(
             width: 12,
           )
