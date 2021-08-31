@@ -59,6 +59,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     primaryCount,
                     alternativeCount
                   ]);
+                  print( allSKULocal[
+                  widget._textEditingControllers.indexOf(element) ~/ 2].SKUName);
                 }
               }
             });
@@ -82,7 +84,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
               ),
             ),
           ),

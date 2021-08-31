@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
 
-
-
 void main() {
   // runApp(SalesOfficer());
   runApp(Fusers());
 }
 
 class Fusers extends StatefulWidget {
-
   @override
   _FusersState createState() => _FusersState();
 }
@@ -19,7 +16,7 @@ class Fusers extends StatefulWidget {
 class _FusersState extends State<Fusers> {
   @override
   Widget build(BuildContext context) {
-    DateTime rightNow = DateTime.now();
+    // DateTime rightNow = DateTime.now();
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(

@@ -34,6 +34,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
       allSKULocal = value;
+      allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
     });
     SKUDistributorWiseService skuDistributorWiseService =
     SKUDistributorWiseService();

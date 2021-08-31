@@ -11,24 +11,42 @@ class OrdersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List personalDistributorOrders = [];
+    distributorOrders.reversed
+        .where(
+            (element) => condition ? element.orderStatus : !element.orderStatus)
+        .forEach((element) {
+      personalDistributorOrders.add(element);
+    });
     return Container(
       decoration: BoxDecoration(
         color: Color(0xffF5F5F5),
       ),
-      child: ListView(
-        children: [
-          SizedBox(height: 7),
-          Column(
-            children: distributorOrders
-                .where((element) => condition ? element.orderStatus: !element.orderStatus)
-                .map(
-                  (e) => SingularPending(e),
+      child: personalDistributorOrders.length != 0
+          ? ListView(
+              children: [
+                SizedBox(height: 7),
+                Column(
+                  children: personalDistributorOrders
+                      .map(
+                        (e) => SingularPending(e),
+                      )
+                      .toList(),
+                ),
+                SizedBox(height: 7),
+              ],
             )
-                .toList(),
-          ),
-          SizedBox(height: 7),
-        ],
-      ),
+          : Center(
+              child: !condition
+                  ? Text(
+                      "NO PENDING ORDERS",
+                      style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
+                    )
+                  : Text(
+                      "NO APPROVED ORDERS",
+                      style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
+                    ),
+            ),
     );
   }
 }

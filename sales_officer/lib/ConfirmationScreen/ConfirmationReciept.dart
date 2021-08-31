@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
@@ -24,125 +25,11 @@ class ConfirmationReciept extends StatefulWidget {
 
 class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   double totalAmount = 0;
-
-  Text getTotalItems() {
-    num _total = 0;
-    widget.receiptData.forEach((element) {
-      _total = _total + element[1] + element[2];
-    });
-    return Text(_total.toString());
-  }
-
-  List getSubGroupItems(int i) {
-    List items = [];
-    widget.receiptData.forEach((element) {
-      if (element[0].subGroupID == i) {
-        items.add(element);
-      }
-    });
-    return items;
-  }
-
-  List<int> getSubProducts() {
-    List<int> subProducts = [];
-    widget.receiptData.forEach((element) {
-      if (!subProducts.contains(element[0].subGroupID)) {
-        subProducts.add(element[0].subGroupID);
-      }
-    });
-    return subProducts;
-  }
-
-  deleteReceiptData(f) {
-    setState(() {
-      widget.receiptData.remove(f);
-      widget._textEditingControllers[allSKULocal.indexOf(f[0]) * 2].text = "";
-      widget._textEditingControllers[allSKULocal.indexOf(f[0]) * 2 + 1].text =
-          "";
-    });
-  }
-
-  updateReceiptData(List f, int primaryCountNew, int alternativeCountNew) {
-    print(primaryCountNew);
-    print(alternativeCountNew);
-    setState(() {
-      widget.receiptData.asMap().entries.forEach((element) {
-        if (element.value[0] == f[0]) {
-          widget.receiptData[element.key] = [
-            f[0],
-            primaryCountNew,
-            alternativeCountNew
-          ];
-        }
-      });
-      try {
-        widget._textEditingControllers[allSKULocal.indexOf(f[0]) * 2].text =
-            primaryCountNew.toString();
-      } catch (e) {
-        print("changing first text editing controller was not successful");
-      }
-      try {
-        widget._textEditingControllers[allSKULocal.indexOf(f[0]) * 2 + 1].text =
-            alternativeCountNew.toString();
-      } catch (e) {
-        print("changing second text editing controller was not successful");
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    SKUService skuService = SKUService();
-    skuService.fetchSKUs().then((value) {
-      allSKULocal = value;
-    });
-    SKUDistributorWiseService skuDistributorWiseService =
-        SKUDistributorWiseService();
-    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-      allSKUDistributorWiseLocal = value;
-      widget._textEditingControllers.forEach((aTextEditingController) {
-        if (aTextEditingController.text != "" &&
-            widget._textEditingControllers.indexOf(aTextEditingController) %
-                    2 ==
-                0) {
-          SKUDistributorWise skuDistributorWise =
-              allSKUDistributorWiseLocal.firstWhere((i) =>
-                  i.SKUID ==
-                      allSKULocal[widget._textEditingControllers
-                                  .indexOf(aTextEditingController) ~/
-                              2]
-                          .SKUID &&
-                  i.distributorID == widget.currentDistributor.distributorID);
-          setState(() {
-            totalAmount += aTextEditingController.text == ""
-                ? 0
-                : int.parse(aTextEditingController.text) *
-                    skuDistributorWise.primaryCF *
-                    skuDistributorWise.MRP;
-            totalAmount += widget
-                        ._textEditingControllers[widget._textEditingControllers
-                                .indexOf(aTextEditingController) +
-                            1]
-                        .text ==
-                    ""
-                ? 0
-                : int.parse(widget
-                        ._textEditingControllers[widget._textEditingControllers
-                                .indexOf(aTextEditingController) +
-                            1]
-                        .text) *
-                    skuDistributorWise.alternativeCF *
-                    skuDistributorWise.MRP;
-          });
-        }
-      });
-    });
-  }
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    List aList = getTotalItems();
     return ListView(
       children: [
         Container(
@@ -159,7 +46,15 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
               Expanded(
                 child: Container(),
               ),
-              getTotalItems(),
+              Text(aList[0].toString()),
+              Text(
+                " Ctn",
+                style: TextStyle(fontSize: 12),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(aList[1].toString()),
               Text(
                 " Pcs",
                 style: TextStyle(fontSize: 12),
@@ -207,16 +102,10 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                               child: Row(
                                 children: [
                                   Text(
-                                    allSubGroupsLocal[e].subGroupName,
+                                    allSubGroupsLocal.firstWhere((element) => element.subGroupID==e).subGroupName,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                  Expanded(child: Container()),
-                                  Text(getSubGroupItems(e).length.toString()),
-                                  Text(
-                                    " Pcs",
-                                    style: TextStyle(fontSize: 12),
                                   ),
                                 ],
                               ),
@@ -275,20 +164,42 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: MaterialButton(
-                    onPressed: () {
-                      createOrder(widget.currentDistributor.distributorID,
-                          widget._textEditingControllers, context);
-                    },
-                    child: Center(
-                      child: Text(
-                        "CONFIRM",
-                        style: TextStyle(
-                          color: Colors.white,
+                  child: isLoading
+                      ? MaterialButton(
+                          onPressed: () async {},
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      : MaterialButton(
+                          onPressed: () {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            createOrder(
+                                widget.currentDistributor.distributorID,
+                                widget._textEditingControllers,
+                                context).then((value) => setState(() {
+                              isLoading = false;
+                            }
+                            )
+                            );
+
+                          },
+                          child: Center(
+                            child: Text(
+                              "CONFIRM",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ),
               SizedBox(
@@ -299,5 +210,135 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
         ),
       ],
     );
+  }
+
+  List getTotalItems() {
+    List aList = [0, 0];
+    widget.receiptData.forEach((element) {
+      aList[0] = aList[0] + element[1];
+      aList[1] = aList[1] + element[2];
+    });
+    return aList;
+  }
+
+  List getSubGroupItems(int i) {
+    List items = [];
+    widget.receiptData.forEach((element) {
+      if (element[0].subGroupID == i) {
+        items.add(element);
+      }
+    });
+    return items;
+  }
+
+  List<int> getSubProducts() {
+    List<int> subProducts = [];
+    widget.receiptData.forEach((element) {
+      if (!subProducts.contains(element[0].subGroupID)) {
+        subProducts.add(element[0].subGroupID);
+      }
+    });
+    return subProducts;
+  }
+
+  deleteReceiptData(List f) {
+    setState(() {
+      widget.receiptData.remove(f);
+      widget
+          ._textEditingControllers[allSKULocal.indexOf(allSKULocal
+                  .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+              2]
+          .text = "";
+      widget
+          ._textEditingControllers[allSKULocal.indexOf(allSKULocal
+                      .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+                  2 +
+              1]
+          .text = "";
+      getTotalValue();
+    });
+  }
+
+  updateReceiptData(List f, int primaryCountNew, int alternativeCountNew) {
+    setState(() {
+      widget.receiptData.asMap().entries.forEach((element) {
+        if (element.value[0] == f[0]) {
+          widget.receiptData[element.key] = [
+            f[0],
+            primaryCountNew,
+            alternativeCountNew
+          ];
+        }
+      });
+      widget
+          ._textEditingControllers[allSKULocal.indexOf(allSKULocal
+                  .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+              2]
+          .text = primaryCountNew.toString();
+      widget
+          ._textEditingControllers[allSKULocal.indexOf(allSKULocal
+                      .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+                  2 +
+              1]
+          .text = alternativeCountNew.toString();
+      getTotalValue();
+    });
+  }
+
+  getTotalValue() {
+    totalAmount = 0;
+    SKUDistributorWiseService skuDistributorWiseService =
+        SKUDistributorWiseService();
+    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
+      allSKUDistributorWiseLocal = value;
+      widget._textEditingControllers.forEach((aTextEditingController) {
+        if (aTextEditingController.text != "" &&
+            widget._textEditingControllers.indexOf(aTextEditingController) %
+                    2 ==
+                0) {
+          SKUDistributorWise skuDistributorWise =
+              allSKUDistributorWiseLocal.firstWhere((i) =>
+                  i.SKUID ==
+                      allSKULocal[widget._textEditingControllers
+                                  .indexOf(aTextEditingController) ~/
+                              2]
+                          .SKUID &&
+                  i.distributorID == widget.currentDistributor.distributorID);
+          setState(() {
+            totalAmount += aTextEditingController.text == ""
+                ? 0
+                : int.parse(aTextEditingController.text) *
+                    skuDistributorWise.primaryCF *
+                    skuDistributorWise.MRP;
+            totalAmount += widget
+                        ._textEditingControllers[widget._textEditingControllers
+                                .indexOf(aTextEditingController) +
+                            1]
+                        .text ==
+                    ""
+                ? 0
+                : int.parse(widget
+                        ._textEditingControllers[widget._textEditingControllers
+                                .indexOf(aTextEditingController) +
+                            1]
+                        .text) *
+                    skuDistributorWise.alternativeCF *
+                    skuDistributorWise.MRP;
+          });
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SKUService skuService = SKUService();
+    skuService.fetchSKUs().then((value) {
+      allSKULocal = value;
+      allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
+    });
+    getTotalValue();
   }
 }

@@ -77,6 +77,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       (value) {
         setState(() {
           allSKULocal = value;
+          allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
         });
         _textEditingControllers =
             List.generate(value.length*2, (index) => TextEditingController());

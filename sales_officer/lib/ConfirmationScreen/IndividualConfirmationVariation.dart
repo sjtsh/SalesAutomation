@@ -46,7 +46,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
               ),
             ),
             Text(
-              " Pcs",
+              " Ctn",
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.black.withOpacity(0.5),

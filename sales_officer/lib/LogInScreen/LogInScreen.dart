@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sales_officer/LogInScreen/JointWorking.dart';
 import 'package:sales_officer/LogInScreen/SelectBeat.dart';
 
@@ -43,6 +44,9 @@ class _LogInScreenState extends State<LogInScreen> {
                     height: 130,
                     width: 100,
                     decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/face.png"),
+                      ),
                       shape: BoxShape.circle,
                       color: Colors.black,
                     ),
@@ -78,7 +82,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 500),
                   clipBehavior: Clip.hardEdge,
-                  height: isSelected ? 60 * 6: null,
+                  height: isSelected ? 60 * 6 : null,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
@@ -90,7 +94,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                     ],
                   ),
-                  child: isSelected ? SelectBeat() : JointWorking(select) ,
+                  child: isSelected ? SelectBeat() : JointWorking(select),
                 ),
               )
             ],
