@@ -11,9 +11,12 @@ class ConfirmOrder extends StatefulWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final int index;
+  final bool isNew;
+  final DistributorOrder distributorOrder;
+  final List<DistributorOrderItem> distributorOrderItems;
 
   ConfirmOrder(
-      this.currentDistributor, this._textEditingControllers, this.index);
+      this.currentDistributor, this._textEditingControllers, this.index, this.isNew, this.distributorOrder, this.distributorOrderItems);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -73,6 +76,9 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     widget._textEditingControllers,
                     receiptData,
                     widget.index,
+                    widget.isNew,
+                    widget.distributorOrder,
+                    widget.distributorOrderItems,
                   );
                 },
               ),

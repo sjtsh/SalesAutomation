@@ -50,7 +50,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
             SKUDistributorWise skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((i) => i.SKUID == element.SKUID && i.distributorID==widget.e.distributorID);
             totalAmount += element.primaryItemCount * skuDistributorWise.primaryCF * skuDistributorWise.MRP;
             totalAmount +=
-                element.secondaryItemCount * skuDistributorWise.alternativeCF * skuDistributorWise.MRP;
+                element.alternativeItemCount * skuDistributorWise.alternativeCF * skuDistributorWise.MRP;
             totalAmount += element.secondaryAlternativeItemCount *
                 skuDistributorWise.secondaryAlternativeCF *
                 skuDistributorWise.MRP;

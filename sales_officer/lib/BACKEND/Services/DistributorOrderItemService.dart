@@ -45,4 +45,28 @@ class DistributorOrderItemService {
     }
     return false;
   }
+
+
+  Future<bool> updateDistributorOrderItem(DistributorOrderItem distributorOrderItem) async {
+    final res = await http.put(
+      Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrderItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{
+          'distributorOrderItemID': distributorOrderItem.distributorOrderItemID.toString(),
+          'distributorOrderID' : distributorOrderItem.distributorOrderID.toString(),
+          'SKUID' : distributorOrderItem.SKUID.toString(),
+          'primaryItemCount' : distributorOrderItem.primaryItemCount.toString(),
+          'alternativeItemCount' : distributorOrderItem.alternativeItemCount.toString(),
+          'secondaryAlternativeItemCount' : distributorOrderItem.secondaryAlternativeItemCount.toString(),
+        },
+      ),
+    );
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

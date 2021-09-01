@@ -4,6 +4,7 @@ import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
+import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';
 
 class SingularPending extends StatelessWidget {
   final DistributorOrder e;
@@ -96,23 +97,26 @@ class SingularPending extends StatelessWidget {
                       Expanded(
                         child: Container(),
                       ),
-                      Column(
-                        children: ["", "", ""]
-                            .map(
-                              (f) => Padding(
-                                padding: const EdgeInsets.only(bottom: 4.0),
-                                child: Container(
-                                  height: 3,
-                                  width: 3,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      )
+                      PopupMenuButton(
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem(
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) {
+                                        return ProductsScreen(
+                                            distributor, 6, e, false);
+                                      }));
+                                    },
+                                    child: Center(child: Text("Edit")))),
+                            PopupMenuItem(
+                                child: GestureDetector(
+                                    onTap: () {},
+                                    child: Center(child: Text("Share")))),
+                          ];
+                        },
+                      ),
                     ],
                   ),
                 ),

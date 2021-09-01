@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
@@ -22,13 +26,16 @@ import 'SearchBar.dart';
 class ProductsScreen extends StatefulWidget {
   final Distributor currentDistributor;
   final int index;
+  final DistributorOrder distributorOrder;
+  final bool isNew;
 
   final SubGroupService subGroupService = SubGroupService();
 
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
-  ProductsScreen(this.currentDistributor, this.index);
+  ProductsScreen(
+      this.currentDistributor, this.index, this.distributorOrder, this.isNew);
 
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
@@ -40,6 +47,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
   bool isSearching = false;
+  List<DistributorOrderItem> distributorOrderItems = [];
 
   void _setNewProducts(String newValue) {
     setState(() {
@@ -70,17 +78,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   void initState() {
-    allSKULocal = [];
     super.initState();
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then(
       (value) {
+        allSKULocal = [];
         setState(() {
           allSKULocal = value;
-          allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
+          allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
         });
         _textEditingControllers =
-            List.generate(value.length*2, (index) => TextEditingController());
+            List.generate(value.length * 2, (index) => TextEditingController());
       },
     );
     SKUDistributorWiseService skuDistributorWiseService =
@@ -89,6 +97,42 @@ class _ProductsScreenState extends State<ProductsScreen> {
       setState(() {
         allSKUDistributorWiseLocal = value;
       });
+
+      if (widget.distributorOrder.distributorID != -1) {
+        DistributorOrderItemService distributorOrderItemService =
+            DistributorOrderItemService();
+        distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+          distributorOrderItems = [];
+          value.forEach((element) {
+            if (element.distributorOrderID ==
+                widget.distributorOrder.distributorOrderID) {
+              distributorOrderItems.add(element);
+            }
+          });
+
+          print(distributorOrderItems);
+
+          distributorOrderItems.forEach((element) {
+            print(element.SKUID.toString() +
+                " " +
+                element.alternativeItemCount.toString() +
+                " " +
+                element.primaryItemCount.toString());
+          });
+
+          distributorOrderItems.forEach((element) {
+            _textEditingControllers[allSKULocal.indexOf(allSKULocal
+                        .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
+                    2]
+                .text = element.primaryItemCount.toString();
+            _textEditingControllers[allSKULocal.indexOf(allSKULocal.firstWhere(
+                            (aSKU) => element.SKUID == aSKU.SKUID)) *
+                        2 +
+                    1]
+                .text = element.alternativeItemCount.toString();
+          });
+        });
+      }
     });
 
     widget._scrollController.addListener(() {
@@ -212,7 +256,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               ],
             ),
             child: ConfirmOrder(widget.currentDistributor,
-                _textEditingControllers, widget.index),
+                _textEditingControllers, widget.index, widget.isNew, widget.distributorOrder, distributorOrderItems),
           ),
         ],
       ),

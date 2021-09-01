@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
@@ -15,9 +16,17 @@ class ConfirmationReciept extends StatefulWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final List receiptData;
+  final bool isNew;
+  final DistributorOrder distributorOrder;
+  final List<DistributorOrderItem> distributorOrderItems;
 
   ConfirmationReciept(
-      this.currentDistributor, this._textEditingControllers, this.receiptData);
+      this.currentDistributor,
+      this._textEditingControllers,
+      this.receiptData,
+      this.isNew,
+      this.distributorOrder,
+      this.distributorOrderItems);
 
   @override
   _ConfirmationRecieptState createState() => _ConfirmationRecieptState();
@@ -102,7 +111,10 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                               child: Row(
                                 children: [
                                   Text(
-                                    allSubGroupsLocal.firstWhere((element) => element.subGroupID==e).subGroupName,
+                                    allSubGroupsLocal
+                                        .firstWhere((element) =>
+                                            element.subGroupID == e)
+                                        .subGroupName,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -181,15 +193,24 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                             setState(() {
                               isLoading = true;
                             });
-                            createOrder(
-                                widget.currentDistributor.distributorID,
-                                widget._textEditingControllers,
-                                context).then((value) => setState(() {
-                              isLoading = false;
+                            if (widget.isNew) {
+                              createOrder(
+                                      widget.currentDistributor.distributorID,
+                                      widget._textEditingControllers,
+                                      context)
+                                  .then((value) => setState(() {
+                                        isLoading = false;
+                                      }));
+                            } else {
+                              updateOrder(
+                                      widget.distributorOrder,
+                                      widget.distributorOrderItems,
+                                      widget._textEditingControllers,
+                                      context)
+                                  .then((value) => setState(() {
+                                        isLoading = false;
+                                      }));
                             }
-                            )
-                            );
-
                           },
                           child: Center(
                             child: Text(
@@ -337,7 +358,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
       allSKULocal = value;
-      allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
+      allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
     });
     getTotalValue();
   }

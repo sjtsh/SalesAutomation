@@ -56,7 +56,7 @@ class OrderItemsExpanded extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      "${e.primaryItemCount},${e.secondaryItemCount},${e.secondaryAlternativeItemCount}",
+                      "${e.primaryItemCount},${e.alternativeItemCount},${e.secondaryAlternativeItemCount}",
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,

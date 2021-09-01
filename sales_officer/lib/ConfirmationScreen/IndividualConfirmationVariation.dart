@@ -9,7 +9,8 @@ class IndividualConfirmationVariation extends StatelessWidget {
   final List f;
   final Function deleteReceiptData;
 
-  IndividualConfirmationVariation(this.updateReceiptData, this.f, this.deleteReceiptData);
+  IndividualConfirmationVariation(
+      this.updateReceiptData, this.f, this.deleteReceiptData);
 
   @override
   Widget build(BuildContext context) {
@@ -39,34 +40,46 @@ class IndividualConfirmationVariation extends StatelessWidget {
                   ),
                 )),
             Expanded(child: Container()),
-            Text(
-              f[1].toString(),
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.5),
-              ),
-            ),
-            Text(
-              " Ctn",
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.black.withOpacity(0.5),
-              ),
-            ),
+            f[1] == 0
+                ? Container()
+                : Row(
+                    children: [
+                      Text(
+                        f[1].toString(),
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                      Text(
+                        " Ctn",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  ),
             SizedBox(
               width: 10,
             ),
-            Text(
-              f[2].toString(),
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.5),
-              ),
-            ),
-            Text(
-              " Pcs",
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.black.withOpacity(0.5),
-              ),
+            f[2] == 0
+                ? Container()
+                : Row(
+              children: [
+                Text(
+                  f[2].toString(),
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                Text(
+                  " Pcs",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               width: 10,

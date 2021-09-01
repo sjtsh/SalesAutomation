@@ -3,7 +3,7 @@ class DistributorOrderItem {
   final int distributorOrderID;
   final int SKUID;
   final int primaryItemCount;
-  final int secondaryItemCount;
+  final int alternativeItemCount;
   final int secondaryAlternativeItemCount;
 
   DistributorOrderItem(
@@ -11,7 +11,7 @@ class DistributorOrderItem {
       this.distributorOrderID,
       this.SKUID,
       this.primaryItemCount,
-      this.secondaryItemCount,
+      this.alternativeItemCount,
       this.secondaryAlternativeItemCount);
 
   factory DistributorOrderItem.fromJson(Map<String, dynamic> json) {

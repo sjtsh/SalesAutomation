@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/DistributorInfo.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
@@ -18,15 +20,6 @@ class DistributorList extends StatelessWidget {
 
   DistributorList(this.distributor, this.isOrder, this.index);
 
-  getInitials() {
-    if (distributor.distributorName.split(" ").length >= 2) {
-      return distributor.distributorName.split(" ")[0].substring(0, 1).toUpperCase() +
-          distributor.distributorName.split(" ")[1].substring(0, 1).toUpperCase();
-    } else {
-      return distributor.distributorName.split(" ")[0].substring(0, 1).toUpperCase();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -38,7 +31,7 @@ class DistributorList extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) {
-                return ProductsScreen(distributor, index);
+                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "",""), true);
               },
             ),
           );
@@ -86,7 +79,7 @@ class DistributorList extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                getInitials(),
+                getInitials(distributor.distributorName),
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
