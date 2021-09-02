@@ -31,34 +31,30 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SKUService skuService = SKUService();
-    skuService.fetchSKUs().then((value) {
-      allSKULocal = value;
-      allSKULocal.sort((a,b)=>a.subGroupID.compareTo(b.subGroupID));
-    });
-    SKUDistributorWiseService skuDistributorWiseService =
-    SKUDistributorWiseService();
-    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-      allSKUDistributorWiseLocal = value;
-      DistributorOrderItemService distributorOrderItemService =
-      DistributorOrderItemService();
-      distributorOrderItemService.fetchDistributorOrderItems().then((value) {
-        List<DistributorOrderItem> aList = [];
-        value.forEach((element) {
-          if (element.distributorOrderID == widget.e.distributorOrderID) {
-            aList.add(element);
-            SKUDistributorWise skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((i) => i.SKUID == element.SKUID && i.distributorID==widget.e.distributorID);
-            totalAmount += element.primaryItemCount * skuDistributorWise.primaryCF * skuDistributorWise.MRP;
-            totalAmount +=
-                element.alternativeItemCount * skuDistributorWise.alternativeCF * skuDistributorWise.MRP;
-            totalAmount += element.secondaryAlternativeItemCount *
-                skuDistributorWise.secondaryAlternativeCF *
-                skuDistributorWise.MRP;
-          }
-        });
-        setState(() {
-          distributorOrderItems = aList;
-        });
+    DistributorOrderItemService distributorOrderItemService =
+        DistributorOrderItemService();
+    distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+      List<DistributorOrderItem> aList = [];
+      value.forEach((element) {
+        if (element.distributorOrderID == widget.e.distributorOrderID) {
+          aList.add(element);
+          SKUDistributorWise skuDistributorWise =
+              allSKUDistributorWiseLocal.firstWhere((i) =>
+                  i.SKUID == element.SKUID &&
+                  i.distributorID == widget.e.distributorID);
+          totalAmount += element.primaryItemCount *
+              skuDistributorWise.primaryCF *
+              skuDistributorWise.MRP;
+          totalAmount += element.alternativeItemCount *
+              skuDistributorWise.alternativeCF *
+              skuDistributorWise.MRP;
+          totalAmount += element.secondaryAlternativeItemCount *
+              skuDistributorWise.secondaryAlternativeCF *
+              skuDistributorWise.MRP;
+        }
+      });
+      setState(() {
+        distributorOrderItems = aList;
       });
     });
   }

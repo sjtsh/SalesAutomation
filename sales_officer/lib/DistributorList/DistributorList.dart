@@ -31,7 +31,7 @@ class DistributorList extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) {
-                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "",""), true);
+                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true);
               },
             ),
           );

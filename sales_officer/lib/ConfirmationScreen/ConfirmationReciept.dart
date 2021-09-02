@@ -308,46 +308,40 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
 
   getTotalValue() {
     totalAmount = 0;
-    SKUDistributorWiseService skuDistributorWiseService =
-        SKUDistributorWiseService();
-    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-      allSKUDistributorWiseLocal = value;
-      widget._textEditingControllers.forEach((aTextEditingController) {
-        if (aTextEditingController.text != "" &&
-            widget._textEditingControllers.indexOf(aTextEditingController) %
-                    2 ==
-                0) {
-          SKUDistributorWise skuDistributorWise =
-              allSKUDistributorWiseLocal.firstWhere((i) =>
-                  i.SKUID ==
-                      allSKULocal[widget._textEditingControllers
-                                  .indexOf(aTextEditingController) ~/
-                              2]
-                          .SKUID &&
-                  i.distributorID == widget.currentDistributor.distributorID);
-          setState(() {
-            totalAmount += aTextEditingController.text == ""
-                ? 0
-                : int.parse(aTextEditingController.text) *
-                    skuDistributorWise.primaryCF *
-                    skuDistributorWise.MRP;
-            totalAmount += widget
-                        ._textEditingControllers[widget._textEditingControllers
-                                .indexOf(aTextEditingController) +
-                            1]
-                        .text ==
-                    ""
-                ? 0
-                : int.parse(widget
-                        ._textEditingControllers[widget._textEditingControllers
-                                .indexOf(aTextEditingController) +
-                            1]
-                        .text) *
-                    skuDistributorWise.alternativeCF *
-                    skuDistributorWise.MRP;
-          });
-        }
-      });
+    widget._textEditingControllers.forEach((aTextEditingController) {
+      if (aTextEditingController.text != "" &&
+          widget._textEditingControllers.indexOf(aTextEditingController) % 2 ==
+              0) {
+        SKUDistributorWise skuDistributorWise =
+            allSKUDistributorWiseLocal.firstWhere((i) =>
+                i.SKUID ==
+                    allSKULocal[widget._textEditingControllers
+                                .indexOf(aTextEditingController) ~/
+                            2]
+                        .SKUID &&
+                i.distributorID == widget.currentDistributor.distributorID);
+        setState(() {
+          totalAmount += aTextEditingController.text == ""
+              ? 0
+              : int.parse(aTextEditingController.text) *
+                  skuDistributorWise.primaryCF *
+                  skuDistributorWise.MRP;
+          totalAmount += widget
+                      ._textEditingControllers[widget._textEditingControllers
+                              .indexOf(aTextEditingController) +
+                          1]
+                      .text ==
+                  ""
+              ? 0
+              : int.parse(widget
+                      ._textEditingControllers[widget._textEditingControllers
+                              .indexOf(aTextEditingController) +
+                          1]
+                      .text) *
+                  skuDistributorWise.alternativeCF *
+                  skuDistributorWise.MRP;
+        });
+      }
     });
   }
 
@@ -355,11 +349,6 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SKUService skuService = SKUService();
-    skuService.fetchSKUs().then((value) {
-      allSKULocal = value;
-      allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
-    });
     getTotalValue();
   }
 }

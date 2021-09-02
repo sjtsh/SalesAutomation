@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/Database.dart';
 
@@ -11,9 +12,10 @@ class SingularProduct extends StatelessWidget {
   final int expandableControllerIndex;
   final List<ExpandableController> _expandableControllers;
   final List<TextEditingController> _textEditingControllers;
+  final Distributor currentDistributor;
 
   SingularProduct(this.item, this.expandableControllerIndex,
-      this._expandableControllers, this._textEditingControllers);
+      this._expandableControllers, this._textEditingControllers, this.currentDistributor);
 
   unExpand() {
     if (!_expandableControllers[expandableControllerIndex].expanded) {
@@ -42,7 +44,7 @@ class SingularProduct extends StatelessWidget {
                 .map((item) => SingularProductVariation(
                     item,
                     _textEditingControllers[allSKULocal.indexOf(item) * 2],
-                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]))
+                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1], currentDistributor))
                 .toList(),
           ),
         ],

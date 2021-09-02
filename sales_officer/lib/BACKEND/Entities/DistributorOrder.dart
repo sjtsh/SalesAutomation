@@ -6,6 +6,9 @@ class DistributorOrder {
   final bool orderStatus;
   final String remarks;
   final String dateAndTime;
+  final String updatedTime;
+  final double lat;
+  final double lng;
 
   DistributorOrder(
       this.distributorOrderID,
@@ -14,7 +17,7 @@ class DistributorOrder {
       this.joint,
       this.orderStatus,
       this.remarks,
-      this.dateAndTime);
+      this.dateAndTime, this.updatedTime, this.lat, this.lng);
 
   factory DistributorOrder.fromJson(Map<String, dynamic> json) {
     return DistributorOrder(
@@ -25,6 +28,9 @@ class DistributorOrder {
       json['4'] == 0 ? false : true,
       json['5'],
       json['6'],
+      json['7'],
+      json['8'],
+      json['9'],
     );
   }
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
+import 'package:sales_officer/Database.dart';
 
 class SingularProductVariation extends StatefulWidget {
   final SKU item;
   final TextEditingController _textEditingControllerPrimary;
   final TextEditingController _textEditingControllerSecondary;
+  final Distributor currentDistributor;
 
-  SingularProductVariation(this.item, this._textEditingControllerPrimary, this._textEditingControllerSecondary);
+  SingularProductVariation(this.item, this._textEditingControllerPrimary,
+      this._textEditingControllerSecondary, this.currentDistributor);
 
   @override
   _SingularProductVariationState createState() =>
@@ -15,7 +19,6 @@ class SingularProductVariation extends StatefulWidget {
 }
 
 class _SingularProductVariationState extends State<SingularProductVariation> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,8 +40,41 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
             width: 12,
           ),
           Expanded(
-            child: Text(
-              widget.item.SKUName,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.item.SKUName,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Stock: " +
+                      allSKUStockLocal
+                          .firstWhere((element) =>
+                              element.distributorID ==
+                                  widget.currentDistributor.distributorID &&
+                              element.SKUID == widget.item.SKUID)
+                          .primaryStock
+                          .toString() +
+                      " Ctn " +
+                      allSKUStockLocal
+                          .firstWhere((element) =>
+                              element.distributorID ==
+                                  widget.currentDistributor.distributorID &&
+                              element.SKUID == widget.item.SKUID)
+                          .alternativeStock
+                          .toString() +
+                      " Pcs",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.green,
+                  ),
+                )
+              ],
             ),
           ),
           SizedBox(

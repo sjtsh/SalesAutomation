@@ -5,10 +5,12 @@ import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/DialogBox/DialogBox.dart';
@@ -29,8 +31,7 @@ class ProductsScreen extends StatefulWidget {
   final DistributorOrder distributorOrder;
   final bool isNew;
 
-  final SubGroupService subGroupService = SubGroupService();
-
+  final SKUStockService skuStockService = SKUStockService();
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
@@ -67,8 +68,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   void _setProducts(List<SubGroup> searchedSubGroup) {
     setState(() {
-      allSubGroupsLocal = searchedSubGroup;
-      if (allSubGroupsLocal.length > 0) {
+      productList = searchedSubGroup;
+      if (productList.length > 0) {
         isSearching = true;
       } else {
         isSearching = false;
@@ -79,61 +80,42 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
     super.initState();
-    SKUService skuService = SKUService();
-    skuService.fetchSKUs().then(
-      (value) {
-        allSKULocal = [];
-        setState(() {
-          allSKULocal = value;
-          allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
+    _textEditingControllers = List.generate(
+        allSKULocal.length * 2, (index) => TextEditingController());
+
+    if (widget.distributorOrder.distributorID != -1) {
+      DistributorOrderItemService distributorOrderItemService =
+          DistributorOrderItemService();
+      distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+        distributorOrderItems = [];
+        value.forEach((element) {
+          if (element.distributorOrderID ==
+              widget.distributorOrder.distributorOrderID) {
+            distributorOrderItems.add(element);
+          }
         });
-        _textEditingControllers =
-            List.generate(value.length * 2, (index) => TextEditingController());
-      },
-    );
-    SKUDistributorWiseService skuDistributorWiseService =
-        SKUDistributorWiseService();
-    skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-      setState(() {
-        allSKUDistributorWiseLocal = value;
+
+        distributorOrderItems.forEach((element) {
+          print(element.SKUID.toString() +
+              " " +
+              element.alternativeItemCount.toString() +
+              " " +
+              element.primaryItemCount.toString());
+        });
+
+        distributorOrderItems.forEach((element) {
+          _textEditingControllers[allSKULocal.indexOf(allSKULocal
+                      .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
+                  2]
+              .text = element.primaryItemCount.toString();
+          _textEditingControllers[allSKULocal.indexOf(allSKULocal
+                          .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
+                      2 +
+                  1]
+              .text = element.alternativeItemCount.toString();
+        });
       });
-
-      if (widget.distributorOrder.distributorID != -1) {
-        DistributorOrderItemService distributorOrderItemService =
-            DistributorOrderItemService();
-        distributorOrderItemService.fetchDistributorOrderItems().then((value) {
-          distributorOrderItems = [];
-          value.forEach((element) {
-            if (element.distributorOrderID ==
-                widget.distributorOrder.distributorOrderID) {
-              distributorOrderItems.add(element);
-            }
-          });
-
-          print(distributorOrderItems);
-
-          distributorOrderItems.forEach((element) {
-            print(element.SKUID.toString() +
-                " " +
-                element.alternativeItemCount.toString() +
-                " " +
-                element.primaryItemCount.toString());
-          });
-
-          distributorOrderItems.forEach((element) {
-            _textEditingControllers[allSKULocal.indexOf(allSKULocal
-                        .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
-                    2]
-                .text = element.primaryItemCount.toString();
-            _textEditingControllers[allSKULocal.indexOf(allSKULocal.firstWhere(
-                            (aSKU) => element.SKUID == aSKU.SKUID)) *
-                        2 +
-                    1]
-                .text = element.alternativeItemCount.toString();
-          });
-        });
-      }
-    });
+    }
 
     widget._scrollController.addListener(() {
       if (widget._scrollController.position.userScrollDirection ==
@@ -217,29 +199,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     Expanded(
                         child: !isSearching
                             ? FutureBuilder(
-                                future: widget.subGroupService.fetchSubGroups(),
+                                future: widget.skuStockService.fetchSKUStocks(),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<dynamic> snapshot) {
-                                  if (snapshot.hasData) {
-                                    productList = snapshot.data;
-                                    allSubGroupsLocal = snapshot.data;
-                                    return ProductList(
-                                      productList,
+                                    AsyncSnapshot<List<SKUStock>> snapshot) {
+                                  return ProductList(
+                                      allSubGroupsLocal,
                                       widget._scrollController,
                                       _textEditingControllers,
-                                    );
-                                  }
-                                  return ListView(
-                                    children: List.generate(10, (index) => "")
-                                        .map((item) => ProductListSkeleton())
-                                        .toList(),
-                                  );
+                                      widget.currentDistributor);
                                 },
                               )
                             : ProductList(
-                                allSubGroupsLocal,
+                                productList,
                                 widget._scrollController,
-                                _textEditingControllers)),
+                                _textEditingControllers,
+                                widget.currentDistributor)),
                   ],
                 ),
               ),
@@ -255,8 +229,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     offset: Offset(0, -2))
               ],
             ),
-            child: ConfirmOrder(widget.currentDistributor,
-                _textEditingControllers, widget.index, widget.isNew, widget.distributorOrder, distributorOrderItems),
+            child: ConfirmOrder(
+                widget.currentDistributor,
+                _textEditingControllers,
+                widget.index,
+                widget.isNew,
+                widget.distributorOrder,
+                distributorOrderItems),
           ),
         ],
       ),

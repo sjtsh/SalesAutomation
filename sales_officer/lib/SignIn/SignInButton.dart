@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUService.dart';
+import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
+import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/HomeScreen.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 
-class SignInButton extends StatelessWidget {
-
+class SignInButton extends StatefulWidget {
   final _formKey;
   final TextEditingController _username;
   final TextEditingController _password;
 
   SignInButton(this._formKey, this._username, this._password);
 
+  @override
+  _SignInButtonState createState() => _SignInButtonState();
+}
+
+class _SignInButtonState extends State<SignInButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +34,6 @@ class SignInButton extends StatelessWidget {
         ),
         child: MaterialButton(
           onPressed: () {
-
             // final username = _username.text;
             // final password = _password.text;
             //
@@ -35,9 +45,10 @@ class SignInButton extends StatelessWidget {
             //   );
             // }
             Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LogInScreen()),
-                  );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LogInScreen(),
+                ));
           },
           child: Center(
             child: Text(
@@ -47,6 +58,37 @@ class SignInButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LoadingScreen extends StatelessWidget {
+  final String loadingText;
+
+  LoadingScreen(this.loadingText);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset("icons/logo.svg"),
+          SizedBox(
+            width: 200,
+            child: LinearProgressIndicator(
+              color: Colors.red,
+              backgroundColor: Colors.red.withOpacity(0.5),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(loadingText),
+        ],
+      )),
     );
   }
 }

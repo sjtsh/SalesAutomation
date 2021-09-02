@@ -8,7 +8,7 @@ class DistributorService {
   final String url =
       "https://asia-south1-hilifedb.cloudfunctions.net/getDistributors";
 
-  Future<List<Distributor>> fetchDistributor() async {
+  Future<List<Distributor>> fetchDistributors() async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       List<dynamic> values = jsonDecode(response.body);

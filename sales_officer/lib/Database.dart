@@ -1,5 +1,6 @@
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'BACKEND/Entities/SKU.dart';
 
@@ -8,6 +9,7 @@ List<Distributor> allDistributorsLocal = [];
 List<SubGroup> allSubGroupsLocal = [];
 List<SKU> allSKULocal = [];
 List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
+List<SKUStock> allSKUStockLocal = [];
 List products = [
   "Chiura",
   "Choco plus",

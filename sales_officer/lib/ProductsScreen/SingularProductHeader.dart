@@ -108,17 +108,6 @@ class SingularProductHeader extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Stock: 1000 Pcs",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.green,
-                            ),
-                          )
                         ],
                       ),
                     ),

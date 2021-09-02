@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
-import 'package:sales_officer/Skeletons/DistributorListSkeleton.dart';
 import 'package:sales_officer/BACKEND/Methods/Search.dart';
 
 import '../Database.dart';
@@ -105,33 +104,13 @@ class _NewOrderState extends State<NewOrder> {
         ),
         Expanded(
           child: !isSearching
-              ? FutureBuilder(
-                  future: widget.distributorService.fetchDistributor(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Distributor>> snapshot) {
-                    if (snapshot.hasData) {
-                      List<Distributor>? syncedDistributors = snapshot.data;
-                      allDistributorsLocal = syncedDistributors!;
-                      return ListView(
-                        children: syncedDistributors
-                            .map(
-                              (item) => DistributorList(
-                                  item, widget.isOrder, widget.index),
-                            )
-                            .toList(),
-                      );
-                    }
-                    return ListView(
-                      children: List.generate(
-                        5,
-                        (index) => index)
-                          .map(
-                            (item) => DistributorListSkeleton(
-                                widget.index),
-                          )
-                          .toList(),
-                    );
-                  },
+              ? ListView(
+                  children: allDistributorsLocal
+                      .map(
+                        (item) =>
+                            DistributorList(item, widget.isOrder, widget.index),
+                      )
+                      .toList(),
                 )
               : ListView(
                   children: searchedDistributorsLocal
