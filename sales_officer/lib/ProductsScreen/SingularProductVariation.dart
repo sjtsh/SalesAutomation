@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
 
 class SingularProductVariation extends StatefulWidget {
@@ -9,9 +11,14 @@ class SingularProductVariation extends StatefulWidget {
   final TextEditingController _textEditingControllerPrimary;
   final TextEditingController _textEditingControllerSecondary;
   final Distributor currentDistributor;
+  final bool isStock;
 
-  SingularProductVariation(this.item, this._textEditingControllerPrimary,
-      this._textEditingControllerSecondary, this.currentDistributor);
+  SingularProductVariation(
+      this.item,
+      this._textEditingControllerPrimary,
+      this._textEditingControllerSecondary,
+      this.currentDistributor,
+      this.isStock);
 
   @override
   _SingularProductVariationState createState() =>
@@ -21,6 +28,27 @@ class SingularProductVariation extends StatefulWidget {
 class _SingularProductVariationState extends State<SingularProductVariation> {
   @override
   Widget build(BuildContext context) {
+    SKUStock mySKUStock;
+    SKUDistributorWise skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((element) => element.distributorID==widget.currentDistributor.distributorID&& element.SKUID==widget.item.SKUID);
+    try{
+      mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
+          element.distributorID == widget.currentDistributor.distributorID &&
+          element.SKUID == widget.item.SKUID);
+      if (widget.isStock) {
+        widget._textEditingControllerPrimary.text =
+            mySKUStock.primaryStock.toString();
+        widget._textEditingControllerSecondary.text =
+            mySKUStock.alternativeStock.toString();
+      }
+    }catch(e){
+      mySKUStock = SKUStock(0, widget.item.SKUID, widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0);
+      if (widget.isStock) {
+        widget._textEditingControllerPrimary.text =
+            mySKUStock.primaryStock.toString();
+        widget._textEditingControllerSecondary.text =
+            mySKUStock.alternativeStock.toString();
+      }
+    }
     return Container(
       height: 60,
       width: double.infinity,
@@ -50,30 +78,45 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 SizedBox(
                   height: 5,
                 ),
-                Text(
-                  "Stock: " +
-                      allSKUStockLocal
-                          .firstWhere((element) =>
-                              element.distributorID ==
-                                  widget.currentDistributor.distributorID &&
-                              element.SKUID == widget.item.SKUID)
-                          .primaryStock
-                          .toString() +
-                      " Ctn " +
-                      allSKUStockLocal
-                          .firstWhere((element) =>
-                              element.distributorID ==
-                                  widget.currentDistributor.distributorID &&
-                              element.SKUID == widget.item.SKUID)
-                          .alternativeStock
-                          .toString() +
-                      " Pcs",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
-                  ),
-                )
+                allSKUStocksLocal == null
+                    ? Container()
+                    : Row(
+                        children: [
+                          Text(
+                            "Stock: ",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.green,
+                            ),
+                          ),
+                          mySKUStock.primaryStock == 0
+                              ? Container()
+                              : Text(
+                                  mySKUStock.primaryStock.toString() + " ${skuDistributorWise.primaryUnit}",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                          mySKUStock.primaryStock == 0 ||
+                                  mySKUStock.alternativeStock == 0
+                              ? Container()
+                              : SizedBox(width: 5),
+                          mySKUStock.alternativeStock == 0
+                              ? Container()
+                              : Text(
+                                  mySKUStock.alternativeStock.toString() +
+                                      " ${skuDistributorWise.alternativeUnit}",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                        ],
+                      )
               ],
             ),
           ),
@@ -100,7 +143,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
               ),
               textAlign: TextAlign.center,
               decoration: InputDecoration(
-                hintText: "carton",
+                hintText: skuDistributorWise.primaryUnit,
                 border: InputBorder.none,
               ),
             ),
@@ -129,7 +172,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 ),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  hintText: "pcs",
+                  hintText: skuDistributorWise.alternativeUnit,
                   border: InputBorder.none,
                 ),
               ),

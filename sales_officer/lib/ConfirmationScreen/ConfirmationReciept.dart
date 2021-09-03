@@ -17,6 +17,7 @@ class ConfirmationReciept extends StatefulWidget {
   final List<TextEditingController> _textEditingControllers;
   final List receiptData;
   final bool isNew;
+  final bool isStock;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
@@ -25,6 +26,7 @@ class ConfirmationReciept extends StatefulWidget {
       this._textEditingControllers,
       this.receiptData,
       this.isNew,
+      this.isStock,
       this.distributorOrder,
       this.distributorOrderItems);
 
@@ -36,8 +38,13 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   double totalAmount = 0;
   bool isLoading = false;
 
+
   @override
   Widget build(BuildContext context) {
+    SKUDistributorWise skuDistributorWise =
+    allSKUDistributorWiseLocal.firstWhere((element) =>
+    element.distributorID == widget.currentDistributor.distributorID &&
+        element.SKUID == widget.receiptData[0][0].SKUID);
     List aList = getTotalItems();
     return ListView(
       children: [
@@ -57,7 +64,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
               ),
               Text(aList[0].toString()),
               Text(
-                " Ctn",
+                " ${skuDistributorWise.primaryUnit}",
                 style: TextStyle(fontSize: 12),
               ),
               SizedBox(
@@ -65,7 +72,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
               ),
               Text(aList[1].toString()),
               Text(
-                " Pcs",
+                " ${skuDistributorWise.alternativeUnit}",
                 style: TextStyle(fontSize: 12),
               ),
             ],
@@ -128,7 +135,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                     (f) => IndividualConfirmationVariation(
                                         updateReceiptData,
                                         f,
-                                        deleteReceiptData),
+                                        deleteReceiptData, widget.currentDistributor),
                                   )
                                   .toList(),
                             ),
@@ -157,7 +164,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                       style: TextStyle(fontSize: 12),
                     ),
                     Text(
-                      " Pcs",
+                      " Rs.",
                       style: TextStyle(fontSize: 12),
                     ),
                   ],
@@ -193,8 +200,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                             setState(() {
                               isLoading = true;
                             });
-                            if (widget.isNew) {
-                              createOrder(
+                            if (widget.isStock) {
+                              updateStock(
                                       widget.currentDistributor.distributorID,
                                       widget._textEditingControllers,
                                       context)
@@ -202,14 +209,24 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                         isLoading = false;
                                       }));
                             } else {
-                              updateOrder(
-                                      widget.distributorOrder,
-                                      widget.distributorOrderItems,
-                                      widget._textEditingControllers,
-                                      context)
-                                  .then((value) => setState(() {
-                                        isLoading = false;
-                                      }));
+                              if (widget.isNew) {
+                                createOrder(
+                                        widget.currentDistributor.distributorID,
+                                        widget._textEditingControllers,
+                                        context)
+                                    .then((value) => setState(() {
+                                          isLoading = false;
+                                        }));
+                              } else {
+                                updateOrder(
+                                        widget.distributorOrder,
+                                        widget.distributorOrderItems,
+                                        widget._textEditingControllers,
+                                        context)
+                                    .then((value) => setState(() {
+                                          isLoading = false;
+                                        }));
+                              }
                             }
                           },
                           child: Center(

@@ -33,7 +33,7 @@ class SKUStockService {
           'primaryStock': skuStock.primaryStock.toString(),
           'alternativeStock': skuStock.alternativeStock.toString(),
           'secondaryAlternativeStock': skuStock.secondaryAlternativeStock.toString(),
-          'updatedTime': DateTime.now().toString().substring(0,19),
+          'updatedDate': DateTime.now().toString().substring(0,19),
           'lat' : value.longitude.toString(),
           'lng' : value.latitude.toString()
         }),

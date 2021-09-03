@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderService.dart';
+import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
 
 import '../../Database.dart';
 
@@ -155,4 +158,64 @@ Future<bool> updateOrder(
         .showSnackBar(SnackBar(content: Text("Order was not successful")));
     return false;
   }
+}
+
+Future<bool> updateStock(int distributorID,
+    List<TextEditingController> _textEditingControllers, context) async {
+  bool conditionOnly = true;
+  _textEditingControllers.forEach((textEditingController) {
+    if (_textEditingControllers.indexOf(textEditingController) % 2 == 0) {
+      int myPrimaryCount = 0;
+      int myAlternativeCount = 0;
+
+      if (textEditingController.text != "") {
+        myPrimaryCount = int.parse(textEditingController.text);
+      }
+      if (_textEditingControllers[
+                  _textEditingControllers.indexOf(textEditingController) + 1]
+              .text !=
+          "") {
+        myAlternativeCount = int.parse(_textEditingControllers[
+                _textEditingControllers.indexOf(textEditingController) + 1]
+            .text);
+      }
+      SKUStock mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
+      element.distributorID == distributorID &&
+          allSKULocal[_textEditingControllers
+              .indexOf(textEditingController) ~/
+              2]
+              .SKUID ==
+              element.SKUID);
+      SKUStockService skuStockService = SKUStockService();
+      Geolocator.getCurrentPosition().then((value) => skuStockService
+              .updateSKUStock(SKUStock(
+                  mySKUStock.SKUStockID,
+                  mySKUStock.SKUID,
+                  mySKUStock.distributorID,
+                  myPrimaryCount,
+                  myAlternativeCount,
+                  0,
+                  DateTime.now().toString(),
+                  value.latitude,
+                  value.longitude))
+              .then((value) {
+            if (!value) {
+              conditionOnly = false;
+            }
+          }));
+    }
+  });
+  if (conditionOnly) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Stock was successfully updated")));
+    print(conditionOnly);
+    return true;
+  } else {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Stock was not updated")));
+    return false;
+  }
+  return true;
 }

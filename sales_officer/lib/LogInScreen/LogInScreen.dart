@@ -48,10 +48,6 @@ class _LogInScreenState extends State<LogInScreen> {
         SKUService skuService = SKUService();
         skuService.fetchSKUs().then((value) {
           allSKULocal = value;
-          allSKUStockLocal = List.generate(
-              allSKULocal.length * allDistributorsLocal.length,
-              (index) => SKUStock(index, index ~/ allDistributorsLocal.length,
-                  index ~/ allSKULocal.length, 0, 0, 0, "", 0, 0));
           allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
             loadingText = "Getting SKU Distributor Wise";

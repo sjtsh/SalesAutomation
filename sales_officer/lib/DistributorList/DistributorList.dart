@@ -16,9 +16,10 @@ List colors = [Color(0xff7DDF5B), Color(0xffE86068), Color(0xff61ABEF)];
 class DistributorList extends StatelessWidget {
   final Distributor distributor;
   final bool isOrder;
+  final bool isStock;
   final int index;
 
-  DistributorList(this.distributor, this.isOrder, this.index);
+  DistributorList(this.distributor, this.isOrder, this.isStock, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class DistributorList extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) {
-                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true);
+                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true, isStock);
               },
             ),
           );

@@ -14,9 +14,16 @@ class ConfirmOrder extends StatefulWidget {
   final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
+  final bool isStock;
 
   ConfirmOrder(
-      this.currentDistributor, this._textEditingControllers, this.index, this.isNew, this.distributorOrder, this.distributorOrderItems);
+      this.currentDistributor,
+      this._textEditingControllers,
+      this.index,
+      this.isNew,
+      this.distributorOrder,
+      this.distributorOrderItems,
+      this.isStock);
 
   @override
   _ConfirmOrderState createState() => _ConfirmOrderState();
@@ -37,50 +44,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           color: Colors.green,
           // splashColor: Color(0xff1e5612),
           onPressed: () {
-            List receiptData = [];
-            widget._textEditingControllers.forEach((element) {
-              int primaryCount = 0;
-              int alternativeCount = 0;
-              if (widget._textEditingControllers.indexOf(element) % 2 == 0) {
-                if (element.text != "") {
-                  primaryCount = int.parse(element.text);
-                }
-                if (widget
-                        ._textEditingControllers[
-                            widget._textEditingControllers.indexOf(element) + 1]
-                        .text !=
-                    "") {
-                  alternativeCount = int.parse(widget
-                      ._textEditingControllers[
-                          widget._textEditingControllers.indexOf(element) + 1]
-                      .text);
-                }
-                if(primaryCount !=0 || alternativeCount!=0){
-                  receiptData.add([
-                    allSKULocal[
-                        widget._textEditingControllers.indexOf(element) ~/ 2],
-                    primaryCount,
-                    alternativeCount
-                  ]);
-                }
-              }
-            });
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) {
-                  return ConfirmationScreen(
-                    widget.currentDistributor,
-                    widget._textEditingControllers,
-                    receiptData,
-                    widget.index,
-                    widget.isNew,
-                    widget.distributorOrder,
-                    widget.distributorOrderItems,
-                  );
-                },
-              ),
-            );
+            takeToReciept();
           },
           child: Center(
             child: Text(
@@ -92,6 +56,53 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  takeToReciept() {
+    List receiptData = [];
+    widget._textEditingControllers.forEach((element) {
+      int primaryCount = 0;
+      int alternativeCount = 0;
+      if (widget._textEditingControllers.indexOf(element) % 2 == 0) {
+        if (element.text != "") {
+          primaryCount = int.parse(element.text);
+        }
+        if (widget
+                ._textEditingControllers[
+                    widget._textEditingControllers.indexOf(element) + 1]
+                .text !=
+            "") {
+          alternativeCount = int.parse(widget
+              ._textEditingControllers[
+                  widget._textEditingControllers.indexOf(element) + 1]
+              .text);
+        }
+        if (primaryCount != 0 || alternativeCount != 0) {
+          receiptData.add([
+            allSKULocal[widget._textEditingControllers.indexOf(element) ~/ 2],
+            primaryCount,
+            alternativeCount
+          ]);
+        }
+      }
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return ConfirmationScreen(
+            widget.currentDistributor,
+            widget._textEditingControllers,
+            receiptData,
+            widget.index,
+            widget.isNew,
+            widget.isStock,
+            widget.distributorOrder,
+            widget.distributorOrderItems,
+          );
+        },
       ),
     );
   }

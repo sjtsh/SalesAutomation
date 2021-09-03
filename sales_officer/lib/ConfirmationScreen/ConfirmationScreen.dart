@@ -14,11 +14,12 @@ class ConfirmationScreen extends StatelessWidget {
   final List receiptData;
   final int index;
   final bool isNew;
+  final bool isStock;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
   ConfirmationScreen(this.currentDistributor, this._textEditingControllers,
-      this.receiptData, this.index, this.isNew, this.distributorOrder, this.distributorOrderItems);
+      this.receiptData, this.index, this.isNew, this.isStock, this.distributorOrder, this.distributorOrderItems);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class ConfirmationScreen extends StatelessWidget {
                   "Distributor", currentDistributor.distributorName)),
           Expanded(
             child: ConfirmationReciept(currentDistributor,
-                _textEditingControllers, receiptData, isNew, distributorOrder, distributorOrderItems),
+                _textEditingControllers, receiptData, isNew, isStock, distributorOrder, distributorOrderItems),
           ),
         ],
       ),

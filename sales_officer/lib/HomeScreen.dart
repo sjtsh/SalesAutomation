@@ -26,13 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
     _setIndex(2);
     return false;
   }
+
   Widget _changeActivity(int i) {
     if (i == 0) {
-      return NewOrder(false, i);
+      return NewOrder(false, true, i);
     } else if (i == 1) {
-      return NewOrder(true, i);
+      return NewOrder(true, true, i);
     } else if (i == 2) {
-      return NewOrder(true, i);
+      return NewOrder(true, false, i);
     } else if (i == 3) {
       return PendingScreen();
     } else if (i == 4) {
@@ -44,19 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
-        onWillPop: _onBackPressed,
-        child: Scaffold(
-          drawer: DrawerScreen(),
-          bottomNavigationBar: i<5 ? NavBar(_setIndex): Container(),
-          backgroundColor: Color(0xffF5F5F5),
-          body: Column(
-            children: [
-              i==5? Header(i, false): Header(i, true),
-              Expanded(child: _changeActivity(i)),
-            ],
-          ),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        drawer: DrawerScreen(),
+        bottomNavigationBar: i < 5 ? NavBar(_setIndex) : Container(),
+        backgroundColor: Color(0xffF5F5F5),
+        body: Column(
+          children: [
+            i == 5 ? Header(i, false) : Header(i, true),
+            Expanded(child: _changeActivity(i)),
+          ],
         ),
+      ),
     );
   }
 }

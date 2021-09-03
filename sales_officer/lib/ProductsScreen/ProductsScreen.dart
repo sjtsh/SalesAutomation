@@ -30,13 +30,14 @@ class ProductsScreen extends StatefulWidget {
   final int index;
   final DistributorOrder distributorOrder;
   final bool isNew;
+  final bool isStock;
 
   final SKUStockService skuStockService = SKUStockService();
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
-  ProductsScreen(
-      this.currentDistributor, this.index, this.distributorOrder, this.isNew);
+  ProductsScreen(this.currentDistributor, this.index, this.distributorOrder,
+      this.isNew, this.isStock);
 
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
@@ -82,59 +83,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
     super.initState();
     _textEditingControllers = List.generate(
         allSKULocal.length * 2, (index) => TextEditingController());
-
-    if (widget.distributorOrder.distributorID != -1) {
-      DistributorOrderItemService distributorOrderItemService =
-          DistributorOrderItemService();
-      distributorOrderItemService.fetchDistributorOrderItems().then((value) {
-        distributorOrderItems = [];
-        value.forEach((element) {
-          if (element.distributorOrderID ==
-              widget.distributorOrder.distributorOrderID) {
-            distributorOrderItems.add(element);
-          }
-        });
-
-        distributorOrderItems.forEach((element) {
-          print(element.SKUID.toString() +
-              " " +
-              element.alternativeItemCount.toString() +
-              " " +
-              element.primaryItemCount.toString());
-        });
-
-        distributorOrderItems.forEach((element) {
-          _textEditingControllers[allSKULocal.indexOf(allSKULocal
-                      .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
-                  2]
-              .text = element.primaryItemCount.toString();
-          _textEditingControllers[allSKULocal.indexOf(allSKULocal
-                          .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
-                      2 +
-                  1]
-              .text = element.alternativeItemCount.toString();
-        });
-      });
+    if (!widget.isNew) {
+      _editOrder(_textEditingControllers);
     }
-
-    widget._scrollController.addListener(() {
-      if (widget._scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if (!scrollingDown) {
-          setState(() {
-            scrollingDown = true;
-          });
-        }
-      }
-      if (widget._scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if (scrollingDown) {
-          setState(() {
-            scrollingDown = false;
-          });
-        }
-      }
-    });
+    _addScrollListeners();
   }
 
   @override
@@ -202,18 +154,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 future: widget.skuStockService.fetchSKUStocks(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<List<SKUStock>> snapshot) {
+                                  allSKUStocksLocal = snapshot.data;
                                   return ProductList(
                                       allSubGroupsLocal,
                                       widget._scrollController,
                                       _textEditingControllers,
-                                      widget.currentDistributor);
+                                      widget.currentDistributor,
+                                      widget.isStock);
                                 },
                               )
                             : ProductList(
                                 productList,
                                 widget._scrollController,
                                 _textEditingControllers,
-                                widget.currentDistributor)),
+                                widget.currentDistributor,
+                                widget.isStock)),
                   ],
                 ),
               ),
@@ -235,10 +190,66 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 widget.index,
                 widget.isNew,
                 widget.distributorOrder,
-                distributorOrderItems),
+                distributorOrderItems,
+                widget.isStock),
           ),
         ],
       ),
     );
+  }
+
+  _addScrollListeners() {
+    widget._scrollController.addListener(() {
+      if (widget._scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!scrollingDown) {
+          setState(() {
+            scrollingDown = true;
+          });
+        }
+      }
+      if (widget._scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (scrollingDown) {
+          setState(() {
+            scrollingDown = false;
+          });
+        }
+      }
+    });
+  }
+
+  _editOrder(List<TextEditingController> _textEditingControllers) {
+    DistributorOrderItemService distributorOrderItemService =
+        DistributorOrderItemService();
+    distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+      distributorOrderItems = [];
+      value.forEach((element) {
+        if (element.distributorOrderID ==
+            widget.distributorOrder.distributorOrderID) {
+          distributorOrderItems.add(element);
+        }
+      });
+
+      distributorOrderItems.forEach((element) {
+        print(element.SKUID.toString() +
+            " " +
+            element.alternativeItemCount.toString() +
+            " " +
+            element.primaryItemCount.toString());
+      });
+
+      distributorOrderItems.forEach((element) {
+        _textEditingControllers[allSKULocal.indexOf(allSKULocal
+                    .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
+                2]
+            .text = element.primaryItemCount.toString();
+        _textEditingControllers[allSKULocal.indexOf(allSKULocal
+                        .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
+                    2 +
+                1]
+            .text = element.alternativeItemCount.toString();
+      });
+    });
   }
 }

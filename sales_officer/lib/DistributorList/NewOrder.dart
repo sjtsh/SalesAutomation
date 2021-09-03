@@ -9,10 +9,11 @@ import 'DistributorList.dart';
 class NewOrder extends StatefulWidget {
   final bool isOrder;
   final int index;
+  final bool isStock;
 
   final DistributorService distributorService = DistributorService();
 
-  NewOrder(this.isOrder, this.index);
+  NewOrder(this.isOrder, this.isStock, this.index);
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -108,7 +109,7 @@ class _NewOrderState extends State<NewOrder> {
                   children: allDistributorsLocal
                       .map(
                         (item) =>
-                            DistributorList(item, widget.isOrder, widget.index),
+                            DistributorList(item, widget.isOrder, widget.isStock, widget.index),
                       )
                       .toList(),
                 )
@@ -116,7 +117,7 @@ class _NewOrderState extends State<NewOrder> {
                   children: searchedDistributorsLocal
                       .map(
                         (item) =>
-                            DistributorList(item, widget.isOrder, widget.index),
+                            DistributorList(item, widget.isOrder, widget.isStock, widget.index),
                       )
                       .toList(),
                 ),

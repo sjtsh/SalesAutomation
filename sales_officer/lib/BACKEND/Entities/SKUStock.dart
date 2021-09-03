@@ -5,12 +5,12 @@ class SKUStock {
   final int primaryStock;
   final int alternativeStock;
   final int secondaryAlternativeStock;
-  final String updatedTime;
+  final String updatedDate;
   final double lat;
   final double lng;
 
   SKUStock(this.SKUStockID, this.SKUID, this.distributorID,
-      this.primaryStock, this.alternativeStock, this.secondaryAlternativeStock, this.updatedTime, this.lat, this.lng, );
+      this.primaryStock, this.alternativeStock, this.secondaryAlternativeStock, this.updatedDate, this.lat, this.lng, );
 
   factory SKUStock.fromJson(Map<String, dynamic> json) {
     return SKUStock(

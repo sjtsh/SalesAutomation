@@ -9,7 +9,7 @@ List<Distributor> allDistributorsLocal = [];
 List<SubGroup> allSubGroupsLocal = [];
 List<SKU> allSKULocal = [];
 List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
-List<SKUStock> allSKUStockLocal = [];
+List<SKUStock>? allSKUStocksLocal;
 List products = [
   "Chiura",
   "Choco plus",

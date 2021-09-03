@@ -13,9 +13,10 @@ class SingularProduct extends StatelessWidget {
   final List<ExpandableController> _expandableControllers;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
+  final bool isStock;
 
   SingularProduct(this.item, this.expandableControllerIndex,
-      this._expandableControllers, this._textEditingControllers, this.currentDistributor);
+      this._expandableControllers, this._textEditingControllers, this.currentDistributor, this.isStock);
 
   unExpand() {
     if (!_expandableControllers[expandableControllerIndex].expanded) {
@@ -44,7 +45,7 @@ class SingularProduct extends StatelessWidget {
                 .map((item) => SingularProductVariation(
                     item,
                     _textEditingControllers[allSKULocal.indexOf(item) * 2],
-                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1], currentDistributor))
+                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1], currentDistributor, isStock))
                 .toList(),
           ),
         ],

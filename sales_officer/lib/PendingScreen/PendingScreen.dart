@@ -6,9 +6,6 @@ import 'package:sales_officer/PendingScreen/OrdersList.dart';
 import 'package:sales_officer/Skeletons/PendingOrderSkeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../Database.dart';
-import 'SingularPending.dart';
-
 List headers = ["Pending Orders", "Approved Orders"];
 
 class PendingScreen extends StatefulWidget {

@@ -11,9 +11,10 @@ class ProductList extends StatefulWidget {
   final ScrollController _scrollController;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
+  final bool isStock;
 
   ProductList(this.subGroupList, this._scrollController,
-      this._textEditingControllers, this.currentDistributor);
+      this._textEditingControllers, this.currentDistributor, this.isStock);
 
   @override
   _ProductListState createState() => _ProductListState();
@@ -26,6 +27,7 @@ class _ProductListState extends State<ProductList> {
   Widget build(BuildContext context) {
     _expandableControllers = List.generate(
         widget.subGroupList.length, (index) => ExpandableController());
+
     return ListView(
       controller: widget._scrollController,
       children: widget.subGroupList
@@ -35,7 +37,7 @@ class _ProductListState extends State<ProductList> {
                 widget.subGroupList.indexOf(item),
                 _expandableControllers,
                 widget._textEditingControllers,
-                widget.currentDistributor),
+                widget.currentDistributor, widget.isStock),
           )
           .toList(),
     );

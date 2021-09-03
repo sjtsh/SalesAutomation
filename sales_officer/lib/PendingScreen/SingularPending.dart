@@ -106,14 +106,34 @@ class SingularPending extends StatelessWidget {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (_) {
                                         return ProductsScreen(
-                                            distributor, 6, e, false);
+                                            distributor, 6, e, false, false);
                                       }));
                                     },
-                                    child: Center(child: Text("Edit")))),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.edit),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(child: Text("Edit")),
+                                      ],
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                    ))),
                             PopupMenuItem(
                                 child: GestureDetector(
                                     onTap: () {},
-                                    child: Center(child: Text("Share")))),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.share),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(child: Text("Share")),
+                                      ],
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                    ))),
                           ];
                         },
                       ),
