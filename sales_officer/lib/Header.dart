@@ -8,7 +8,8 @@ List heading = [
   "Orders",
   "Dashboard",
   "Notifications",
-  "Edit Order"
+  "Edit Order",
+  "Tour Plan",
 ];
 
 class Header extends StatelessWidget {

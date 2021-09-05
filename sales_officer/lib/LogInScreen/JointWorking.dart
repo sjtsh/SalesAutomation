@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/Database.dart';
 
+import '../LeaveScreen.dart';
 import 'SelectBeat.dart';
 
 class JointWorking extends StatelessWidget {
@@ -14,6 +16,7 @@ class JointWorking extends StatelessWidget {
         GestureDetector(
           onTap: () {
             select();
+            isJoint = false;
           },
           child: Container(
             height: 60,
@@ -45,7 +48,10 @@ class JointWorking extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            select();
+            isJoint = true;
+          },
           child: Container(
             height: 60,
             decoration: BoxDecoration(
@@ -76,7 +82,11 @@ class JointWorking extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_){
+            return LeaveScreen();
+          }));
+          },
           child: Container(
             height: 60,
             decoration: BoxDecoration(

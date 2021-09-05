@@ -10,6 +10,7 @@ List<SubGroup> allSubGroupsLocal = [];
 List<SKU> allSKULocal = [];
 List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
 List<SKUStock>? allSKUStocksLocal;
+bool? isJoint;
 List products = [
   "Chiura",
   "Choco plus",
