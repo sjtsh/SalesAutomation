@@ -26,6 +26,7 @@ class ApproveOrderScreen extends StatefulWidget {
 class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
   List<DistributorOrderItem> distributorOrderItems = [];
   double totalAmount = 0;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -55,6 +56,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       });
       setState(() {
         distributorOrderItems = aList;
+        isLoading = false;
       });
     });
   }
@@ -216,7 +218,17 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                         ),
                         ExpandablePanel(
                           collapsed: OrderItemsHeader(),
-                          expanded: OrderItemsExpanded(distributorOrderItems),
+                          expanded: isLoading
+                              ? Column(
+                                  children: [
+                                    OrderItemsHeader(),
+                                    Container(
+                                        height: 100,
+                                        color: Color(0xffF5F5F5),
+                                        child: Center(child: CircularProgressIndicator())),
+                                  ],
+                                )
+                              : OrderItemsExpanded(distributorOrderItems),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

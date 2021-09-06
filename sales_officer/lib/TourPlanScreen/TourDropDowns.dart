@@ -7,8 +7,9 @@ class TourDropDowns extends StatefulWidget {
   final int startDate;
   final int endDate;
   final DateTime now;
+  final Function setIsModalTrue;
 
-  TourDropDowns(this.startDate, this.endDate, this.now);
+  TourDropDowns(this.startDate, this.endDate, this.now, this.setIsModalTrue);
   @override
   _TourDropDownsState createState() => _TourDropDownsState();
 }
@@ -21,7 +22,7 @@ class _TourDropDownsState extends State<TourDropDowns> {
       child: ListView(
           children: List.generate(widget.endDate - widget.startDate + 1,
                   (index) {
-                return SingularTourDropDown(widget.startDate, widget.endDate, widget.now, index);
+                return SingularTourDropDown(widget.startDate, widget.endDate, widget.now, index, widget.setIsModalTrue);
               })),
     );
   }

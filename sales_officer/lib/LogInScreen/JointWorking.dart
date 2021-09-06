@@ -13,100 +13,104 @@ class JointWorking extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
-          onTap: () {
-            select();
-            isJoint = false;
-          },
-          child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.black.withOpacity(0.1)),
+        Material(
+        color: Colors.white,
+          child: InkWell(
+            onTap: () {
+              select();
+              isJoint = false;
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black.withOpacity(0.1)),
+                ),
               ),
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Start Retailing",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Expanded(child: Container()),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Start Retailing",
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            select();
-            isJoint = true;
-          },
-          child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.black.withOpacity(0.1)),
+        Material(
+          color: Colors.white,
+          child: InkWell(
+            onTap: () {
+              select();
+              isJoint = true;
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black.withOpacity(0.1)),
+                ),
               ),
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Joint Working",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Expanded(child: Container()),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Joint Working",
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_){
-            return LeaveScreen();
-          }));
-          },
-          child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Leave/week off",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Expanded(child: Container()),
-                Icon(Icons.arrow_forward, color: Colors.black),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
+        Material(
+          color: Colors.white,
+          child: InkWell(
+            onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_){
+              return LeaveScreen();
+            }));
+            },
+            child: Container(
+              height: 60,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Leave/week off",
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(Icons.arrow_forward, color: Colors.black),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

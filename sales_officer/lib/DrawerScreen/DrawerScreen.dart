@@ -20,39 +20,45 @@ class DrawerScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.1),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("My Performance"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("My Performance"),
+                    ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.1),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Change Beat"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Change Beat"),
+                    ),
                   ),
                 ),
                 InkWell(
                   onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                    return TourPlanScreen();
-                  }));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return TourPlanScreen();
+                    }));
                   },
                   child: Container(
                     width: double.infinity,
@@ -69,32 +75,38 @@ class DrawerScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.1),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Share Order"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("Share Order"),
+                    ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.1),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("FAQ"),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text("FAQ"),
+                    ),
                   ),
                 ),
               ],
@@ -103,13 +115,13 @@ class DrawerScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Container(
-            clipBehavior: Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: MaterialButton(
                 color: Colors.green,
-                minWidth: MediaQuery.of(context).size.width-24,
+                minWidth: MediaQuery.of(context).size.width - 24,
                 onPressed: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -127,7 +139,9 @@ class DrawerScreen extends StatelessWidget {
               color: Colors.black.withOpacity(0.5),
             ),
           ),
-          SizedBox(height: 12,),
+          SizedBox(
+            height: 12,
+          ),
         ],
       ),
     );

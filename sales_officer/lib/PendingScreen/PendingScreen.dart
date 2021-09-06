@@ -62,7 +62,7 @@ class _PendingScreenState extends State<PendingScreen> {
                               bottom: BorderSide(
                                 color: isTabPending
                                     ? Colors.blue
-                                    : Colors.transparent,
+                                    : Colors.black.withOpacity(0.1),
                                 width: 2,
                               ),
                             ),
@@ -70,7 +70,7 @@ class _PendingScreenState extends State<PendingScreen> {
                           child: Center(
                             child: Text(
                               "PENDING",
-                              style: TextStyle(color: isTabPending ? Colors.blue: Colors.black),
+                              style: TextStyle(color: isTabPending ? Colors.blue: Colors.black.withOpacity(0.5)),
                             ),
                           ),
                         ),
@@ -89,7 +89,7 @@ class _PendingScreenState extends State<PendingScreen> {
                               top: BorderSide(color: Colors.black.withOpacity(0.1)),
                               bottom: BorderSide(
                                 color: isTabPending
-                                    ? Colors.transparent
+                                    ? Colors.black.withOpacity(0.1)
                                     : Colors.blue,
                                 width: 2,
                               ),
@@ -98,7 +98,7 @@ class _PendingScreenState extends State<PendingScreen> {
                           child: Center(
                             child: Text(
                               "APPROVED",
-                              style: TextStyle(color: isTabPending ? Colors.black: Colors.blue),
+                              style: TextStyle(color: isTabPending ? Colors.black.withOpacity(0.5): Colors.blue),
                             ),
                           ),
                         ),

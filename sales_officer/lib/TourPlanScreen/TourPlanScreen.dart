@@ -65,19 +65,19 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                                   width: 3))),
                       child: Center(
                           child: Text(
-                            "Start Day",
-                            style: TextStyle(
-                                color: isStartCondition
-                                    ? Colors.green
-                                    : Colors.black.withOpacity(0.1)),
-                          )),
+                        "Start Day",
+                        style: TextStyle(
+                            color: isStartCondition
+                                ? Colors.green
+                                : Colors.black.withOpacity(0.1)),
+                      )),
                     ),
                   ),
                 ),
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      if(!isButton1Disabled){
+                      if (!isButton1Disabled) {
                         setState(() {
                           isStartCondition = false;
                         });
@@ -96,12 +96,12 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                                   width: 3))),
                       child: Center(
                           child: Text(
-                            "End Day",
-                            style: TextStyle(
-                                color: !isStartCondition
-                                    ? Colors.blue
-                                    : Colors.black.withOpacity(0.1)),
-                          )),
+                        "End Day",
+                        style: TextStyle(
+                            color: !isStartCondition
+                                ? Colors.blue
+                                : Colors.black.withOpacity(0.1)),
+                      )),
                     ),
                   ),
                 )
@@ -110,99 +110,102 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
           ),
           isStartCondition
               ? Expanded(
-            child: Container(
-              margin: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2))
-                ],
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      "${months[now.month - 1]} ${now.year}",
-                      style: TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                  child: Container(
+                    margin: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 3,
+                            offset: Offset(0, 2))
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "${months[now.month - 1]} ${now.year}",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                          child: Calendar(now.month, startDay, endDay,
+                              setStartDay, setEndDay, isStartCondition),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: Calendar(now.month, startDay, endDay,
-                        setStartDay, setEndDay, isStartCondition),
-                  ),
-                ],
-              ),
-            ),
-          )
+                )
               : Expanded(
-            child: Container(
-              margin: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2))
-                ],
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      "${months[now.month]} ${now.year}",
-                      style: TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.bold),
+                  child: Container(
+                    margin: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 3,
+                            offset: Offset(0, 2))
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "${months[now.month]} ${now.year}",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Expanded(
+                            child: Calendar(now.month + 1, startDay, endDay,
+                                setStartDay, setEndDay, isStartCondition)),
+                      ],
                     ),
                   ),
-                  Expanded(
-                      child: Calendar(now.month + 1, startDay, endDay,
-                          setStartDay, setEndDay, isStartCondition)),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: InkWell(
-              onTap: () {
-                if (isStartCondition) {
-                  if(!isButton1Disabled){
-                    setState(() {
-                      isStartCondition = false;
-                    });
-                  }
-                } else {
-                  if(!isButton2Disabled){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                      return EditTourPlanScreen(startDay, endDay, now);
-                    }));
-                  }
-                }
-              },
-              child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width - 24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: isStartCondition && !isButton1Disabled? Colors.green: !isStartCondition && !isButton2Disabled? Colors.blue: Colors.blueGrey,
                 ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: MaterialButton(
+                color: isStartCondition && !isButton1Disabled
+                    ? Colors.green
+                    : !isStartCondition && !isButton2Disabled
+                        ? Colors.blue
+                        : Colors.blueGrey,
+                onPressed: () {
+                  if (isStartCondition) {
+                    if (!isButton1Disabled) {
+                      setState(() {
+                        isStartCondition = false;
+                      });
+                    }
+                  } else {
+                    if (!isButton2Disabled) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return EditTourPlanScreen(startDay, endDay, now);
+                      }));
+                    }
+                  }
+                },
                 child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      isStartCondition ? "Next" : "Create Tour Plan",
-                      style: TextStyle(color: Colors.white),
+                  child: Text(
+                    isStartCondition ? "Next" : "Create Tour Plan",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

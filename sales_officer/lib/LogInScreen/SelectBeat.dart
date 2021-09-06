@@ -17,42 +17,44 @@ class _SelectBeatState extends State<SelectBeat> {
         "Pahelo Pool - Rato Pool",
         "Gopikrishna - Pahelo Pool",
         "Kalo Pool - Rato Pool",
-        "Kalo Pool - Rato Pool",
-        "Kalo Pool - Rato Pool",
-        "Kalo Pool - Rato Pool",
+        "Rato Pool - New Pool",
       ]
           .asMap()
           .entries
-          .map((e) => GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                },
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
+          .map((e) => Material(
+                color: Colors.white,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => HomeScreen()));
+                  },
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.1)),
                       ),
-                      Text(
-                        e.value,
-                        style: TextStyle(
-                            fontSize: 18,
-                            color:Colors.black),
-                      ),
-                      Expanded(child: Container()),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          e.value,
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                        Expanded(child: Container()),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ))

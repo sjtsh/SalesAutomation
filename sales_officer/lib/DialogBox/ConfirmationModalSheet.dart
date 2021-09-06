@@ -168,17 +168,20 @@ class ConfirmationModalSheet extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Container(
                           clipBehavior: Clip.hardEdge,
+                          width: double.infinity,
+                          height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: MaterialButton(
+                            onPressed: () => Navigator.pop(context),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   'Cancel',
                                   style: TextStyle(color: Colors.white),
@@ -191,15 +194,35 @@ class ConfirmationModalSheet extends StatelessWidget {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: RawMaterialButton(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(12)),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              int primaryCountNew =
+                                  _textEditingControllerPrimary.text == ""
+                                      ? f[1]
+                                      : int.parse(
+                                          _textEditingControllerPrimary.text);
+                              int alternativeCountNew =
+                                  _textEditingControllerAlternative.text == ""
+                                      ? f[2]
+                                      : int.parse(
+                                          _textEditingControllerAlternative
+                                              .text);
+                              updateReceiptData(
+                                  f, primaryCountNew, alternativeCountNew);
+                              Navigator.pop(context);
+                            },
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding: const EdgeInsets.all(5.0),
                                 child: Text(
                                   'Update',
                                   style: TextStyle(color: Colors.white),
@@ -207,21 +230,6 @@ class ConfirmationModalSheet extends StatelessWidget {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            int primaryCountNew = _textEditingControllerPrimary
-                                        .text ==
-                                    ""
-                                ? f[1]
-                                : int.parse(_textEditingControllerPrimary.text);
-                            int alternativeCountNew =
-                                _textEditingControllerAlternative.text == ""
-                                    ? f[2]
-                                    : int.parse(
-                                        _textEditingControllerAlternative.text);
-                            updateReceiptData(
-                                f, primaryCountNew, alternativeCountNew);
-                            Navigator.pop(context);
-                          },
                         ),
                       ),
                     ),

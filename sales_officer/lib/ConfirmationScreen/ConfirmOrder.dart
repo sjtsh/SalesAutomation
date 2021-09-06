@@ -42,7 +42,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
         ),
         child: MaterialButton(
           color: Colors.green,
-          // splashColor: Color(0xff1e5612),
           onPressed: () {
             takeToReciept();
           },

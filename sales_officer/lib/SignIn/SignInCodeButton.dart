@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/ActivationCode/ActivationCode.dart';
+import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 
 class SignInCodeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: MaterialButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
+      padding: const EdgeInsets.symmetric(horizontal: 36.0),
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        height: 60,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.red)),
+        child: MaterialButton(
           onPressed: () {
-          print("logged in with activation code");
+            print("logged in with activation code");
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ActivationCode()),
             );
           },
-          child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.red)),
-            child: Center(
-              child: Text(
-                "Already have an activation code",
-                style: TextStyle(color: Colors.red, fontSize: 16),
-              ),
+          child: Center(
+            child: Text(
+              "Already have an activation code",
+              style: TextStyle(color: Colors.red, fontSize: 16),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

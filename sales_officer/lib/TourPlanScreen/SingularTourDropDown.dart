@@ -1,30 +1,48 @@
 import 'package:flutter/material.dart';
 
 import '../Database.dart';
+import 'ModalSheet/ModalSheetTourPlan.dart';
 
 class SingularTourDropDown extends StatefulWidget {
   final int startDate;
   final int endDate;
   final DateTime now;
   final int index;
+  final Function setIsModalTrue;
 
-  SingularTourDropDown(this.startDate, this.endDate, this.now, this.index);
+  SingularTourDropDown(
+      this.startDate, this.endDate, this.now, this.index, this.setIsModalTrue);
 
   @override
   _SingularTourDropDownState createState() => _SingularTourDropDownState();
 }
 
 class _SingularTourDropDownState extends State<SingularTourDropDown> {
-  String dropDownValue = "Activity";
+  String activityValue = "Choose";
+  String detailValue = "Details - Beat/Schedule/Comments";
+
+  setDetail(String detail) {
+    setState(() {
+      detailValue = detail;
+    });
+  }
+
+  setActivity(String activity) {
+    setState(() {
+      activityValue = activity;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    String todayText =
+        "${weeks[(widget.now.weekday + widget.index) % 7]}, ${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? (widget.startDate + widget.index) % dates[widget.now.month - 1] : (widget.startDate + widget.index)} - ${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? months[widget.now.month] : months[widget.now.month - 1]} - ${widget.now.year}";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
       child: Container(
         height: 50,
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
@@ -33,71 +51,59 @@ class _SingularTourDropDownState extends State<SingularTourDropDown> {
                 offset: Offset(0, 2))
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${weeks[(widget.now.weekday + widget.index) % 7]}, ${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? (widget.startDate + widget.index) % dates[widget.now.month - 1] : (widget.startDate + widget.index)}-${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? months[widget.now.month] : months[widget.now.month - 1]}-${widget.now.year}",
-                style: TextStyle(
-                  color: Colors.purple,
-                  fontSize: 10,
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    DropdownButton(
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      onChanged: (_value) {
-                        setState(() {
-                          dropDownValue = _value as String;
-                        });
-                      },
-                      underline: Container(),
-                      value: dropDownValue,
-                      items: <String>[
-                        "Activity",
-                        "Retailing",
-                        "Leave",
-                        "Holiday",
-                        "Weekly Off",
-                        "Depot Visit",
-                        "Distributor Search",
-                        "Other Activities",
-                        "Meeting",
-                        "Training"
-                      ]
-                          .map((e) => DropdownMenuItem<String>(
+        child: Material(
+          child: InkWell(
+            onTap: () {
+              widget.setIsModalTrue(todayText, setActivity, setDetail);
+            },
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    todayText,
+                    style: TextStyle(
+                      color: Colors.purple,
+                      fontSize: 10,
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 140,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Container(child: Text(activityValue))),
+                              Icon(Icons.keyboard_arrow_down_outlined),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: Color(0xffF5F5F5),
+                            height: 30,
+                            child: Center(
                                 child: Text(
-                                  e,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                value: e,
-                              ))
-                          .toList(),
+                              detailValue,
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.black.withOpacity(0.5)),
+                            )),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Container(
-                        color: Color(0xffF5F5F5),
-                        height: 30,
-                        child: Center(
-                            child: Text(
-                          "Details - Beat/Schedule/Comments",
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.black.withOpacity(0.5)),
-                        )),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

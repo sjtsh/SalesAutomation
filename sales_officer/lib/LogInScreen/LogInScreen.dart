@@ -76,7 +76,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 Container(
                   margin: EdgeInsets.all(12),
                   alignment: Alignment.centerLeft,
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },

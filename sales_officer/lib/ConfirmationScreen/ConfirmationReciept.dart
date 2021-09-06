@@ -38,13 +38,12 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   double totalAmount = 0;
   bool isLoading = false;
 
-
   @override
   Widget build(BuildContext context) {
     SKUDistributorWise skuDistributorWise =
-    allSKUDistributorWiseLocal.firstWhere((element) =>
-    element.distributorID == widget.currentDistributor.distributorID &&
-        element.SKUID == widget.receiptData[0][0].SKUID);
+        allSKUDistributorWiseLocal.firstWhere((element) =>
+            element.distributorID == widget.currentDistributor.distributorID &&
+            element.SKUID == widget.receiptData[0][0].SKUID);
     List aList = getTotalItems();
     return ListView(
       children: [
@@ -135,7 +134,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                     (f) => IndividualConfirmationVariation(
                                         updateReceiptData,
                                         f,
-                                        deleteReceiptData, widget.currentDistributor),
+                                        deleteReceiptData,
+                                        widget.currentDistributor),
                                   )
                                   .toList(),
                             ),

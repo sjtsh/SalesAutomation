@@ -36,7 +36,6 @@ class _NewOrderState extends State<NewOrder> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           height: 80,
@@ -104,23 +103,36 @@ class _NewOrderState extends State<NewOrder> {
           ),
         ),
         Expanded(
-          child: !isSearching
-              ? ListView(
-                  children: allDistributorsLocal
-                      .map(
-                        (item) =>
-                            DistributorList(item, widget.isOrder, widget.isStock, widget.index),
-                      )
-                      .toList(),
-                )
-              : ListView(
-                  children: searchedDistributorsLocal
-                      .map(
-                        (item) =>
-                            DistributorList(item, widget.isOrder, widget.isStock, widget.index),
-                      )
-                      .toList(),
+          child: SingleChildScrollView(
+            child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  offset: Offset(0, 2),
+                  blurRadius: 3,
                 ),
+              ],
+            ),
+              child: !isSearching
+                  ? Column(
+                      children: allDistributorsLocal
+                          .map(
+                            (item) =>
+                                DistributorList(item, widget.isOrder, widget.isStock, widget.index),
+                          )
+                          .toList(),
+                    )
+                  : Column(
+                      children: searchedDistributorsLocal
+                          .map(
+                            (item) =>
+                                DistributorList(item, widget.isOrder, widget.isStock, widget.index),
+                          )
+                          .toList(),
+                    ),
+            ),
+          ),
         ),
       ],
     );

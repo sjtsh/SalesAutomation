@@ -24,18 +24,16 @@ class _ActivationCodeState extends State<ActivationCode> {
       backgroundColor: Color(0xffF5F5F5),
       body: Column(
         children: [
-          Material(
-          color: Colors.white,
+          Container(
+            margin: EdgeInsets.all(12),
+            alignment: Alignment.centerLeft,
             child: InkWell(
+
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Container(
-                margin: EdgeInsets.all(12),
-                alignment: Alignment.centerLeft,
-                child: Icon(
-                  Icons.arrow_back,
-                ),
+              child: Icon(
+                Icons.arrow_back,
               ),
             ),
           ),

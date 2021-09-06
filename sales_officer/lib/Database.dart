@@ -38,3 +38,15 @@ List<String> months = [
   "Chaitra"
 ];
 List<String> weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+List options = [
+  ["Retailing", true],
+  ["Leave", false],
+  ["Holiday", false],
+  ["Weekly Off", false],
+  ["Depot Visit", true],
+  ["Distributor Search", true],
+  ["Other Activities", true],
+  ["Meeting", true],
+  ["Training", true],
+];
+List beats = ["Baluwatar", "Golfutar", "Maharajgunj", "Koteshwor 4", "Kritipur 1"];

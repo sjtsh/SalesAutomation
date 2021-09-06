@@ -33,19 +33,22 @@ class Header extends StatelessWidget {
       ),
       child: Row(
         children: [
-          InkWell(
-            onTap: () {
-              if (condition) {
-                Scaffold.of(context).openDrawer();
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-            child: Ink(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Icon(condition ? Icons.menu : Icons.arrow_back),
-              ),
+          Material(
+            color: Colors.white,
+            child: InkWell(
+              onTap: () {
+                if (condition) {
+                  Scaffold.of(context).openDrawer();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  child: Center(
+                      child: Icon(condition ? Icons.menu : Icons.arrow_back))),
             ),
           ),
           Text(

@@ -23,83 +23,78 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () async {
-        if (isOrder) {
-          print("4 into 5");
-          NavBar.onItemTapped(5);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) {
-                return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true, isStock);
-              },
-            ),
-          );
-        } else {
-          print("4 into 5");
-          NavBar.onItemTapped(6);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) {
-                return DistributorInfo(distributor);
-              },
-            ),
-          );
-        }
-      },
-      child: Container(
-        padding: EdgeInsets.only(left: 20),
-        alignment: Alignment.centerLeft,
-        height: 60,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: Offset(0, 2),
-              blurRadius: 3,
-            ),
-          ],
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.black.withOpacity(0.1),
+    return Material(
+      color: Colors.white,
+      child: InkWell(
+        onTap: () async {
+          if (isOrder) {
+            print("4 into 5");
+            NavBar.onItemTapped(5);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) {
+                  return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true, isStock);
+                },
+              ),
+            );
+          } else {
+            print("4 into 5");
+            NavBar.onItemTapped(6);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) {
+                  return DistributorInfo(distributor);
+                },
+              ),
+            );
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.only(left: 20),
+          alignment: Alignment.centerLeft,
+          height: 60,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.black.withOpacity(0.1),
+              ),
             ),
           ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: colors[index],
+          child: Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colors[index],
+                ),
+                child: Center(
+                    child: Text(
+                  getInitials(distributor.distributorName),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                )),
               ),
-              child: Center(
-                  child: Text(
-                getInitials(distributor.distributorName),
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              )),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Text(
-                "${distributor.distributorName}",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 16,
+              SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Text(
+                  "${distributor.distributorName}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
