@@ -9,15 +9,18 @@ class LeaveScreen extends StatelessWidget {
       backgroundColor: Color(0xffF5F5F5),
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.all(12),
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
+          Material(
+          color: Colors.white,
+            child: InkWell(
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(
-                Icons.arrow_back,
+              child: Container(
+                margin: EdgeInsets.all(12),
+                alignment: Alignment.centerLeft,
+                child: Icon(
+                  Icons.arrow_back,
+                ),
               ),
             ),
           ),
@@ -32,15 +35,18 @@ class LeaveScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.black.withOpacity(0.5)),
                   ),
-                  child: TextField(
-                    cursorColor: Colors.black,
-                    style: TextStyle(fontSize: 20),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: TextField(
+                      cursorColor: Colors.black,
+                      style: TextStyle(fontSize: 20),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      minLines: null,
+                      maxLines: null,
+                      expands: true,
                     ),
-                    minLines: null,
-                    maxLines: null,
-                    expands: true,
                   ),
                 )),
               ],

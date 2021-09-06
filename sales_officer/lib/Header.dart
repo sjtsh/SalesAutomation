@@ -49,23 +49,34 @@ class Header extends StatelessWidget {
             ),
           ),
           Text(
-            heading[index],style: TextStyle(fontWeight: FontWeight.bold),
+            heading[index],
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Container(),
           ),
-          GestureDetector(
-            onTap: () {
-              if(condition){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NotificationScreen()));
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: condition? Icon(Icons.notifications_active_outlined):Container(),
+          Material(
+            color: Colors.white,
+            child: InkWell(
+              onTap: () {
+                if (condition) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationScreen()));
+                }
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: condition
+                    ? Center(
+                        child: Icon(
+                        Icons.notifications_active_outlined,
+                      ))
+                    : Container(),
+              ),
             ),
           ),
         ],

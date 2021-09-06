@@ -2,22 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nepali_utils/nepali_utils.dart';
 import 'package:sales_officer/Header.dart';
 
+import '../Database.dart';
 import 'Calendar.dart';
-
-List<String> months = [
-  "Baisakh",
-  "Jestha",
-  "Asar",
-  "Shrawan",
-  "Bhadra",
-  "Ashwin",
-  "Kartik",
-  "Mangsir",
-  "Poush",
-  "Magh",
-  "Falgun",
-  "Chaitra"
-];
+import 'EditTourPlanScreen.dart';
 
 class TourPlanScreen extends StatefulWidget {
   @override
@@ -29,56 +16,28 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
   int startDay = 0;
   int endDay = 0;
   bool isStartCondition = true;
-  Text text = Text(
-    "Select Start Point",
-    style: TextStyle(color: Colors.green, fontSize: 20),
-  );
+  bool isButton1Disabled = true;
+  bool isButton2Disabled = true;
 
-  setStartDay1(int index) {
+  setStartDay(int index) {
     setState(() {
       startDay = index;
       endDay = 0;
-      text = Text(
-        "Select End Point",
-        style: TextStyle(color: Colors.blue, fontSize: 20),
-      );
+      isButton1Disabled = false;
     });
   }
 
-  setEndDay1(int index) {
+  setEndDay(int index) {
     setState(() {
       endDay = index;
-      text = Text(
-        "Select Start Point",
-        style: TextStyle(color: Colors.green, fontSize: 20),
-      );
-    });
-  }
-
-  setStartDay2(int index) {
-    setState(() {
-      startDay = index;
-      endDay = 0;
-      text = Text(
-        "Select End Point",
-        style: TextStyle(color: Colors.blue, fontSize: 20),
-      );
-    });
-  }
-
-  setEndDay2(int index) {
-    setState(() {
-      endDay = index;
-      text = Text(
-        "Select Start Point",
-        style: TextStyle(color: Colors.green, fontSize: 20),
-      );
+      isButton2Disabled = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffF5F5F5),
       body: Column(
         children: [
           Header(7, false),
@@ -118,9 +77,11 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      setState(() {
-                        isStartCondition = false;
-                      });
+                      if(!isButton1Disabled){
+                        setState(() {
+                          isStartCondition = false;
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -173,7 +134,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                   ),
                   Expanded(
                     child: Calendar(now.month, startDay, endDay,
-                        setStartDay1, setEndDay1, isStartCondition),
+                        setStartDay, setEndDay, isStartCondition),
                   ),
                 ],
               ),
@@ -204,7 +165,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                   ),
                   Expanded(
                       child: Calendar(now.month + 1, startDay, endDay,
-                          setStartDay2, setEndDay2, isStartCondition)),
+                          setStartDay, setEndDay, isStartCondition)),
                 ],
               ),
             ),
@@ -214,13 +175,17 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
             child: InkWell(
               onTap: () {
                 if (isStartCondition) {
-                  setState(() {
-                    isStartCondition = false;
-                  });
+                  if(!isButton1Disabled){
+                    setState(() {
+                      isStartCondition = false;
+                    });
+                  }
                 } else {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return Container();
-                  }));
+                  if(!isButton2Disabled){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return EditTourPlanScreen(startDay, endDay, now);
+                    }));
+                  }
                 }
               },
               child: Container(
@@ -230,7 +195,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                     .width - 24,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: isStartCondition ? Colors.green: Colors.blue,
+                  color: isStartCondition && !isButton1Disabled? Colors.green: !isStartCondition && !isButton2Disabled? Colors.blue: Colors.blueGrey,
                 ),
                 child: Center(
                   child: Padding(

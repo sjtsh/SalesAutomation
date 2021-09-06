@@ -19,3 +19,22 @@ List products = [
   "Green Tea"
 ];
 List sales = [200, 20003, 19000, 200, 30000];
+
+final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
+final int startDate1 = 3;
+
+List<String> months = [
+  "Baisakh",
+  "Jestha",
+  "Asar",
+  "Shrawan",
+  "Bhadra",
+  "Ashwin",
+  "Kartik",
+  "Mangsir",
+  "Poush",
+  "Magh",
+  "Falgun",
+  "Chaitra"
+];
+List<String> weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

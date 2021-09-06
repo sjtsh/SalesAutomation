@@ -11,8 +11,7 @@ class ConfirmationModalSheet extends StatelessWidget {
   final TextEditingController _textEditingControllerAlternative =
       TextEditingController();
 
-  ConfirmationModalSheet(this.f,
-      this.updateReceiptData);
+  ConfirmationModalSheet(this.f, this.updateReceiptData);
 
   @override
   Widget build(BuildContext context) {
@@ -170,11 +169,13 @@ class ConfirmationModalSheet extends StatelessWidget {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(12)),
+                        child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12)),
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
                             child: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
@@ -185,14 +186,13 @@ class ConfirmationModalSheet extends StatelessWidget {
                               ),
                             ),
                           ),
-                          onTap: () => Navigator.pop(context),
                         ),
                       ),
                     ),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: GestureDetector(
+                        child: RawMaterialButton(
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.green,
@@ -207,7 +207,7 @@ class ConfirmationModalSheet extends StatelessWidget {
                               ),
                             ),
                           ),
-                          onTap: () {
+                          onPressed: () {
                             int primaryCountNew = _textEditingControllerPrimary
                                         .text ==
                                     ""
@@ -219,9 +219,7 @@ class ConfirmationModalSheet extends StatelessWidget {
                                     : int.parse(
                                         _textEditingControllerAlternative.text);
                             updateReceiptData(
-                                f,
-                                primaryCountNew,
-                                alternativeCountNew);
+                                f, primaryCountNew, alternativeCountNew);
                             Navigator.pop(context);
                           },
                         ),

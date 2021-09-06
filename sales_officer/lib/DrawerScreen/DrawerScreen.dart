@@ -102,15 +102,21 @@ class DrawerScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: MaterialButton(
-              color: Colors.green,
-              minWidth: MediaQuery.of(context).size.width-24,
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "END DAY",
-                  style: TextStyle(color: Colors.white),
+            child: Container(
+            clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              ),
+              child: MaterialButton(
+                color: Colors.green,
+                minWidth: MediaQuery.of(context).size.width-24,
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    "END DAY",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),

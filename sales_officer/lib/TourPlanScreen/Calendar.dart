@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/TourPlanScreen/SingularDate.dart';
 
-final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
-final int startDate1 = 3;
+import '../Database.dart';
+
 
 class Calendar extends StatelessWidget {
   final int current;
@@ -27,7 +27,7 @@ class Calendar extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            children: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            children: weeks
                 .map((e) => Expanded(
                         child: Center(
                             child: Text(
