@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
-import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUService.dart';
+import 'package:sales_officer/ConfirmationScreen/ConfirmationRecieptWarning.dart';
 import 'package:sales_officer/Database.dart';
 
 import 'IndividualConfirmationVariation.dart';
@@ -37,217 +34,337 @@ class ConfirmationReciept extends StatefulWidget {
 class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   double totalAmount = 0;
   bool isLoading = false;
+  bool isWarning = false;
+
+  List tempBillingAmounts = [];
 
   @override
   Widget build(BuildContext context) {
-    SKUDistributorWise skuDistributorWise =
-        allSKUDistributorWiseLocal.firstWhere((element) =>
-            element.distributorID == widget.currentDistributor.distributorID &&
-            element.SKUID == widget.receiptData[0][0].SKUID);
     List aList = getTotalItems();
-    return ListView(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 12),
-          height: 40,
-          child: Row(
-            children: [
-              Text(
-                "Total Stock",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+    if (!widget.isStock) {
+      tempBillingAmounts = [];
+      isWarning = false;
+      widget.receiptData.forEach((element) {
+        SKUDistributorWise skuDistributorWise =
+            allSKUDistributorWiseLocal.firstWhere((aSKU) =>
+                aSKU.distributorID == widget.currentDistributor.distributorID &&
+                aSKU.SKUID == element[0].SKUID);
+        List aBillingAmount = billingAmounts.firstWhere(
+            (element) => element[0] == skuDistributorWise.billingCompanyID);
+        if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
+          isWarning = true;
+          if (!tempBillingAmounts.contains(aBillingAmount)) {
+            tempBillingAmounts.add(aBillingAmount);
+          }
+        }
+      });
+    }
+    if (widget.receiptData.length == 0) {
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            height: 40,
+            child: Row(
+              children: [
+                Text(
+                  "Total Stock",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Text(aList[0].toString()),
-              Text(
-                " ${skuDistributorWise.primaryUnit}",
-                style: TextStyle(fontSize: 12),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(aList[1].toString()),
-              Text(
-                " ${skuDistributorWise.alternativeUnit}",
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
+                Expanded(
+                  child: Container(),
+                ),
+                Text(
+                  "0 Units",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: Offset(0, 2),
-                  blurRadius: 3)
-            ],
+          Expanded(
+              child: Center(
+                  child: Text(
+            "No Orders",
+            style:
+                TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 30),
+          )))
+        ],
+      );
+    } else {
+      return ListView(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            height: 40,
+            child: Row(
+              children: [
+                Text(
+                  "Total Stock",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Expanded(
+                  child: Container(),
+                ),
+                Text(aList[0].toString()),
+                Text(
+                  " Units",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Column(
-                children: getSubProducts()
-                    .map(
-                      (e) => Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.black.withOpacity(0.1),
-                              width: 1,
+          Container(
+            margin: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    offset: Offset(0, 2),
+                    blurRadius: 3)
+              ],
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  children: getSubProducts()
+                      .map(
+                        (e) => Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black.withOpacity(0.1),
+                                width: 1,
+                              ),
                             ),
                           ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(right: 20, left: 20),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      allSubGroupsLocal
+                                          .firstWhere((element) =>
+                                              element.subGroupID == e)
+                                          .subGroupName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: getSubGroupItems(e)
+                                    .map(
+                                      (f) => IndividualConfirmationVariation(
+                                          updateReceiptData,
+                                          f,
+                                          deleteReceiptData,
+                                          widget.currentDistributor),
+                                    )
+                                    .toList(),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
+                      )
+                      .toList(),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Total Value",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Text(
+                        totalAmount.toString(),
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        " Rs.",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                isWarning
+                    ? ConfirmationRecieptWarning(tempBillingAmounts)
+                    : Container(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: isWarning ? Colors.blueGrey : Colors.green,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: isLoading
+                        ? MaterialButton(
+                            onPressed: () async {},
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(right: 20, left: 20),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    allSubGroupsLocal
-                                        .firstWhere((element) =>
-                                            element.subGroupID == e)
-                                        .subGroupName,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                          )
+                        : MaterialButton(
+                            onPressed: () {
+                              if (!isWarning) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                if (widget.isStock) {
+                                  updateStock(
+                                          widget
+                                              .currentDistributor.distributorID,
+                                          widget._textEditingControllers,
+                                          context)
+                                      .then((value) => setState(() {
+                                            isLoading = false;
+                                          }));
+                                } else {
+                                  if (widget.isNew) {
+                                    createOrder(
+                                            widget.currentDistributor
+                                                .distributorID,
+                                            widget._textEditingControllers,
+                                            isWarning,
+                                            context)
+                                        .then((value) => setState(() {
+                                              isLoading = false;
+                                            }));
+                                  } else {
+                                    updateOrder(
+                                            widget.distributorOrder,
+                                            widget.distributorOrderItems,
+                                            widget._textEditingControllers,
+                                            isWarning,
+                                            context)
+                                        .then((value) => setState(() {
+                                              isLoading = false;
+                                            }));
+                                  }
+                                }
+                              }
+                            },
+                            child: Center(
+                              child: Text(
+                                "PLACE ORDER",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                isWarning && !widget.isStock
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xffF2B200),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: isLoading
+                              ? MaterialButton(
+                                  onPressed: () async {},
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: getSubGroupItems(e)
-                                  .map(
-                                    (f) => IndividualConfirmationVariation(
-                                        updateReceiptData,
-                                        f,
-                                        deleteReceiptData,
-                                        widget.currentDistributor),
-                                  )
-                                  .toList(),
-                            ),
-                          ],
+                                )
+                              : MaterialButton(
+                                  onPressed: () {
+                                    if (isWarning) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      if (widget.isNew) {
+                                        createOrder(
+                                                widget.currentDistributor
+                                                    .distributorID,
+                                                widget._textEditingControllers,
+                                                isWarning,
+                                                context)
+                                            .then((value) => setState(() {
+                                                  isLoading = false;
+                                                }));
+                                      } else {
+                                        updateOrder(
+                                                widget.distributorOrder,
+                                                widget.distributorOrderItems,
+                                                widget._textEditingControllers,
+                                                isWarning,
+                                                context)
+                                            .then((value) => setState(() {
+                                                  isLoading = false;
+                                                }));
+                                      }
+                                    }
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      "Request for Approval",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                         ),
-                      ),
-                    )
-                    .toList(),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 12),
-                height: 40,
-                child: Row(
-                  children: [
-                    Text(
-                      "Total Value",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    Text(
-                      totalAmount.toString(),
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    Text(
-                      " Rs.",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 12,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: isLoading
-                      ? MaterialButton(
-                          onPressed: () async {},
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        )
-                      : MaterialButton(
-                          onPressed: () {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            if (widget.isStock) {
-                              updateStock(
-                                      widget.currentDistributor.distributorID,
-                                      widget._textEditingControllers,
-                                      context)
-                                  .then((value) => setState(() {
-                                        isLoading = false;
-                                      }));
-                            } else {
-                              if (widget.isNew) {
-                                createOrder(
-                                        widget.currentDistributor.distributorID,
-                                        widget._textEditingControllers,
-                                        context)
-                                    .then((value) => setState(() {
-                                          isLoading = false;
-                                        }));
-                              } else {
-                                updateOrder(
-                                        widget.distributorOrder,
-                                        widget.distributorOrderItems,
-                                        widget._textEditingControllers,
-                                        context)
-                                    .then((value) => setState(() {
-                                          isLoading = false;
-                                        }));
-                              }
-                            }
-                          },
-                          child: Center(
-                            child: Text(
-                              "CONFIRM",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 
   List getTotalItems() {
@@ -337,26 +454,29 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                             2]
                         .SKUID &&
                 i.distributorID == widget.currentDistributor.distributorID);
+        double tempAmount = 0;
+        tempAmount += aTextEditingController.text == ""
+            ? 0
+            : int.parse(aTextEditingController.text) *
+                skuDistributorWise.primaryCF *
+                skuDistributorWise.MRP;
+        tempAmount += widget
+                    ._textEditingControllers[widget._textEditingControllers
+                            .indexOf(aTextEditingController) +
+                        1]
+                    .text ==
+                ""
+            ? 0
+            : int.parse(widget
+                    ._textEditingControllers[widget._textEditingControllers
+                            .indexOf(aTextEditingController) +
+                        1]
+                    .text) *
+                skuDistributorWise.alternativeCF *
+                skuDistributorWise.MRP;
+
         setState(() {
-          totalAmount += aTextEditingController.text == ""
-              ? 0
-              : int.parse(aTextEditingController.text) *
-                  skuDistributorWise.primaryCF *
-                  skuDistributorWise.MRP;
-          totalAmount += widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text ==
-                  ""
-              ? 0
-              : int.parse(widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text) *
-                  skuDistributorWise.alternativeCF *
-                  skuDistributorWise.MRP;
+          totalAmount += tempAmount;
         });
       }
     });

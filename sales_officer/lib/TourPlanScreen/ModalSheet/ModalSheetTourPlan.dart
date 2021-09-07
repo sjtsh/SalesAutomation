@@ -8,10 +8,11 @@ class ModalSheetTourPlan extends StatefulWidget {
   final String todayText;
   final Function setActivity;
   final Function setDetail;
+  final int index;
   final Function setIsModalFalse;
+  final Function setTourPlan;
 
-
-  ModalSheetTourPlan(this.todayText, this.setActivity, this.setDetail, this.setIsModalFalse);
+  ModalSheetTourPlan(this.todayText, this.setActivity, this.setDetail, this.index, this.setIsModalFalse, this.setTourPlan);
 
   @override
   _ModalSheetTourPlanState createState() => _ModalSheetTourPlanState();
@@ -61,7 +62,7 @@ class _ModalSheetTourPlanState extends State<ModalSheetTourPlan> {
         ),
         Expanded(
             child: isActivitySelected
-                ? SelectedList(activity, widget.setDetail, widget.setIsModalFalse)
+                ? SelectedList(widget.todayText, activity, widget.setDetail, widget.index, widget.setIsModalFalse, widget.setTourPlan)
                 : ActivityList(setIsActivitySelected)),
       ],
     );

@@ -9,9 +9,10 @@ class SingularTourDropDown extends StatefulWidget {
   final DateTime now;
   final int index;
   final Function setIsModalTrue;
+  final List tourPlanSingular;
 
-  SingularTourDropDown(
-      this.startDate, this.endDate, this.now, this.index, this.setIsModalTrue);
+  SingularTourDropDown(this.startDate, this.endDate, this.now, this.index,
+      this.setIsModalTrue, this.tourPlanSingular);
 
   @override
   _SingularTourDropDownState createState() => _SingularTourDropDownState();
@@ -34,9 +35,24 @@ class _SingularTourDropDownState extends State<SingularTourDropDown> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.tourPlanSingular[1] == null ? activityValue = "Choose" : activityValue =
+    widget.tourPlanSingular[1];
+    widget.tourPlanSingular[2] == null ? detailValue = "Details - Beat/Schedule/Comments" : detailValue =
+    widget.tourPlanSingular[2];
+  }
+
+  @override
   Widget build(BuildContext context) {
     String todayText =
-        "${weeks[(widget.now.weekday + widget.index) % 7]}, ${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? (widget.startDate + widget.index) % dates[widget.now.month - 1] : (widget.startDate + widget.index)} - ${(widget.startDate + widget.index) > dates[widget.now.month - 1] ? months[widget.now.month] : months[widget.now.month - 1]} - ${widget.now.year}";
+        "${weeks[(widget.now.weekday + widget.index) % 7]}, ${(widget
+        .startDate + widget.index) > dates[widget.now.month - 1] ? (widget
+        .startDate + widget.index) % dates[widget.now.month - 1] : (widget
+        .startDate + widget.index)} - ${(widget.startDate + widget.index) >
+        dates[widget.now.month - 1] ? months[widget.now.month] : months[widget
+        .now.month - 1]} - ${widget.now.year}";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
       child: Container(
@@ -54,11 +70,12 @@ class _SingularTourDropDownState extends State<SingularTourDropDown> {
         child: Material(
           child: InkWell(
             onTap: () {
-              widget.setIsModalTrue(todayText, setActivity, setDetail);
+              widget.setIsModalTrue(
+                  todayText, setActivity, setDetail, widget.index);
             },
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,11 +108,11 @@ class _SingularTourDropDownState extends State<SingularTourDropDown> {
                             height: 30,
                             child: Center(
                                 child: Text(
-                              detailValue,
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black.withOpacity(0.5)),
-                            )),
+                                  detailValue,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black.withOpacity(0.5)),
+                                )),
                           ),
                         ),
                       ],

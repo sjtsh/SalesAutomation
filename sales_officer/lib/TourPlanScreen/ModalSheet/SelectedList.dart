@@ -5,10 +5,20 @@ import '../../Database.dart';
 class SelectedList extends StatelessWidget {
   final String activity;
   final Function setDetail;
+  final int index;
   final Function setIsModalFalse;
   final TextEditingController _textEditingController = TextEditingController();
+  final Function setTourPlan;
+  final String dateTime;
 
-  SelectedList(this.activity, this.setDetail, this.setIsModalFalse);
+  SelectedList(
+    this.dateTime,
+    this.activity,
+    this.setDetail,
+    this.index,
+    this.setIsModalFalse,
+    this.setTourPlan,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +33,7 @@ class SelectedList extends StatelessWidget {
                           onTap: () {
                             setDetail(option);
                             setIsModalFalse();
+                            setTourPlan([dateTime, activity, option], index);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -76,6 +87,7 @@ class SelectedList extends StatelessWidget {
                           onPressed: () {
                             setDetail(_textEditingController.text);
                             setIsModalFalse();
+                            setTourPlan([dateTime, activity, _textEditingController.text], index);
                           },
                           child: Center(
                             child: Text(

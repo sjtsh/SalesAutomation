@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
+import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
@@ -57,8 +58,16 @@ class _LogInScreenState extends State<LogInScreen> {
           skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
             allSKUDistributorWiseLocal = value;
             setState(() {
-              loadingText = "Almost Done";
-              isLoaded = true;
+              loadingText = "Getting Billing Companies";
+            });
+          }).then((value){
+            BillingCompanyService billingCompanyService = BillingCompanyService();
+            billingCompanyService.fetchBillingCompanys().then((value){
+              allBillingCompanysLocal = value;
+              setState(() {
+                loadingText = "Almost Done";
+                isLoaded = true;
+              });
             });
           });
         });

@@ -10,13 +10,16 @@ import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
 
 import '../../Database.dart';
 
-Future<void> createOrder(int distributorID,
-    List<TextEditingController> _textEditingControllers, context) async {
-  bool conditionOnly = true;
+Future<bool> createOrder(
+    int distributorID,
+    List<TextEditingController> _textEditingControllers,
+    bool isWarning,
+    context) async {
+  bool conditionOnly = false;
   int _distributorID = distributorID;
   int _SOID = 1;
   bool _joint = isJoint!;
-  bool _orderStatus = true;
+  bool _orderStatus = !isWarning;
   String _remarks = "Success";
   String _dateAndTime = DateTime.now().toString();
   DistributorOrderService distributorOrderService = DistributorOrderService();
@@ -66,26 +69,33 @@ Future<void> createOrder(int distributorID,
     } catch (e) {
       conditionOnly = false;
     }
-
-    if (conditionOnly) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Order was successfully punched")));
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Order was not successful")));
-    }
   });
+  if (conditionOnly) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Order was successfully punched")));
+    return true;
+  } else {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Order was not successful")));
+    return false;
+  }
 }
 
 Future<bool> updateOrder(
   DistributorOrder distributorOrder,
   List<DistributorOrderItem> distributorOrderItems,
   List<TextEditingController> _textEditingControllers,
+  bool isWarning,
   context,
 ) async {
   bool conditionOnly = true;
+
+  //
+  //edit the distributor Order here as pending column to be not is warning and updated time changed everything else can remain the same
+  //
+
   _textEditingControllers.forEach((textEditingController) {
     if (_textEditingControllers.indexOf(textEditingController) % 2 == 0) {
       int myPrimaryCount = 0;

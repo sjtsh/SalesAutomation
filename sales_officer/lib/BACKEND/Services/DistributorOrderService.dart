@@ -28,18 +28,18 @@ class DistributorOrderService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-        'distributorID': distributorID.toString(),
-        'SOID': SOID.toString(),
-        'joint': joint.toString(),
-        'orderStatus': orderStatus.toString(),
-        'remarks': remarks,
-        'dateAndTime': dateAndTime.toString().substring(0,19),
-        'updatedTime': dateAndTime.toString().substring(0,19),
-        'lat' : value.longitude.toString(),
-        'lng' : value.latitude.toString()
+          'distributorID': distributorID.toString(),
+          'SOID': SOID.toString(),
+          'joint': joint.toString(),
+          'orderStatus': orderStatus.toString(),
+          'remarks': remarks,
+          'dateAndTime': dateAndTime.toString().substring(0, 19),
+          'updatedTime': dateAndTime.toString().substring(0, 19),
+          'lat': value.longitude.toString(),
+          'lng': value.latitude.toString()
         }),
       );
-      List<dynamic> aList =  jsonDecode(response.body);
+      List<dynamic> aList = jsonDecode(response.body);
       int distributorID2 = aList[0]["0"];
       if (response.statusCode == 200) {
         return distributorID2;
@@ -47,5 +47,33 @@ class DistributorOrderService {
       return -1;
     });
     return -1;
+  }
+
+  Future<bool> updateDistributorOrder(DistributorOrder distributorOrder) async {
+    final res = await http.put(
+      Uri.parse(
+          "https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrder"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{
+          'distributorOrderID': distributorOrder.distributorOrderID.toString(),
+          'distributorID': distributorOrder.distributorID.toString(),
+          'SOID': distributorOrder.SOID.toString(),
+          'joint': distributorOrder.joint.toString(),
+          'orderStatus': distributorOrder.orderStatus.toString(),
+          'remarks': distributorOrder.remarks.toString(),
+          'dateAndTime': distributorOrder.dateAndTime.toString(),
+          'updatedTime': distributorOrder.updatedTime.toString(),
+          'lat': distributorOrder.lat.toString(),
+          'lng': distributorOrder.lng.toString(),
+        },
+      ),
+    );
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }

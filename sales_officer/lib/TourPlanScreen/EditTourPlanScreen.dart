@@ -23,15 +23,31 @@ class EditTourPlanScreen extends StatefulWidget {
 class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
   bool isModal = false;
   bool condition = false;
-  String todayText = "";
-  Function setActivity = () {};
-  Function setDetail = () {};
+  String? todayText;
+  Function? setActivity;
+  Function? setDetail;
+  int? index;
+  List? allTourPlans;
+  bool isFillDisabled = true;
 
-  setIsModalTrue(String todayText, Function setActivity, Function setDetail) {
+  setTourPlan(List aList, index) {
+    bool condition = false;
+    allTourPlans![index] = aList;
+    allTourPlans!.forEach((element) {
+      if (element[2] == null) {
+        condition = true;
+      }
+    });
+    isFillDisabled = condition;
+  }
+
+  setIsModalTrue(
+      String todayText, Function setActivity, Function setDetail, int index) {
     this.condition = condition;
     this.todayText = todayText;
     this.setActivity = setActivity;
     this.setDetail = setDetail;
+    this.index = index;
     setState(() {
       isModal = true;
     });
@@ -41,6 +57,14 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
     setState(() {
       isModal = false;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    allTourPlans = List.generate(
+        widget.endDate - widget.startDate + 1, (index) => [null, null, null]);
   }
 
   @override
@@ -110,7 +134,7 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
                 ),
               ),
               TourDropDowns(
-                  widget.startDate, widget.endDate, widget.now, setIsModalTrue),
+                  widget.startDate, widget.endDate, widget.now, setIsModalTrue, allTourPlans!),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                 child: Container(
@@ -120,8 +144,16 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: MaterialButton(
-                    color: Colors.green,
-                    onPressed: () {},
+                    color: isFillDisabled ? Colors.blueGrey : Colors.green,
+                    onPressed: () {
+                      if (isFillDisabled) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Please Fill All Fields"),
+                        ));
+                      } else {
+                        print(allTourPlans);
+                      }
+                    },
                     child: Center(
                       child: Text(
                         "FILL",
@@ -153,8 +185,8 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
                             borderRadius: BorderRadius.circular(12),
                             color: Colors.white,
                           ),
-                          child: ModalSheetTourPlan(
-                              todayText, setActivity, setDetail, setIsModalFalse),
+                          child: ModalSheetTourPlan(todayText!, setActivity!,
+                              setDetail!, index!, setIsModalFalse, setTourPlan),
                         ),
                       ),
                     ),

@@ -13,7 +13,11 @@ class IndividualConfirmationVariation extends StatelessWidget {
   final Distributor distributor;
 
   IndividualConfirmationVariation(
-      this.updateReceiptData, this.f, this.deleteReceiptData, this.distributor,);
+    this.updateReceiptData,
+    this.f,
+    this.deleteReceiptData,
+    this.distributor,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
             element.distributorID == distributor.distributorID &&
             element.SKUID == f[0].SKUID);
     return Material(
-    color: Colors.white,
+      color: Colors.white,
       child: InkWell(
         onTap: () {
           showDialog(
@@ -39,15 +43,37 @@ class IndividualConfirmationVariation extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Text(
-                    f[0].SKUName,
-                    maxLines: 3,
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
+              Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: Text(
+                        f[0].SKUName,
+                        maxLines: 3,
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      )),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        allBillingCompanysLocal
+                            .firstWhere((element) =>
+                        skuDistributorWise.billingCompanyID ==
+                            element.billingCompanyID)
+                            .billingCompanyName,
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Expanded(child: Container()),
               f[1] == 0
                   ? Container()
