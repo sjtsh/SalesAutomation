@@ -1,5 +1,3 @@
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/Database.dart';
 
 String getInitials(String distributorName) {
   if (distributorName.split(" ").length >= 2) {

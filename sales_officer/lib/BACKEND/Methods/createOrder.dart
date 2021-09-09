@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
@@ -15,10 +14,10 @@ Future<bool> createOrder(
     List<TextEditingController> _textEditingControllers,
     bool isWarning,
     context) async {
-  bool conditionOnly = false;
+  bool conditionOnly = true;
   int _distributorID = distributorID;
   int _SOID = 1;
-  bool _joint = isJoint!;
+  bool _joint = true;
   bool _orderStatus = !isWarning;
   String _remarks = "Success";
   String _dateAndTime = DateTime.now().toString();
@@ -27,7 +26,11 @@ Future<bool> createOrder(
       .insertDistributorOrder(
           _distributorID, _SOID, _joint, _orderStatus, _remarks, _dateAndTime)
       .then((value) async {
+    if (value == -1) {
+      conditionOnly = false;
+    }
     int distributorOrderID = value;
+    print(distributorOrderID.toString() + " has been found");
     try {
       _textEditingControllers.forEach(
         (element) async {
@@ -52,16 +55,18 @@ Future<bool> createOrder(
             if (primaryItemCount != 0 || alternativeItemCount != 0) {
               DistributorOrderItemService distributorOrderItemService =
                   DistributorOrderItemService();
-              bool condition2 =
-                  await distributorOrderItemService.insertDistributorOrderItem(
+              distributorOrderItemService
+                  .insertDistributorOrderItem(
                       distributorOrderID,
                       SKUID,
                       primaryItemCount,
                       alternativeItemCount,
-                      secondaryAlternativeItemCount);
-              if (!condition2) {
-                conditionOnly = false;
-              }
+                      secondaryAlternativeItemCount)
+                  .then((value) {
+                if (!value) {
+                  conditionOnly = false;
+                }
+              });
             }
           }
         },
@@ -91,17 +96,12 @@ Future<bool> updateOrder(
   context,
 ) async {
   bool conditionOnly = true;
-
-  //
-  //edit the distributor Order here as pending column to be not is warning and updated time changed everything else can remain the same
-  //
-
+  print(distributorOrderItems);
   _textEditingControllers.forEach((textEditingController) {
     if (_textEditingControllers.indexOf(textEditingController) % 2 == 0) {
       int myPrimaryCount = 0;
       int myAlternativeCount = 0;
       bool isToBeUpdated = false;
-
       if (textEditingController.text != "") {
         myPrimaryCount = int.parse(textEditingController.text);
       }
@@ -161,6 +161,19 @@ Future<bool> updateOrder(
       }
     }
   });
+  DistributorOrderService distributorOrderService = DistributorOrderService();
+  DistributorOrder newDistributorOrder = DistributorOrder(
+      distributorOrder.distributorOrderID,
+      distributorOrder.distributorID,
+      distributorOrder.SOID,
+      distributorOrder.joint,
+      !isWarning,
+      distributorOrder.remarks,
+      distributorOrder.dateAndTime,
+      DateTime.now().toString(),
+      distributorOrder.lat,
+      distributorOrder.lng);
+  distributorOrderService.updateDistributorOrder(newDistributorOrder);
   if (conditionOnly) {
     Navigator.of(context).pop();
     Navigator.of(context).pop();

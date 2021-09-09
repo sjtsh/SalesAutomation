@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
-class SingularProductHeader extends StatelessWidget {
+class StockSingularProductHeader extends StatelessWidget {
   final SubGroup subGroup;
   final Function unExpand;
 
-  SingularProductHeader(this.subGroup, this.unExpand);
+  StockSingularProductHeader(this.subGroup, this.unExpand);
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,13 @@ class SingularProductHeader extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                          top: 3,
-                          right: 3,
-                            child: Icon(Icons.zoom_in, size: 15, color: Colors.blue,),
+                            top: 3,
+                            right: 3,
+                            child: Icon(
+                              Icons.zoom_in,
+                              size: 15,
+                              color: Colors.blue,
+                            ),
                           ),
                         ],
                       ),

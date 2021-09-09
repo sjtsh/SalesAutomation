@@ -7,7 +7,6 @@ import 'package:sales_officer/TourPlanScreen/TourDropDowns.dart';
 import '../Database.dart';
 import '../Header.dart';
 import 'ModalSheet/ModalSheetTourPlan.dart';
-import 'TourPlanScreen.dart';
 
 class EditTourPlanScreen extends StatefulWidget {
   final int startDate;

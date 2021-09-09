@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogContent.dart';
 
-import 'DialogContent.dart';
-
 class ProductDialogBox extends StatefulWidget {
   final SubGroup subGroup;
 

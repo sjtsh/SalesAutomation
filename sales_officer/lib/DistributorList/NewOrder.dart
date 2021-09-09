@@ -38,7 +38,7 @@ class _NewOrderState extends State<NewOrder> {
     return Column(
       children: [
         Container(
-          height: 80,
+          height: 50,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
@@ -52,8 +52,8 @@ class _NewOrderState extends State<NewOrder> {
           ),
           child: Center(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12.0),
-              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 12.0,),
+              height: 35,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
                 border: Border.all(

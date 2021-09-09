@@ -10,36 +10,38 @@ import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart'
 import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Header.dart';
-import 'package:sales_officer/ConfirmationScreen/ConfirmOrder.dart';
-import 'package:sales_officer/ProductsScreen/ProductList.dart';
+import 'package:sales_officer/StockConfirmationScreen/StockConfirmOrder.dart';
 
 import '../Database.dart';
 import 'SearchBar.dart';
+import 'StockList.dart';
 
-class ProductsScreen extends StatefulWidget {
+List<DistributorOrderItem> distributorOrderItems = [];
+
+class StocksScreen extends StatefulWidget {
   final Distributor currentDistributor;
   final int index;
   final DistributorOrder distributorOrder;
-  final bool isNew;
-
   final SKUStockService skuStockService = SKUStockService();
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
-  ProductsScreen(
-      this.currentDistributor, this.index, this.distributorOrder, this.isNew);
+  StocksScreen(
+    this.currentDistributor,
+    this.index,
+    this.distributorOrder,
+  );
 
   @override
-  _ProductsScreenState createState() => _ProductsScreenState();
+  _StocksScreenState createState() => _StocksScreenState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
+class _StocksScreenState extends State<StocksScreen> {
   String dropdownValue = "All Products";
   List<SubGroup> productList = [];
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
   bool isSearching = false;
-  List<DistributorOrderItem> distributorOrderItems = [];
 
   void _setNewProducts(String newValue) {
     setState(() {
@@ -73,9 +75,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     super.initState();
     _textEditingControllers = List.generate(
         allSKULocal.length * 2, (index) => TextEditingController());
-    if (!widget.isNew) {
-      _editOrder(_textEditingControllers);
-    }
+    _editOrder(_textEditingControllers);
     _addScrollListeners();
   }
 
@@ -145,7 +145,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 builder: (BuildContext context,
                                     AsyncSnapshot<List<SKUStock>> snapshot) {
                                   allSKUStocksLocal = snapshot.data;
-                                  return ProductList(
+                                  return StockList(
                                     allSubGroupsLocal,
                                     widget._scrollController,
                                     _textEditingControllers,
@@ -153,7 +153,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   );
                                 },
                               )
-                            : ProductList(
+                            : StockList(
                                 productList,
                                 widget._scrollController,
                                 _textEditingControllers,
@@ -174,11 +174,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     offset: Offset(0, -2))
               ],
             ),
-            child: ConfirmOrder(
+            child: StockConfirmOrder(
               widget.currentDistributor,
               _textEditingControllers,
               widget.index,
-              widget.isNew,
               widget.distributorOrder,
               distributorOrderItems,
             ),
@@ -213,16 +212,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
     DistributorOrderItemService distributorOrderItemService =
         DistributorOrderItemService();
     distributorOrderItemService.fetchDistributorOrderItems().then((value) {
-      List<DistributorOrderItem> newDistributorOrderItems = [];
+      distributorOrderItems = [];
 
       value.forEach((element) {
         if (element.distributorOrderID ==
             widget.distributorOrder.distributorOrderID) {
-          newDistributorOrderItems.add(element);
+          distributorOrderItems.add(element);
         }
       });
 
-      newDistributorOrderItems.forEach((element) {
+      distributorOrderItems.forEach((element) {
         _textEditingControllers[allSKULocal.indexOf(allSKULocal
                     .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
                 2]
@@ -232,10 +231,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     2 +
                 1]
             .text = element.alternativeItemCount.toString();
-      });
-
-      setState(() {
-        distributorOrderItems = newDistributorOrderItems;
       });
     });
   }

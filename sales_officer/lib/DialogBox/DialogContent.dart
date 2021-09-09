@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/NavBar/NavBar.dart';
 
 class DialogContent extends StatelessWidget {
 

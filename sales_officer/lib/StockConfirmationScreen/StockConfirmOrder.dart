@@ -3,31 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/ConfirmationScreen/ConfirmationScreen.dart';
 import 'package:sales_officer/Database.dart';
 
-class ConfirmOrder extends StatefulWidget {
+import 'StockConfirmationScreen.dart';
+
+class StockConfirmOrder extends StatefulWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final int index;
-  final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
-  ConfirmOrder(
-    this.currentDistributor,
-    this._textEditingControllers,
-    this.index,
-    this.isNew,
-    this.distributorOrder,
-    this.distributorOrderItems,
-  );
+  StockConfirmOrder(
+      this.currentDistributor,
+      this._textEditingControllers,
+      this.index,
+      this.distributorOrder,
+      this.distributorOrderItems,
+      );
 
   @override
-  _ConfirmOrderState createState() => _ConfirmOrderState();
+  _StockConfirmOrderState createState() => _StockConfirmOrderState();
 }
 
-class _ConfirmOrderState extends State<ConfirmOrder> {
+class _StockConfirmOrderState extends State<StockConfirmOrder> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -89,12 +88,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       context,
       MaterialPageRoute(
         builder: (_) {
-          return ConfirmationScreen(
+          return StockConfirmationScreen(
             widget.currentDistributor,
             widget._textEditingControllers,
             receiptData,
             widget.index,
-            widget.isNew,
             widget.distributorOrder,
             widget.distributorOrderItems,
           );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/Database.dart';
 

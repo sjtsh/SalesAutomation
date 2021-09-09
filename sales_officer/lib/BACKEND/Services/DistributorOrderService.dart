@@ -18,9 +18,10 @@ class DistributorOrderService {
     }
   }
 
-  Future<int> insertDistributorOrder(int distributorID, int SOID, bool joint,
+  insertDistributorOrder(int distributorID, int SOID, bool joint,
       bool orderStatus, String remarks, String dateAndTime) async {
-    Geolocator.getCurrentPosition().then((value) async {
+    int distributorID2 = -1;
+    await Geolocator.getCurrentPosition().then((value) async {
       final response = await http.post(
         Uri.parse(
             "https://asia-south1-hilifedb.cloudfunctions.net/insertDistributorOrder"),
@@ -40,13 +41,10 @@ class DistributorOrderService {
         }),
       );
       List<dynamic> aList = jsonDecode(response.body);
-      int distributorID2 = aList[0]["0"];
-      if (response.statusCode == 200) {
-        return distributorID2;
-      }
-      return -1;
+      distributorID2 = aList[0]["0"];
+      return distributorID2;
     });
-    return -1;
+    return distributorID2;
   }
 
   Future<bool> updateDistributorOrder(DistributorOrder distributorOrder) async {
@@ -65,7 +63,8 @@ class DistributorOrderService {
           'orderStatus': distributorOrder.orderStatus.toString(),
           'remarks': distributorOrder.remarks.toString(),
           'dateAndTime': distributorOrder.dateAndTime.toString(),
-          'updatedTime': distributorOrder.updatedTime.toString(),
+          'updatedTime':
+              distributorOrder.updatedTime.toString().substring(0, 19),
           'lat': distributorOrder.lat.toString(),
           'lng': distributorOrder.lng.toString(),
         },

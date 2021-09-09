@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';

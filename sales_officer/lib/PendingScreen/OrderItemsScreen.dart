@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/Header.dart';
@@ -128,16 +126,11 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    distributor.distributorName
-                                            .split(" ")[0]
-                                            .substring(0, 1) +
-                                        distributor.distributorName
-                                            .split(" ")[1]
-                                            .substring(0, 1),
+                                    getInitials(distributor.distributorName),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 12),
+                                        fontSize: 8),
                                   ),
                                 ),
                               ),
@@ -181,15 +174,17 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                           children: [
                             ["Order ID :", "#OR${widget.e.distributorOrderID}"],
                             ["Date :", "${widget.e.dateAndTime}"],
+                            ["Last Updated :", widget.e.updatedTime],
                             [
                               "Status :",
-                              widget.e.orderStatus ? "Pending" : "Approved"
+                              widget.e.orderStatus ? "Approved" : "Pending"
                             ],
                             [
                               "Representation :",
                               widget.e.joint ? "Joint" : "Single"
                             ],
                             ["Remarks :", "${widget.e.remarks}"],
+                            ["Location :","${widget.e.lat}, ${widget.e.lng}"]
                           ]
                               .map(
                                 (e) => Column(
@@ -225,7 +220,9 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                     Container(
                                         height: 100,
                                         color: Color(0xffF5F5F5),
-                                        child: Center(child: CircularProgressIndicator())),
+                                        child: Center(
+                                            child:
+                                                CircularProgressIndicator())),
                                   ],
                                 )
                               : OrderItemsExpanded(distributorOrderItems),

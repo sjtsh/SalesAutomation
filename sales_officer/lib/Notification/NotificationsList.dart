@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Notification/IndividualNotification.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> messages = List.generate(7, (index) => "Notification $index");
 

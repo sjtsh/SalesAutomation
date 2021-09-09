@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
-import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/DistributorInfo.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
+import 'package:sales_officer/StocksScreen/StocksScreen.dart';
 
-import '../Database.dart';
-import 'NewOrder.dart';
 import '../ProductsScreen/ProductsScreen.dart';
 
 List colors = [Color(0xff7DDF5B), Color(0xffE86068), Color(0xff61ABEF)];
@@ -30,14 +27,36 @@ class DistributorList extends StatelessWidget {
           if (isOrder) {
             print("4 into 5");
             NavBar.onItemTapped(5);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) {
-                  return ProductsScreen(distributor, index, DistributorOrder(-1,-1,-1, true, false, "","","",0,0), true, isStock);
-                },
-              ),
-            );
+            if(isStock){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return StocksScreen(
+                      distributor,
+                      index,
+                      DistributorOrder(
+                          -1, -1, -1, true, false, "", "", "", 0, 0),
+                    );
+                  },
+                ),
+              );
+            }else{
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return ProductsScreen(
+                      distributor,
+                      index,
+                      DistributorOrder(
+                          -1, -1, -1, true, false, "", "", "", 0, 0),
+                      true,
+                    );
+                  },
+                ),
+              );
+            }
           } else {
             print("4 into 5");
             NavBar.onItemTapped(6);

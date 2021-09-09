@@ -7,54 +7,36 @@ import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationRecieptWarning.dart';
 import 'package:sales_officer/Database.dart';
 
-import 'IndividualConfirmationVariation.dart';
+import 'StockIndividualConfirmationVariation.dart';
 
-class ConfirmationReciept extends StatefulWidget {
+class StockConfirmationReciept extends StatefulWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final List receiptData;
-  final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
-  ConfirmationReciept(
+  StockConfirmationReciept(
       this.currentDistributor,
       this._textEditingControllers,
       this.receiptData,
-      this.isNew,
       this.distributorOrder,
       this.distributorOrderItems);
 
   @override
-  _ConfirmationRecieptState createState() => _ConfirmationRecieptState();
+  _StockConfirmationRecieptState createState() =>
+      _StockConfirmationRecieptState();
 }
 
-class _ConfirmationRecieptState extends State<ConfirmationReciept> {
+class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
   double totalAmount = 0;
   bool isLoading = false;
-  bool isWarning = false;
 
   List tempBillingAmounts = [];
 
   @override
   Widget build(BuildContext context) {
     List aList = getTotalItems();
-    tempBillingAmounts = [];
-    isWarning = false;
-    widget.receiptData.forEach((element) {
-      SKUDistributorWise skuDistributorWise =
-          allSKUDistributorWiseLocal.firstWhere((aSKU) =>
-              aSKU.distributorID == widget.currentDistributor.distributorID &&
-              aSKU.SKUID == element[0].SKUID);
-      List aBillingAmount = billingAmounts.firstWhere(
-          (element) => element[0] == skuDistributorWise.billingCompanyID);
-      if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
-        isWarning = true;
-        if (!tempBillingAmounts.contains(aBillingAmount)) {
-          tempBillingAmounts.add(aBillingAmount);
-        }
-      }
-    });
     if (widget.receiptData.length == 0) {
       return Column(
         children: [
@@ -187,7 +169,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                   child: Row(
                     children: [
                       Text(
-                        "Total Value",
+                        "Total Stock Value",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -209,9 +191,6 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                 SizedBox(
                   height: 20,
                 ),
-                isWarning
-                    ? ConfirmationRecieptWarning(tempBillingAmounts)
-                    : Container(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   child: Container(
@@ -219,7 +198,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: isWarning ? Colors.blueGrey : Colors.green,
+                      color: Colors.green,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: isLoading
@@ -236,36 +215,20 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                           )
                         : MaterialButton(
                             onPressed: () {
-                              if (!isWarning) {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                if (widget.isNew) {
-                                  createOrder(
-                                          widget
-                                              .currentDistributor.distributorID,
-                                          widget._textEditingControllers,
-                                          isWarning,
-                                          context)
-                                      .then((value) => setState(() {
-                                            isLoading = false;
-                                          }));
-                                } else {
-                                  updateOrder(
-                                          widget.distributorOrder,
-                                          widget.distributorOrderItems,
-                                          widget._textEditingControllers,
-                                          isWarning,
-                                          context)
-                                      .then((value) => setState(() {
-                                            isLoading = false;
-                                          }));
-                                }
-                              }
+                              setState(() {
+                                isLoading = true;
+                              });
+                              updateStock(
+                                      widget.currentDistributor.distributorID,
+                                      widget._textEditingControllers,
+                                      context)
+                                  .then((value) => setState(() {
+                                        isLoading = false;
+                                      }));
                             },
                             child: Center(
                               child: Text(
-                                "PLACE ORDER",
+                                "PLACE STOCK COUNT",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -274,73 +237,6 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                           ),
                   ),
                 ),
-                SizedBox(
-                  height: 12,
-                ),
-                isWarning
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Color(0xffF2B200),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: isLoading
-                              ? MaterialButton(
-                                  onPressed: () async {},
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : MaterialButton(
-                                  onPressed: () {
-                                    if (isWarning) {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-                                      if (widget.isNew) {
-                                        createOrder(
-                                                widget.currentDistributor
-                                                    .distributorID,
-                                                widget._textEditingControllers,
-                                                isWarning,
-                                                context)
-                                            .then((value) => setState(() {
-                                                  isLoading = false;
-                                                }));
-                                      } else {
-                                        updateOrder(
-                                                widget.distributorOrder,
-                                                widget.distributorOrderItems,
-                                                widget._textEditingControllers,
-                                                isWarning,
-                                                context)
-                                            .then((value) => setState(() {
-                                                  isLoading = false;
-                                                }));
-                                      }
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "Request for Approval",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
-                      )
-                    : Container(),
                 SizedBox(
                   height: 12,
                 ),

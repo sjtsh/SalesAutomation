@@ -48,8 +48,8 @@ class SingularPending extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5.0, horizontal: 12),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 12),
                     child: Row(
                       children: [
                         Container(
@@ -100,28 +100,35 @@ class SingularPending extends StatelessWidget {
                           child: Container(),
                         ),
                         PopupMenuButton(
+                          onSelected: (option) {
+                            if (option == 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) {
+                                  return ProductsScreen(
+                                    distributor,
+                                    6,
+                                    e,
+                                    false,
+                                  );
+                                }),
+                              );
+                            }
+                          },
                           itemBuilder: (BuildContext context) {
                             return [
                               PopupMenuItem(
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return ProductsScreen(
-                                              distributor, 6, e, false, false);
-                                        }));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.edit),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(child: Text("Edit")),
-                                        ],
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                      ))),
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.edit),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(child: Text("Edit")),
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  )),
                               PopupMenuItem(
                                   child: GestureDetector(
                                       onTap: () {},

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/TourPlanScreen/SingularTourDropDown.dart';
 
-import '../Database.dart';
 
 class TourDropDowns extends StatefulWidget {
   final int startDate;

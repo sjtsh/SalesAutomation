@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/ActivationCode/ActivationCode.dart';
-import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 
 class SignInCodeButton extends StatelessWidget {
   @override

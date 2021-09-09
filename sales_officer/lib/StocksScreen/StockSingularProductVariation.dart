@@ -6,34 +6,48 @@ import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
 
-class SingularProductVariation extends StatefulWidget {
+class StockSingularProductVariation extends StatefulWidget {
   final SKU item;
   final TextEditingController _textEditingControllerPrimary;
   final TextEditingController _textEditingControllerSecondary;
   final Distributor currentDistributor;
 
-  SingularProductVariation(
-      this.item,
-      this._textEditingControllerPrimary,
-      this._textEditingControllerSecondary,
-      this.currentDistributor,);
+  StockSingularProductVariation(
+    this.item,
+    this._textEditingControllerPrimary,
+    this._textEditingControllerSecondary,
+    this.currentDistributor,
+  );
 
   @override
-  _SingularProductVariationState createState() =>
-      _SingularProductVariationState();
+  _StockSingularProductVariationState createState() =>
+      _StockSingularProductVariationState();
 }
 
-class _SingularProductVariationState extends State<SingularProductVariation> {
+class _StockSingularProductVariationState
+    extends State<StockSingularProductVariation> {
   @override
   Widget build(BuildContext context) {
     SKUStock mySKUStock;
-    SKUDistributorWise skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((element) => element.distributorID==widget.currentDistributor.distributorID&& element.SKUID==widget.item.SKUID);
-    try{
+    SKUDistributorWise skuDistributorWise =
+        allSKUDistributorWiseLocal.firstWhere((element) =>
+            element.distributorID == widget.currentDistributor.distributorID &&
+            element.SKUID == widget.item.SKUID);
+    try {
       mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
           element.distributorID == widget.currentDistributor.distributorID &&
           element.SKUID == widget.item.SKUID);
-    }catch(e){
-      mySKUStock = SKUStock(0, widget.item.SKUID, widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0);
+      widget._textEditingControllerPrimary.text =
+          mySKUStock.primaryStock.toString();
+      widget._textEditingControllerSecondary.text =
+          mySKUStock.alternativeStock.toString();
+    } catch (e) {
+      mySKUStock = SKUStock(0, widget.item.SKUID,
+          widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0);
+      widget._textEditingControllerPrimary.text =
+          mySKUStock.primaryStock.toString();
+      widget._textEditingControllerSecondary.text =
+          mySKUStock.alternativeStock.toString();
     }
     return Container(
       height: 60,
@@ -79,7 +93,8 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                           mySKUStock.primaryStock == 0
                               ? Container()
                               : Text(
-                                  mySKUStock.primaryStock.toString() + " ${skuDistributorWise.primaryUnit}",
+                                  mySKUStock.primaryStock.toString() +
+                                      " ${skuDistributorWise.primaryUnit}",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontSize: 12,

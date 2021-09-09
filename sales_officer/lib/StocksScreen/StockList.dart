@@ -2,25 +2,23 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
-import 'package:sales_officer/StocksScreen/StockSingularProduct.dart';
 
-import 'SingularProduct.dart';
+import 'StockSingularProduct.dart';
 
-
-class ProductList extends StatefulWidget {
+class StockList extends StatefulWidget {
   final List<SubGroup> subGroupList;
   final ScrollController _scrollController;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
 
-  ProductList(this.subGroupList, this._scrollController,
+  StockList(this.subGroupList, this._scrollController,
       this._textEditingControllers, this.currentDistributor,);
 
   @override
-  _ProductListState createState() => _ProductListState();
+  _StockListState createState() => _StockListState();
 }
 
-class _ProductListState extends State<ProductList> {
+class _StockListState extends State<StockList> {
   List<ExpandableController> _expandableControllers = [];
 
   @override
@@ -32,7 +30,7 @@ class _ProductListState extends State<ProductList> {
       controller: widget._scrollController,
       children: widget.subGroupList
           .map(
-            (item) => SingularProduct(
+            (item) => StockSingularProduct(
                 item,
                 widget.subGroupList.indexOf(item),
                 _expandableControllers,

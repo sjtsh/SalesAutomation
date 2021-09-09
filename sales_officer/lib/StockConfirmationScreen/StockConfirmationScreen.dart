@@ -3,26 +3,20 @@ import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
-import 'package:sales_officer/ConfirmationScreen/ConfirmationReciept.dart';
 import 'package:sales_officer/Header.dart';
 
-class ConfirmationScreen extends StatelessWidget {
+import 'StockConfirmationReciept.dart';
+
+class StockConfirmationScreen extends StatelessWidget {
   final Distributor currentDistributor;
   final List<TextEditingController> _textEditingControllers;
   final List receiptData;
   final int index;
-  final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
-  ConfirmationScreen(
-      this.currentDistributor,
-      this._textEditingControllers,
-      this.receiptData,
-      this.index,
-      this.isNew,
-      this.distributorOrder,
-      this.distributorOrderItems);
+  StockConfirmationScreen(this.currentDistributor, this._textEditingControllers,
+      this.receiptData, this.index, this.distributorOrder, this.distributorOrderItems);
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +50,8 @@ class ConfirmationScreen extends StatelessWidget {
               child: BreadCrum3(
                   "Distributor", currentDistributor.distributorName)),
           Expanded(
-            child: ConfirmationReciept(
-                currentDistributor,
-                _textEditingControllers,
-                receiptData,
-                isNew,
-                distributorOrder,
-                distributorOrderItems),
+            child: StockConfirmationReciept(currentDistributor,
+                _textEditingControllers, receiptData, distributorOrder, distributorOrderItems),
           ),
         ],
       ),
