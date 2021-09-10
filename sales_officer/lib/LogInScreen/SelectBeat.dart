@@ -24,6 +24,7 @@ class _SelectBeatState extends State<SelectBeat> {
           .map((e) => Material(
                 color: Colors.white,
                 child: InkWell(
+                  splashColor: Colors.greenAccent,
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => HomeScreen()));

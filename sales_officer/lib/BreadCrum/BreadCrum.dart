@@ -16,17 +16,9 @@ class BreadCrum2 extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => DialogBox(),
-              );
-            },
-            child: Text(
-              prefix,
-              style: TextStyle(fontSize: 12),
-            ),
+          Text(
+            prefix,
+            style: TextStyle(fontSize: 12),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),

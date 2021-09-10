@@ -1,29 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/DialogBox/ConfirmationModalSheet.dart';
+import 'package:sales_officer/StocksScreen/StockReturnModal.dart';
 
 import '../Database.dart';
 
-class IndividualConfirmationVariation extends StatelessWidget {
+class StockIndividualConfirmationVariation extends StatefulWidget {
   final Function updateReceiptData;
   final List f;
   final Function deleteReceiptData;
   final Distributor distributor;
+  final List returnOrdersCountList;
+  final List<TextEditingController> textEditingControllers;
 
-  IndividualConfirmationVariation(
+  StockIndividualConfirmationVariation(
     this.updateReceiptData,
     this.f,
     this.deleteReceiptData,
     this.distributor,
+    this.returnOrdersCountList,
+    this.textEditingControllers,
   );
 
   @override
+  _StockIndividualConfirmationVariationState createState() =>
+      _StockIndividualConfirmationVariationState();
+}
+
+class _StockIndividualConfirmationVariationState
+    extends State<StockIndividualConfirmationVariation> {
+  refresh() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List counts;
+    try {
+      counts = widget.returnOrdersCountList.firstWhere((element) {
+        return element[0].SKUID == widget.f[0].SKUID;
+      });
+    } catch (e) {
+      counts = [widget.f[0], 0, 0];
+    }
+
     SKUDistributorWise skuDistributorWise =
         allSKUDistributorWiseLocal.firstWhere((element) =>
-            element.distributorID == distributor.distributorID &&
-            element.SKUID == f[0].SKUID);
+            element.distributorID == widget.distributor.distributorID &&
+            element.SKUID == widget.f[0].SKUID);
+    TextEditingController primaryTextEditingController =
+        widget.textEditingControllers[allSKULocal.indexOf(allSKULocal
+                .firstWhere((element) => element.SKUID == widget.f[0].SKUID)) *
+            2];
+    TextEditingController alternativeTextEditingController = widget
+        .textEditingControllers[allSKULocal.indexOf(allSKULocal
+                .firstWhere((element) => element.SKUID == widget.f[0].SKUID)) *
+            2 +
+        1];
     return Material(
       color: Colors.white,
       child: InkWell(
@@ -31,7 +66,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ConfirmationModalSheet(f, updateReceiptData);
+              return ConfirmationModalSheet(widget.f, widget.updateReceiptData);
             },
           );
         },
@@ -43,43 +78,115 @@ class IndividualConfirmationVariation extends StatelessWidget {
           child: Row(
             children: [
               Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2,
                       child: Text(
-                        f[0].SKUName,
+                        widget.f[0].SKUName,
                         maxLines: 3,
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                         ),
                       )),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        allBillingCompanysLocal
-                            .firstWhere((element) =>
-                        skuDistributorWise.billingCompanyID ==
-                            element.billingCompanyID)
-                            .billingCompanyName,
-                        style: TextStyle(fontSize: 10, color: Colors.white),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            allBillingCompanysLocal
+                                .firstWhere((element) =>
+                                    skuDistributorWise.billingCompanyID ==
+                                    element.billingCompanyID)
+                                .billingCompanyName,
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      counts[1] != 0 || counts[2] != 0
+                          ? InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return StockReturnModal(
+                                        widget.f[0],
+                                        primaryTextEditingController,
+                                        alternativeTextEditingController,
+                                        skuDistributorWise,
+                                        widget.returnOrdersCountList,
+                                        refresh,
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                        height: 20,
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                        child: SvgPicture.asset(
+                                          "icons/returnorder.svg",
+                                          color: Colors.red,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Row(
+                                        children: [
+                                          counts[1] != 0
+                                              ? Text(
+                                                  "${counts[1]}${skuDistributorWise.primaryUnit}",
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.white),
+                                                )
+                                              : Container(),
+                                          counts[2] != 0
+                                              ? Text(
+                                                  " ${counts[2]}${skuDistributorWise.alternativeUnit}",
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.white),
+                                                )
+                                              : Container(),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
                   ),
                 ],
               ),
               Expanded(child: Container()),
-              f[1] == 0
+              widget.f[1] == 0
                   ? Container()
                   : Row(
                       children: [
                         Text(
-                          f[1].toString(),
+                          widget.f[1].toString(),
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.5),
                           ),
@@ -93,17 +200,17 @@ class IndividualConfirmationVariation extends StatelessWidget {
                         ),
                       ],
                     ),
-              f[1] == 0 || f[2] == 0
+              widget.f[1] == 0 || widget.f[2] == 0
                   ? Container()
                   : SizedBox(
                       width: 10,
                     ),
-              f[2] == 0
+              widget.f[2] == 0
                   ? Container()
                   : Row(
                       children: [
                         Text(
-                          f[2].toString(),
+                          widget.f[2].toString(),
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.5),
                           ),
@@ -122,7 +229,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  deleteReceiptData(f);
+                  widget.deleteReceiptData(widget.f);
                 },
                 child: Icon(
                   Icons.cancel_outlined,

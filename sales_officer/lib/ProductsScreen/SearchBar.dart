@@ -36,7 +36,7 @@ class _SearchBarState extends State<SearchBar> {
               color: Colors.black.withOpacity(0.1),
             ),
             color: Color(0xffF5F5F5),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(5),
           ),
           child: Row(
             children: [
@@ -57,7 +57,7 @@ class _SearchBarState extends State<SearchBar> {
                       decoration: InputDecoration(
                         isCollapsed: true,
                         border: InputBorder.none,
-                        hintText: "Search Distributors",
+                        hintText: "Search Products",
                         hintStyle: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 16,
@@ -81,7 +81,7 @@ class _SearchBarState extends State<SearchBar> {
               ),
               SizedBox(width: 10,),
               SizedBox(
-                width: 140,
+                width: 80,
                 child: DropdownButton<String>(
                 icon: Icon(Icons.keyboard_arrow_down_rounded),
                 isExpanded: true,
@@ -97,10 +97,10 @@ class _SearchBarState extends State<SearchBar> {
                     widget._setNewProducts(newValue);
                   },
                   items: <String>[
-                    'All Products',
-                    'Promoted Products',
-                    'New Products',
-                    'Trending Products'
+                    'All',
+                    'Promoted',
+                    'New',
+                    'Trending'
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

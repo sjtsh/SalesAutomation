@@ -59,7 +59,7 @@ class _NewOrderState extends State<NewOrder> {
                 border: Border.all(
                   color: Colors.black.withOpacity(0.1),
                 ),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Row(
                 children: [

@@ -13,8 +13,9 @@ class JointWorking extends StatelessWidget {
     return Column(
       children: [
         Material(
-        color: Colors.white,
+          color: Colors.white,
           child: InkWell(
+            splashColor: Colors.greenAccent,
             onTap: () {
               select();
               isJoint = false;
@@ -51,6 +52,7 @@ class JointWorking extends StatelessWidget {
         Material(
           color: Colors.white,
           child: InkWell(
+            splashColor: Colors.greenAccent,
             onTap: () {
               select();
               isJoint = true;
@@ -87,10 +89,11 @@ class JointWorking extends StatelessWidget {
         Material(
           color: Colors.white,
           child: InkWell(
+            splashColor: Colors.greenAccent,
             onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_){
-              return LeaveScreen();
-            }));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return LeaveScreen();
+              }));
             },
             child: Container(
               height: 60,

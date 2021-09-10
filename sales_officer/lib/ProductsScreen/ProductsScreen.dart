@@ -34,25 +34,46 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  String dropdownValue = "All Products";
+  String dropdownValue = "All";
   List<SubGroup> productList = [];
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
   bool isSearching = false;
+  bool isFiltered = false;
   List<DistributorOrderItem> distributorOrderItems = [];
 
   void _setNewProducts(String newValue) {
+    productList = [];
     setState(() {
+      isFiltered = true;
       dropdownValue = newValue;
-      // if (newValue == 'All Products') {
-      //   productList = allSubGroupsLocal;
-      // } else if (newValue == 'New Products') {
-      //   productList = allSubGroupsLocal.sublist(0, 2);
-      // } else if (newValue == 'Promoted Products') {
-      //   productList = allSubGroupsLocal.sublist(2, 4);
-      // } else if (newValue == 'Trending Products') {
-      //   productList = allSubGroupsLocal.sublist(4, 6);
-      // }
+      if (newValue == 'All') {
+        productList= allSubGroupsLocal;
+      } else if (newValue == 'New') {
+        allSubGroupsLocal.forEach((element) {
+          if (allFamiliaritysLocal
+              .firstWhere((e) => e.subGroupID == element.subGroupID)
+              .isNew) {
+            productList.add(element);
+          }
+        });
+      } else if (newValue == 'Promoted') {
+        allSubGroupsLocal.forEach((element) {
+          if (allFamiliaritysLocal
+              .firstWhere((e) => e.subGroupID == element.subGroupID)
+              .isPromoted) {
+            productList.add(element);
+          }
+        });
+      } else if (newValue == 'Trending') {
+        allSubGroupsLocal.forEach((element) {
+          if (allFamiliaritysLocal
+              .firstWhere((e) => e.subGroupID == element.subGroupID)
+              .isTrending) {
+            productList.add(element);
+          }
+        });
+      }
       scrollingDown = false;
     });
   }
@@ -139,7 +160,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           _setProducts, _setNewProducts, dropdownValue),
                     ),
                     Expanded(
-                        child: !isSearching
+                        child: !isSearching && !isFiltered
                             ? FutureBuilder(
                                 future: widget.skuStockService.fetchSKUStocks(),
                                 builder: (BuildContext context,

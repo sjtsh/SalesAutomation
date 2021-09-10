@@ -54,10 +54,19 @@ class SingularProductHeader extends StatelessWidget {
                               fit: BoxFit.contain,
                             ),
                           ),
-                          Positioned(
-                          top: 3,
-                          right: 3,
-                            child: Icon(Icons.zoom_in, size: 15, color: Colors.blue,),
+                          Container(
+                            height: 60,
+                            width: 52,
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.15),
+                                shape: BoxShape.circle),
+                            child: Center(
+                              child: Icon(
+                                Icons.zoom_in,
+                                size: 25,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ],
                       ),

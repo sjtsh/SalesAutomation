@@ -26,10 +26,17 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
   double totalAmount = 0;
   bool isLoading = true;
 
+  List<SKUDistributorWise> skuDistributorWises = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    allSKUDistributorWiseLocal.forEach((i) {
+      if (i.distributorID == widget.e.distributorID) {
+        skuDistributorWises.add(i);
+      }
+    });
     DistributorOrderItemService distributorOrderItemService =
         DistributorOrderItemService();
     distributorOrderItemService.fetchDistributorOrderItems().then((value) {
@@ -38,9 +45,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
         if (element.distributorOrderID == widget.e.distributorOrderID) {
           aList.add(element);
           SKUDistributorWise skuDistributorWise =
-              allSKUDistributorWiseLocal.firstWhere((i) =>
-                  i.SKUID == element.SKUID &&
-                  i.distributorID == widget.e.distributorID);
+              skuDistributorWises.firstWhere((i) => i.SKUID == element.SKUID);
           totalAmount += element.primaryItemCount *
               skuDistributorWise.primaryCF *
               skuDistributorWise.MRP;
@@ -184,7 +189,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                               widget.e.joint ? "Joint" : "Single"
                             ],
                             ["Remarks :", "${widget.e.remarks}"],
-                            ["Location :","${widget.e.lat}, ${widget.e.lng}"]
+                            ["Location :", "${widget.e.lat}, ${widget.e.lng}"]
                           ]
                               .map(
                                 (e) => Column(
@@ -225,7 +230,8 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                 CircularProgressIndicator())),
                                   ],
                                 )
-                              : OrderItemsExpanded(distributorOrderItems),
+                              : OrderItemsExpanded(
+                                  distributorOrderItems, skuDistributorWises),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

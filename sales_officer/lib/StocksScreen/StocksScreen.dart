@@ -41,6 +41,7 @@ class _StocksScreenState extends State<StocksScreen> {
   List<SubGroup> productList = [];
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
+  List returnOrdersCountList = [];
   bool isSearching = false;
 
   void _setNewProducts(String newValue) {
@@ -146,11 +147,11 @@ class _StocksScreenState extends State<StocksScreen> {
                                     AsyncSnapshot<List<SKUStock>> snapshot) {
                                   allSKUStocksLocal = snapshot.data;
                                   return StockList(
-                                    allSubGroupsLocal,
-                                    widget._scrollController,
-                                    _textEditingControllers,
-                                    widget.currentDistributor,
-                                  );
+                                      allSubGroupsLocal,
+                                      widget._scrollController,
+                                      _textEditingControllers,
+                                      widget.currentDistributor,
+                                      returnOrdersCountList);
                                 },
                               )
                             : StockList(
@@ -158,6 +159,7 @@ class _StocksScreenState extends State<StocksScreen> {
                                 widget._scrollController,
                                 _textEditingControllers,
                                 widget.currentDistributor,
+                                returnOrdersCountList,
                               )),
                   ],
                 ),
@@ -175,12 +177,12 @@ class _StocksScreenState extends State<StocksScreen> {
               ],
             ),
             child: StockConfirmOrder(
-              widget.currentDistributor,
-              _textEditingControllers,
-              widget.index,
-              widget.distributorOrder,
-              distributorOrderItems,
-            ),
+                widget.currentDistributor,
+                _textEditingControllers,
+                widget.index,
+                widget.distributorOrder,
+                distributorOrderItems,
+                returnOrdersCountList),
           ),
         ],
       ),

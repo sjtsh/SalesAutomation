@@ -13,14 +13,16 @@ class StockConfirmOrder extends StatefulWidget {
   final int index;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
+  final List returnOrdersCountList;
 
   StockConfirmOrder(
-      this.currentDistributor,
-      this._textEditingControllers,
-      this.index,
-      this.distributorOrder,
-      this.distributorOrderItems,
-      );
+    this.currentDistributor,
+    this._textEditingControllers,
+    this.index,
+    this.distributorOrder,
+    this.distributorOrderItems,
+    this.returnOrdersCountList,
+  );
 
   @override
   _StockConfirmOrderState createState() => _StockConfirmOrderState();
@@ -44,7 +46,7 @@ class _StockConfirmOrderState extends State<StockConfirmOrder> {
           },
           child: Center(
             child: Text(
-              "NEXT",
+              "REVIEW ORDER",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -89,13 +91,13 @@ class _StockConfirmOrderState extends State<StockConfirmOrder> {
       MaterialPageRoute(
         builder: (_) {
           return StockConfirmationScreen(
-            widget.currentDistributor,
-            widget._textEditingControllers,
-            receiptData,
-            widget.index,
-            widget.distributorOrder,
-            widget.distributorOrderItems,
-          );
+              widget.currentDistributor,
+              widget._textEditingControllers,
+              receiptData,
+              widget.index,
+              widget.distributorOrder,
+              widget.distributorOrderItems,
+              widget.returnOrdersCountList);
         },
       ),
     );

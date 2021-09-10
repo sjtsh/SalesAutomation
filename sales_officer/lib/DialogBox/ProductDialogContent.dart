@@ -96,7 +96,7 @@ class ProductDialogContent extends StatelessWidget {
             },
             child: Center(
               child: Text(
-                "BACK",
+                "CLOSE",
                 style: TextStyle(
                   color: Colors.white,
                 ),

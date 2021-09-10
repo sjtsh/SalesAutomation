@@ -29,14 +29,14 @@ class _SearchBarState extends State<SearchBar> {
       ),
       child: Center(
         child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
+          margin: EdgeInsets.symmetric(horizontal: 12),
           height: 35,
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.black.withOpacity(0.1),
             ),
             color: Color(0xffF5F5F5),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(5),
           ),
           child: Row(
             children: [
@@ -57,7 +57,7 @@ class _SearchBarState extends State<SearchBar> {
                       decoration: InputDecoration(
                         isCollapsed: true,
                         border: InputBorder.none,
-                        hintText: "Search Distributors",
+                        hintText: "Search Products",
                         hintStyle: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 16,
@@ -69,22 +69,18 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               ),
               Container(
-                width: 1,
-                height: 30,
+                width: 10,
                 decoration: BoxDecoration(
-                  border: Border(
-                    right: BorderSide(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                  ),
+                  color: Color(0xffe8e8e8),
+                  border:Border(left: BorderSide(color: Colors.black.withOpacity(0.1)))
                 ),
               ),
-              SizedBox(width: 10,),
-              SizedBox(
+              Container(
+                color: Color(0xffe8e8e8),
                 width: 140,
                 child: DropdownButton<String>(
-                icon: Icon(Icons.keyboard_arrow_down_rounded),
-                isExpanded: true,
+                  icon: Icon(Icons.keyboard_arrow_down_rounded),
+                  isExpanded: true,
                   value: widget.dropdownValue,
                   underline: Container(),
                   iconSize: 12,
@@ -104,13 +100,17 @@ class _SearchBarState extends State<SearchBar> {
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value, overflow: TextOverflow.ellipsis,),
+                      child: Text(
+                        value,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     );
                   }).toList(),
                 ),
               ),
-              SizedBox(
-                width: 12,
+              Container(
+                width: 10,
+                color: Color(0xffe8e8e8),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
@@ -243,4 +244,9 @@ Future<bool> updateStock(int distributorID,
         .showSnackBar(SnackBar(content: Text("Stock was not updated")));
     return false;
   }
+}
+
+
+Future<bool> addReturnOrderStock(Distributor distributor, List returnOrdersCountList, context)async{
+  return false;
 }

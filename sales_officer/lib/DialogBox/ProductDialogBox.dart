@@ -25,9 +25,9 @@ class _ProductDialogBoxState extends State<ProductDialogBox>
     super.initState();
 
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+        CurvedAnimation(parent: controller, curve: Curves.easeIn);
 
     controller.addListener(() {
       setState(() {});

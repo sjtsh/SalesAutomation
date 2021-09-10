@@ -19,6 +19,7 @@ class PendingScreen extends StatefulWidget {
 class _PendingScreenState extends State<PendingScreen> {
   int index = 0;
   bool isTabPending = true;
+  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +54,16 @@ class _PendingScreenState extends State<PendingScreen> {
                         onTap: () {
                           setState(() {
                             isTabPending = true;
+                            pageController.previousPage(
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.easeIn);
                           });
                         },
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border(
-                            top: BorderSide(color: Colors.black.withOpacity(0.1)),
+                              top: BorderSide(
+                                  color: Colors.black.withOpacity(0.1)),
                               bottom: BorderSide(
                                 color: isTabPending
                                     ? Colors.blue
@@ -70,7 +75,10 @@ class _PendingScreenState extends State<PendingScreen> {
                           child: Center(
                             child: Text(
                               "PENDING",
-                              style: TextStyle(color: isTabPending ? Colors.blue: Colors.black.withOpacity(0.5)),
+                              style: TextStyle(
+                                  color: isTabPending
+                                      ? Colors.blue
+                                      : Colors.black.withOpacity(0.5)),
                             ),
                           ),
                         ),
@@ -81,12 +89,16 @@ class _PendingScreenState extends State<PendingScreen> {
                         onTap: () {
                           setState(() {
                             isTabPending = false;
+                            pageController.nextPage(
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.easeIn);
                           });
                         },
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border(
-                              top: BorderSide(color: Colors.black.withOpacity(0.1)),
+                              top: BorderSide(
+                                  color: Colors.black.withOpacity(0.1)),
                               bottom: BorderSide(
                                 color: isTabPending
                                     ? Colors.black.withOpacity(0.1)
@@ -98,7 +110,10 @@ class _PendingScreenState extends State<PendingScreen> {
                           child: Center(
                             child: Text(
                               "APPROVED",
-                              style: TextStyle(color: isTabPending ? Colors.black.withOpacity(0.5): Colors.blue),
+                              style: TextStyle(
+                                  color: isTabPending
+                                      ? Colors.black.withOpacity(0.5)
+                                      : Colors.blue),
                             ),
                           ),
                         ),
@@ -108,9 +123,22 @@ class _PendingScreenState extends State<PendingScreen> {
                 ),
               ),
               Expanded(
-                child: isTabPending
-                    ? OrdersList(distributorOrders, false)
-                    : OrdersList(distributorOrders, true),
+                child: PageView(
+                onPageChanged: (int i){
+                  setState(() {
+                    if(i==1){
+                      isTabPending = false;
+                    }else if(i==0){
+                      isTabPending = true;
+                    }
+                  });
+                },
+                  controller: pageController,
+                  children: [
+                    OrdersList(distributorOrders, false),
+                    OrdersList(distributorOrders, true)
+                  ],
+                ),
               ),
             ],
           );

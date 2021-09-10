@@ -45,7 +45,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
           },
           child: Center(
             child: Text(
-              "NEXT",
+              "REVIEW ORDER",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

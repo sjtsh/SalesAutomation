@@ -71,7 +71,7 @@ class DistributorInfo extends StatelessWidget {
                               ["Bank Account Number: ", currentDistributor.bankAccountNumber.toString()],
                               ["Bank Address: ", currentDistributor.bankAddress],
                               ["VAT Number: ", currentDistributor.VAT.toString()],
-                              ["Geo: ", currentDistributor.lat.toString() + currentDistributor.lng.toString()],
+                              ["Geo: ", currentDistributor.lat.toString() + ", " + currentDistributor.lng.toString()],
                             ]
                                 .map((e) => Column(
                                       children: [

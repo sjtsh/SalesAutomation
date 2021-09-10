@@ -13,14 +13,15 @@ class StockSingularProduct extends StatelessWidget {
   final List<ExpandableController> _expandableControllers;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
+  final List returnOrdersCountList;
 
   StockSingularProduct(
-    this.item,
-    this.expandableControllerIndex,
-    this._expandableControllers,
-    this._textEditingControllers,
-    this.currentDistributor,
-  );
+      this.item,
+      this.expandableControllerIndex,
+      this._expandableControllers,
+      this._textEditingControllers,
+      this.currentDistributor,
+      this.returnOrdersCountList);
 
   unExpand() {
     if (!_expandableControllers[expandableControllerIndex].expanded) {
@@ -52,6 +53,7 @@ class StockSingularProduct extends StatelessWidget {
                       _textEditingControllers[
                           allSKULocal.indexOf(item) * 2 + 1],
                       currentDistributor,
+                      returnOrdersCountList,
                     ))
                 .toList(),
           ),

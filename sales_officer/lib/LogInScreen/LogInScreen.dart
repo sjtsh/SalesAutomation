@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
+import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
@@ -58,13 +60,21 @@ class _LogInScreenState extends State<LogInScreen> {
             setState(() {
               loadingText = "Getting Billing Companies";
             });
-          }).then((value){
-            BillingCompanyService billingCompanyService = BillingCompanyService();
-            billingCompanyService.fetchBillingCompanys().then((value){
+          }).then((value) {
+            BillingCompanyService billingCompanyService =
+                BillingCompanyService();
+            billingCompanyService.fetchBillingCompanys().then((value) {
               allBillingCompanysLocal = value;
               setState(() {
-                loadingText = "Almost Done";
-                isLoaded = true;
+                loadingText = "Loading Familiarities";
+              });
+              FamiliarityService familiarityService = FamiliarityService();
+              familiarityService.fetchFamiliaritys().then((value) {
+                allFamiliaritysLocal = value;
+                setState(() {
+                  loadingText = "Almost Done";
+                  isLoaded = true;
+                });
               });
             });
           });

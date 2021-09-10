@@ -4,7 +4,6 @@ import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
-import 'package:sales_officer/ConfirmationScreen/ConfirmationRecieptWarning.dart';
 import 'package:sales_officer/Database.dart';
 
 import 'StockIndividualConfirmationVariation.dart';
@@ -15,13 +14,15 @@ class StockConfirmationReciept extends StatefulWidget {
   final List receiptData;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
+  final List returnOrdersCountList;
 
   StockConfirmationReciept(
       this.currentDistributor,
       this._textEditingControllers,
       this.receiptData,
       this.distributorOrder,
-      this.distributorOrderItems);
+      this.distributorOrderItems,
+      this.returnOrdersCountList);
 
   @override
   _StockConfirmationRecieptState createState() =>
@@ -149,11 +150,14 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               Column(
                                 children: getSubGroupItems(e)
                                     .map(
-                                      (f) => IndividualConfirmationVariation(
-                                          updateReceiptData,
-                                          f,
-                                          deleteReceiptData,
-                                          widget.currentDistributor),
+                                      (f) =>
+                                          StockIndividualConfirmationVariation(
+                                              updateReceiptData,
+                                              f,
+                                              deleteReceiptData,
+                                              widget.currentDistributor,
+                                              widget.returnOrdersCountList,
+                                              widget._textEditingControllers),
                                     )
                                     .toList(),
                               ),
@@ -218,6 +222,8 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               setState(() {
                                 isLoading = true;
                               });
+                              addReturnOrderStock(widget.currentDistributor,
+                                  widget.returnOrdersCountList, context);
                               updateStock(
                                       widget.currentDistributor.distributorID,
                                       widget._textEditingControllers,

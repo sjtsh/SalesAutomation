@@ -4,7 +4,7 @@ import 'package:sales_officer/Notification/NotificationScreen.dart';
 List heading = [
   "Distributor",
   "Stocks",
-  "New Order",
+  "Distributor Primary Order",
   "Orders",
   "Dashboard",
   "Notifications",
