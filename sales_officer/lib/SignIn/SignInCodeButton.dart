@@ -14,7 +14,6 @@ class SignInCodeButton extends StatelessWidget {
             border: Border.all(color: Colors.red)),
         child: MaterialButton(
           onPressed: () {
-            print("logged in with activation code");
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ActivationCode()),

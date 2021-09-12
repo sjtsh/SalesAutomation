@@ -25,7 +25,6 @@ class DistributorList extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           if (isOrder) {
-            print("4 into 5");
             NavBar.onItemTapped(5);
             if(isStock){
               Navigator.push(
@@ -58,7 +57,6 @@ class DistributorList extends StatelessWidget {
               );
             }
           } else {
-            print("4 into 5");
             NavBar.onItemTapped(6);
             Navigator.push(
               context,

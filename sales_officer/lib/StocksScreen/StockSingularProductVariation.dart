@@ -16,13 +16,14 @@ class StockSingularProductVariation extends StatefulWidget {
   final TextEditingController _textEditingControllerSecondary;
   final Distributor currentDistributor;
   final List returnOrdersCountList;
+  final SKUStock mySKUStock;
 
-  StockSingularProductVariation(
-      this.item,
+  StockSingularProductVariation(this.item,
       this._textEditingControllerPrimary,
       this._textEditingControllerSecondary,
       this.currentDistributor,
-      this.returnOrdersCountList);
+      this.returnOrdersCountList,
+      this.mySKUStock);
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -41,33 +42,19 @@ class _StockSingularProductVariationState
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    widget._textEditingControllerPrimary.text == "" ? hintTextPrimary = "0": widget._textEditingControllerPrimary.text;
+    widget._textEditingControllerSecondary.text == "" ? hintTextAlternative = "0": widget._textEditingControllerSecondary.text;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SKUStock mySKUStock;
     SKUDistributorWise skuDistributorWise =
-        allSKUDistributorWiseLocal.firstWhere((element) =>
-            element.distributorID == widget.currentDistributor.distributorID &&
-            element.SKUID == widget.item.SKUID);
-    try {
-      mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
-          element.distributorID == widget.currentDistributor.distributorID &&
-          element.SKUID == widget.item.SKUID);
-
-      //here________________________________________________
-      widget._textEditingControllerPrimary.text =
-          mySKUStock.primaryStock.toString();
-      hintTextPrimary = mySKUStock.primaryStock.toString();
-
-      widget._textEditingControllerSecondary.text =
-          mySKUStock.alternativeStock.toString();
-      hintTextAlternative = mySKUStock.alternativeStock.toString();
-      //here________________________________________________
-
-    } catch (e) {
-      mySKUStock = SKUStock(0, widget.item.SKUID,
-          widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0);
-      hintTextPrimary = mySKUStock.primaryStock.toString();
-      hintTextAlternative = mySKUStock.alternativeStock.toString();
-    }
+    allSKUDistributorWiseLocal.firstWhere((element) =>
+    element.distributorID == widget.currentDistributor.distributorID &&
+        element.SKUID == widget.item.SKUID);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -95,52 +82,52 @@ class _StockSingularProductVariationState
                 allSKUStocksLocal == null
                     ? Container()
                     : Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Stock: ",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.green,
-                                ),
-                              ),
-                              mySKUStock.primaryStock == 0
-                                  ? Container()
-                                  : Text(
-                                      mySKUStock.primaryStock.toString() +
-                                          "${skuDistributorWise.primaryUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                              mySKUStock.primaryStock == 0 ||
-                                      mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : SizedBox(width: 5),
-                              mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : Text(
-                                      mySKUStock.alternativeStock.toString() +
-                                          "${skuDistributorWise.alternativeUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                            ],
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Stock: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green,
                           ),
                         ),
-                      ),
+                        widget.mySKUStock.primaryStock == 0
+                            ? Container()
+                            : Text(
+                          widget.mySKUStock.primaryStock.toString() +
+                              "${skuDistributorWise.primaryUnit}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green,
+                          ),
+                        ),
+                        widget.mySKUStock.primaryStock == 0 ||
+                            widget.mySKUStock.alternativeStock == 0
+                            ? Container()
+                            : SizedBox(width: 5),
+                        widget.mySKUStock.alternativeStock == 0
+                            ? Container()
+                            : Text(
+                          widget.mySKUStock.alternativeStock.toString() +
+                              "${skuDistributorWise.alternativeUnit}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: 12,
                 ),

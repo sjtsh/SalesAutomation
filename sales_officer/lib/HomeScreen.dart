@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<bool> _onBackPressed() async {
-    print("Back Pressed");
     NavBar.currentIndex = 2;
     _setIndex(2);
     return false;

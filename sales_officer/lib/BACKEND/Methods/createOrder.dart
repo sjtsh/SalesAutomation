@@ -31,7 +31,6 @@ Future<bool> createOrder(
       conditionOnly = false;
     }
     int distributorOrderID = value;
-    print(distributorOrderID.toString() + " has been found");
     try {
       _textEditingControllers.forEach(
         (element) async {
@@ -97,7 +96,6 @@ Future<bool> updateOrder(
   context,
 ) async {
   bool conditionOnly = true;
-  print(distributorOrderItems);
   _textEditingControllers.forEach((textEditingController) {
     if (_textEditingControllers.indexOf(textEditingController) % 2 == 0) {
       int myPrimaryCount = 0;
@@ -237,7 +235,6 @@ Future<bool> updateStock(int distributorID,
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Stock was successfully updated")));
-    print(conditionOnly);
     return true;
   } else {
     ScaffoldMessenger.of(context)
