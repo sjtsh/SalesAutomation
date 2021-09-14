@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 
@@ -16,6 +17,7 @@ searchForDistributor(String distributor, Function setDistributors) {
             .substring(0, numOfCharacters)
             .toLowerCase()) {
       distributors.add(allDistributorsLocal[i]);
+      break;
     }
   }
   setDistributors(distributors);
