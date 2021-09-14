@@ -43,6 +43,7 @@ class _StocksScreenState extends State<StocksScreen> {
   List<TextEditingController> _textEditingControllers = [];
   List returnOrdersCountList = [];
   bool isSearching = false;
+  bool isNoProductFound = false;
 
   void _setNewProducts(String newValue) {
     setState(() {
@@ -65,8 +66,9 @@ class _StocksScreenState extends State<StocksScreen> {
       productList = searchedSubGroup;
       if (productList.length > 0) {
         isSearching = true;
+        isNoProductFound = false;
       } else {
-        isSearching = false;
+        isNoProductFound = true;
       }
     });
   }
@@ -200,6 +202,44 @@ class _StocksScreenState extends State<StocksScreen> {
                                 widget.currentDistributor,
                                 returnOrdersCountList,
                               )),
+                    isNoProductFound
+                        ? Expanded(
+                            child: Center(
+                              child: Text(
+                                "No Products Found",
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: !isSearching
+                                ? FutureBuilder(
+                                    future:
+                                        widget.skuStockService.fetchSKUStocks(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<List<SKUStock>>
+                                            snapshot) {
+                                      allSKUStocksLocal = snapshot.data;
+                                      return StockList(
+                                          allSubGroupsLocal,
+                                          widget._scrollController,
+                                          _textEditingControllers,
+                                          widget.currentDistributor,
+                                          returnOrdersCountList);
+                                    },
+                                  )
+                                : StockList(
+                                    productList,
+                                    widget._scrollController,
+                                    _textEditingControllers,
+                                    widget.currentDistributor,
+                                    returnOrdersCountList,
+                                  ),
+                          ),
                   ],
                 ),
               ),

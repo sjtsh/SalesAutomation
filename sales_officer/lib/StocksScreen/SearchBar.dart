@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../BACKEND/Methods/Search.dart';
+import '../Database.dart';
 
 class SearchBar extends StatefulWidget {
   final Function _setProducts;
@@ -64,7 +65,12 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                       ),
                       onChanged: (_products) {
-                        searchForProducts(_products, widget._setProducts);
+                        if(_products != ""){
+                          searchForProducts(_products, widget._setProducts);
+                        }
+                        else{
+                          widget._setProducts(allSubGroupsLocal);
+                        }
                       }),
                 ),
               ),
@@ -102,7 +108,7 @@ class _SearchBarState extends State<SearchBar> {
                       value: value,
                       child: Text(
                         value,
-                        overflow: TextOverflow.ellipsis,
+                        // overflow: TextOverflow.ellipsis,
                       ),
                     );
                   }).toList(),
