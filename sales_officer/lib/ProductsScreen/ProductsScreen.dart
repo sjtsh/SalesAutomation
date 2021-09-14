@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -39,6 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
   bool isSearching = false;
+  bool isNotFound = false;
   bool isFiltered = false;
   List<DistributorOrderItem> distributorOrderItems = [];
 
@@ -48,7 +50,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       isFiltered = true;
       dropdownValue = newValue;
       if (newValue == 'All') {
-        productList= allSubGroupsLocal;
+        productList = allSubGroupsLocal;
       } else if (newValue == 'New') {
         allSubGroupsLocal.forEach((element) {
           if (allFamiliaritysLocal
@@ -83,8 +85,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
       productList = searchedSubGroup;
       if (productList.length > 0) {
         isSearching = true;
+        isNotFound = false;
       } else {
-        isSearching = false;
+        isNotFound = true;
       }
     });
   }
@@ -159,27 +162,35 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       child: SearchBar(
                           _setProducts, _setNewProducts, dropdownValue),
                     ),
-                    Expanded(
-                        child: !isSearching && !isFiltered
-                            ? FutureBuilder(
-                                future: widget.skuStockService.fetchSKUStocks(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<List<SKUStock>> snapshot) {
-                                  allSKUStocksLocal = snapshot.data;
-                                  return ProductList(
-                                    allSubGroupsLocal,
+                    isNotFound
+                        ? Expanded(
+                            child: Center(
+                              child: Text("No Search Found."),
+                            ),
+                          )
+                        : Expanded(
+                            child: !isSearching && !isFiltered
+                                ? FutureBuilder(
+                                    future:
+                                        widget.skuStockService.fetchSKUStocks(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<List<SKUStock>>
+                                            snapshot) {
+                                      allSKUStocksLocal = snapshot.data;
+                                      return ProductList(
+                                        allSubGroupsLocal,
+                                        widget._scrollController,
+                                        _textEditingControllers,
+                                        widget.currentDistributor,
+                                      );
+                                    },
+                                  )
+                                : ProductList(
+                                    productList,
                                     widget._scrollController,
                                     _textEditingControllers,
                                     widget.currentDistributor,
-                                  );
-                                },
-                              )
-                            : ProductList(
-                                productList,
-                                widget._scrollController,
-                                _textEditingControllers,
-                                widget.currentDistributor,
-                              )),
+                                  )),
                   ],
                 ),
               ),

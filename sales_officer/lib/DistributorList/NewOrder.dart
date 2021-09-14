@@ -13,7 +13,11 @@ class NewOrder extends StatefulWidget {
 
   final DistributorService distributorService = DistributorService();
 
-  NewOrder(this.isOrder, this.isStock, this.index);
+  NewOrder(
+    this.isOrder,
+    this.isStock,
+    this.index,
+  );
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -21,14 +25,16 @@ class NewOrder extends StatefulWidget {
 
 class _NewOrderState extends State<NewOrder> {
   bool isSearching = false;
+  bool isNotFound = false;
 
   void setDistributors(List<Distributor> searchedDistributors) {
     setState(() {
       searchedDistributorsLocal = searchedDistributors;
       if (searchedDistributorsLocal.length > 0) {
         isSearching = true;
+        isNotFound = false;
       } else {
-        isSearching = false;
+        isNotFound = true;
       }
     });
   }
@@ -52,7 +58,9 @@ class _NewOrderState extends State<NewOrder> {
           ),
           child: Center(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12.0,),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+              ),
               height: 35,
               decoration: BoxDecoration(
                 color: Color(0xffF5F5F5),
@@ -85,7 +93,11 @@ class _NewOrderState extends State<NewOrder> {
                           ),
                         ),
                         onChanged: (_distributor) {
-                          searchForDistributor(_distributor, setDistributors);
+                          if (_distributor != "") {
+                            searchForDistributor(_distributor, setDistributors);
+                          } else {
+                            setDistributors(allDistributorsLocal);
+                          }
                         },
                       ),
                     ),
@@ -102,38 +114,52 @@ class _NewOrderState extends State<NewOrder> {
             ),
           ),
         ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: Offset(0, 2),
-                  blurRadius: 3,
+        isNotFound
+            ? Expanded(
+                child: Center(
+                  child: Text("No Search Found."),
                 ),
-              ],
-            ),
-              child: !isSearching
-                  ? Column(
-                      children: allDistributorsLocal
-                          .map(
-                            (item) =>
-                                DistributorList(item, widget.isOrder, widget.isStock, widget.index),
-                          )
-                          .toList(),
-                    )
-                  : Column(
-                      children: searchedDistributorsLocal
-                          .map(
-                            (item) =>
-                                DistributorList(item, widget.isOrder, widget.isStock, widget.index),
-                          )
-                          .toList(),
+              )
+            : Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          offset: Offset(0, 2),
+                          blurRadius: 3,
+                        ),
+                      ],
                     ),
-            ),
-          ),
-        ),
+                    child: !isSearching
+                        ? Column(
+                            children: allDistributorsLocal
+                                .map(
+                                  (item) => DistributorList(
+                                    item,
+                                    widget.isOrder,
+                                    widget.isStock,
+                                    widget.index,
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : Column(
+                            children: searchedDistributorsLocal
+                                .map(
+                                  (item) => DistributorList(
+                                    item,
+                                    widget.isOrder,
+                                    widget.isStock,
+                                    widget.index,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                  ),
+                ),
+              ),
       ],
     );
   }
