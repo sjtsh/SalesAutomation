@@ -66,7 +66,7 @@ class _StockIndividualConfirmationVariationState
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ConfirmationModalSheet(widget.f, widget.updateReceiptData);
+              return StockReturnModal(widget.f[0], primaryTextEditingController, alternativeTextEditingController, skuDistributorWise, widget.returnOrdersCountList, refresh);
             },
           );
         },

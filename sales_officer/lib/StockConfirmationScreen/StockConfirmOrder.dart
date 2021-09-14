@@ -59,6 +59,9 @@ class _StockConfirmOrderState extends State<StockConfirmOrder> {
   }
 
   takeToReciept() {
+    // widget._textEditingControllers.forEach((element) {
+    //   print(element.text);
+    // });
     List receiptData = [];
     widget._textEditingControllers.forEach((element) {
       int primaryCount = 0;

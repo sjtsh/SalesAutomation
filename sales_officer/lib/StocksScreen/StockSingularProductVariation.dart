@@ -12,18 +12,13 @@ import 'StockReturnModal.dart';
 
 class StockSingularProductVariation extends StatefulWidget {
   final SKU item;
-  final TextEditingController _textEditingControllerPrimary;
-  final TextEditingController _textEditingControllerSecondary;
+  final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
   final List returnOrdersCountList;
   final SKUStock mySKUStock;
 
-  StockSingularProductVariation(this.item,
-      this._textEditingControllerPrimary,
-      this._textEditingControllerSecondary,
-      this.currentDistributor,
-      this.returnOrdersCountList,
-      this.mySKUStock);
+  StockSingularProductVariation(this.item, this._textEditingControllers,
+      this.currentDistributor, this.returnOrdersCountList, this.mySKUStock);
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -32,29 +27,16 @@ class StockSingularProductVariation extends StatefulWidget {
 
 class _StockSingularProductVariationState
     extends State<StockSingularProductVariation> {
-  String hintTextPrimary = "";
-  String hintTextAlternative = "";
-  TextEditingController _textEditingController1 = TextEditingController();
-  TextEditingController _textEditingController2 = TextEditingController();
-
   refresh() {
     setState(() {});
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    widget._textEditingControllerPrimary.text == "" ? hintTextPrimary = "0": widget._textEditingControllerPrimary.text;
-    widget._textEditingControllerSecondary.text == "" ? hintTextAlternative = "0": widget._textEditingControllerSecondary.text;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SKUDistributorWise skuDistributorWise =
-    allSKUDistributorWiseLocal.firstWhere((element) =>
-    element.distributorID == widget.currentDistributor.distributorID &&
-        element.SKUID == widget.item.SKUID);
+        allSKUDistributorWiseLocal.firstWhere((element) =>
+            element.distributorID == widget.currentDistributor.distributorID &&
+            element.SKUID == widget.item.SKUID);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -82,52 +64,54 @@ class _StockSingularProductVariationState
                 allSKUStocksLocal == null
                     ? Container()
                     : Container(
-                  height: 30,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Stock: ",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.green,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Stock: ",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              widget.mySKUStock.primaryStock == 0
+                                  ? Container()
+                                  : Text(
+                                      widget.mySKUStock.primaryStock
+                                              .toString() +
+                                          "${skuDistributorWise.primaryUnit}",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                              widget.mySKUStock.primaryStock == 0 ||
+                                      widget.mySKUStock.alternativeStock == 0
+                                  ? Container()
+                                  : SizedBox(width: 5),
+                              widget.mySKUStock.alternativeStock == 0
+                                  ? Container()
+                                  : Text(
+                                      widget.mySKUStock.alternativeStock
+                                              .toString() +
+                                          "${skuDistributorWise.alternativeUnit}",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                            ],
                           ),
                         ),
-                        widget.mySKUStock.primaryStock == 0
-                            ? Container()
-                            : Text(
-                          widget.mySKUStock.primaryStock.toString() +
-                              "${skuDistributorWise.primaryUnit}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.green,
-                          ),
-                        ),
-                        widget.mySKUStock.primaryStock == 0 ||
-                            widget.mySKUStock.alternativeStock == 0
-                            ? Container()
-                            : SizedBox(width: 5),
-                        widget.mySKUStock.alternativeStock == 0
-                            ? Container()
-                            : Text(
-                          widget.mySKUStock.alternativeStock.toString() +
-                              "${skuDistributorWise.alternativeUnit}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
                 SizedBox(
                   width: 12,
                 ),
@@ -138,8 +122,10 @@ class _StockSingularProductVariationState
                         builder: (_) {
                           return StockReturnModal(
                             widget.item,
-                            widget._textEditingControllerPrimary,
-                            widget._textEditingControllerSecondary,
+                            widget._textEditingControllers[
+                                allSKULocal.indexOf(widget.item) * 2],
+                            widget._textEditingControllers[
+                                allSKULocal.indexOf(widget.item) * 2 + 1],
                             skuDistributorWise,
                             widget.returnOrdersCountList,
                             refresh,
@@ -172,10 +158,8 @@ class _StockSingularProductVariationState
                   ),
                   child: Center(
                     child: TextField(
-                      onChanged: (String number) {
-                        widget._textEditingControllerPrimary.text = number;
-                      },
-                      controller: _textEditingController1,
+                      controller: widget._textEditingControllers[
+                          allSKULocal.indexOf(widget.item) * 2],
                       cursorWidth: 1,
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.blue,
@@ -185,7 +169,7 @@ class _StockSingularProductVariationState
                       ),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                        hintText: hintTextPrimary,
+                        hintText: "${skuDistributorWise.primaryUnit}",
                         border: InputBorder.none,
                       ),
                     ),
@@ -204,10 +188,8 @@ class _StockSingularProductVariationState
                   ),
                   child: Center(
                     child: TextField(
-                      onChanged: (String number) {
-                        widget._textEditingControllerSecondary.text = number;
-                      },
-                      controller: _textEditingController2,
+                      controller: widget._textEditingControllers[
+                          allSKULocal.indexOf(widget.item) * 2 + 1],
                       cursorWidth: 1,
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.blue,
@@ -217,7 +199,7 @@ class _StockSingularProductVariationState
                       ),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                        hintText: hintTextAlternative,
+                        hintText: "${skuDistributorWise.alternativeUnit}",
                         border: InputBorder.none,
                         fillColor: Colors.white,
                       ),

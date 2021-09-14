@@ -8,7 +8,7 @@ import 'package:sales_officer/Database.dart';
 import 'StockSingularProductHeader.dart';
 import 'StockSingularProductVariation.dart';
 
-class StockSingularProduct extends StatelessWidget {
+class StockSingularProduct extends StatefulWidget {
   final SubGroup item;
   final int expandableControllerIndex;
   final List<ExpandableController> _expandableControllers;
@@ -24,61 +24,62 @@ class StockSingularProduct extends StatelessWidget {
       this.currentDistributor,
       this.returnOrdersCountList);
 
+  @override
+  _StockSingularProductState createState() => _StockSingularProductState();
+}
+
+class _StockSingularProductState extends State<StockSingularProduct> {
   unExpand() {
-    if (!_expandableControllers[expandableControllerIndex].expanded) {
-      for (int i = 0; i < _expandableControllers.length; i++) {
-        if (i != expandableControllerIndex) {
-          _expandableControllers[i].expanded = false;
+    if (!widget
+        ._expandableControllers[widget.expandableControllerIndex].expanded) {
+      for (int i = 0; i < widget._expandableControllers.length; i++) {
+        if (i != widget.expandableControllerIndex) {
+          widget._expandableControllers[i].expanded = false;
         } else {
-          _expandableControllers[i].expanded = true;
+          widget._expandableControllers[i].expanded = true;
         }
       }
     } else {
-      _expandableControllers[expandableControllerIndex].expanded = false;
+      widget._expandableControllers[widget.expandableControllerIndex].expanded =
+          false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ExpandablePanel(
-      collapsed: StockSingularProductHeader(item, unExpand),
+      collapsed: StockSingularProductHeader(widget.item, unExpand),
       expanded: Column(
         children: [
-          StockSingularProductHeader(item, unExpand),
+          StockSingularProductHeader(widget.item, unExpand),
           Column(
             children: allSKULocal
-                .where((element) => element.subGroupID == item.subGroupID)
+                .where(
+                    (element) => element.subGroupID == widget.item.subGroupID)
                 .map((item) {
-                SKUStock mySKUStock;
+              SKUStock mySKUStock;
               try {
                 mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
-                element.distributorID == currentDistributor.distributorID &&
+                    element.distributorID ==
+                        widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
 
-                //here________________________________________________
-                _textEditingControllers[allSKULocal.indexOf(item) * 2].text =
-                    mySKUStock.primaryStock.toString();
-
-                _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1].text =
-                    mySKUStock.alternativeStock.toString();
-                //here________________________________________________
-
               } catch (e) {
-                mySKUStock = SKUStock(0,0,0, 0, 0, 0, "", 0, 0);
+                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
               }
               return StockSingularProductVariation(
                 item,
-                _textEditingControllers[allSKULocal.indexOf(item) * 2],
-                _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1],
-                currentDistributor,
-                returnOrdersCountList,
+                widget._textEditingControllers,
+                widget.currentDistributor,
+                widget.returnOrdersCountList,
                 mySKUStock,
               );
             }).toList(),
           ),
         ],
       ),
-      controller: _expandableControllers[expandableControllerIndex],
+      controller:
+          widget._expandableControllers[widget.expandableControllerIndex],
     );
   }
 }
