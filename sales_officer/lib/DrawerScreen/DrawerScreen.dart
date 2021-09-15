@@ -9,9 +9,7 @@ class DrawerScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          DrawerHeader(
-            child: SvgPicture.asset("icons/logo.svg"),
-          ),
+          SvgPicture.asset("icons/logo.svg"),
           Divider(
             color: Colors.red.withOpacity(0.5),
             thickness: 2,

@@ -5,6 +5,7 @@ import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/DistributorInfo.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/StocksScreen/StocksScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../ProductsScreen/ProductsScreen.dart';
 
@@ -16,7 +17,12 @@ class DistributorList extends StatelessWidget {
   final bool isStock;
   final int index;
 
-  DistributorList(this.distributor, this.isOrder, this.isStock, this.index);
+  DistributorList(
+    this.distributor,
+    this.isOrder,
+    this.isStock,
+    this.index,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class DistributorList extends StatelessWidget {
         onTap: () async {
           if (isOrder) {
             NavBar.onItemTapped(5);
-            if(isStock){
+            if (isStock) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -40,7 +46,7 @@ class DistributorList extends StatelessWidget {
                   },
                 ),
               );
-            }else{
+            } else {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -102,14 +108,49 @@ class DistributorList extends StatelessWidget {
                 width: 20,
               ),
               Expanded(
-                child: Text(
-                  "${distributor.distributorName}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${distributor.distributorName}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          distributor.location,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.5)),
+                        ),
+                      ],
+                    ),
+                    Expanded(child: Container()),
+                    MaterialButton(
+                        onPressed: () => launch(
+                            "tel:+977${distributor.mobileNumber.toString()}"),
+                        child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: .5,
+                                  ),
+                                ]),
+                            child: Icon(
+                          Icons.call,
+                          color: colors[index],
+                        ))),
+                  ],
                 ),
-              ),
+              )
             ],
           ),
         ),

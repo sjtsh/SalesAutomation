@@ -20,6 +20,7 @@ class _FusersState extends State<Fusers> {
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
+      theme: ThemeData(fontFamily: "lato"),
       routes: {
         // '': (context) => const FirstScreen(),
       },
@@ -27,6 +28,7 @@ class _FusersState extends State<Fusers> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
+
         body: SignIn(),
       ),
     );

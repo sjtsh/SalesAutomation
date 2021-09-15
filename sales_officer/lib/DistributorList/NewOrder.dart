@@ -13,7 +13,11 @@ class NewOrder extends StatefulWidget {
 
   final DistributorService distributorService = DistributorService();
 
-  NewOrder(this.isOrder, this.isStock, this.index);
+  NewOrder(
+    this.isOrder,
+    this.isStock,
+    this.index,
+  );
 
   @override
   _NewOrderState createState() => _NewOrderState();
@@ -21,16 +25,16 @@ class NewOrder extends StatefulWidget {
 
 class _NewOrderState extends State<NewOrder> {
   bool isSearching = false;
-  bool isNoDistributorFound = false;
+  bool isNotFound = false;
 
   void setDistributors(List<Distributor> searchedDistributors) {
     setState(() {
       searchedDistributorsLocal = searchedDistributors;
       if (searchedDistributorsLocal.length > 0) {
         isSearching = true;
-        isNoDistributorFound = false;
+        isNotFound = false;
       } else {
-        isNoDistributorFound = true;
+        isNotFound = true;
       }
     });
   }
@@ -110,19 +114,12 @@ class _NewOrderState extends State<NewOrder> {
             ),
           ),
         ),
-        isNoDistributorFound
+        isNotFound
             ? Expanded(
-              child: Center(
-                  child: Text(
-                    "No Distributor Found",
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                child: Center(
+                  child: Text("No Search Found."),
                 ),
-            )
+              )
             : Expanded(
                 child: SingleChildScrollView(
                   child: Container(
@@ -140,10 +137,11 @@ class _NewOrderState extends State<NewOrder> {
                             children: allDistributorsLocal
                                 .map(
                                   (item) => DistributorList(
-                                      item,
-                                      widget.isOrder,
-                                      widget.isStock,
-                                      widget.index),
+                                    item,
+                                    widget.isOrder,
+                                    widget.isStock,
+                                    widget.index,
+                                  ),
                                 )
                                 .toList(),
                           )
@@ -151,10 +149,11 @@ class _NewOrderState extends State<NewOrder> {
                             children: searchedDistributorsLocal
                                 .map(
                                   (item) => DistributorList(
-                                      item,
-                                      widget.isOrder,
-                                      widget.isStock,
-                                      widget.index),
+                                    item,
+                                    widget.isOrder,
+                                    widget.isStock,
+                                    widget.index,
+                                  ),
                                 )
                                 .toList(),
                           ),

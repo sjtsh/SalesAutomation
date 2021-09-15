@@ -69,7 +69,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                         style: TextStyle(
                             color: isStartCondition
                                 ? Colors.green
-                                : Colors.black.withOpacity(0.1)),
+                                : Colors.black.withOpacity(0.5)),
                       )),
                     ),
                   ),
@@ -100,7 +100,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                         style: TextStyle(
                             color: !isStartCondition
                                 ? Colors.blue
-                                : Colors.black.withOpacity(0.1)),
+                                : Colors.black.withOpacity(0.5)),
                       )),
                     ),
                   ),

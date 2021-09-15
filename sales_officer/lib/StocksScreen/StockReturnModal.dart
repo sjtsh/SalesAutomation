@@ -20,12 +20,13 @@ class StockReturnModal extends StatelessWidget {
       TextEditingController();
 
   StockReturnModal(
-      this.sku,
-      this.primaryStockController,
-      this.alternativeStockController,
-      this.skuDistributorWise,
-      this.returnOrdersCountList,
-      this.refresh,);
+    this.sku,
+    this.primaryStockController,
+    this.alternativeStockController,
+    this.skuDistributorWise,
+    this.returnOrdersCountList,
+    this.refresh,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +210,15 @@ class StockReturnModal extends StatelessWidget {
                           child: MaterialButton(
                             onPressed: () {
                               bool isConsists = false;
+                              int actualPrimaryCountNew =
+                                  primaryStockController.text == ""
+                                      ? 0
+                                      : int.parse(primaryStockController.text);
+                              int actualAlternativeCountNew =
+                                  alternativeStockController.text == ""
+                                      ? 0
+                                      : int.parse(
+                                          alternativeStockController.text);
                               int primaryCountNew =
                                   _textEditingControllerPrimary.text == ""
                                       ? 0
@@ -220,8 +230,8 @@ class StockReturnModal extends StatelessWidget {
                                       : int.parse(
                                           _textEditingControllerAlternative
                                               .text);
-                              if (primaryCountNew > int.parse(primaryStockController.text) ||
-                                  alternativeCountNew > int.parse(alternativeStockController.text)) {
+                              if (primaryCountNew > actualPrimaryCountNew ||
+                                  alternativeCountNew > actualAlternativeCountNew) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                         content: Text("Not enough stock")));
