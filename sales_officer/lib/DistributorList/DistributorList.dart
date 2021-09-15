@@ -151,8 +151,8 @@ class DistributorList extends StatelessWidget {
                               blurRadius: .5,
                             ),
                           ]),
-                      child: InkWell(
-                          onTap: () => launch(
+                      child: RawMaterialButton(
+                          onPressed: () => launch(
                               "tel:+977${distributor.mobileNumber.toString()}"),
                           child: Icon(
                             Icons.call,
