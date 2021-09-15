@@ -11,7 +11,8 @@ class ModalSheetTourPlan extends StatefulWidget {
   final Function setIsModalFalse;
   final Function setTourPlan;
 
-  ModalSheetTourPlan(this.todayText, this.setActivity, this.setDetail, this.index, this.setIsModalFalse, this.setTourPlan);
+  ModalSheetTourPlan(this.todayText, this.setActivity, this.setDetail,
+      this.index, this.setIsModalFalse, this.setTourPlan);
 
   @override
   _ModalSheetTourPlanState createState() => _ModalSheetTourPlanState();
@@ -30,7 +31,6 @@ class _ModalSheetTourPlanState extends State<ModalSheetTourPlan> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,8 +38,12 @@ class _ModalSheetTourPlanState extends State<ModalSheetTourPlan> {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Select Activity For ${widget.todayText}"),
+              Text(
+                "Select Activity For ${widget.todayText}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               Expanded(
                 child: Container(),
               ),
@@ -58,10 +62,12 @@ class _ModalSheetTourPlanState extends State<ModalSheetTourPlan> {
         Divider(
           color: Colors.black.withOpacity(0.1),
           thickness: 2,
+          height: 0,
         ),
         Expanded(
             child: isActivitySelected
-                ? SelectedList(widget.todayText, activity, widget.setDetail, widget.index, widget.setIsModalFalse, widget.setTourPlan)
+                ? SelectedList(widget.todayText, activity, widget.setDetail,
+                    widget.index, widget.setIsModalFalse, widget.setTourPlan)
                 : ActivityList(setIsActivitySelected)),
       ],
     );
