@@ -60,7 +60,7 @@ class _SearchBarState extends State<SearchBar> {
                         border: InputBorder.none,
                         hintText: "Search Products",
                         hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.black.withOpacity(0.3),
                           fontSize: 16,
                         ),
                       ),

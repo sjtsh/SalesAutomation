@@ -68,131 +68,133 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5F5F5),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Header(7, false),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom:
-                            BorderSide(color: Colors.black.withOpacity(0.1)))),
-                height: 50,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 12,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Start Date",
-                          style: TextStyle(color: Colors.green, fontSize: 10),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xffF5F5F5),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Header(7, false),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom:
+                              BorderSide(color: Colors.black.withOpacity(0.1)))),
+                  height: 50,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Start Date",
+                            style: TextStyle(color: Colors.green, fontSize: 10),
+                          ),
+                          Center(
+                            child: Text(
+                              "${widget.startDate}/${widget.now.month - 1}/${widget.now.year}",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: SvgPicture.asset(
+                          "icons/bothsidearrow.svg",
+                          fit: BoxFit.contain,
                         ),
-                        Center(
-                          child: Text(
-                            "${widget.startDate}/${widget.now.month - 1}/${widget.now.year}",
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "End Date",
+                            style: TextStyle(color: Colors.blue, fontSize: 10),
+                          ),
+                          Text(
+                            "${widget.endDate - dates[widget.now.month - 1]}/${widget.now.month}/${widget.now.year}",
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.5),
                                 fontSize: 14),
                           ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: SvgPicture.asset(
-                        "icons/bothsidearrow.svg",
-                        fit: BoxFit.contain,
+                        ],
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "End Date",
-                          style: TextStyle(color: Colors.blue, fontSize: 10),
-                        ),
-                        Text(
-                          "${widget.endDate - dates[widget.now.month - 1]}/${widget.now.month}/${widget.now.year}",
-                          style: TextStyle(
-                              color: Colors.black.withOpacity(0.5),
-                              fontSize: 14),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 12,
-                    ),
-                  ],
-                ),
-              ),
-              TourDropDowns(
-                  widget.startDate, widget.endDate, widget.now, setIsModalTrue, allTourPlans!),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: MaterialButton(
-                    color: isFillDisabled ? Colors.blueGrey : Colors.green,
-                    onPressed: () {
-                      if (isFillDisabled) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("Please Fill All Fields"),
-                        ));
-                      } else {
-                        print(allTourPlans);
-                      }
-                    },
-                    child: Center(
-                      child: Text(
-                        "FILL",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      SizedBox(
+                        width: 12,
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          isModal
-              ? GestureDetector(
-                  onTap: () {},
+                TourDropDowns(
+                    widget.startDate, widget.endDate, widget.now, setIsModalTrue, allTourPlans!),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    color: Colors.black.withOpacity(0.1),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 2 / 3,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
+                    clipBehavior: Clip.hardEdge,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: MaterialButton(
+                      color: isFillDisabled ? Colors.blueGrey : Colors.green,
+                      onPressed: () {
+                        if (isFillDisabled) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Please Fill All Fields"),
+                          ));
+                        } else {
+                          print(allTourPlans);
+                        }
+                      },
+                      child: Center(
+                        child: Text(
+                          "FILL",
+                          style: TextStyle(
                             color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: ModalSheetTourPlan(todayText!, setActivity!,
-                              setDetail!, index!, setIsModalFalse, setTourPlan),
                         ),
                       ),
                     ),
                   ),
-                )
-              : Container()
-        ],
+                ),
+              ],
+            ),
+            isModal
+                ? GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.black.withOpacity(0.1),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 2 / 3,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                            ),
+                            child: ModalSheetTourPlan(todayText!, setActivity!,
+                                setDetail!, index!, setIsModalFalse, setTourPlan),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container()
+          ],
+        ),
       ),
     );
   }

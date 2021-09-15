@@ -32,7 +32,7 @@ class EnterActivation extends StatelessWidget {
               isCollapsed: true,
               hintText: "Enter activation",
               hintStyle: TextStyle(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withOpacity(0.3),
                 fontSize: 14,
               ),
               icon: Icon(
