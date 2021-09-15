@@ -223,7 +223,7 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               setState(() {
                                 isLoading = true;
                               });
-                              addReturnOrderStock(widget.currentDistributor,
+                              createReturnOrder(widget.currentDistributor.distributorID,
                                   widget.returnOrdersCountList, context);
                               updateStock(
                                       widget.currentDistributor.distributorID,
