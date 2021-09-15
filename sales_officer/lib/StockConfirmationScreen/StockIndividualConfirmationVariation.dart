@@ -66,7 +66,13 @@ class _StockIndividualConfirmationVariationState
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return StockReturnModal(widget.f[0], primaryTextEditingController, alternativeTextEditingController, skuDistributorWise, widget.returnOrdersCountList, refresh);
+              return StockReturnModal(
+                  widget.f[0],
+                  primaryTextEditingController,
+                  alternativeTextEditingController,
+                  skuDistributorWise,
+                  widget.returnOrdersCountList,
+                  refresh);
             },
           );
         },
