@@ -124,15 +124,15 @@ class _PendingScreenState extends State<PendingScreen> {
               ),
               Expanded(
                 child: PageView(
-                onPageChanged: (int i){
-                  setState(() {
-                    if(i==1){
-                      isTabPending = false;
-                    }else if(i==0){
-                      isTabPending = true;
-                    }
-                  });
-                },
+                  onPageChanged: (int i) {
+                    setState(() {
+                      if (i == 1) {
+                        isTabPending = false;
+                      } else if (i == 0) {
+                        isTabPending = true;
+                      }
+                    });
+                  },
                   controller: pageController,
                   children: [
                     OrdersList(distributorOrders, false),
@@ -149,6 +149,74 @@ class _PendingScreenState extends State<PendingScreen> {
           ),
           child: ListView(
             children: [
+              Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2))
+                  ],
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                                color: Colors.black.withOpacity(0.1)),
+                            bottom: BorderSide(
+                              color: isTabPending
+                                  ? Colors.blue
+                                  : Colors.black.withOpacity(0.1),
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "PENDING",
+                            style: TextStyle(
+                                color: isTabPending
+                                    ? Colors.blue
+                                    : Colors.black.withOpacity(0.5)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                  color: Colors.black.withOpacity(0.1)),
+                              bottom: BorderSide(
+                                color: isTabPending
+                                    ? Colors.black.withOpacity(0.1)
+                                    : Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "APPROVED",
+                              style: TextStyle(
+                                  color: isTabPending
+                                      ? Colors.black.withOpacity(0.5)
+                                      : Colors.blue),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 7),
               Column(
                 children: List.generate(

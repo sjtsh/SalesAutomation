@@ -4,9 +4,9 @@ import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
 class SingularProductHeader extends StatelessWidget {
   final SubGroup subGroup;
-  final Function unExpand;
+  final Function changeCurrentlyExpanded;
 
-  SingularProductHeader(this.subGroup, this.unExpand);
+  SingularProductHeader(this.subGroup, this.changeCurrentlyExpanded);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SingularProductHeader extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          unExpand();
+          changeCurrentlyExpanded(subGroup.subGroupID);
         },
         child: Container(
           decoration: BoxDecoration(
