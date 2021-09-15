@@ -90,41 +90,26 @@ class _StocksScreenState extends State<StocksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(widget.index, false),
-          Container(
-              padding: EdgeInsets.only(left: 12),
-              alignment: Alignment.centerLeft,
-              height: 40,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                  bottom: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: BreadCrum2(
-                  "Distributor", widget.currentDistributor.distributorName)),
-          Expanded(
-            child: Form(
-              key: widget._formKey,
-              child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Header(widget.index, false),
+            Container(
+                padding: EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
@@ -133,111 +118,128 @@ class _StocksScreenState extends State<StocksScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      height: scrollingDown ? 0 : 50,
-                      child: SearchBar(
-                          _setProducts, _setNewProducts, dropdownValue),
-                    ),
-                    isProductNotFound
-                        ? Expanded(
-                            child: Center(
-                              child: Text("No Search Found."),
-                            ),
-                          )
-                        : Expanded(
-                            child: !isSearching
-                                ? FutureBuilder(
-                                    future:
-                                        widget.skuStockService.fetchSKUStocks(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<List<SKUStock>>
-                                            snapshot) {
-                                      allSKUStocksLocal = snapshot.data;
-                                      allSKULocal.forEach((item) {
-                                        SKUStock mySKUStock;
-                                        try {
-                                          mySKUStock = allSKUStocksLocal!
-                                              .firstWhere((element) =>
-                                                  element.distributorID ==
-                                                      widget.currentDistributor
-                                                          .distributorID &&
-                                                  element.SKUID == item.SKUID);
+                child: BreadCrum2(
+                    "Distributor", widget.currentDistributor.distributorName)),
+            Expanded(
+              child: Form(
+                key: widget._formKey,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        height: scrollingDown ? 0 : 50,
+                        child: SearchBar(
+                            _setProducts, _setNewProducts, dropdownValue),
+                      ),
+                      isProductNotFound
+                          ? Expanded(
+                              child: Center(
+                                child: Text("No Search Found."),
+                              ),
+                            )
+                          : Expanded(
+                              child: !isSearching
+                                  ? FutureBuilder(
+                                      future:
+                                          widget.skuStockService.fetchSKUStocks(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<SKUStock>>
+                                              snapshot) {
+                                        allSKUStocksLocal = snapshot.data;
+                                        allSKULocal.forEach((item) {
+                                          SKUStock mySKUStock;
+                                          try {
+                                            mySKUStock = allSKUStocksLocal!
+                                                .firstWhere((element) =>
+                                                    element.distributorID ==
+                                                        widget.currentDistributor
+                                                            .distributorID &&
+                                                    element.SKUID == item.SKUID);
 
-                                          //here________________________________________________
-                                          mySKUStock.primaryStock == 0
-                                              ? _textEditingControllers[
-                                                      allSKULocal
-                                                              .indexOf(item) *
-                                                          2]
-                                                  .text = ""
-                                              : _textEditingControllers[
-                                                          allSKULocal.indexOf(
-                                                                  item) *
-                                                              2]
-                                                      .text =
-                                                  mySKUStock.primaryStock
-                                                      .toString();
+                                            //here________________________________________________
+                                            mySKUStock.primaryStock == 0
+                                                ? _textEditingControllers[
+                                                        allSKULocal
+                                                                .indexOf(item) *
+                                                            2]
+                                                    .text = ""
+                                                : _textEditingControllers[
+                                                            allSKULocal.indexOf(
+                                                                    item) *
+                                                                2]
+                                                        .text =
+                                                    mySKUStock.primaryStock
+                                                        .toString();
 
-                                          mySKUStock.alternativeStock == 0
-                                              ? _textEditingControllers[
-                                                      allSKULocal.indexOf(
-                                                                  item) *
-                                                              2 +
-                                                          1]
-                                                  .text = ""
-                                              : _textEditingControllers[
-                                                          allSKULocal.indexOf(
-                                                                      item) *
-                                                                  2 +
-                                                              1]
-                                                      .text =
-                                                  mySKUStock.alternativeStock
-                                                      .toString();
-                                          //here________________________________________________
-                                    } catch (e) {}
-                                  });
-                                  return StockList(
-                                      allSubGroupsLocal,
-                                      widget._scrollController,
-                                      _textEditingControllers,
-                                      widget.currentDistributor,
-                                      returnOrdersCountList);
-                                },
-                              )
-                            : StockList(
-                                productList,
-                                widget._scrollController,
-                                _textEditingControllers,
-                                widget.currentDistributor,
-                                returnOrdersCountList,
-                              )),
-                  ],
+                                            mySKUStock.alternativeStock == 0
+                                                ? _textEditingControllers[
+                                                        allSKULocal.indexOf(
+                                                                    item) *
+                                                                2 +
+                                                            1]
+                                                    .text = ""
+                                                : _textEditingControllers[
+                                                            allSKULocal.indexOf(
+                                                                        item) *
+                                                                    2 +
+                                                                1]
+                                                        .text =
+                                                    mySKUStock.alternativeStock
+                                                        .toString();
+                                            //here________________________________________________
+                                      } catch (e) {}
+                                    });
+                                    return StockList(
+                                        allSubGroupsLocal,
+                                        widget._scrollController,
+                                        _textEditingControllers,
+                                        widget.currentDistributor,
+                                        returnOrdersCountList);
+                                  },
+                                )
+                              : StockList(
+                                  productList,
+                                  widget._scrollController,
+                                  _textEditingControllers,
+                                  widget.currentDistributor,
+                                  returnOrdersCountList,
+                                )),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, -2))
-              ],
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, -2))
+                ],
+              ),
+              child: StockConfirmOrder(
+                  widget.currentDistributor,
+                  _textEditingControllers,
+                  widget.index,
+                  widget.distributorOrder,
+                  distributorOrderItems,
+                  returnOrdersCountList),
             ),
-            child: StockConfirmOrder(
-                widget.currentDistributor,
-                _textEditingControllers,
-                widget.index,
-                widget.distributorOrder,
-                distributorOrderItems,
-                returnOrdersCountList),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

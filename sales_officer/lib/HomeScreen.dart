@@ -46,15 +46,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onBackPressed,
-      child: Scaffold(
-        drawer: DrawerScreen(),
-        bottomNavigationBar: i < 5 ? NavBar(_setIndex) : Container(),
-        backgroundColor: Color(0xffF5F5F5),
-        body: Column(
-          children: [
-            i == 5 ? Header(i, false) : Header(i, true),
-            Expanded(child: _changeActivity(i)),
-          ],
+      child: SafeArea(
+        child: Scaffold(
+          drawer: DrawerScreen(),
+          bottomNavigationBar: i < 5 ? NavBar(_setIndex) : Container(),
+          backgroundColor: Color(0xffF5F5F5),
+          body: Column(
+            children: [
+              i == 5 ? Header(i, false) : Header(i, true),
+              Expanded(child: _changeActivity(i)),
+            ],
+          ),
         ),
       ),
     );
