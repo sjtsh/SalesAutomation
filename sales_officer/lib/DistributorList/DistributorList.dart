@@ -124,15 +124,30 @@ class DistributorList extends StatelessWidget {
                         Text(
                           distributor.location,
                           style: TextStyle(
-                              fontSize: 12, color: Colors.black.withOpacity(0.5)),
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.5)),
                         ),
                       ],
                     ),
                     Expanded(child: Container()),
                     MaterialButton(
-                        onPressed: () =>
-                            launch("tel:+977${distributor.mobileNumber.toString()}"),
-                        child: Icon(Icons.call)),
+                        onPressed: () => launch(
+                            "tel:+977${distributor.mobileNumber.toString()}"),
+                        child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: .5,
+                                  ),
+                                ]),
+                            child: Icon(
+                          Icons.call,
+                          color: colors[index],
+                        ))),
                   ],
                 ),
               )
