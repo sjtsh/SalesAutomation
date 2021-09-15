@@ -65,7 +65,7 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                       ),
                       onChanged: (_products) {
-                        if(_products != " "){
+                        if(_products != ""){
                           searchForProducts(_products, widget._setProducts);
                         }
                         else{
