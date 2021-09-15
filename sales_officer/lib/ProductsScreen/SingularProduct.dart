@@ -7,49 +7,56 @@ import 'package:sales_officer/Database.dart';
 import 'SingularProductHeader.dart';
 import 'SingularProductVariation.dart';
 
-class SingularProduct extends StatelessWidget {
+class SingularProduct extends StatefulWidget {
   final SubGroup item;
-  final int expandableControllerIndex;
-  final List<ExpandableController> _expandableControllers;
+  final int currentlyExpanded;
+  final Function changeCurrentlyExpanded;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
 
-  SingularProduct(this.item, this.expandableControllerIndex,
-      this._expandableControllers, this._textEditingControllers, this.currentDistributor);
+  SingularProduct(
+      this.item,
+      this.currentlyExpanded,
+      this.changeCurrentlyExpanded,
+      this._textEditingControllers,
+      this.currentDistributor);
 
-  unExpand() {
-    if (!_expandableControllers[expandableControllerIndex].expanded) {
-      for (int i = 0; i < _expandableControllers.length; i++) {
-        if (i != expandableControllerIndex) {
-          _expandableControllers[i].expanded = false;
-        } else {
-          _expandableControllers[i].expanded = true;
-        }
-      }
-    } else {
-      _expandableControllers[expandableControllerIndex].expanded = false;
-    }
-  }
+  @override
+  _SingularProductState createState() => _SingularProductState();
+}
+
+class _SingularProductState extends State<SingularProduct> {
+  ExpandableController _expandableController = ExpandableController();
 
   @override
   Widget build(BuildContext context) {
+    if (widget.currentlyExpanded == widget.item.subGroupID) {
+      _expandableController.expanded = true;
+    }else{
+      _expandableController.expanded = false;
+    }
     return ExpandablePanel(
-      collapsed: SingularProductHeader(item, unExpand),
+      collapsed:
+          SingularProductHeader(widget.item, widget.changeCurrentlyExpanded),
       expanded: Column(
         children: [
-          SingularProductHeader(item, unExpand),
+          SingularProductHeader(widget.item, widget.changeCurrentlyExpanded),
           Column(
             children: allSKULocal
-                .where((element) => element.subGroupID == item.subGroupID)
+                .where(
+                    (element) => element.subGroupID == widget.item.subGroupID)
                 .map((item) => SingularProductVariation(
                     item,
-                    _textEditingControllers[allSKULocal.indexOf(item) * 2],
-                    _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1], currentDistributor))
+                    widget
+                        ._textEditingControllers[allSKULocal.indexOf(item) * 2],
+                    widget._textEditingControllers[
+                        allSKULocal.indexOf(item) * 2 + 1],
+                    widget.currentDistributor))
                 .toList(),
           ),
         ],
       ),
-      controller: _expandableControllers[expandableControllerIndex],
+      controller: _expandableController,
     );
   }
 }

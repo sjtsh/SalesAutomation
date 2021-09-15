@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -39,6 +40,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   bool scrollingDown = false;
   List<TextEditingController> _textEditingControllers = [];
   bool isSearching = false;
+  bool isNotFound = false;
   bool isFiltered = false;
   List<DistributorOrderItem> distributorOrderItems = [];
 
@@ -48,7 +50,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       isFiltered = true;
       dropdownValue = newValue;
       if (newValue == 'All') {
-        productList= allSubGroupsLocal;
+        productList = allSubGroupsLocal;
       } else if (newValue == 'New') {
         allSubGroupsLocal.forEach((element) {
           if (allFamiliaritysLocal
@@ -83,8 +85,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
       productList = searchedSubGroup;
       if (productList.length > 0) {
         isSearching = true;
+        isNotFound = false;
       } else {
-        isSearching = false;
+        isNotFound = true;
       }
     });
   }
@@ -108,41 +111,26 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(widget.index, false),
-          Container(
-              padding: EdgeInsets.only(left: 12),
-              alignment: Alignment.centerLeft,
-              height: 40,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                  bottom: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: BreadCrum2(
-                  "Distributor", widget.currentDistributor.distributorName)),
-          Expanded(
-            child: Form(
-              key: widget._formKey,
-              child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Header(widget.index, false),
+            Container(
+                padding: EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
@@ -151,60 +139,85 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      height: scrollingDown ? 0 : 50,
-                      child: SearchBar(
-                          _setProducts, _setNewProducts, dropdownValue),
-                    ),
-                    Expanded(
-                        child: !isSearching && !isFiltered
-                            ? FutureBuilder(
-                                future: widget.skuStockService.fetchSKUStocks(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<List<SKUStock>> snapshot) {
-                                  allSKUStocksLocal = snapshot.data;
-                                  return ProductList(
-                                    allSubGroupsLocal,
-                                    widget._scrollController,
-                                    _textEditingControllers,
-                                    widget.currentDistributor,
-                                  );
-                                },
-                              )
-                            : ProductList(
-                                productList,
-                                widget._scrollController,
-                                _textEditingControllers,
-                                widget.currentDistributor,
-                              )),
-                  ],
+                child: BreadCrum2(
+                    "Distributor", widget.currentDistributor.distributorName)),
+            Expanded(
+              child: Form(
+                key: widget._formKey,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
+                        height: scrollingDown ? 0 : 50,
+                        child: SearchBar(
+                            _setProducts, _setNewProducts, dropdownValue),
+                      ),
+                      isNotFound
+                          ? Expanded(
+                              child: Center(
+                                child: Text("No Search Found."),
+                              ),
+                            )
+                          : Expanded(
+                              child: !isSearching && !isFiltered
+                                  ? FutureBuilder(
+                                      future:
+                                          widget.skuStockService.fetchSKUStocks(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<SKUStock>>
+                                              snapshot) {
+                                        allSKUStocksLocal = snapshot.data;
+                                        return ProductList(
+                                          allSubGroupsLocal,
+                                          widget._scrollController,
+                                          _textEditingControllers,
+                                          widget.currentDistributor,
+                                        );
+                                      },
+                                    )
+                                  : ProductList(
+                                      productList,
+                                      widget._scrollController,
+                                      _textEditingControllers,
+                                      widget.currentDistributor,
+                                    )),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, -2))
-              ],
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, -2))
+                ],
+              ),
+              child: ConfirmOrder(
+                widget.currentDistributor,
+                _textEditingControllers,
+                widget.index,
+                widget.isNew,
+                widget.distributorOrder,
+                distributorOrderItems,
+              ),
             ),
-            child: ConfirmOrder(
-              widget.currentDistributor,
-              _textEditingControllers,
-              widget.index,
-              widget.isNew,
-              widget.distributorOrder,
-              distributorOrderItems,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../BACKEND/Methods/Search.dart';
+import '../Database.dart';
 
 class SearchBar extends StatefulWidget {
   final Function _setProducts;
@@ -59,12 +60,17 @@ class _SearchBarState extends State<SearchBar> {
                         border: InputBorder.none,
                         hintText: "Search Products",
                         hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.black.withOpacity(0.3),
                           fontSize: 16,
                         ),
                       ),
                       onChanged: (_products) {
-                        searchForProducts(_products, widget._setProducts);
+                        if(_products != ""){
+                          searchForProducts(_products, widget._setProducts);
+                        }
+                        else{
+                          widget._setProducts(allSubGroupsLocal);
+                        }
                       }),
                 ),
               ),

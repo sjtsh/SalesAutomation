@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/Notification/NotificationScreen.dart';
 
 List heading = [
-  "Distributor",
-  "Stocks",
+  "Distributor Info",
+  "Distributor Stocks",
   "Distributor Primary Order",
   "Orders",
   "Dashboard",
@@ -53,7 +53,7 @@ class Header extends StatelessWidget {
           ),
           Text(
             heading[index],
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold,),
           ),
           Expanded(
             child: Container(),

@@ -182,11 +182,11 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                         child: Container(),
                       ),
                       Text(
-                        totalAmount.toString(),
+                        " Rs.",
                         style: TextStyle(fontSize: 12),
                       ),
                       Text(
-                        " Rs.",
+                        totalAmount.toString(),
                         style: TextStyle(fontSize: 12),
                       ),
                     ],
@@ -208,10 +208,11 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                     child: isLoading
                         ? MaterialButton(
                             onPressed: () async {},
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: CircularProgressIndicator(
+                            child: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Center(
+                                child: CircularProgressIndicator(strokeWidth: 2,
                                   color: Colors.white,
                                 ),
                               ),
@@ -234,7 +235,7 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                             },
                             child: Center(
                               child: Text(
-                                "PLACE STOCK COUNT",
+                                "UPDATE STOCK",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),

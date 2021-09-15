@@ -62,26 +62,28 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset("icons/logo.svg"),
-          SizedBox(
-            width: 200,
-            child: LinearProgressIndicator(
-              color: Colors.red,
-              backgroundColor: Colors.red.withOpacity(0.5),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset("icons/logo.svg"),
+            SizedBox(
+              width: 200,
+              child: LinearProgressIndicator(
+                color: Colors.red,
+                backgroundColor: Colors.red.withOpacity(0.5),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(loadingText),
-        ],
-      )),
+            SizedBox(
+              height: 20,
+            ),
+            Text(loadingText),
+          ],
+        )),
+      ),
     );
   }
 }

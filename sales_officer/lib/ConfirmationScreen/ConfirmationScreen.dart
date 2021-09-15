@@ -26,45 +26,47 @@ class ConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(index, false),
-          Container(
-              padding: EdgeInsets.only(left: 12),
-              alignment: Alignment.centerLeft,
-              height: 40,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Header(index, false),
+            Container(
+                padding: EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
                   ),
-                  bottom: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: BreadCrum3(
-                  "Distributor", currentDistributor.distributorName)),
-          Expanded(
-            child: ConfirmationReciept(
-                currentDistributor,
-                _textEditingControllers,
-                receiptData,
-                isNew,
-                distributorOrder,
-                distributorOrderItems),
-          ),
-        ],
+                child: BreadCrum3(
+                    "Distributor", currentDistributor.distributorName)),
+            Expanded(
+              child: ConfirmationReciept(
+                  currentDistributor,
+                  _textEditingControllers,
+                  receiptData,
+                  isNew,
+                  distributorOrder,
+                  distributorOrderItems),
+            ),
+          ],
+        ),
       ),
     );
   }

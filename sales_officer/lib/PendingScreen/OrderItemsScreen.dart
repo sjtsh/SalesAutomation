@@ -69,194 +69,200 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     Distributor distributor = allDistributorsLocal
         .where((element) => element.distributorID == widget.e.distributorID)
         .first;
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(3, false),
-          Container(
-            padding: EdgeInsets.only(left: 12),
-            alignment: Alignment.centerLeft,
-            height: 40,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                top: BorderSide(
-                  color: Colors.black.withOpacity(0.1),
-                ),
-                bottom: BorderSide(
-                  color: Colors.black.withOpacity(0.1),
-                ),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: BreadCrum2("Pending Orders", distributor.distributorName),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: Offset(0, 2))
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Header(3, false),
+            Container(
+              padding: EdgeInsets.only(left: 12),
+              alignment: Alignment.centerLeft,
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 12),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xffEA47B2),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    getInitials(distributor.distributorName),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 8),
+                  bottom: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: BreadCrum2("Pending Orders", distributor.distributorName),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 3,
+                            offset: Offset(0, 2))
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 12),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xffEA47B2),
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                distributor.distributorName,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Expanded(child: Container()),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: widget.e.orderStatus
-                                      ? Color(0xff60D74D)
-                                      : Color(0xffFFCE31),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    widget.e.orderStatus
-                                        ? "APPROVED"
-                                        : "PENDING",
-                                    style: TextStyle(
-                                      fontSize: 10,
+                                  child: Center(
+                                    child: Text(
+                                      getInitials(distributor.distributorName),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 8),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(
-                          color: Colors.black.withOpacity(0.1),
-                          thickness: 1,
-                        ),
-                        Column(
-                          children: [
-                            ["Order ID :", "#OR${widget.e.distributorOrderID}"],
-                            ["Date :", "${widget.e.dateAndTime}"],
-                            ["Last Updated :", widget.e.updatedTime],
-                            [
-                              "Status :",
-                              widget.e.orderStatus ? "Approved" : "Pending"
-                            ],
-                            [
-                              "Representation :",
-                              widget.e.joint ? "Joint" : "Single"
-                            ],
-                            ["Remarks :", "${widget.e.remarks}"],
-                            ["Location :", "${widget.e.lat}, ${widget.e.lng}"]
-                          ]
-                              .map(
-                                (e) => Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0, horizontal: 12),
-                                      child: Row(
-                                        children: [
-                                          Text(e[0]),
-                                          Expanded(child: Container()),
-                                          Text(
-                                            e[1],
-                                          ),
-                                        ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  distributor.distributorName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: widget.e.orderStatus
+                                        ? Color(0xff60D74D)
+                                        : Color(0xffFFCE31),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      widget.e.orderStatus
+                                          ? "APPROVED"
+                                          : "PENDING",
+                                      style: TextStyle(
+                                        fontSize: 10,
                                       ),
                                     ),
-                                    Divider(
-                                      color: Colors.black.withOpacity(0.1),
-                                      thickness: 1,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              )
-                              .toList(),
-                        ),
-                        ExpandablePanel(
-                          collapsed: OrderItemsHeader(),
-                          expanded: isLoading
-                              ? Column(
-                                  children: [
-                                    OrderItemsHeader(),
-                                    Container(
-                                        height: 100,
-                                        color: Color(0xffF5F5F5),
-                                        child: Center(
-                                            child:
-                                                CircularProgressIndicator())),
-                                  ],
-                                )
-                              : OrderItemsExpanded(
-                                  distributorOrderItems, skuDistributorWises),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 12),
-                          child: Row(
-                            children: [
-                              Text("Total Amount"),
-                              Expanded(child: Container()),
-                              Text(
-                                "Rs $totalAmount",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Divider(
+                            color: Colors.black.withOpacity(0.1),
+                            thickness: 1,
+                          ),
+                          Column(
+                            children: [
+                              ["Order ID :", "#OR${widget.e.distributorOrderID}"],
+                              ["Date :", "${widget.e.dateAndTime}"],
+                              ["Last Updated :", widget.e.updatedTime],
+                              [
+                                "Status :",
+                                widget.e.orderStatus ? "Approved" : "Pending"
+                              ],
+                              [
+                                "Representation :",
+                                widget.e.joint ? "Joint" : "Single"
+                              ],
+                              ["Remarks :", "${widget.e.remarks}"],
+                              ["Location :", "${widget.e.lat}, ${widget.e.lng}"]
+                            ]
+                                .map(
+                                  (e) => Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 12),
+                                        child: Row(
+                                          children: [
+                                            Text(e[0]),
+                                            Expanded(child: Container()),
+                                            Text(
+                                              e[1],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(
+                                        color: Colors.black.withOpacity(0.1),
+                                        thickness: 1,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          ExpandablePanel(
+                            collapsed: OrderItemsHeader(),
+                            expanded: isLoading
+                                ? Column(
+                                    children: [
+                                      OrderItemsHeader(),
+                                      Container(
+                                          height: 100,
+                                          color: Colors.white,
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator())),
+                                      Divider(
+                                        color: Colors.black.withOpacity(0.1),
+                                        thickness: 1,
+                                      ),
+                                    ],
+                                  )
+                                : OrderItemsExpanded(
+                                    distributorOrderItems, skuDistributorWises),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 12),
+                            child: Row(
+                              children: [
+                                Text("Total Amount"),
+                                Expanded(child: Container()),
+                                Text(
+                                  "Rs $totalAmount",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

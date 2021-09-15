@@ -68,8 +68,11 @@ class SelectedList extends StatelessWidget {
                           maxLines: 20,
                           controller: _textEditingController,
                           decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter the Explanation here"),
+                            border: InputBorder.none,
+                            hintText: "Enter the Explanation here",
+                            hintStyle:
+                                TextStyle(color: Colors.black.withOpacity(0.3)),
+                          ),
                         ),
                       ),
                     ),
@@ -87,7 +90,11 @@ class SelectedList extends StatelessWidget {
                           onPressed: () {
                             setDetail(_textEditingController.text);
                             setIsModalFalse();
-                            setTourPlan([dateTime, activity, _textEditingController.text], index);
+                            setTourPlan([
+                              dateTime,
+                              activity,
+                              _textEditingController.text
+                            ], index);
                           },
                           child: Center(
                             child: Text(
