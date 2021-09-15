@@ -171,6 +171,7 @@ class _StockSingularProductVariationState
                       decoration: InputDecoration(
                         hintText: "${skuDistributorWise.primaryUnit}",
                         border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                       ),
                     ),
                   ),
@@ -201,7 +202,7 @@ class _StockSingularProductVariationState
                       decoration: InputDecoration(
                         hintText: "${skuDistributorWise.alternativeUnit}",
                         border: InputBorder.none,
-                        fillColor: Colors.white,
+                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                       ),
                     ),
                   ),

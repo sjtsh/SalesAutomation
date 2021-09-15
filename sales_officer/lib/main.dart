@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
-
 
 void main() {
   runApp(Fusers());
@@ -17,8 +15,6 @@ class _FusersState extends State<Fusers> {
   @override
   Widget build(BuildContext context) {
     // DateTime rightNow = DateTime.now();
-
-    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       theme: ThemeData(fontFamily: "lato"),
       routes: {
@@ -26,10 +22,11 @@ class _FusersState extends State<Fusers> {
       },
       title: 'Fusers',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Color(0xffF5F5F5),
-
-        body: SignIn(),
+      home: SafeArea(
+        child: Scaffold(
+          backgroundColor: Color(0xffF5F5F5),
+          body: SignIn(),
+        ),
       ),
     );
   }

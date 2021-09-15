@@ -88,7 +88,7 @@ class _NewOrderState extends State<NewOrder> {
                           border: InputBorder.none,
                           hintText: "Search Distributors",
                           hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withOpacity(0.3),
                             fontSize: 16,
                           ),
                         ),

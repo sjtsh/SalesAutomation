@@ -135,6 +135,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                         hintText: skuDistributorWise.primaryUnit,
+                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                         border: InputBorder.none,
                       ),
                     ),
@@ -165,6 +166,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                       decoration: InputDecoration(
                         hintText: skuDistributorWise.alternativeUnit,
                         border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                       ),
                     ),
                   ),
