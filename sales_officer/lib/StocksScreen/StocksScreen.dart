@@ -47,15 +47,6 @@ class _StocksScreenState extends State<StocksScreen> {
   void _setNewProducts(String newValue) {
     setState(() {
       dropdownValue = newValue;
-      // if (newValue == 'All Products') {
-      //   productList = allSubGroupsLocal;
-      // } else if (newValue == 'New Products') {
-      //   productList = allSubGroupsLocal.sublist(0, 2);
-      // } else if (newValue == 'Promoted Products') {
-      //   productList = allSubGroupsLocal.sublist(2, 4);
-      // } else if (newValue == 'Trending Products') {
-      //   productList = allSubGroupsLocal.sublist(4, 6);
-      // }
       scrollingDown = false;
     });
   }
