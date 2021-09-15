@@ -53,7 +53,7 @@ class DistributorInfo extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0,right: 12.0,bottom: 12.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -187,13 +187,6 @@ class DistributorInfo extends StatelessWidget {
                                   ),
                                 )
                                 .toList(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Divider(
-                              thickness: 2,
-                              color: Colors.black.withOpacity(0.1),
-                            ),
                           ),
                         ],
                       ),

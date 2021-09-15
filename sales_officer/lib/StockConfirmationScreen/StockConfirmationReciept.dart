@@ -182,11 +182,11 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                         child: Container(),
                       ),
                       Text(
-                        totalAmount.toString(),
+                        " Rs.",
                         style: TextStyle(fontSize: 12),
                       ),
                       Text(
-                        " Rs.",
+                        totalAmount.toString(),
                         style: TextStyle(fontSize: 12),
                       ),
                     ],
@@ -235,7 +235,7 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                             },
                             child: Center(
                               child: Text(
-                                "PLACE STOCK COUNT",
+                                "UPDATE STOCK",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),

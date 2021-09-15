@@ -224,10 +224,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                     OrderItemsHeader(),
                                     Container(
                                         height: 100,
-                                        color: Color(0xffF5F5F5),
+                                        color: Colors.white,
                                         child: Center(
                                             child:
                                                 CircularProgressIndicator())),
+                                    Divider(
+                                      color: Colors.black.withOpacity(0.1),
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                               : OrderItemsExpanded(
