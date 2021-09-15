@@ -9,7 +9,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../ProductsScreen/ProductsScreen.dart';
 
-List colors = [Color(0xff7DDF5B), Color(0xffE86068), Color(0xff61ABEF)];
+List<Color> colors = <Color>[
+  Color(0xff7DDF5B),
+  Color(0xffE86068),
+  Color(0xff61ABEF)
+];
+List<Color> colorOpacity = <Color>[
+  Color(0xffF2FCEF),
+  Color(0xffFDEEEE),
+  Color(0xffF0F7FE)
+];
 
 class DistributorList extends StatelessWidget {
   final Distributor distributor;
@@ -130,24 +139,29 @@ class DistributorList extends StatelessWidget {
                       ],
                     ),
                     Expanded(child: Container()),
-                    MaterialButton(
-                        onPressed: () => launch(
-                            "tel:+977${distributor.mobileNumber.toString()}"),
-                        child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: .5,
-                                  ),
-                                ]),
-                            child: Icon(
-                          Icons.call,
-                          color: colors[index],
-                        ))),
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: colorOpacity[index],
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: colors[index],
+                              blurRadius: .5,
+                            ),
+                          ]),
+                      child: InkWell(
+                          onTap: () => launch(
+                              "tel:+977${distributor.mobileNumber.toString()}"),
+                          child: Icon(
+                            Icons.call,
+                            color: colors[index],
+                          )),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                   ],
                 ),
               )
