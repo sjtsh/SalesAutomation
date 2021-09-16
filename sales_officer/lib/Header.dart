@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/Notification/NotificationScreen.dart';
 
 List heading = [
-  "Distributor Info",
-  "Distributor Stocks",
-  "Distributor Primary Order",
-  "Orders",
   "Dashboard",
+  "Distributors",
+  "Orders",
+  "More",
+  "Tour Plan",
   "Notifications",
   "Edit Order",
-  "Tour Plan",
+  "Create Order",
+  "Update Stock",
 ];
 
 class Header extends StatelessWidget {
@@ -33,12 +34,11 @@ class Header extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Material(
+          condition ? SizedBox(width: 12,) : Material(
             color: Colors.white,
             child: InkWell(
               onTap: () {
                 if (condition) {
-                  Scaffold.of(context).openDrawer();
                 } else {
                   Navigator.of(context).pop();
                 }
@@ -48,12 +48,12 @@ class Header extends StatelessWidget {
                   width: 50,
                   decoration: BoxDecoration(shape: BoxShape.circle),
                   child: Center(
-                      child: Icon(condition ? Icons.menu : Icons.arrow_back))),
+                      child: Icon(Icons.arrow_back))),
             ),
           ),
           Text(
             heading[index],
-            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Expanded(
             child: Container(),
@@ -78,6 +78,24 @@ class Header extends StatelessWidget {
                         child: Icon(
                         Icons.notifications_active_outlined,
                       ))
+                    : Container(),
+              ),
+            ),
+          ),
+          Material(
+            color: Colors.white,
+            child: InkWell(
+              onTap: () {
+              },
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: condition
+                    ? Center(
+                    child: Icon(
+                      Icons.sync,
+                    ))
                     : Container(),
               ),
             ),

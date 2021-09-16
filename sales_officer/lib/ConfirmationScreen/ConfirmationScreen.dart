@@ -30,7 +30,7 @@ class ConfirmationScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Header(index, false),
+            Header(7, false),
             Container(
                 padding: EdgeInsets.only(left: 12),
                 alignment: Alignment.centerLeft,

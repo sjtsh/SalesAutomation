@@ -22,14 +22,10 @@ List<Color> colorOpacity = <Color>[
 
 class DistributorList extends StatelessWidget {
   final Distributor distributor;
-  final bool isOrder;
-  final bool isStock;
   final int index;
 
   DistributorList(
     this.distributor,
-    this.isOrder,
-    this.isStock,
     this.index,
   );
 
@@ -38,50 +34,16 @@ class DistributorList extends StatelessWidget {
     return Material(
       color: Colors.white,
       child: InkWell(
-        onTap: () async {
-          if (isOrder) {
-            NavBar.onItemTapped(5);
-            if (isStock) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) {
-                    return StocksScreen(
-                      distributor,
-                      index,
-                      DistributorOrder(
-                          -1, -1, -1, true, false, "", "", "", 0, 0),
-                    );
-                  },
-                ),
-              );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) {
-                    return ProductsScreen(
-                      distributor,
-                      index,
-                      DistributorOrder(
-                          -1, -1, -1, true, false, "", "", "", 0, 0),
-                      true,
-                    );
-                  },
-                ),
-              );
-            }
-          } else {
-            NavBar.onItemTapped(6);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) {
-                  return DistributorInfo(distributor);
-                },
-              ),
-            );
-          }
+        onTap: () {
+          NavBar.onItemTapped(6);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) {
+                return DistributorInfo(distributor);
+              },
+            ),
+          );
         },
         child: Container(
           padding: EdgeInsets.only(left: 20),
@@ -140,28 +102,27 @@ class DistributorList extends StatelessWidget {
                     ),
                     Expanded(child: Container()),
                     Container(
-                      decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: colors[index],
-                                blurRadius: .5,
-                              ),
-                            ]),
+                      decoration:
+                          BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                        BoxShadow(
+                          color: colors[index],
+                          blurRadius: .5,
+                        ),
+                      ]),
                       child: Material(
                         color: colorOpacity[index],
                         clipBehavior: Clip.hardEdge,
                         shape: CircleBorder(),
                         child: InkWell(
                           onTap: () => launch(
-                                "tel:+977${distributor.mobileNumber.toString()}"),
+                              "tel:+977${distributor.mobileNumber.toString()}"),
                           child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.call,
-                                color: colors[index],
-                              ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.call,
+                              color: colors[index],
                             ),
+                          ),
                         ),
                       ),
                     ),

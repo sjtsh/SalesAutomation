@@ -106,7 +106,7 @@ class _StocksScreenState extends State<StocksScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(widget.index, false),
+            Header(8, false),
             Container(
                 padding: EdgeInsets.only(left: 12),
                 alignment: Alignment.centerLeft,

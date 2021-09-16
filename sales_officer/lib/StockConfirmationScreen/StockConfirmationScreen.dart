@@ -33,7 +33,7 @@ class StockConfirmationScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Header(index, false),
+            Header(8, false),
             Container(
                 padding: EdgeInsets.only(left: 12),
                 alignment: Alignment.centerLeft,

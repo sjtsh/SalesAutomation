@@ -73,7 +73,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(3, false),
+            Header(2, false),
             Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,

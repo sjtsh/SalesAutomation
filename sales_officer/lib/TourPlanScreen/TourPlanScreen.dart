@@ -41,7 +41,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
         backgroundColor: Color(0xffF5F5F5),
         body: Column(
           children: [
-            Header(7, false),
+            Header(4, false),
             Container(
               height: 50,
               child: Row(

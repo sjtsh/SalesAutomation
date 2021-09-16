@@ -75,7 +75,7 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
           children: [
             Column(
               children: [
-                Header(7, false),
+                Header(4, false),
                 Container(
                   decoration: BoxDecoration(
                       border: Border(

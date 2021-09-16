@@ -9,7 +9,7 @@ class NavBar extends StatefulWidget {
         blurRadius: 3,
         offset: Offset(0, 2))
   ];
-  static int currentIndex = 2;
+  static int currentIndex = 0;
   final Function _setIndex;
 
   NavBar(this._setIndex);
@@ -47,13 +47,13 @@ class _NavBarState extends State<NavBar> {
         items: [
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
-              "icons/distributor.svg",
+              "icons/dashboard.svg",
               color: NavBar.currentIndex == 0
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Distributor",
+              "Dashboard",
               style: TextStyle(
                   color: NavBar.currentIndex == 0
                       ? Colors.blue
@@ -62,14 +62,14 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           CustomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "icons/updatestock.svg",
+            icon: Icon(
+              Icons.add,
               color: NavBar.currentIndex == 1
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Stocks",
+              "New",
               style: TextStyle(
                   color: NavBar.currentIndex == 1
                       ? Colors.blue
@@ -78,14 +78,14 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           CustomNavigationBarItem(
-            icon: Icon(
-              Icons.add,
+            icon: SvgPicture.asset(
+              "icons/pendingorder.svg",
               color: NavBar.currentIndex == 2
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "New",
+              "Pending",
               style: TextStyle(
                   color: NavBar.currentIndex == 2
                       ? Colors.blue
@@ -93,33 +93,18 @@ class _NavBarState extends State<NavBar> {
                   fontSize: 10),
             ),
           ),
+
           CustomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "icons/pendingorder.svg",
+            icon: Icon(
+              Icons.menu,
               color: NavBar.currentIndex == 3
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Pending",
+              "More",
               style: TextStyle(
                   color: NavBar.currentIndex == 3
-                      ? Colors.blue
-                      : Colors.black.withOpacity(0.5),
-                  fontSize: 10),
-            ),
-          ),
-          CustomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "icons/dashboard.svg",
-              color: NavBar.currentIndex == 4
-                  ? Colors.blue
-                  : Colors.black.withOpacity(0.5),
-            ),
-            title: Text(
-              "Dashboard",
-              style: TextStyle(
-                  color: NavBar.currentIndex == 4
                       ? Colors.blue
                       : Colors.black.withOpacity(0.5),
                   fontSize: 10),

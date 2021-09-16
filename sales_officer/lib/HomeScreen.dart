@@ -5,6 +5,9 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
+import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
+
+import 'MoreScreen/MoreScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int i = 2;
+  int i = 0;
 
   _setIndex(int i) {
     setState(() {
@@ -28,15 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _changeActivity(int i) {
     if (i == 0) {
-      return NewOrder(false, true, i);
-    } else if (i == 1) {
-      return NewOrder(true, true, i);
-    } else if (i == 2) {
-      return NewOrder(true, false, i);
-    } else if (i == 3) {
-      return PendingScreen();
-    } else if (i == 4) {
       return Profile();
+    } else if (i == 1) {
+      return NewOrder(i);
+    } else if (i == 2) {
+      return PendingScreen();
+    } else if (i == 3) {
+      return MoreScreen();
     } else {
       return Container();
     }
@@ -48,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: _onBackPressed,
       child: SafeArea(
         child: Scaffold(
-          drawer: DrawerScreen(),
           bottomNavigationBar: i < 5 ? NavBar(_setIndex) : Container(),
           backgroundColor: Color(0xffF5F5F5),
           body: Column(

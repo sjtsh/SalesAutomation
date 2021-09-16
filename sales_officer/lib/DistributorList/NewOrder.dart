@@ -7,15 +7,11 @@ import '../Database.dart';
 import 'DistributorList.dart';
 
 class NewOrder extends StatefulWidget {
-  final bool isOrder;
   final int index;
-  final bool isStock;
 
   final DistributorService distributorService = DistributorService();
 
   NewOrder(
-    this.isOrder,
-    this.isStock,
     this.index,
   );
 
@@ -138,8 +134,6 @@ class _NewOrderState extends State<NewOrder> {
                                 .map(
                                   (item) => DistributorList(
                                     item,
-                                    widget.isOrder,
-                                    widget.isStock,
                                     widget.index,
                                   ),
                                 )
@@ -150,8 +144,6 @@ class _NewOrderState extends State<NewOrder> {
                                 .map(
                                   (item) => DistributorList(
                                     item,
-                                    widget.isOrder,
-                                    widget.isStock,
                                     widget.index,
                                   ),
                                 )
