@@ -179,7 +179,7 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 2 / 3,
+                            height: MediaQuery.of(context).size.height * 2/ 3.35,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),

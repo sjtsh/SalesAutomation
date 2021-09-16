@@ -140,24 +140,30 @@ class DistributorList extends StatelessWidget {
                     ),
                     Expanded(child: Container()),
                     Container(
-                      clipBehavior: Clip.hardEdge,
-                      padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
-                          color: colorOpacity[index],
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: colors[index],
-                              blurRadius: .5,
-                            ),
-                          ]),
-                      child: InkWell(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: colors[index],
+                                blurRadius: .5,
+                              ),
+                            ]),
+                      child: Material(
+                        color: colorOpacity[index],
+                        clipBehavior: Clip.hardEdge,
+                        shape: CircleBorder(),
+                        child: InkWell(
                           onTap: () => launch(
-                              "tel:+977${distributor.mobileNumber.toString()}"),
-                          child: Icon(
-                            Icons.call,
-                            color: colors[index],
-                          )),
+                                "tel:+977${distributor.mobileNumber.toString()}"),
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.call,
+                                color: colors[index],
+                              ),
+                            ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       width: 20,
