@@ -15,9 +15,17 @@ class StockConfirmationScreen extends StatelessWidget {
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
   final List returnOrdersCountList;
+  final Function updateReturnOrdersCountList;
 
-  StockConfirmationScreen(this.currentDistributor, this._textEditingControllers,
-      this.receiptData, this.index, this.distributorOrder, this.distributorOrderItems, this.returnOrdersCountList);
+  StockConfirmationScreen(
+      this.currentDistributor,
+      this._textEditingControllers,
+      this.receiptData,
+      this.index,
+      this.distributorOrder,
+      this.distributorOrderItems,
+      this.returnOrdersCountList,
+      this.updateReturnOrdersCountList);
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +60,14 @@ class StockConfirmationScreen extends StatelessWidget {
                 child: BreadCrum3(
                     "Distributor", currentDistributor.distributorName)),
             Expanded(
-              child: StockConfirmationReciept(currentDistributor,
-                  _textEditingControllers, receiptData, distributorOrder, distributorOrderItems, returnOrdersCountList),
+              child: StockConfirmationReciept(
+                  currentDistributor,
+                  _textEditingControllers,
+                  receiptData,
+                  distributorOrder,
+                  distributorOrderItems,
+                  returnOrdersCountList,
+                  updateReturnOrdersCountList),
             ),
           ],
         ),

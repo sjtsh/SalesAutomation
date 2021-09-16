@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/DialogBox/ConfirmationModalSheet.dart';
-import 'package:sales_officer/StocksScreen/StockReturnModal.dart';
+import 'package:sales_officer/DialogBox/StockReturnModal.dart';
 
 import '../Database.dart';
 
@@ -14,6 +14,7 @@ class StockIndividualConfirmationVariation extends StatefulWidget {
   final Distributor distributor;
   final List returnOrdersCountList;
   final List<TextEditingController> textEditingControllers;
+  final Function updateReturnOrdersCountList;
 
   StockIndividualConfirmationVariation(
     this.updateReceiptData,
@@ -22,6 +23,7 @@ class StockIndividualConfirmationVariation extends StatefulWidget {
     this.distributor,
     this.returnOrdersCountList,
     this.textEditingControllers,
+    this.updateReturnOrdersCountList,
   );
 
   @override
@@ -43,7 +45,7 @@ class _StockIndividualConfirmationVariationState
         return element[0].SKUID == widget.f[0].SKUID;
       });
     } catch (e) {
-      counts = [widget.f[0], 0, 0];
+      counts = [widget.f[0], 0, 0, 0];
     }
 
     SKUDistributorWise skuDistributorWise =
@@ -66,13 +68,7 @@ class _StockIndividualConfirmationVariationState
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return StockReturnModal(
-                  widget.f[0],
-                  primaryTextEditingController,
-                  alternativeTextEditingController,
-                  skuDistributorWise,
-                  widget.returnOrdersCountList,
-                  refresh);
+              return ConfirmationModalSheet(widget.f, widget.updateReceiptData);
             },
           );
         },
@@ -132,6 +128,7 @@ class _StockIndividualConfirmationVariationState
                                         alternativeTextEditingController,
                                         skuDistributorWise,
                                         widget.returnOrdersCountList,
+                                        widget.updateReturnOrdersCountList,
                                         refresh,
                                       );
                                     });

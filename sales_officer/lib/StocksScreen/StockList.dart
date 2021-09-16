@@ -11,9 +11,15 @@ class StockList extends StatefulWidget {
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
   final List returnOrdersCountList;
+  final Function updateReturnOrdersCountList;
 
-  StockList(this.subGroupList, this._scrollController,
-      this._textEditingControllers, this.currentDistributor, this.returnOrdersCountList);
+  StockList(
+      this.subGroupList,
+      this._scrollController,
+      this._textEditingControllers,
+      this.currentDistributor,
+      this.returnOrdersCountList,
+      this.updateReturnOrdersCountList);
 
   @override
   _StockListState createState() => _StockListState();
@@ -36,7 +42,9 @@ class _StockListState extends State<StockList> {
                 widget.subGroupList.indexOf(item),
                 _expandableControllers,
                 widget._textEditingControllers,
-                widget.currentDistributor,widget.returnOrdersCountList),
+                widget.currentDistributor,
+                widget.returnOrdersCountList,
+                widget.updateReturnOrdersCountList),
           )
           .toList(),
     );

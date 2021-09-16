@@ -7,8 +7,8 @@ import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
+import 'package:sales_officer/DialogBox/StockReturnModal.dart';
 
-import 'StockReturnModal.dart';
 
 class StockSingularProductVariation extends StatefulWidget {
   final SKU item;
@@ -16,9 +16,15 @@ class StockSingularProductVariation extends StatefulWidget {
   final Distributor currentDistributor;
   final List returnOrdersCountList;
   final SKUStock mySKUStock;
+  final Function updateReturnOrdersCountList;
 
-  StockSingularProductVariation(this.item, this._textEditingControllers,
-      this.currentDistributor, this.returnOrdersCountList, this.mySKUStock);
+  StockSingularProductVariation(
+      this.item,
+      this._textEditingControllers,
+      this.currentDistributor,
+      this.returnOrdersCountList,
+      this.mySKUStock,
+      this.updateReturnOrdersCountList);
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -121,15 +127,15 @@ class _StockSingularProductVariationState
                         context: context,
                         builder: (_) {
                           return StockReturnModal(
-                            widget.item,
-                            widget._textEditingControllers[
-                                allSKULocal.indexOf(widget.item) * 2],
-                            widget._textEditingControllers[
-                                allSKULocal.indexOf(widget.item) * 2 + 1],
-                            skuDistributorWise,
-                            widget.returnOrdersCountList,
-                            refresh,
-                          );
+                              widget.item,
+                              widget._textEditingControllers[
+                                  allSKULocal.indexOf(widget.item) * 2],
+                              widget._textEditingControllers[
+                                  allSKULocal.indexOf(widget.item) * 2 + 1],
+                              skuDistributorWise,
+                              widget.returnOrdersCountList,
+                              widget.updateReturnOrdersCountList,
+                              refresh);
                         });
                   },
                   child: Container(
@@ -171,7 +177,8 @@ class _StockSingularProductVariationState
                       decoration: InputDecoration(
                         hintText: "${skuDistributorWise.primaryUnit}",
                         border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                        hintStyle:
+                            TextStyle(color: Colors.black.withOpacity(0.3)),
                       ),
                     ),
                   ),
@@ -202,7 +209,8 @@ class _StockSingularProductVariationState
                       decoration: InputDecoration(
                         hintText: "${skuDistributorWise.alternativeUnit}",
                         border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                        hintStyle:
+                            TextStyle(color: Colors.black.withOpacity(0.3)),
                       ),
                     ),
                   ),
@@ -215,4 +223,3 @@ class _StockSingularProductVariationState
     );
   }
 }
-

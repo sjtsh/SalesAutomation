@@ -15,6 +15,7 @@ class StockSingularProduct extends StatefulWidget {
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
   final List returnOrdersCountList;
+  final Function updateReturnOrdersCountList;
 
   StockSingularProduct(
       this.item,
@@ -22,7 +23,8 @@ class StockSingularProduct extends StatefulWidget {
       this._expandableControllers,
       this._textEditingControllers,
       this.currentDistributor,
-      this.returnOrdersCountList);
+      this.returnOrdersCountList,
+      this.updateReturnOrdersCountList);
 
   @override
   _StockSingularProductState createState() => _StockSingularProductState();
@@ -63,17 +65,16 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
-
               } catch (e) {
                 mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
               }
               return StockSingularProductVariation(
-                item,
-                widget._textEditingControllers,
-                widget.currentDistributor,
-                widget.returnOrdersCountList,
-                mySKUStock,
-              );
+                  item,
+                  widget._textEditingControllers,
+                  widget.currentDistributor,
+                  widget.returnOrdersCountList,
+                  mySKUStock,
+                  widget.updateReturnOrdersCountList);
             }).toList(),
           ),
         ],

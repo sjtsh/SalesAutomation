@@ -15,6 +15,7 @@ class StockConfirmationReciept extends StatefulWidget {
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
   final List returnOrdersCountList;
+  final Function updateReturnOrdersCountList;
 
   StockConfirmationReciept(
       this.currentDistributor,
@@ -22,7 +23,8 @@ class StockConfirmationReciept extends StatefulWidget {
       this.receiptData,
       this.distributorOrder,
       this.distributorOrderItems,
-      this.returnOrdersCountList);
+      this.returnOrdersCountList,
+      this.updateReturnOrdersCountList);
 
   @override
   _StockConfirmationRecieptState createState() =>
@@ -157,7 +159,8 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                                               deleteReceiptData,
                                               widget.currentDistributor,
                                               widget.returnOrdersCountList,
-                                              widget._textEditingControllers),
+                                              widget._textEditingControllers,
+                                              widget.updateReturnOrdersCountList),
                                     )
                                     .toList(),
                               ),

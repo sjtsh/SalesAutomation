@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
@@ -61,6 +62,26 @@ class _StocksScreenState extends State<StocksScreen> {
       } else {
         isProductNotFound = true;
       }
+    });
+  }
+
+  updateReturnOrdersCountList(
+      SKU sku, int primaryCountNew, int alternativeCountNew, String reason) {
+    setState(() {
+      bool isConsists = false;
+      returnOrdersCountList.forEach((element) {
+        if (element[0].SKUID == sku.SKUID) {
+          isConsists = true;
+          element[1] = primaryCountNew;
+          element[2] = alternativeCountNew;
+          element[3] = reason;
+        }
+      });
+      if (!isConsists) {
+        returnOrdersCountList
+            .add([sku, primaryCountNew, alternativeCountNew, reason]);
+      }
+      returnOrdersCountList = returnOrdersCountList;
     });
   }
 
@@ -142,8 +163,8 @@ class _StocksScreenState extends State<StocksScreen> {
                           : Expanded(
                               child: !isSearching
                                   ? FutureBuilder(
-                                      future:
-                                          widget.skuStockService.fetchSKUStocks(),
+                                      future: widget.skuStockService
+                                          .fetchSKUStocks(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot<List<SKUStock>>
                                               snapshot) {
@@ -154,9 +175,11 @@ class _StocksScreenState extends State<StocksScreen> {
                                             mySKUStock = allSKUStocksLocal!
                                                 .firstWhere((element) =>
                                                     element.distributorID ==
-                                                        widget.currentDistributor
+                                                        widget
+                                                            .currentDistributor
                                                             .distributorID &&
-                                                    element.SKUID == item.SKUID);
+                                                    element.SKUID ==
+                                                        item.SKUID);
 
                                             //here________________________________________________
                                             mySKUStock.primaryStock == 0
@@ -189,23 +212,24 @@ class _StocksScreenState extends State<StocksScreen> {
                                                     mySKUStock.alternativeStock
                                                         .toString();
                                             //here________________________________________________
-                                      } catch (e) {}
-                                    });
-                                    return StockList(
-                                        allSubGroupsLocal,
-                                        widget._scrollController,
-                                        _textEditingControllers,
-                                        widget.currentDistributor,
-                                        returnOrdersCountList);
-                                  },
-                                )
-                              : StockList(
-                                  productList,
-                                  widget._scrollController,
-                                  _textEditingControllers,
-                                  widget.currentDistributor,
-                                  returnOrdersCountList,
-                                )),
+                                          } catch (e) {}
+                                        });
+                                        return StockList(
+                                            allSubGroupsLocal,
+                                            widget._scrollController,
+                                            _textEditingControllers,
+                                            widget.currentDistributor,
+                                            returnOrdersCountList,
+                                            updateReturnOrdersCountList);
+                                      },
+                                    )
+                                  : StockList(
+                                      productList,
+                                      widget._scrollController,
+                                      _textEditingControllers,
+                                      widget.currentDistributor,
+                                      returnOrdersCountList,
+                                      updateReturnOrdersCountList)),
                     ],
                   ),
                 ),
@@ -227,7 +251,8 @@ class _StocksScreenState extends State<StocksScreen> {
                   widget.index,
                   widget.distributorOrder,
                   distributorOrderItems,
-                  returnOrdersCountList),
+                  returnOrdersCountList,
+                  updateReturnOrdersCountList),
             ),
           ],
         ),
