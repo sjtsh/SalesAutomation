@@ -73,28 +73,32 @@ class _NewOrderState extends State<NewOrder> {
                       alignment: Alignment.centerLeft,
                       height: 50,
                       width: double.infinity,
-                      child: TextField(
-                        textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                        decoration: InputDecoration(
-                          isCollapsed: true,
-                          border: InputBorder.none,
-                          hintText: "Search Distributors",
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.3),
-                            fontSize: 16,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: TextField(
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              isCollapsed: true,
+                              border: InputBorder.none,
+                              hintText: "Search Distributors",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.3),
+                                fontSize: 16,
+                              ),
+                            ),
+                            onChanged: (_distributor) {
+                              if (_distributor != "") {
+                                searchForDistributor(_distributor, setDistributors);
+                              } else {
+                                setDistributors(allDistributorsLocal);
+                              }
+                            },
                           ),
                         ),
-                        onChanged: (_distributor) {
-                          if (_distributor != "") {
-                            searchForDistributor(_distributor, setDistributors);
-                          } else {
-                            setDistributors(allDistributorsLocal);
-                          }
-                        },
                       ),
                     ),
                   ),

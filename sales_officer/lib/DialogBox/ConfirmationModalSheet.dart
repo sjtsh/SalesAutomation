@@ -119,23 +119,27 @@ class ConfirmationModalSheet extends StatelessWidget {
                               border: Border.all(
                                   color: Colors.black.withOpacity(0.1)),
                             ),
-                            padding: const EdgeInsets.only(bottom: 5),
-                            child: TextField(
-                              controller: _textEditingControllerPrimary,
-                              cursorWidth: 1,
-                              keyboardType: TextInputType.number,
-                              cursorColor: Colors.blue,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
-                              onTap: () {},
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                hintText: hintableText1,
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                    color: Colors.black.withOpacity(0.3)),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: TextField(
+                                  controller: _textEditingControllerPrimary,
+                                  cursorWidth: 1,
+                                  keyboardType: TextInputType.number,
+                                  cursorColor: Colors.blue,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                  onTap: () {},
+                                  textAlign: TextAlign.left,
+                                  decoration: InputDecoration(
+                                    hintText: hintableText1,
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                        color: Colors.black.withOpacity(0.3)),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -149,24 +153,27 @@ class ConfirmationModalSheet extends StatelessWidget {
                                   color: Colors.black.withOpacity(0.1)),
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            padding: const EdgeInsets.only(bottom: 5),
                             child: Center(
-                              child: TextField(
-                                controller: _textEditingControllerAlternative,
-                                cursorWidth: 1,
-                                keyboardType: TextInputType.number,
-                                cursorColor: Colors.blue,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                ),
-                                onTap: () {},
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  hintText: hintableText2,
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      color: Colors.black.withOpacity(0.3)),
+                              child: Padding(
+
+                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: TextField(
+                                  controller: _textEditingControllerAlternative,
+                                  cursorWidth: 1,
+                                  keyboardType: TextInputType.number,
+                                  cursorColor: Colors.blue,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                  ),
+                                  onTap: () {},
+                                  textAlign: TextAlign.left,
+                                  decoration: InputDecoration(
+                                    hintText: hintableText2,
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                        color: Colors.black.withOpacity(0.3)),
+                                  ),
                                 ),
                               ),
                             ),

@@ -163,22 +163,25 @@ class _StockSingularProductVariationState
                     border: Border.all(color: Colors.black.withOpacity(0.1)),
                   ),
                   child: Center(
-                    child: TextField(
-                      controller: widget._textEditingControllers[
-                          allSKULocal.indexOf(widget.item) * 2],
-                      cursorWidth: 1,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.blue,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: "${skuDistributorWise.primaryUnit}",
-                        border: InputBorder.none,
-                        hintStyle:
-                            TextStyle(color: Colors.black.withOpacity(0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: TextField(
+                        controller: widget._textEditingControllers[
+                            allSKULocal.indexOf(widget.item) * 2],
+                        cursorWidth: 1,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.blue,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: "${skuDistributorWise.primaryUnit}",
+                          border: InputBorder.none,
+                          hintStyle:
+                              TextStyle(color: Colors.black.withOpacity(0.3)),
+                        ),
                       ),
                     ),
                   ),
@@ -195,22 +198,25 @@ class _StockSingularProductVariationState
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(
-                    child: TextField(
-                      controller: widget._textEditingControllers[
-                          allSKULocal.indexOf(widget.item) * 2 + 1],
-                      cursorWidth: 1,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.blue,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: "${skuDistributorWise.alternativeUnit}",
-                        border: InputBorder.none,
-                        hintStyle:
-                            TextStyle(color: Colors.black.withOpacity(0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: TextField(
+                        controller: widget._textEditingControllers[
+                            allSKULocal.indexOf(widget.item) * 2 + 1],
+                        cursorWidth: 1,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.blue,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: "${skuDistributorWise.alternativeUnit}",
+                          border: InputBorder.none,
+                          hintStyle:
+                              TextStyle(color: Colors.black.withOpacity(0.3)),
+                        ),
                       ),
                     ),
                   ),

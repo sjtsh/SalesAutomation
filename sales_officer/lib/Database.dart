@@ -15,7 +15,9 @@ List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
 List<SKUStock>? allSKUStocksLocal;
 List<BillingCompany> allBillingCompanysLocal = [];
 List<Familiarity> allFamiliaritysLocal = [];
-List<SO> allSOLocal = [];
+SO? meSO;
+String meBeat = "";
+
 
 bool? isJoint;
 List products = [

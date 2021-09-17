@@ -64,14 +64,17 @@ class SelectedList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         padding: const EdgeInsets.all(12.0),
-                        child: TextField(
-                          maxLines: 20,
-                          controller: _textEditingController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Enter the Explanation here",
-                            hintStyle:
-                                TextStyle(color: Colors.black.withOpacity(0.3)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: TextField(
+                            maxLines: 20,
+                            controller: _textEditingController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter the Explanation here",
+                              hintStyle:
+                                  TextStyle(color: Colors.black.withOpacity(0.3)),
+                            ),
                           ),
                         ),
                       ),

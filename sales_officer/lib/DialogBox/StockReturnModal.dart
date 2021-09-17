@@ -169,20 +169,24 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                   border: Border.all(
                                       color: Colors.blue.withOpacity(0.1)),
                                 ),
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: TextField(
-                                  controller: _textEditingControllerPrimary,
-                                  cursorWidth: 1,
-                                  keyboardType: TextInputType.number,
-                                  cursorColor: Colors.blue,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                    hintText: "0",
-                                    border: InputBorder.none,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: TextField(
+                                      controller: _textEditingControllerPrimary,
+                                      cursorWidth: 1,
+                                      keyboardType: TextInputType.number,
+                                      cursorColor: Colors.blue,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        hintText: "0",
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -200,20 +204,23 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                 ),
                                 padding: const EdgeInsets.only(bottom: 5),
                                 child: Center(
-                                  child: TextField(
-                                    controller:
-                                        _textEditingControllerAlternative,
-                                    cursorWidth: 1,
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: Colors.blue,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    decoration: InputDecoration(
-                                      hintText: "0",
-                                      border: InputBorder.none,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: TextField(
+                                      controller:
+                                          _textEditingControllerAlternative,
+                                      cursorWidth: 1,
+                                      keyboardType: TextInputType.number,
+                                      cursorColor: Colors.blue,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        hintText: "0",
+                                        border: InputBorder.none,
+                                      ),
                                     ),
                                   ),
                                 ),

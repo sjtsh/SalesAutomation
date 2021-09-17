@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
@@ -79,7 +80,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   });
                   SOService soService = SOService();
                   soService.fetchSOs().then((value) {
-                    allSOLocal = value;
+                    meSO = value.firstWhere((element) => element.SOID==1);
                     setState(() {
                       isLoaded = true;
                     });
@@ -124,11 +125,14 @@ class _LogInScreenState extends State<LogInScreen> {
                             height: 130,
                             width: 100,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/face.png"),
-                              ),
                               shape: BoxShape.circle,
-                              color: Colors.black,
+                              color: Colors.green,
+                            ),
+                            child: Center(
+                              child: Text(
+                                getInitials(meSO!.SOName),
+                                style: TextStyle(color: Colors.white, fontSize: 30),
+                              ),
                             ),
                           ),
                         ),
@@ -136,7 +140,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           height: 10,
                         ),
                         Text(
-                          "John Doe",
+                          meSO!.SOName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),

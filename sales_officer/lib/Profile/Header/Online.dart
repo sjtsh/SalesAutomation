@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Methods/method.dart';
+
+import '../../Database.dart';
 
 class Online extends StatelessWidget {
   @override
@@ -13,7 +16,12 @@ class Online extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.red,
           ),
-          child: Image.asset("assets/face.png"),
+          child: Center(
+            child: Text(
+              getInitials(meSO!.SOName),
+              style: TextStyle(color: Colors.white, fontSize: 30),
+            ),
+          ),
         ),
         Positioned(
           bottom: 6,

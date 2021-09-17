@@ -17,7 +17,6 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    SO so = allSOLocal.firstWhere((element) => element.SOID == 1);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -51,7 +50,7 @@ class _SettingsState extends State<Settings> {
                           ),
                           child: Center(
                             child: Text(
-                              getInitials(so.SOName),
+                              getInitials(meSO!.SOName),
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -66,11 +65,11 @@ class _SettingsState extends State<Settings> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                so.SOName,
+                                meSO!.SOName,
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(
-                                so.email,
+                                meSO!.email,
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.5),
                                     fontSize: 15),
@@ -114,35 +113,35 @@ class _SettingsState extends State<Settings> {
                         [
                           Icons.person,
                           "Name: ",
-                          so.SOName,
+                          meSO!.SOName,
                         ],
-                        [Icons.email, "Email: ", so.email],
-                        [Icons.phone, "Phone Number: ", so.phone],
+                        [Icons.email, "Email: ", meSO!.email],
+                        [Icons.phone, "Phone Number: ", meSO!.phone],
                         [
                           Icons.domain_verification,
                           "Reporting Manager: ",
-                          so.reportingManager
+                          meSO!.reportingManager
                         ],
                         [
                           Icons.location_on_rounded,
                           "Home Location: ",
-                          so.homeLocation
+                          meSO!.homeLocation
                         ],
-                        [Icons.add_business_outlined, "PAN: ", so.PAN],
+                        [Icons.add_business_outlined, "PAN: ", meSO!.PAN],
                         [
                           Icons.my_location_outlined,
                           "District Name: ",
-                          so.districtName,
+                          meSO!.districtName,
                         ],
                         [
                           Icons.account_balance,
                           "Bank Account Name: ",
-                          so.bankAccountName
+                          meSO!.bankAccountName
                         ],
                         [
                           Icons.account_balance_wallet_sharp,
                           "Bank Account Number: ",
-                          so.bankAccountNumber
+                          meSO!.bankAccountNumber
                         ],
                       ],
                       [

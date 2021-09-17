@@ -123,20 +123,23 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                     border: Border.all(color: Colors.black.withOpacity(0.1)),
                   ),
                   child: Center(
-                    child: TextField(
-                      controller: widget._textEditingControllerPrimary,
-                      cursorWidth: 1,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.blue,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: skuDistributorWise.primaryUnit,
-                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
-                        border: InputBorder.none,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: TextField(
+                        controller: widget._textEditingControllerPrimary,
+                        cursorWidth: 1,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.blue,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.left,
+                        decoration: InputDecoration(
+                          hintText: skuDistributorWise.primaryUnit,
+                          hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
@@ -153,20 +156,23 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(
-                    child: TextField(
-                      controller: widget._textEditingControllerSecondary,
-                      cursorWidth: 1,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.blue,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: skuDistributorWise.alternativeUnit,
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: TextField(
+                        controller: widget._textEditingControllerSecondary,
+                        cursorWidth: 1,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.blue,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.left,
+                        decoration: InputDecoration(
+                          hintText: skuDistributorWise.alternativeUnit,
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                        ),
                       ),
                     ),
                   ),

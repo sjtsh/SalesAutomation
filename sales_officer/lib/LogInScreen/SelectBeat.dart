@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/HomeScreen.dart';
 
+import '../Database.dart';
+
 class SelectBeat extends StatefulWidget {
   @override
   _SelectBeatState createState() => _SelectBeatState();
@@ -27,6 +29,7 @@ class _SelectBeatState extends State<SelectBeat> {
                 child: InkWell(
                   splashColor: Colors.greenAccent,
                   onTap: () {
+                    meBeat = e.value;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => HomeScreen()));
                   },

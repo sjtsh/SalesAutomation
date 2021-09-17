@@ -48,30 +48,33 @@ class _SearchBarState extends State<SearchBar> {
                 child: Container(
                   alignment: Alignment.centerLeft,
                   width: double.infinity,
-                  child: TextField(
-                      cursorColor: Colors.black,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                      decoration: InputDecoration(
-                        isCollapsed: true,
-                        border: InputBorder.none,
-                        hintText: "Search Products",
-                        hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.3),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: TextField(
+                        cursorColor: Colors.black,
+                        textAlignVertical: TextAlignVertical.center,
+                        style: TextStyle(
+                          color: Colors.black,
                           fontSize: 16,
                         ),
-                      ),
-                      onChanged: (_products) {
-                        if(_products != ""){
-                          searchForProducts(_products, widget._setProducts);
-                        }
-                        else{
-                          widget._setProducts(allSubGroupsLocal);
-                        }
-                      }),
+                        decoration: InputDecoration(
+                          isCollapsed: true,
+                          border: InputBorder.none,
+                          hintText: "Search Products",
+                          hintStyle: TextStyle(
+                            color: Colors.black.withOpacity(0.3),
+                            fontSize: 16,
+                          ),
+                        ),
+                        onChanged: (_products) {
+                          if(_products != ""){
+                            searchForProducts(_products, widget._setProducts);
+                          }
+                          else{
+                            widget._setProducts(allSubGroupsLocal);
+                          }
+                        }),
+                  ),
                 ),
               ),
               Container(

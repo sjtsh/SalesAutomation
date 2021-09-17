@@ -20,7 +20,7 @@ Future<bool> createOrder(
   bool conditionOnly = true;
   await Future(() {
     int _distributorID = distributorID;
-    int _SOID = 1;
+    int _SOID = meSO!.SOID;
     bool _joint = true;
     bool _orderStatus = !isWarning;
     String _remarks = "Success";
@@ -261,7 +261,7 @@ Future<bool> updateStock(int distributorID,
 
 Future<void> createReturnOrder(
     int distributorID, List returnOrdersCountList, context) async {
-  int _SOID = 1;
+  int _SOID = meSO!.SOID;
   String _remarks = "Success";
   DistributorReturnOrderService distributorReturnOrderService =
       DistributorReturnOrderService();

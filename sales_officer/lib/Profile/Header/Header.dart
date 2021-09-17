@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/Profile/Header/Online.dart';
 
 import 'ProgressBar.dart';
@@ -29,7 +30,7 @@ class Header extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "John Doe",
+                      meSO!.SOName,
                       textAlign: TextAlign.left,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -43,7 +44,7 @@ class Header extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  "Kritipur Beat",
+                  "Beat: $meBeat",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: Colors.black.withOpacity(0.4), fontSize: 14),
