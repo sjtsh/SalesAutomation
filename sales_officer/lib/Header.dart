@@ -11,6 +11,8 @@ List heading = [
   "Edit Order",
   "Create Order",
   "Update Stock",
+  "Settings",
+  "FAQ"
 ];
 
 class Header extends StatelessWidget {
@@ -34,29 +36,49 @@ class Header extends StatelessWidget {
       ),
       child: Row(
         children: [
-          condition ? SizedBox(width: 12,) : Material(
-            color: Colors.white,
-            child: InkWell(
-              onTap: () {
-                if (condition) {
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: Center(
-                      child: Icon(Icons.arrow_back))),
-            ),
-          ),
+          condition
+              ? SizedBox(
+                  width: 12,
+                )
+              : Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {
+                      if (condition) {
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Center(child: Icon(Icons.arrow_back))),
+                  ),
+                ),
           Text(
             heading[index],
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Expanded(
             child: Container(),
+          ),
+          Material(
+            color: Colors.white,
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: condition
+                    ? Center(
+                        child: Icon(
+                        Icons.sync,
+                      ))
+                    : Container(),
+              ),
+            ),
           ),
           Material(
             color: Colors.white,
@@ -78,24 +100,6 @@ class Header extends StatelessWidget {
                         child: Icon(
                         Icons.notifications_active_outlined,
                       ))
-                    : Container(),
-              ),
-            ),
-          ),
-          Material(
-            color: Colors.white,
-            child: InkWell(
-              onTap: () {
-              },
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child: condition
-                    ? Center(
-                    child: Icon(
-                      Icons.sync,
-                    ))
                     : Container(),
               ),
             ),

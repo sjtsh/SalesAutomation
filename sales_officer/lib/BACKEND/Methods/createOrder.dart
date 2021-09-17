@@ -8,6 +8,7 @@ import 'package:sales_officer/BACKEND/Services/DistributorOrderService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorReturnOrderItemService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorReturnOrderService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
+import 'package:sales_officer/NavBar/NavBar.dart';
 
 import '../../Database.dart';
 
@@ -119,7 +120,6 @@ Future<bool> updateOrder(
                   _textEditingControllers.indexOf(textEditingController) + 1]
               .text);
         }
-
         distributorOrderItems.forEach((distributorOrderItem) {
           if (distributorOrderItem.SKUID ==
               allSKULocal[

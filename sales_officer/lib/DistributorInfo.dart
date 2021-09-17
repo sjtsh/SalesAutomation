@@ -58,7 +58,7 @@ class DistributorInfo extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.only(bottom: 12.0, left: 12, right: 12),
                     child: Row(
                       children: [
                         Expanded(

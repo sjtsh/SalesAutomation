@@ -62,14 +62,14 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           CustomNavigationBarItem(
-            icon: Icon(
-              Icons.add,
+            icon: SvgPicture.asset(
+              "icons/distributor.svg",
               color: NavBar.currentIndex == 1
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "New",
+              "Distributor",
               style: TextStyle(
                   color: NavBar.currentIndex == 1
                       ? Colors.blue
@@ -85,7 +85,7 @@ class _NavBarState extends State<NavBar> {
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
-              "Pending",
+              "Status",
               style: TextStyle(
                   color: NavBar.currentIndex == 2
                       ? Colors.blue
@@ -93,7 +93,6 @@ class _NavBarState extends State<NavBar> {
                   fontSize: 10),
             ),
           ),
-
           CustomNavigationBarItem(
             icon: Icon(
               Icons.menu,

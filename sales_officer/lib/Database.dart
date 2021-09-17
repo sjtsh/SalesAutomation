@@ -5,6 +5,7 @@ import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'BACKEND/Entities/BillingCompany.dart';
 import 'BACKEND/Entities/SKU.dart';
+import 'BACKEND/Entities/SO.dart';
 
 List<Distributor> searchedDistributorsLocal = [];
 List<Distributor> allDistributorsLocal = [];
@@ -14,6 +15,8 @@ List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
 List<SKUStock>? allSKUStocksLocal;
 List<BillingCompany> allBillingCompanysLocal = [];
 List<Familiarity> allFamiliaritysLocal = [];
+List<SO> allSOLocal = [];
+
 bool? isJoint;
 List products = [
   "Chiura",

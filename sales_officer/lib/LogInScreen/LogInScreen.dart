@@ -6,6 +6,7 @@ import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
+import 'package:sales_officer/BACKEND/Services/SOService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
 import 'package:sales_officer/LogInScreen/JointWorking.dart';
 import 'package:sales_officer/LogInScreen/SelectBeat.dart';
@@ -35,60 +36,70 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    DistributorService distributorService = DistributorService();
-    distributorService.fetchDistributors().then((value) {
-      allDistributorsLocal = value;
-      setState(() {
-        loadingText = "Getting SubGroups";
-      });
-      SubGroupService subGroupService = SubGroupService();
-      subGroupService.fetchSubGroups().then((value) {
-        allSubGroupsLocal = value;
+    if(allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0){
+      DistributorService distributorService = DistributorService();
+      distributorService.fetchDistributors().then((value) {
+        allDistributorsLocal = value;
         setState(() {
-          loadingText = "Getting SKUs";
+          loadingText = "Getting SubGroups";
         });
-        SKUService skuService = SKUService();
-        skuService.fetchSKUs().then((value) {
-          allSKULocal = value;
-          allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
+        SubGroupService subGroupService = SubGroupService();
+        subGroupService.fetchSubGroups().then((value) {
+          allSubGroupsLocal = value;
           setState(() {
-            loadingText = "Getting SKU Distributor Wise";
+            loadingText = "Getting SKUs";
           });
-          SKUDistributorWiseService skuDistributorWiseService =
-              SKUDistributorWiseService();
-          skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-            allSKUDistributorWiseLocal = value;
+          SKUService skuService = SKUService();
+          skuService.fetchSKUs().then((value) {
+            allSKULocal = value;
+            allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
             setState(() {
-              loadingText = "Getting Billing Companies";
+              loadingText = "Getting SKU Distributor Wise";
             });
-          }).then((value) {
-            BillingCompanyService billingCompanyService =
-                BillingCompanyService();
-            billingCompanyService.fetchBillingCompanys().then((value) {
-              allBillingCompanysLocal = value;
+            SKUDistributorWiseService skuDistributorWiseService =
+                SKUDistributorWiseService();
+            skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
+              allSKUDistributorWiseLocal = value;
               setState(() {
-                loadingText = "Loading Familiarities";
+                loadingText = "Getting Billing Companies";
               });
-              FamiliarityService familiarityService = FamiliarityService();
-              familiarityService.fetchFamiliaritys().then((value) {
-                allFamiliaritysLocal = value;
+            }).then((value) {
+              BillingCompanyService billingCompanyService =
+                  BillingCompanyService();
+              billingCompanyService.fetchBillingCompanys().then((value) {
+                allBillingCompanysLocal = value;
                 setState(() {
-                  loadingText = "Almost Done";
-                  isLoaded = true;
+                  loadingText = "Loading Familiarities";
+                });
+                FamiliarityService familiarityService = FamiliarityService();
+                familiarityService.fetchFamiliaritys().then((value) {
+                  allFamiliaritysLocal = value;
+                  setState(() {
+                    loadingText = "Almost Done";
+                  });
+                  SOService soService = SOService();
+                  soService.fetchSOs().then((value) {
+                    allSOLocal = value;
+                    setState(() {
+                      isLoaded = true;
+                    });
+                  });
                 });
               });
             });
           });
         });
       });
-    });
+    }else{
+      isLoaded = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return isLoaded
         ? SafeArea(
-          child: Scaffold(
+            child: Scaffold(
               backgroundColor: Color(0xffF5F5F5),
               body: Column(
                 children: [
@@ -164,7 +175,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               ),
                             ],
                           ),
-                          child: isSelected ? SelectBeat() : JointWorking(select),
+                          child:
+                              isSelected ? SelectBeat() : JointWorking(select),
                         ),
                       )
                     ],
@@ -172,7 +184,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 ],
               ),
             ),
-        )
+          )
         : LoadingScreen(loadingText);
   }
 }
