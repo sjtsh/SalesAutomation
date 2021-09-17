@@ -5,8 +5,9 @@ import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 class SingularProductHeader extends StatelessWidget {
   final SubGroup subGroup;
   final Function changeCurrentlyExpanded;
+  final IconData _icon;
 
-  SingularProductHeader(this.subGroup, this.changeCurrentlyExpanded);
+  SingularProductHeader(this.subGroup, this.changeCurrentlyExpanded,this._icon);
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +132,7 @@ class SingularProductHeader extends StatelessWidget {
                         ),
                       ),
                       Icon(
-                        Icons.add,
+                        _icon,
                         color: Colors.black.withOpacity(0.5),
                       ),
                       SizedBox(
