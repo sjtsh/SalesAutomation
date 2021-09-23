@@ -7,12 +7,13 @@ class SingularProductHeader extends StatelessWidget {
   final Function changeCurrentlyExpanded;
   final IconData _icon;
 
-  SingularProductHeader(this.subGroup, this.changeCurrentlyExpanded,this._icon);
+  SingularProductHeader(
+      this.subGroup, this.changeCurrentlyExpanded, this._icon);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: _icon == Icons.remove ? Color(0xffC8E6C9) : Colors.white,
       child: InkWell(
         onTap: () {
           changeCurrentlyExpanded(subGroup.subGroupID);

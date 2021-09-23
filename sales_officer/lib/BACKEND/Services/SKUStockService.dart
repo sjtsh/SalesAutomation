@@ -11,7 +11,7 @@ class SKUStockService {
     if (response.statusCode == 200) {
       List<dynamic> values = jsonDecode(response.body);
       List<SKUStock> SKUStocks =
-      values.map((e) => SKUStock.fromJson(e)).toList();
+          values.map((e) => SKUStock.fromJson(e)).toList();
       return SKUStocks;
     } else {
       throw Exception("failed to load post");
@@ -19,7 +19,7 @@ class SKUStockService {
   }
 
   Future<bool> updateSKUStock(SKUStock skuStock) async {
-    Geolocator.getCurrentPosition().then((value) async {
+    return Geolocator.getCurrentPosition().then((value) async {
       final response = await http.post(
         Uri.parse(
             "https://asia-south1-hilifedb.cloudfunctions.net/updateSKUStock"),
@@ -32,17 +32,18 @@ class SKUStockService {
           'distributorID': skuStock.distributorID.toString(),
           'primaryStock': skuStock.primaryStock.toString(),
           'alternativeStock': skuStock.alternativeStock.toString(),
-          'secondaryAlternativeStock': skuStock.secondaryAlternativeStock.toString(),
-          'updatedDate': DateTime.now().toString().substring(0,19),
-          'lat' : value.longitude.toString(),
-          'lng' : value.latitude.toString()
+          'secondaryAlternativeStock':
+              skuStock.secondaryAlternativeStock.toString(),
+          'updatedDate': DateTime.now().toString().substring(0, 19),
+          'lat': value.longitude.toString(),
+          'lng': value.latitude.toString()
         }),
       );
       if (response.statusCode == 200) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     });
-    return false;
   }
 }

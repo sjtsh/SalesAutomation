@@ -4,6 +4,7 @@ import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
+import 'package:sales_officer/BACKEND/Methods/updateStock.dart';
 import 'package:sales_officer/Database.dart';
 
 import 'StockIndividualConfirmationVariation.dart';
@@ -160,7 +161,8 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                                               widget.currentDistributor,
                                               widget.returnOrdersCountList,
                                               widget._textEditingControllers,
-                                              widget.updateReturnOrdersCountList),
+                                              widget
+                                                  .updateReturnOrdersCountList),
                                     )
                                     .toList(),
                               ),
@@ -215,7 +217,8 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               height: 20,
                               width: 20,
                               child: Center(
-                                child: CircularProgressIndicator(strokeWidth: 2,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
                                   color: Colors.white,
                                 ),
                               ),
@@ -226,15 +229,40 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               setState(() {
                                 isLoading = true;
                               });
-                              createReturnOrder(widget.currentDistributor.distributorID,
-                                  widget.returnOrdersCountList, context);
+                              createReturnOrder(
+                                  widget.currentDistributor.distributorID,
+                                  widget.returnOrdersCountList,
+                                  context);
                               updateStock(
-                                      widget.currentDistributor.distributorID,
-                                      widget._textEditingControllers,
-                                      context)
-                                  .then((value) => setState(() {
-                                        isLoading = false;
-                                      }));
+                                widget.receiptData,
+                                widget.currentDistributor.distributorID,
+                                widget._textEditingControllers,
+                              ).timeout(Duration(seconds: 30), onTimeout: () {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Please connect to a stronger connection")));
+                                return false;
+                              }).then((value) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                if (value) {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Stock was successfully punched")));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Please connect to a stronger connection")));
+                                }
+                              });
                             },
                             child: Center(
                               child: Text(

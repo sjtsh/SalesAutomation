@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
@@ -30,6 +31,7 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   bool isLoaded = false;
+  int style = 0;
 
   String loadingText = "Getting Distributors...";
 
@@ -37,18 +39,20 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0){
+    if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       DistributorService distributorService = DistributorService();
       distributorService.fetchDistributors().then((value) {
         allDistributorsLocal = value;
         setState(() {
           loadingText = "Getting SubGroups";
+          style = 1;
         });
         SubGroupService subGroupService = SubGroupService();
         subGroupService.fetchSubGroups().then((value) {
           allSubGroupsLocal = value;
           setState(() {
             loadingText = "Getting SKUs";
+            style = 2;
           });
           SKUService skuService = SKUService();
           skuService.fetchSKUs().then((value) {
@@ -56,6 +60,7 @@ class _LogInScreenState extends State<LogInScreen> {
             allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
             setState(() {
               loadingText = "Getting SKU Distributor Wise";
+              style = 3;
             });
             SKUDistributorWiseService skuDistributorWiseService =
                 SKUDistributorWiseService();
@@ -63,6 +68,7 @@ class _LogInScreenState extends State<LogInScreen> {
               allSKUDistributorWiseLocal = value;
               setState(() {
                 loadingText = "Getting Billing Companies";
+                style = 4;
               });
             }).then((value) {
               BillingCompanyService billingCompanyService =
@@ -71,16 +77,18 @@ class _LogInScreenState extends State<LogInScreen> {
                 allBillingCompanysLocal = value;
                 setState(() {
                   loadingText = "Loading Familiarities";
+                  style = 5;
                 });
                 FamiliarityService familiarityService = FamiliarityService();
                 familiarityService.fetchFamiliaritys().then((value) {
                   allFamiliaritysLocal = value;
                   setState(() {
                     loadingText = "Almost Done";
+                    style = 6;
                   });
                   SOService soService = SOService();
                   soService.fetchSOs().then((value) {
-                    meSO = value.firstWhere((element) => element.SOID==1);
+                    meSO = value.firstWhere((element) => element.SOID == 1);
                     setState(() {
                       isLoaded = true;
                     });
@@ -91,7 +99,7 @@ class _LogInScreenState extends State<LogInScreen> {
           });
         });
       });
-    }else{
+    } else {
       isLoaded = true;
     }
   }
@@ -131,7 +139,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             child: Center(
                               child: Text(
                                 getInitials(meSO!.SOName),
-                                style: TextStyle(color: Colors.white, fontSize: 30),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30),
                               ),
                             ),
                           ),
@@ -189,6 +198,73 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             ),
           )
-        : LoadingScreen(loadingText);
+        : SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset("icons/logo.svg"),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Container(
+                    //   height: 100,
+                    //   width: 100,
+                    //   child: Center(
+                    //     child: AnimatedContainer(
+                    //       height: style % 3 == 0
+                    //           ? 100
+                    //           : style % 2 == 0
+                    //               ? 80
+                    //               : 60,
+                    //       width: style % 3 == 0
+                    //           ? 100
+                    //           : style % 2 == 0
+                    //               ? 80
+                    //               : 60,
+                    //       duration: Duration(seconds: 1),
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(
+                    //           style % 3 == 0
+                    //               ? 12
+                    //               : style % 2 == 0
+                    //                   ? 50
+                    //                   : 100,
+                    //         ),
+                    //         color: style == 0
+                    //             ? Colors.green
+                    //             : style == 1
+                    //                 ? Colors.red
+                    //                 : style == 2
+                    //                     ? Colors.yellow
+                    //                     : style == 3
+                    //                         ? Colors.blue
+                    //                         : style == 4
+                    //                             ? Colors.purple
+                    //                             : style == 5
+                    //                                 ? Colors.teal
+                    //                                 : Colors.pink,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    SizedBox(
+                      width: 200,
+                      child: LinearProgressIndicator(
+                        color: Colors.red,
+                        backgroundColor: Colors.red.withOpacity(0.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(loadingText),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }

@@ -9,6 +9,7 @@ import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/DialogBox/StockReturnModal.dart';
 
+import 'MyTooltip.dart';
 
 class StockSingularProductVariation extends StatefulWidget {
   final SKU item;
@@ -17,6 +18,7 @@ class StockSingularProductVariation extends StatefulWidget {
   final List returnOrdersCountList;
   final SKUStock mySKUStock;
   final Function updateReturnOrdersCountList;
+  final bool isTooltips;
 
   StockSingularProductVariation(
       this.item,
@@ -24,7 +26,8 @@ class StockSingularProductVariation extends StatefulWidget {
       this.currentDistributor,
       this.returnOrdersCountList,
       this.mySKUStock,
-      this.updateReturnOrdersCountList);
+      this.updateReturnOrdersCountList,
+      this.isTooltips);
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -69,55 +72,7 @@ class _StockSingularProductVariationState
               children: [
                 allSKUStocksLocal == null
                     ? Container()
-                    : Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Stock: ",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.green,
-                                ),
-                              ),
-                              widget.mySKUStock.primaryStock == 0
-                                  ? Container()
-                                  : Text(
-                                      widget.mySKUStock.primaryStock
-                                              .toString() +
-                                          "${skuDistributorWise.primaryUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                              widget.mySKUStock.primaryStock == 0 ||
-                                      widget.mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : SizedBox(width: 5),
-                              widget.mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : Text(
-                                      widget.mySKUStock.alternativeStock
-                                              .toString() +
-                                          "${skuDistributorWise.alternativeUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    : MyTooltip(widget.mySKUStock, skuDistributorWise, widget.isTooltips),
                 SizedBox(
                   width: 12,
                 ),

@@ -31,6 +31,7 @@ class StockSingularProduct extends StatefulWidget {
 }
 
 class _StockSingularProductState extends State<StockSingularProduct> {
+  bool isTooltips = false;
   unExpand() {
     if (!widget
         ._expandableControllers[widget.expandableControllerIndex].expanded) {
@@ -44,7 +45,11 @@ class _StockSingularProductState extends State<StockSingularProduct> {
     } else {
       widget._expandableControllers[widget.expandableControllerIndex].expanded =
           false;
+
     }
+    setState(() {
+      isTooltips = true;
+    });
   }
 
   @override
@@ -74,7 +79,8 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                   widget.currentDistributor,
                   widget.returnOrdersCountList,
                   mySKUStock,
-                  widget.updateReturnOrdersCountList);
+                  widget.updateReturnOrdersCountList,
+                  isTooltips);
             }).toList(),
           ),
         ],

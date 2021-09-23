@@ -54,36 +54,3 @@ class _SignInButtonState extends State<SignInButton> {
     );
   }
 }
-
-class LoadingScreen extends StatelessWidget {
-  final String loadingText;
-
-  LoadingScreen(this.loadingText);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset("icons/logo.svg"),
-            SizedBox(
-              width: 200,
-              child: LinearProgressIndicator(
-                color: Colors.red,
-                backgroundColor: Colors.red.withOpacity(0.5),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(loadingText),
-          ],
-        )),
-      ),
-    );
-  }
-}

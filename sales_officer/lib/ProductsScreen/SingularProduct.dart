@@ -38,31 +38,23 @@ class _SingularProductState extends State<SingularProduct> {
     return ExpandablePanel(
       collapsed:
           SingularProductHeader(widget.item, widget.changeCurrentlyExpanded,Icons.add),
-      expanded: Container(
-        decoration: BoxDecoration(
-          boxShadow: [BoxShadow(color: Colors.green)],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Column(
-            children: [
-              SingularProductHeader(widget.item, widget.changeCurrentlyExpanded,Icons.remove),
-              Column(
-                children: allSKULocal
-                    .where(
-                        (element) => element.subGroupID == widget.item.subGroupID)
-                    .map((item) => SingularProductVariation(
-                        item,
-                        widget
-                            ._textEditingControllers[allSKULocal.indexOf(item) * 2],
-                        widget._textEditingControllers[
-                            allSKULocal.indexOf(item) * 2 + 1],
-                        widget.currentDistributor))
-                    .toList(),
-              ),
-            ],
+      expanded: Column(
+        children: [
+          SingularProductHeader(widget.item, widget.changeCurrentlyExpanded,Icons.remove),
+          Column(
+            children: allSKULocal
+                .where(
+                    (element) => element.subGroupID == widget.item.subGroupID)
+                .map((item) => SingularProductVariation(
+                    item,
+                    widget
+                        ._textEditingControllers[allSKULocal.indexOf(item) * 2],
+                    widget._textEditingControllers[
+                        allSKULocal.indexOf(item) * 2 + 1],
+                    widget.currentDistributor))
+                .toList(),
           ),
-        ),
+        ],
       ),
       controller: _expandableController,
     );
