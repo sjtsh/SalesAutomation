@@ -31,6 +31,7 @@ class StockSingularProduct extends StatefulWidget {
 }
 
 class _StockSingularProductState extends State<StockSingularProduct> {
+
   unExpand() {
     if (!widget
         ._expandableControllers[widget.expandableControllerIndex].expanded) {
@@ -65,8 +66,9 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
+
               } catch (e) {
-                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
+                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
               return StockSingularProductVariation(
                   item,
@@ -74,7 +76,8 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                   widget.currentDistributor,
                   widget.returnOrdersCountList,
                   mySKUStock,
-                  widget.updateReturnOrdersCountList);
+                  widget.updateReturnOrdersCountList,
+              );
             }).toList(),
           ),
         ],

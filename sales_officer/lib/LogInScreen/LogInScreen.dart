@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
+import 'package:sales_officer/BACKEND/Services/ProductGroupService.dart';
+import 'package:sales_officer/BACKEND/Services/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SOService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
+import 'package:sales_officer/BACKEND/Services/UnitService.dart';
 import 'package:sales_officer/LogInScreen/JointWorking.dart';
 import 'package:sales_officer/LogInScreen/SelectBeat.dart';
 import 'package:sales_officer/SignIn/SignInButton.dart';
@@ -30,6 +34,7 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   bool isLoaded = false;
+  int style = 0;
 
   String loadingText = "Getting Distributors...";
 
@@ -37,18 +42,20 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0){
+    if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       DistributorService distributorService = DistributorService();
       distributorService.fetchDistributors().then((value) {
         allDistributorsLocal = value;
         setState(() {
           loadingText = "Getting SubGroups";
+          style = 1;
         });
         SubGroupService subGroupService = SubGroupService();
         subGroupService.fetchSubGroups().then((value) {
           allSubGroupsLocal = value;
           setState(() {
             loadingText = "Getting SKUs";
+            style = 2;
           });
           SKUService skuService = SKUService();
           skuService.fetchSKUs().then((value) {
@@ -56,6 +63,7 @@ class _LogInScreenState extends State<LogInScreen> {
             allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
             setState(() {
               loadingText = "Getting SKU Distributor Wise";
+              style = 3;
             });
             SKUDistributorWiseService skuDistributorWiseService =
                 SKUDistributorWiseService();
@@ -63,6 +71,7 @@ class _LogInScreenState extends State<LogInScreen> {
               allSKUDistributorWiseLocal = value;
               setState(() {
                 loadingText = "Getting Billing Companies";
+                style = 4;
               });
             }).then((value) {
               BillingCompanyService billingCompanyService =
@@ -70,19 +79,58 @@ class _LogInScreenState extends State<LogInScreen> {
               billingCompanyService.fetchBillingCompanys().then((value) {
                 allBillingCompanysLocal = value;
                 setState(() {
-                  loadingText = "Loading Familiarities";
+                  loadingText = "Loading Units";
+                  style = 5;
                 });
-                FamiliarityService familiarityService = FamiliarityService();
-                familiarityService.fetchFamiliaritys().then((value) {
-                  allFamiliaritysLocal = value;
+                UnitService unitService = UnitService();
+                unitService.fetchUnits().then((value) {
+                  allUnitsLocal = value;
                   setState(() {
-                    loadingText = "Almost Done";
+                    loadingText = "Loading Product Lines";
+                    style = 6;
                   });
-                  SOService soService = SOService();
-                  soService.fetchSOs().then((value) {
-                    meSO = value.firstWhere((element) => element.SOID==1);
+                  ProductGroupService productGroupService =
+                      ProductGroupService();
+                  productGroupService.fetchProductGroups().then((value) {
+                    allProductGroupsLocal = value;
                     setState(() {
-                      isLoaded = true;
+                      loadingText = "Loading Product Groups";
+                      style = 6;
+                    });
+                    ProductGroupService productGroupService =
+                    ProductGroupService();
+                    productGroupService.fetchProductGroups().then((value) {
+                      allProductGroupsLocal = value;
+                      setState(() {
+                        loadingText = "Loading Product Groups";
+                        style = 6;
+                      });
+                      ProductLineService productLines = ProductLineService();
+                      productLines.fetchProductLines().then((value) {
+                        allProductLinesLocal = value;
+                        setState(() {
+                          loadingText = "Loading Familiarities";
+                          style = 6;
+                        });
+                        FamiliarityService familiarityService =
+                        FamiliarityService();
+                        familiarityService.fetchFamiliaritys().then((value) {
+                          allFamiliaritysLocal = value;
+                          setState(() {
+                            loadingText = "Almost Done";
+                            style = 6;
+                          });
+                          SOService soService = SOService();
+                          soService.fetchSOs().then((value) {
+                            meSO =
+                                value.firstWhere((element) =>
+                                element.SOID == 1);
+                            setState(() {
+                              isLoaded = true;
+                            });
+                          });
+                        });
+                      });
                     });
                   });
                 });
@@ -91,7 +139,7 @@ class _LogInScreenState extends State<LogInScreen> {
           });
         });
       });
-    }else{
+    } else {
       isLoaded = true;
     }
   }
@@ -131,7 +179,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             child: Center(
                               child: Text(
                                 getInitials(meSO!.SOName),
-                                style: TextStyle(color: Colors.white, fontSize: 30),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 30),
                               ),
                             ),
                           ),
@@ -189,6 +238,29 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
             ),
           )
-        : LoadingScreen(loadingText);
+        : SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset("icons/logo.svg"),
+                    SizedBox(
+                      width: 200,
+                      child: LinearProgressIndicator(
+                        color: Colors.red,
+                        backgroundColor: Colors.red.withOpacity(0.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(loadingText),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }

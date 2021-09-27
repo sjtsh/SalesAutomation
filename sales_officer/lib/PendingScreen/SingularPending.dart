@@ -2,19 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
+import 'package:sales_officer/BACKEND/Methods/shareOrder.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
 import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';
 
-class SingularPending extends StatelessWidget {
+class SingularPending extends StatefulWidget {
   final DistributorOrder e;
 
   SingularPending(this.e);
 
   @override
+  State<SingularPending> createState() => _SingularPendingState();
+}
+
+class _SingularPendingState extends State<SingularPending> {
+
+  bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
     Distributor distributor = allDistributorsLocal
-        .where((element) => element.distributorID == e.distributorID)
+        .where((element) => element.distributorID == widget.e.distributorID)
         .first;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
@@ -31,13 +40,13 @@ class SingularPending extends StatelessWidget {
                 offset: Offset(0, 2))
           ],
         ),
-        child: Material(
+        child: !isLoading ? Material(
           child: InkWell(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return ApproveOrderScreen(e);
+                    return ApproveOrderScreen(widget.e);
                   },
                 ),
               );
@@ -81,7 +90,7 @@ class SingularPending extends StatelessWidget {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: e.orderStatus
+                            color: widget.e.orderStatus
                                 ? Color(0xff60D74D)
                                 : Color(0xffFFCE31),
                             borderRadius: BorderRadius.circular(10),
@@ -89,7 +98,7 @@ class SingularPending extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              e.orderStatus ? "APPROVED" : "PENDING",
+                              widget.e.orderStatus ? "APPROVED" : "PENDING",
                               style: TextStyle(
                                 fontSize: 10,
                               ),
@@ -108,7 +117,7 @@ class SingularPending extends StatelessWidget {
                                   return ProductsScreen(
                                     distributor,
                                     6,
-                                    e,
+                                    widget.e,
                                     false,
                                   );
                                 }),
@@ -131,7 +140,15 @@ class SingularPending extends StatelessWidget {
                                   )),
                               PopupMenuItem(
                                   child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+                                        shareOrder(widget.e);
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(Icons.share),
@@ -155,8 +172,8 @@ class SingularPending extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      ["Order ID :", "#OR${e.distributorOrderID}"],
-                      ["Date :", "${e.dateAndTime}"],
+                      ["Order ID :", "#OR${widget.e.distributorOrderID}"],
+                      ["Date :", "${widget.e.dateAndTime}"],
                     ]
                         .map(
                           (e) => Padding(
@@ -184,7 +201,7 @@ class SingularPending extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ): SizedBox(height:200, child: Center(child: CircularProgressIndicator())),
       ),
     );
   }

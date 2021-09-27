@@ -18,10 +18,10 @@ class DistributorOrderService {
     }
   }
 
-  insertDistributorOrder(int distributorID, int SOID, bool joint,
-      bool orderStatus, String remarks, String dateAndTime) async {
-    int distributorID2 = -1;
-    await Geolocator.getCurrentPosition().then((value) async {
+  Future<int> insertDistributorOrder(int distributorID, int SOID, bool joint,
+      bool orderStatus, String remarks, String dateAndTime) {
+    Future<int> distributorID2 =
+        Geolocator.getCurrentPosition().then((value) async {
       final response = await http.post(
         Uri.parse(
             "https://asia-south1-hilifedb.cloudfunctions.net/insertDistributorOrder"),
@@ -37,12 +37,16 @@ class DistributorOrderService {
           'dateAndTime': dateAndTime.toString().substring(0, 19),
           'updatedTime': dateAndTime.toString().substring(0, 19),
           'lat': value.longitude.toString(),
-          'lng': value.latitude.toString()
+          'lng': value.latitude.toString(),
+          'deactivated':false.toString()
         }),
       );
-      List<dynamic> aList = jsonDecode(response.body);
-      distributorID2 = aList[0]["0"];
-      return distributorID2;
+      if (response.statusCode == 200) {
+        List<dynamic> aList = jsonDecode(response.body);
+        return aList[0]["0"];
+      } else {
+        return -1;
+      }
     });
     return distributorID2;
   }
@@ -67,12 +71,14 @@ class DistributorOrderService {
               distributorOrder.updatedTime.toString().substring(0, 19),
           'lat': distributorOrder.lat.toString(),
           'lng': distributorOrder.lng.toString(),
+          'deactivated': distributorOrder.deactivated.toString(),
         },
       ),
     );
     if (res.statusCode == 200) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 }

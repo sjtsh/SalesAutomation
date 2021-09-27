@@ -31,14 +31,17 @@ class DistributorOrderItemService {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'distributorOrderID': distributorOrderID.toString(),
-        'SKUID': SKUID.toString(),
-        'primaryItemCount': primaryItemCount.toString(),
-        'alternativeItemCount': alternativeItemCount.toString(),
-        'secondaryAlternativeItemCount':
-            secondaryAlternativeItemCount.toString(),
-      }),
+      body: jsonEncode(
+        <String, String>{
+          'distributorOrderID': distributorOrderID.toString(),
+          'SKUID': SKUID.toString(),
+          'primaryItemCount': primaryItemCount.toString(),
+          'alternativeItemCount': alternativeItemCount.toString(),
+          'secondaryAlternativeItemCount':
+              secondaryAlternativeItemCount.toString(),
+          'deactivated': false.toString(),
+        },
+      ),
     );
     if (response.statusCode == 200) {
       return true;
@@ -46,21 +49,27 @@ class DistributorOrderItemService {
     return false;
   }
 
-
-  Future<bool> updateDistributorOrderItem(DistributorOrderItem distributorOrderItem) async {
+  Future<bool> updateDistributorOrderItem(
+      DistributorOrderItem distributorOrderItem) async {
     final res = await http.put(
-      Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrderItem"),
+      Uri.parse(
+          "https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrderItem"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(
         <String, String>{
-          'distributorOrderItemID': distributorOrderItem.distributorOrderItemID.toString(),
-          'distributorOrderID' : distributorOrderItem.distributorOrderID.toString(),
-          'SKUID' : distributorOrderItem.SKUID.toString(),
-          'primaryItemCount' : distributorOrderItem.primaryItemCount.toString(),
-          'alternativeItemCount' : distributorOrderItem.alternativeItemCount.toString(),
-          'secondaryAlternativeItemCount' : distributorOrderItem.secondaryAlternativeItemCount.toString(),
+          'distributorOrderItemID':
+              distributorOrderItem.distributorOrderItemID.toString(),
+          'distributorOrderID':
+              distributorOrderItem.distributorOrderID.toString(),
+          'SKUID': distributorOrderItem.SKUID.toString(),
+          'primaryItemCount': distributorOrderItem.primaryItemCount.toString(),
+          'alternativeItemCount':
+              distributorOrderItem.alternativeItemCount.toString(),
+          'secondaryAlternativeItemCount':
+              distributorOrderItem.secondaryAlternativeItemCount.toString(),
+          'deactivated': false.toString(),
         },
       ),
     );

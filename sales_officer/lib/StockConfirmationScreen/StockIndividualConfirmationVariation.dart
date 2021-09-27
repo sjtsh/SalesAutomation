@@ -157,7 +157,7 @@ class _StockIndividualConfirmationVariationState
                                         children: [
                                           counts[1] != 0
                                               ? Text(
-                                                  "${counts[1]}${skuDistributorWise.primaryUnit}",
+                                                  "${counts[1]}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
                                                   style: TextStyle(
                                                       fontSize: 10,
                                                       color: Colors.white),
@@ -165,7 +165,7 @@ class _StockIndividualConfirmationVariationState
                                               : Container(),
                                           counts[2] != 0
                                               ? Text(
-                                                  " ${counts[2]}${skuDistributorWise.alternativeUnit}",
+                                                  " ${counts[2]}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
                                                   style: TextStyle(
                                                       fontSize: 10,
                                                       color: Colors.white),
@@ -195,7 +195,7 @@ class _StockIndividualConfirmationVariationState
                           ),
                         ),
                         Text(
-                          " ${skuDistributorWise.primaryUnit}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),
@@ -219,7 +219,7 @@ class _StockIndividualConfirmationVariationState
                           ),
                         ),
                         Text(
-                          " ${skuDistributorWise.alternativeUnit}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),

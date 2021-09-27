@@ -4,6 +4,7 @@ import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
+import 'package:sales_officer/BACKEND/Methods/updateOrder.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationRecieptWarning.dart';
 import 'package:sales_officer/Database.dart';
 
@@ -225,10 +226,12 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     child: isLoading
                         ? MaterialButton(
                             onPressed: () async {},
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                            child: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Center(
                                 child: CircularProgressIndicator(
+                                  strokeWidth: 2,
                                   color: Colors.white,
                                 ),
                               ),
@@ -245,21 +248,71 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                           widget
                                               .currentDistributor.distributorID,
                                           widget._textEditingControllers,
-                                          isWarning,
-                                          context)
-                                      .then((value) => setState(() {
-                                            isLoading = false;
-                                          }));
+                                          isWarning)
+                                      .timeout(Duration(seconds: 30),
+                                          onTimeout: () {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Please connect to a stronger connection")));
+                                    return -1;
+                                  }).then((value) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    if (value != -1) {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Order was successfully punched")));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Please connect to a stronger connection")));
+                                    }
+                                  });
                                 } else {
+                                  print(
+                                      "the function has started for update Order and is Loading is set to $isLoading\n");
                                   updateOrder(
-                                          widget.distributorOrder,
-                                          widget.distributorOrderItems,
-                                          widget._textEditingControllers,
-                                          isWarning,
-                                          context)
-                                      .then((value) => setState(() {
-                                            isLoading = false;
-                                          }));
+                                    widget.distributorOrder,
+                                    widget.distributorOrderItems,
+                                    widget._textEditingControllers,
+                                    isWarning,
+                                  ).timeout(Duration(seconds: 30),
+                                      onTimeout: () {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Please connect to a stronger connection")));
+                                    return false;
+                                  }).then((value) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    if (value) {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Order was successfully punched")));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Please connect to a stronger connection")));
+                                    }
+                                  });
                                 }
                               }
                             },
@@ -291,10 +344,12 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                           child: isLoading
                               ? MaterialButton(
                                   onPressed: () async {},
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: Center(
                                       child: CircularProgressIndicator(
+                                        strokeWidth: 2,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -311,21 +366,72 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                                 widget.currentDistributor
                                                     .distributorID,
                                                 widget._textEditingControllers,
-                                                isWarning,
-                                                context)
-                                            .then((value) => setState(() {
-                                                  isLoading = false;
-                                                }));
+                                                isWarning)
+                                            .timeout(Duration(seconds: 30),
+                                                onTimeout: () {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Please connect to a stronger connection"),
+                                            ),
+                                          );
+                                          return 0;
+                                        }).then((value) {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          if (value != -1) {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Order was successfully punched")));
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Please connect to a stronger connection")));
+                                          }
+                                        });
                                       } else {
                                         updateOrder(
-                                                widget.distributorOrder,
-                                                widget.distributorOrderItems,
-                                                widget._textEditingControllers,
-                                                isWarning,
-                                                context)
-                                            .then((value) => setState(() {
-                                                  isLoading = false;
-                                                }));
+                                          widget.distributorOrder,
+                                          widget.distributorOrderItems,
+                                          widget._textEditingControllers,
+                                          isWarning,
+                                        ).timeout(Duration(seconds: 30),
+                                            onTimeout: () {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      "Please connect to a stronger connection")));
+                                          return false;
+                                        }).then((value) {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          if (value) {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Order was successfully punched")));
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "Please connect to a stronger connection")));
+                                          }
+                                        });
                                       }
                                     }
                                   },

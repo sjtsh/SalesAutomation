@@ -40,10 +40,9 @@ class _StockReturnModalState extends State<StockReturnModal> {
   String _value = "damaged";
 
   @override
-  Widget build(BuildContext context) {
-    SubGroup subGroup = allSubGroupsLocal
-        .firstWhere((element) => element.subGroupID == widget.sku.subGroupID);
-
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     widget.returnOrdersCountList.forEach((element) {
       if (element[0] == widget.sku) {
         if (element[1] != 0) {
@@ -54,7 +53,10 @@ class _StockReturnModalState extends State<StockReturnModal> {
         }
       }
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -152,7 +154,7 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: Text(
-                                      "Stock Present: 30Ctn 29Pcs",
+                                      "Stock Present: ${widget.primaryStockController.text}${allUnitsLocal.firstWhere((element) => widget.skuDistributorWise.primaryUnitID == element.unitID).unitName} ${widget.alternativeStockController.text}${allUnitsLocal.firstWhere((element) => widget.skuDistributorWise.alternativeUnitID == element.unitID).unitName}",
                                       style: TextStyle(
                                           fontSize: 10, color: Colors.green),
                                     ),
@@ -171,7 +173,8 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                 ),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
                                     child: TextField(
                                       controller: _textEditingControllerPrimary,
                                       cursorWidth: 1,
@@ -205,7 +208,8 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                 padding: const EdgeInsets.only(bottom: 5),
                                 child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
                                     child: TextField(
                                       controller:
                                           _textEditingControllerAlternative,
@@ -380,6 +384,12 @@ class _StockReturnModalState extends State<StockReturnModal> {
                             }
                             Navigator.pop(context);
                             widget.refresh();
+                            print("______________________________________");
+                            print("primary stock has now the value of: " +
+                                widget.primaryStockController.text);
+                            print("primary stock has now the value of: " +
+                                widget.alternativeStockController.text);
+
                           },
                           child: Center(
                             child: Padding(

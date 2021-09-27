@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 
 class SignInButton extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SignInButtonState extends State<SignInButton> {
           color: Colors.red,
         ),
         child: MaterialButton(
-          onPressed: () {
+          onPressed: () async {
             // final username = _username.text;
             // final password = _password.text;
             //
@@ -37,6 +38,31 @@ class _SignInButtonState extends State<SignInButton> {
             //     MaterialPageRoute(builder: (context) => HomeScreen()),
             //   );
             // }
+            LocationPermission permission = await Geolocator.checkPermission();
+            if (permission == LocationPermission.denied) {
+              permission = await Geolocator.requestPermission();
+              if (permission == LocationPermission.denied) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(minutes: 2),
+                    content: Text('Location permissions are denied'),
+                  ),
+                );
+                return Future.error('Location permissions are denied');
+              }
+            }
+
+            if (permission == LocationPermission.deniedForever) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(minutes: 2),
+                  content: Text('Location permissions are denied'),
+                ),
+              );
+              return Future.error(
+                  'Location permissions are permanently denied, we cannot request permissions.');
+            }
+
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -50,39 +76,6 @@ class _SignInButtonState extends State<SignInButton> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class LoadingScreen extends StatelessWidget {
-  final String loadingText;
-
-  LoadingScreen(this.loadingText);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset("icons/logo.svg"),
-            SizedBox(
-              width: 200,
-              child: LinearProgressIndicator(
-                color: Colors.red,
-                backgroundColor: Colors.red.withOpacity(0.5),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(loadingText),
-          ],
-        )),
       ),
     );
   }

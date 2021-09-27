@@ -9,6 +9,7 @@ import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/DialogBox/StockReturnModal.dart';
 
+import 'MyTooltip.dart';
 
 class StockSingularProductVariation extends StatefulWidget {
   final SKU item;
@@ -19,12 +20,13 @@ class StockSingularProductVariation extends StatefulWidget {
   final Function updateReturnOrdersCountList;
 
   StockSingularProductVariation(
-      this.item,
-      this._textEditingControllers,
-      this.currentDistributor,
-      this.returnOrdersCountList,
-      this.mySKUStock,
-      this.updateReturnOrdersCountList);
+    this.item,
+    this._textEditingControllers,
+    this.currentDistributor,
+    this.returnOrdersCountList,
+    this.mySKUStock,
+    this.updateReturnOrdersCountList,
+  );
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -33,9 +35,7 @@ class StockSingularProductVariation extends StatefulWidget {
 
 class _StockSingularProductVariationState
     extends State<StockSingularProductVariation> {
-  refresh() {
-    setState(() {});
-  }
+  refresh() {}
 
   @override
   Widget build(BuildContext context) {
@@ -69,54 +69,9 @@ class _StockSingularProductVariationState
               children: [
                 allSKUStocksLocal == null
                     ? Container()
-                    : Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Stock: ",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.green,
-                                ),
-                              ),
-                              widget.mySKUStock.primaryStock == 0
-                                  ? Container()
-                                  : Text(
-                                      widget.mySKUStock.primaryStock
-                                              .toString() +
-                                          "${skuDistributorWise.primaryUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                              widget.mySKUStock.primaryStock == 0 ||
-                                      widget.mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : SizedBox(width: 5),
-                              widget.mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : Text(
-                                      widget.mySKUStock.alternativeStock
-                                              .toString() +
-                                          "${skuDistributorWise.alternativeUnit}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        ),
+                    : MyTooltip(
+                        widget.mySKUStock,
+                        skuDistributorWise,
                       ),
                 SizedBox(
                   width: 12,
@@ -177,7 +132,8 @@ class _StockSingularProductVariationState
                         ),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          hintText: "${skuDistributorWise.primaryUnit}",
+                          hintText:
+                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.primaryUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),
@@ -212,7 +168,8 @@ class _StockSingularProductVariationState
                         ),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          hintText: "${skuDistributorWise.alternativeUnit}",
+                          hintText:
+                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.alternativeUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),

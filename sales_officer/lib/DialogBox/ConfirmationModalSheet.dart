@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/Database.dart';
 
@@ -25,6 +26,8 @@ class ConfirmationModalSheet extends StatelessWidget {
 
     String hintableText1 = f[1].toString();
     String hintableText2 = f[2].toString();
+    ProductLine productLine = allProductLinesLocal.firstWhere((element) => element.productLineID == subGroup.productLineID);
+
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -76,10 +79,10 @@ class ConfirmationModalSheet extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5.0, vertical: 1),
                                   child: Text(
-                                    subGroup.productLineName.substring(0, 1) +
-                                        subGroup.productLineName.substring(
-                                            subGroup.productLineName.length - 1,
-                                            subGroup.productLineName.length),
+                                    productLine.productLineName.substring(0, 1) +
+                                        productLine.productLineName.substring(
+                                            productLine.productLineName.length - 1,
+                                            productLine.productLineName.length),
                                     style: TextStyle(
                                       fontSize: 8,
                                       color: Colors.white,

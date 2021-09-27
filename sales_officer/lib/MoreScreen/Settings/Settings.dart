@@ -131,7 +131,7 @@ class _SettingsState extends State<Settings> {
                         [
                           Icons.my_location_outlined,
                           "District Name: ",
-                          meSO!.districtName,
+                          allDistrictsLocal.firstWhere((element) => element.districtID == meSO!.districtID).districtName,
                         ],
                         [
                           Icons.account_balance,
