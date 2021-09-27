@@ -1,32 +1,35 @@
 class SKU {
   final int SKUID;
-  final String pricingTypeName;
+  final int pricingTypeID;
   final int subGroupID;
   final int defaultBillingCompanyID;
-  final String primaryUnit;
+  final int primaryUnitID;
   final int primaryCF;
-  final String alternativeUnit;
+  final int alternativeUnitID;
   final int alternativeCF;
-  final String secondaryAlternativeUnit;
+  final int secondaryAlternativeUnitID;
   final int secondaryAlternativeCF;
   final String SKUName;
   final double MRP;
   final String img;
+  final bool deactivated;
 
   SKU(
-      this.SKUID,
-      this.pricingTypeName,
-      this.subGroupID,
-      this.defaultBillingCompanyID,
-      this.primaryUnit,
-      this.primaryCF,
-      this.alternativeUnit,
-      this.alternativeCF,
-      this.secondaryAlternativeUnit,
-      this.secondaryAlternativeCF,
-      this.SKUName,
-      this.MRP,
-      this.img);
+    this.SKUID,
+    this.pricingTypeID,
+    this.subGroupID,
+    this.defaultBillingCompanyID,
+    this.primaryUnitID,
+    this.primaryCF,
+    this.alternativeUnitID,
+    this.alternativeCF,
+    this.secondaryAlternativeUnitID,
+    this.secondaryAlternativeCF,
+    this.SKUName,
+    this.MRP,
+    this.img,
+    this.deactivated,
+  );
 
   factory SKU.fromJson(Map<String, dynamic> json) {
     return SKU(
@@ -43,6 +46,7 @@ class SKU {
       json['10'],
       json['11'],
       json['12'],
+      json['13'] == 0 ? false : true,
     );
   }
 }

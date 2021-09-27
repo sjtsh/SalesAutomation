@@ -17,8 +17,6 @@ import '../Database.dart';
 import 'SearchBar.dart';
 import 'StockList.dart';
 
-List<DistributorOrderItem> distributorOrderItems = [];
-
 class StocksScreen extends StatefulWidget {
   final Distributor currentDistributor;
   final int index;
@@ -46,6 +44,8 @@ class _StocksScreenState extends State<StocksScreen> {
   bool isSearching = false;
   bool isProductNotFound = false;
 
+  List<DistributorOrderItem> distributorOrderItems = [];
+
   void _setNewProducts(String newValue) {
     setState(() {
       dropdownValue = newValue;
@@ -67,22 +67,19 @@ class _StocksScreenState extends State<StocksScreen> {
 
   updateReturnOrdersCountList(
       SKU sku, int primaryCountNew, int alternativeCountNew, String reason) {
-    setState(() {
-      bool isConsists = false;
-      returnOrdersCountList.forEach((element) {
-        if (element[0].SKUID == sku.SKUID) {
-          isConsists = true;
-          element[1] = primaryCountNew;
-          element[2] = alternativeCountNew;
-          element[3] = reason;
-        }
-      });
-      if (!isConsists) {
-        returnOrdersCountList
-            .add([sku, primaryCountNew, alternativeCountNew, reason]);
+    bool isConsists = false;
+    returnOrdersCountList.forEach((element) {
+      if (element[0].SKUID == sku.SKUID) {
+        isConsists = true;
+        element[1] = primaryCountNew;
+        element[2] = alternativeCountNew;
+        element[3] = reason;
       }
-      returnOrdersCountList = returnOrdersCountList;
     });
+    if (!isConsists) {
+      returnOrdersCountList
+          .add([sku, primaryCountNew, alternativeCountNew, reason]);
+    }
   }
 
   @override

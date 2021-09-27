@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
@@ -38,7 +39,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
           element.SKUID == widget.item.SKUID);
     } catch (e) {
       mySKUStock = SKUStock(0, widget.item.SKUID,
-          widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0);
+          widget.currentDistributor.distributorID, 0, 0, 0, "", 0, 0, false);
     }
     return Container(
       width: double.infinity,
@@ -87,7 +88,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                                   ? Container()
                                   : Text(
                                       mySKUStock.primaryStock.toString() +
-                                          "${skuDistributorWise.primaryUnit}",
+                                          "${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontSize: 12,
@@ -102,7 +103,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                                   ? Container()
                                   : Text(
                                       mySKUStock.alternativeStock.toString() +
-                                          "${skuDistributorWise.alternativeUnit}",
+                                          "${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontSize: 12,
@@ -136,8 +137,9 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                         ),
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                          hintText: skuDistributorWise.primaryUnit,
-                          hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                          hintText: allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName,
+                          hintStyle:
+                              TextStyle(color: Colors.black.withOpacity(0.3)),
                           border: InputBorder.none,
                         ),
                       ),
@@ -169,9 +171,10 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                         ),
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                          hintText: skuDistributorWise.alternativeUnit,
+                          hintText: allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName,
                           border: InputBorder.none,
-                          hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
+                          hintStyle:
+                              TextStyle(color: Colors.black.withOpacity(0.3)),
                         ),
                       ),
                     ),

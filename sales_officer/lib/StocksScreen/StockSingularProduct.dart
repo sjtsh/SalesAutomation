@@ -71,7 +71,7 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
               } catch (e) {
-                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
+                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
               return StockSingularProductVariation(
                   item,

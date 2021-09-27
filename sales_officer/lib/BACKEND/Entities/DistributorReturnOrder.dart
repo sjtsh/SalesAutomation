@@ -9,18 +9,21 @@ class DistributorReturnOrder {
   final String updatedTime;
   final double lat;
   final double lng;
+  final bool deactivated;
 
   DistributorReturnOrder(
-      this.distributorReturnOrderID,
-      this.distributorID,
-      this.SOID,
-      this.joint,
-      this.returnOrderStatus,
-      this.remarks,
-      this.dateAndTime,
-      this.updatedTime,
-      this.lat,
-      this.lng);
+    this.distributorReturnOrderID,
+    this.distributorID,
+    this.SOID,
+    this.joint,
+    this.returnOrderStatus,
+    this.remarks,
+    this.dateAndTime,
+    this.updatedTime,
+    this.lat,
+    this.lng,
+    this.deactivated,
+  );
 
   factory DistributorReturnOrder.fromJson(Map<String, dynamic> json) {
     return DistributorReturnOrder(
@@ -34,6 +37,7 @@ class DistributorReturnOrder {
       json['7'],
       json['8'],
       json['9'],
+      json['10'] == 0 ? false : true,
     );
   }
 }

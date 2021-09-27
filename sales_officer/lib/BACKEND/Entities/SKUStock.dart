@@ -8,9 +8,20 @@ class SKUStock {
   final String updatedDate;
   final double lat;
   final double lng;
+  final bool deactivated;
 
-  SKUStock(this.SKUStockID, this.SKUID, this.distributorID,
-      this.primaryStock, this.alternativeStock, this.secondaryAlternativeStock, this.updatedDate, this.lat, this.lng, );
+  SKUStock(
+    this.SKUStockID,
+    this.SKUID,
+    this.distributorID,
+    this.primaryStock,
+    this.alternativeStock,
+    this.secondaryAlternativeStock,
+    this.updatedDate,
+    this.lat,
+    this.lng,
+    this.deactivated,
+  );
 
   factory SKUStock.fromJson(Map<String, dynamic> json) {
     return SKUStock(
@@ -23,6 +34,7 @@ class SKUStock {
       json['6'],
       json['7'],
       json['8'],
+      json['9'] == 0 ? false : true,
     );
   }
 }

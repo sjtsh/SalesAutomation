@@ -57,7 +57,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
               0,
               DateTime.now().toString(),
               value.latitude,
-              value.longitude)),
+              value.longitude, false)),
         );
       }
     }

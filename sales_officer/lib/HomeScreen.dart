@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/DrawerScreen/DrawerScreen.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
-import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
 
 import 'MoreScreen/MoreScreen.dart';
 

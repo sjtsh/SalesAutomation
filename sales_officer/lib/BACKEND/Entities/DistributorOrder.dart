@@ -9,15 +9,21 @@ class DistributorOrder {
   final String updatedTime;
   final double lat;
   final double lng;
+  final bool deactivated;
 
   DistributorOrder(
-      this.distributorOrderID,
-      this.distributorID,
-      this.SOID,
-      this.joint,
-      this.orderStatus,
-      this.remarks,
-      this.dateAndTime, this.updatedTime, this.lat, this.lng);
+    this.distributorOrderID,
+    this.distributorID,
+    this.SOID,
+    this.joint,
+    this.orderStatus,
+    this.remarks,
+    this.dateAndTime,
+    this.updatedTime,
+    this.lat,
+    this.lng,
+    this.deactivated,
+  );
 
   factory DistributorOrder.fromJson(Map<String, dynamic> json) {
     return DistributorOrder(
@@ -31,6 +37,7 @@ class DistributorOrder {
       json['7'],
       json['8'],
       json['9'],
+      json['10'] == 0 ? false : true,
     );
   }
 }

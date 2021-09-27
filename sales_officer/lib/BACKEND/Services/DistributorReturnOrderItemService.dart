@@ -22,7 +22,8 @@ class DistributorReturnOrderItemService {
         'alternativeItemCount': alternativeItemCount.toString(),
         'secondaryAlternativeItemCount':
             secondaryAlternativeItemCount.toString(),
-        'reason': reason
+        'reason': reason,
+        'deactivated': false.toString()
       }),
     );
     print("______________________________________");

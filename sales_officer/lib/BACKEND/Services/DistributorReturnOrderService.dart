@@ -25,7 +25,8 @@ class DistributorReturnOrderService {
           'dateAndTime': DateTime.now().toString().substring(0, 19),
           'updatedTime': DateTime.now().toString().substring(0, 19),
           'lat': value.longitude.toString(),
-          'lng': value.latitude.toString()
+          'lng': value.latitude.toString(),
+          'deactivated': false.toString(),
         }),
       );
       List<dynamic> aList = jsonDecode(response.body);
