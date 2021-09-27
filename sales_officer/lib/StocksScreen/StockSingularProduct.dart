@@ -32,6 +32,7 @@ class StockSingularProduct extends StatefulWidget {
 
 class _StockSingularProductState extends State<StockSingularProduct> {
   bool isTooltips = false;
+
   unExpand() {
     if (!widget
         ._expandableControllers[widget.expandableControllerIndex].expanded) {
@@ -45,7 +46,6 @@ class _StockSingularProductState extends State<StockSingularProduct> {
     } else {
       widget._expandableControllers[widget.expandableControllerIndex].expanded =
           false;
-
     }
     setState(() {
       isTooltips = true;
@@ -70,6 +70,15 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
+
+                //here________________________________________________
+                widget._textEditingControllers[allSKULocal.indexOf(item) * 2]
+                    .text = mySKUStock.primaryStock.toString();
+
+                widget
+                    ._textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]
+                    .text = mySKUStock.alternativeStock.toString();
+                //here________________________________________________
               } catch (e) {
                 mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
               }
