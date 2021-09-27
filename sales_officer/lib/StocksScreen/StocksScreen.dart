@@ -17,6 +17,8 @@ import '../Database.dart';
 import 'SearchBar.dart';
 import 'StockList.dart';
 
+List<SKUStock> ourSKUStock = [];
+
 class StocksScreen extends StatefulWidget {
   final Distributor currentDistributor;
   final int index;
@@ -159,67 +161,13 @@ class _StocksScreenState extends State<StocksScreen> {
                             )
                           : Expanded(
                               child: !isSearching
-                                  ? FutureBuilder(
-                                      future: widget.skuStockService
-                                          .fetchSKUStocks(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<List<SKUStock>>
-                                              snapshot) {
-                                        allSKUStocksLocal = snapshot.data;
-                                        allSKULocal.forEach((item) {
-                                          SKUStock mySKUStock;
-                                          try {
-                                            mySKUStock = allSKUStocksLocal!
-                                                .firstWhere((element) =>
-                                                    element.distributorID ==
-                                                        widget
-                                                            .currentDistributor
-                                                            .distributorID &&
-                                                    element.SKUID ==
-                                                        item.SKUID);
-
-                                            //here________________________________________________
-                                            mySKUStock.primaryStock == 0
-                                                ? _textEditingControllers[
-                                                        allSKULocal
-                                                                .indexOf(item) *
-                                                            2]
-                                                    .text = ""
-                                                : _textEditingControllers[
-                                                            allSKULocal.indexOf(
-                                                                    item) *
-                                                                2]
-                                                        .text =
-                                                    mySKUStock.primaryStock
-                                                        .toString();
-
-                                            mySKUStock.alternativeStock == 0
-                                                ? _textEditingControllers[
-                                                        allSKULocal.indexOf(
-                                                                    item) *
-                                                                2 +
-                                                            1]
-                                                    .text = ""
-                                                : _textEditingControllers[
-                                                            allSKULocal.indexOf(
-                                                                        item) *
-                                                                    2 +
-                                                                1]
-                                                        .text =
-                                                    mySKUStock.alternativeStock
-                                                        .toString();
-                                            //here________________________________________________
-                                          } catch (e) {}
-                                        });
-                                        return StockList(
-                                            allSubGroupsLocal,
-                                            widget._scrollController,
-                                            _textEditingControllers,
-                                            widget.currentDistributor,
-                                            returnOrdersCountList,
-                                            updateReturnOrdersCountList);
-                                      },
-                                    )
+                                  ? StockList(
+                                      allSubGroupsLocal,
+                                      widget._scrollController,
+                                      _textEditingControllers,
+                                      widget.currentDistributor,
+                                      returnOrdersCountList,
+                                      updateReturnOrdersCountList)
                                   : StockList(
                                       productList,
                                       widget._scrollController,
@@ -279,28 +227,33 @@ class _StocksScreenState extends State<StocksScreen> {
   }
 
   _editOrder(List<TextEditingController> _textEditingControllers) {
-    DistributorOrderItemService distributorOrderItemService =
-        DistributorOrderItemService();
-    distributorOrderItemService.fetchDistributorOrderItems().then((value) {
-      distributorOrderItems = [];
-
-      value.forEach((element) {
-        if (element.distributorOrderID ==
-            widget.distributorOrder.distributorOrderID) {
-          distributorOrderItems.add(element);
-        }
+    widget.skuStockService.fetchSKUStocks().then((value) {
+      setState(() {
+        allSKUStocksLocal = value;
       });
+      ourSKUStock = allSKUStocksLocal!
+          .where((element) =>
+              element.distributorID == widget.currentDistributor.distributorID)
+          .toList();
+      allSKULocal.forEach((item) {
+        SKUStock mySKUStock;
+        try {
+          mySKUStock =
+              ourSKUStock.firstWhere((element) => element.SKUID == item.SKUID);
 
-      distributorOrderItems.forEach((element) {
-        _textEditingControllers[allSKULocal.indexOf(allSKULocal
-                    .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
-                2]
-            .text = element.primaryItemCount.toString();
-        _textEditingControllers[allSKULocal.indexOf(allSKULocal
-                        .firstWhere((aSKU) => element.SKUID == aSKU.SKUID)) *
-                    2 +
-                1]
-            .text = element.alternativeItemCount.toString();
+          //here________________________________________________
+          mySKUStock.primaryStock == 0
+              ? _textEditingControllers[allSKULocal.indexOf(item) * 2].text = ""
+              : _textEditingControllers[allSKULocal.indexOf(item) * 2].text =
+                  mySKUStock.primaryStock.toString();
+
+          mySKUStock.alternativeStock == 0
+              ? _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]
+                  .text = ""
+              : _textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]
+                  .text = mySKUStock.alternativeStock.toString();
+          //here________________________________________________
+        } catch (e) {}
       });
     });
   }

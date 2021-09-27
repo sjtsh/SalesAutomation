@@ -7,9 +7,11 @@ import '../Database.dart';
 class MyTooltip extends StatefulWidget {
   final SKUStock mySKUStock;
   final SKUDistributorWise skuDistributorWise;
-  final bool isTooltips;
 
-  MyTooltip(this.mySKUStock, this.skuDistributorWise, this.isTooltips);
+  MyTooltip(
+    this.mySKUStock,
+    this.skuDistributorWise,
+  );
 
   @override
   State<MyTooltip> createState() => _MyTooltipState();

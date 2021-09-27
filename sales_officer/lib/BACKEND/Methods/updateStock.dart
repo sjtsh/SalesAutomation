@@ -9,6 +9,7 @@ import 'package:sales_officer/BACKEND/Services/DistributorReturnOrderItemService
 import 'package:sales_officer/BACKEND/Services/DistributorReturnOrderService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUStockService.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
+import 'package:sales_officer/StocksScreen/StocksScreen.dart';
 
 import '../../Database.dart';
 
@@ -39,14 +40,16 @@ Future<bool> updateStock(List recieptData, int distributorID,
               element.SKUID);
       SKUStockService skuStockService = SKUStockService();
       bool isContains = false;
-      recieptData.forEach((element) {
-        if (element[0].SKUID == mySKUStock.SKUID &&
-            element[1] == myPrimaryCount &&
-            element[2] == myAlternativeCount) {
+      ourSKUStock.forEach((element) {
+      print("already there");
+        if (element.SKUID == mySKUStock.SKUID &&
+            element.primaryStock == myPrimaryCount &&
+            element.alternativeStock == myAlternativeCount) {
           isContains = true;
         }
       });
       if (!isContains) {
+      print("incoming");
         conditionOnly = Geolocator.getCurrentPosition().then(
           (value) => skuStockService.updateSKUStock(SKUStock(
               mySKUStock.SKUStockID,

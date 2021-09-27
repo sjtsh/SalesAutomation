@@ -31,7 +31,6 @@ class StockSingularProduct extends StatefulWidget {
 }
 
 class _StockSingularProductState extends State<StockSingularProduct> {
-  bool isTooltips = false;
 
   unExpand() {
     if (!widget
@@ -47,9 +46,6 @@ class _StockSingularProductState extends State<StockSingularProduct> {
       widget._expandableControllers[widget.expandableControllerIndex].expanded =
           false;
     }
-    setState(() {
-      isTooltips = true;
-    });
   }
 
   @override
@@ -70,6 +66,7 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
+
               } catch (e) {
                 mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
@@ -80,7 +77,7 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                   widget.returnOrdersCountList,
                   mySKUStock,
                   widget.updateReturnOrdersCountList,
-                  isTooltips);
+              );
             }).toList(),
           ),
         ],

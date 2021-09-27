@@ -18,16 +18,15 @@ class StockSingularProductVariation extends StatefulWidget {
   final List returnOrdersCountList;
   final SKUStock mySKUStock;
   final Function updateReturnOrdersCountList;
-  final bool isTooltips;
 
   StockSingularProductVariation(
-      this.item,
-      this._textEditingControllers,
-      this.currentDistributor,
-      this.returnOrdersCountList,
-      this.mySKUStock,
-      this.updateReturnOrdersCountList,
-      this.isTooltips);
+    this.item,
+    this._textEditingControllers,
+    this.currentDistributor,
+    this.returnOrdersCountList,
+    this.mySKUStock,
+    this.updateReturnOrdersCountList,
+  );
 
   @override
   _StockSingularProductVariationState createState() =>
@@ -36,8 +35,7 @@ class StockSingularProductVariation extends StatefulWidget {
 
 class _StockSingularProductVariationState
     extends State<StockSingularProductVariation> {
-  refresh() {
-  }
+  refresh() {}
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +69,10 @@ class _StockSingularProductVariationState
               children: [
                 allSKUStocksLocal == null
                     ? Container()
-                    : MyTooltip(widget.mySKUStock, skuDistributorWise,
-                        widget.isTooltips),
+                    : MyTooltip(
+                        widget.mySKUStock,
+                        skuDistributorWise,
+                      ),
                 SizedBox(
                   width: 12,
                 ),
