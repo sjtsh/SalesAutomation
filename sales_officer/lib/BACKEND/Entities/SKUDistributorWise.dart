@@ -2,13 +2,13 @@ class SKUDistributorWise {
   final int SKUDistributorWiseID;
   final int SKUID;
   final int distributorID;
-  final String pricingTypeName;
+  final int pricingTypeID;
   final int billingCompanyID;
-  final String primaryUnit;
+  final int primaryUnitID;
   final int primaryCF;
-  final String alternativeUnit;
+  final int alternativeUnitID;
   final int alternativeCF;
-  final String secondaryAlternativeUnit;
+  final int secondaryAlternativeUnitID;
   final int secondaryAlternativeCF;
   final double MRP;
   final int inventoryLevel;
@@ -18,13 +18,13 @@ class SKUDistributorWise {
       this.SKUDistributorWiseID,
       this.SKUID,
       this.distributorID,
-      this.pricingTypeName,
+      this.pricingTypeID,
       this.billingCompanyID,
-      this.primaryUnit,
+      this.primaryUnitID,
       this.primaryCF,
-      this.alternativeUnit,
+      this.alternativeUnitID,
       this.alternativeCF,
-      this.secondaryAlternativeUnit,
+      this.secondaryAlternativeUnitID,
       this.secondaryAlternativeCF,
       this.MRP,
       this.inventoryLevel,

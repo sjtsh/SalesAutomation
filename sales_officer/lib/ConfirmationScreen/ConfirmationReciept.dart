@@ -278,7 +278,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                     }
                                   });
                                 } else {
-                                print("the function has started for update Order and is Loading is set to $isLoading\n");
+                                  print(
+                                      "the function has started for update Order and is Loading is set to $isLoading\n");
                                   updateOrder(
                                     widget.distributorOrder,
                                     widget.distributorOrderItems,
@@ -356,7 +357,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                 )
                               : MaterialButton(
                                   onPressed: () {
-                                    if (!isWarning) {
+                                    if (isWarning) {
                                       setState(() {
                                         isLoading = true;
                                       });
@@ -372,9 +373,12 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                             isLoading = false;
                                           });
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      "Please connect to a stronger connection")));
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  "Please connect to a stronger connection"),
+                                            ),
+                                          );
                                           return 0;
                                         }).then((value) {
                                           setState(() {

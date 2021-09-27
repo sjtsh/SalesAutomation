@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
 class StockSingularProductHeader extends StatelessWidget {
@@ -10,6 +12,8 @@ class StockSingularProductHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductLine productLine = allProductLinesLocal.firstWhere(
+        (element) => element.productLineID == subGroup.productLineID);
     return Material(
       color: Colors.white,
       child: InkWell(
@@ -87,7 +91,11 @@ class StockSingularProductHeader extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  subGroup.productGroupName,
+                                  allProductGroupsLocal
+                                      .firstWhere((element) =>
+                                          element.productGroupID ==
+                                          subGroup.productGroupID)
+                                      .productGroupName,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.black.withOpacity(0.5),
@@ -106,11 +114,11 @@ class StockSingularProductHeader extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5.0, vertical: 1),
                                     child: Text(
-                                      subGroup.productLineName.substring(0, 1) +
-                                          subGroup.productLineName.substring(
-                                              subGroup.productLineName.length -
+                                      productLine.productLineName.substring(0, 1) +
+                                          productLine.productLineName.substring(
+                                              productLine.productLineName.length -
                                                   1,
-                                              subGroup.productLineName.length),
+                                              productLine.productLineName.length),
                                       style: TextStyle(
                                         fontSize: 8,
                                         color: Colors.white,

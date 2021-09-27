@@ -80,7 +80,7 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     .text = mySKUStock.alternativeStock.toString();
                 //here________________________________________________
               } catch (e) {
-                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0);
+                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
               return StockSingularProductVariation(
                   item,

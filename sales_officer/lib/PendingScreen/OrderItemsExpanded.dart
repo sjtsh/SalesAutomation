@@ -57,7 +57,7 @@ class OrderItemsExpanded extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          "${e.primaryItemCount}${skuDistributorWises.firstWhere((element) => e.SKUID == element.SKUID).primaryUnit} ${e.alternativeItemCount}${skuDistributorWises.firstWhere((element) => e.SKUID == element.SKUID).alternativeUnit}",
+                          "${e.primaryItemCount}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWises.firstWhere((element) => e.SKUID == element.SKUID).primaryUnitID).unitName} ${e.alternativeItemCount}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWises.firstWhere((element) => e.SKUID == element.SKUID).alternativeUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SO {
   final int SOID;
   final int ASMID;
-  final String districtName;
+  final int districtID;
   final String homeLocation;
   final int PAN;
   final String SOName;
@@ -16,7 +16,7 @@ class SO {
   final bool deactivated;
   final String reportingManager;
 
-  SO(this.SOID, this.ASMID, this.districtName, this.homeLocation, this.PAN, this.SOName, this.phone, this.img, this.email, this.bankAccountName, this.bankAccountNumber, this.bankName, this.deactivated, this.reportingManager);
+  SO(this.SOID, this.ASMID, this.districtID, this.homeLocation, this.PAN, this.SOName, this.phone, this.img, this.email, this.bankAccountName, this.bankAccountNumber, this.bankName, this.deactivated, this.reportingManager);
 
   factory SO.fromJson(Map<String, dynamic> json) {
     return SO(

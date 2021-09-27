@@ -5,14 +5,17 @@ class DistributorOrderItem {
   final int primaryItemCount;
   final int alternativeItemCount;
   final int secondaryAlternativeItemCount;
+  final bool deactivated;
 
   DistributorOrderItem(
-      this.distributorOrderItemID,
-      this.distributorOrderID,
-      this.SKUID,
-      this.primaryItemCount,
-      this.alternativeItemCount,
-      this.secondaryAlternativeItemCount);
+    this.distributorOrderItemID,
+    this.distributorOrderID,
+    this.SKUID,
+    this.primaryItemCount,
+    this.alternativeItemCount,
+    this.secondaryAlternativeItemCount,
+    this.deactivated,
+  );
 
   factory DistributorOrderItem.fromJson(Map<String, dynamic> json) {
     return DistributorOrderItem(
@@ -22,6 +25,7 @@ class DistributorOrderItem {
       json['3'],
       json['4'],
       json['5'],
+      json['6'] == 0 ? false : true,
     );
   }
 }

@@ -49,7 +49,7 @@ class DistributorInfo extends StatelessWidget {
                                 currentDistributor,
                                 2,
                                 DistributorOrder(
-                                    -1, -1, -1, true, false, "", "", "", 0, 0),
+                                    -1, -1, -1, true, false, "", "", "", 0, 0, false),
                                 true,
                               );
                             },
@@ -110,7 +110,7 @@ class DistributorInfo extends StatelessWidget {
                                 currentDistributor,
                                 1,
                                 DistributorOrder(
-                                    -1, -1, -1, true, false, "", "", "", 0, 0),
+                                    -1, -1, -1, true, false, "", "", "", 0, 0, false),
                               );
                             },
                           ),

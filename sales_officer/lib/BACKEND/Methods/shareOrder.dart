@@ -151,7 +151,7 @@ shareOrder(DistributorOrder distributorOrder) {
                         pw.SizedBox(
                           width: 50,
                           child: pw.Text(
-                            "Rs ${e.primaryItemCount.toString() + mySKUDistributorWise.primaryUnit + " " + e.alternativeItemCount.toString() + mySKUDistributorWise.alternativeUnit}",
+                            "Rs ${e.primaryItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.primaryUnitID).unitName + " " + e.alternativeItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.alternativeUnitID).unitName}",
                           ),
                         ),
                         pw.SizedBox(

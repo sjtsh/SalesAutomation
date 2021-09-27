@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 
+import '../Database.dart';
+
 class MyTooltip extends StatefulWidget {
   final SKUStock mySKUStock;
   final SKUDistributorWise skuDistributorWise;
@@ -53,7 +55,7 @@ class _MyTooltipState extends State<MyTooltip> {
                   ? Container()
                   : Text(
                       widget.mySKUStock.primaryStock.toString() +
-                          "${widget.skuDistributorWise.primaryUnit}",
+                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.skuDistributorWise.primaryUnitID).unitName}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 12,
@@ -68,7 +70,7 @@ class _MyTooltipState extends State<MyTooltip> {
                   ? Container()
                   : Text(
                       widget.mySKUStock.alternativeStock.toString() +
-                          "${widget.skuDistributorWise.alternativeUnit}",
+                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.skuDistributorWise.alternativeUnitID).unitName}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 12,

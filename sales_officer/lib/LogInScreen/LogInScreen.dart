@@ -6,10 +6,13 @@ import 'package:sales_officer/BACKEND/Methods/method.dart';
 import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
+import 'package:sales_officer/BACKEND/Services/ProductGroupService.dart';
+import 'package:sales_officer/BACKEND/Services/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SOService.dart';
 import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
+import 'package:sales_officer/BACKEND/Services/UnitService.dart';
 import 'package:sales_officer/LogInScreen/JointWorking.dart';
 import 'package:sales_officer/LogInScreen/SelectBeat.dart';
 import 'package:sales_officer/SignIn/SignInButton.dart';
@@ -76,21 +79,58 @@ class _LogInScreenState extends State<LogInScreen> {
               billingCompanyService.fetchBillingCompanys().then((value) {
                 allBillingCompanysLocal = value;
                 setState(() {
-                  loadingText = "Loading Familiarities";
+                  loadingText = "Loading Units";
                   style = 5;
                 });
-                FamiliarityService familiarityService = FamiliarityService();
-                familiarityService.fetchFamiliaritys().then((value) {
-                  allFamiliaritysLocal = value;
+                UnitService unitService = UnitService();
+                unitService.fetchUnits().then((value) {
+                  allUnitsLocal = value;
                   setState(() {
-                    loadingText = "Almost Done";
+                    loadingText = "Loading Product Lines";
                     style = 6;
                   });
-                  SOService soService = SOService();
-                  soService.fetchSOs().then((value) {
-                    meSO = value.firstWhere((element) => element.SOID == 1);
+                  ProductGroupService productGroupService =
+                      ProductGroupService();
+                  productGroupService.fetchProductGroups().then((value) {
+                    allProductGroupsLocal = value;
                     setState(() {
-                      isLoaded = true;
+                      loadingText = "Loading Product Groups";
+                      style = 6;
+                    });
+                    ProductGroupService productGroupService =
+                    ProductGroupService();
+                    productGroupService.fetchProductGroups().then((value) {
+                      allProductGroupsLocal = value;
+                      setState(() {
+                        loadingText = "Loading Product Groups";
+                        style = 6;
+                      });
+                      ProductLineService productLines = ProductLineService();
+                      productLines.fetchProductLines().then((value) {
+                        allProductLinesLocal = value;
+                        setState(() {
+                          loadingText = "Loading Familiarities";
+                          style = 6;
+                        });
+                        FamiliarityService familiarityService =
+                        FamiliarityService();
+                        familiarityService.fetchFamiliaritys().then((value) {
+                          allFamiliaritysLocal = value;
+                          setState(() {
+                            loadingText = "Almost Done";
+                            style = 6;
+                          });
+                          SOService soService = SOService();
+                          soService.fetchSOs().then((value) {
+                            meSO =
+                                value.firstWhere((element) =>
+                                element.SOID == 1);
+                            setState(() {
+                              isLoaded = true;
+                            });
+                          });
+                        });
+                      });
                     });
                   });
                 });
@@ -206,50 +246,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset("icons/logo.svg"),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Container(
-                    //   height: 100,
-                    //   width: 100,
-                    //   child: Center(
-                    //     child: AnimatedContainer(
-                    //       height: style % 3 == 0
-                    //           ? 100
-                    //           : style % 2 == 0
-                    //               ? 80
-                    //               : 60,
-                    //       width: style % 3 == 0
-                    //           ? 100
-                    //           : style % 2 == 0
-                    //               ? 80
-                    //               : 60,
-                    //       duration: Duration(seconds: 1),
-                    //       decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(
-                    //           style % 3 == 0
-                    //               ? 12
-                    //               : style % 2 == 0
-                    //                   ? 50
-                    //                   : 100,
-                    //         ),
-                    //         color: style == 0
-                    //             ? Colors.green
-                    //             : style == 1
-                    //                 ? Colors.red
-                    //                 : style == 2
-                    //                     ? Colors.yellow
-                    //                     : style == 3
-                    //                         ? Colors.blue
-                    //                         : style == 4
-                    //                             ? Colors.purple
-                    //                             : style == 5
-                    //                                 ? Colors.teal
-                    //                                 : Colors.pink,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       width: 200,
                       child: LinearProgressIndicator(

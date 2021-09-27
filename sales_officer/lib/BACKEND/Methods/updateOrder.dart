@@ -43,14 +43,17 @@ Future<bool> updateOrder(
           isToBeUpdated = true;
           DistributorOrderItemService distributorOrderItemService =
               DistributorOrderItemService();
-          conditionOnly = distributorOrderItemService
-              .updateDistributorOrderItem(DistributorOrderItem(
-                  distributorOrderItem.distributorOrderItemID,
-                  distributorOrderItem.distributorOrderID,
-                  distributorOrderItem.SKUID,
-                  myPrimaryCount,
-                  myAlternativeCount,
-                  0));
+          conditionOnly =
+              distributorOrderItemService.updateDistributorOrderItem(
+            DistributorOrderItem(
+                distributorOrderItem.distributorOrderItemID,
+                distributorOrderItem.distributorOrderID,
+                distributorOrderItem.SKUID,
+                myPrimaryCount,
+                myAlternativeCount,
+                0,
+                false),
+          );
         }
       });
 
@@ -83,7 +86,8 @@ Future<bool> updateOrder(
       distributorOrder.dateAndTime,
       DateTime.now().toString(),
       distributorOrder.lat,
-      distributorOrder.lng);
+      distributorOrder.lng,
+      false);
   conditionOnly =
       distributorOrderService.updateDistributorOrder(newDistributorOrder);
   return conditionOnly;

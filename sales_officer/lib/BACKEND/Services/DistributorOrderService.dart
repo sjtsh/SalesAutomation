@@ -37,7 +37,8 @@ class DistributorOrderService {
           'dateAndTime': dateAndTime.toString().substring(0, 19),
           'updatedTime': dateAndTime.toString().substring(0, 19),
           'lat': value.longitude.toString(),
-          'lng': value.latitude.toString()
+          'lng': value.latitude.toString(),
+          'deactivated':false.toString()
         }),
       );
       if (response.statusCode == 200) {
@@ -70,6 +71,7 @@ class DistributorOrderService {
               distributorOrder.updatedTime.toString().substring(0, 19),
           'lat': distributorOrder.lat.toString(),
           'lng': distributorOrder.lng.toString(),
+          'deactivated': distributorOrder.deactivated.toString(),
         },
       ),
     );

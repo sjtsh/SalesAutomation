@@ -37,7 +37,6 @@ class StockSingularProductVariation extends StatefulWidget {
 class _StockSingularProductVariationState
     extends State<StockSingularProductVariation> {
   refresh() {
-    setState(() {});
   }
 
   @override
@@ -72,7 +71,8 @@ class _StockSingularProductVariationState
               children: [
                 allSKUStocksLocal == null
                     ? Container()
-                    : MyTooltip(widget.mySKUStock, skuDistributorWise, widget.isTooltips),
+                    : MyTooltip(widget.mySKUStock, skuDistributorWise,
+                        widget.isTooltips),
                 SizedBox(
                   width: 12,
                 ),
@@ -132,7 +132,8 @@ class _StockSingularProductVariationState
                         ),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          hintText: "${skuDistributorWise.primaryUnit}",
+                          hintText:
+                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.primaryUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),
@@ -167,7 +168,8 @@ class _StockSingularProductVariationState
                         ),
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          hintText: "${skuDistributorWise.alternativeUnit}",
+                          hintText:
+                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.alternativeUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),

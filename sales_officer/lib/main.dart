@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sales_officer/BACKEND/Services/SOService.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
 
@@ -15,7 +16,6 @@ class Fusers extends StatefulWidget {
 class _FusersState extends State<Fusers> {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData(fontFamily: "lato"),
       routes: {

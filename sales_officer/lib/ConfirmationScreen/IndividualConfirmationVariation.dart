@@ -43,7 +43,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
           child: Row(
             children: [
               Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2,
@@ -64,8 +64,8 @@ class IndividualConfirmationVariation extends StatelessWidget {
                       child: Text(
                         allBillingCompanysLocal
                             .firstWhere((element) =>
-                        skuDistributorWise.billingCompanyID ==
-                            element.billingCompanyID)
+                                skuDistributorWise.billingCompanyID ==
+                                element.billingCompanyID)
                             .billingCompanyName,
                         style: TextStyle(fontSize: 10, color: Colors.white),
                       ),
@@ -85,7 +85,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          " ${skuDistributorWise.primaryUnit}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),
@@ -109,7 +109,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          " ${skuDistributorWise.alternativeUnit}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),
