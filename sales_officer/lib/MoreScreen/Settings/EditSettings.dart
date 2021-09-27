@@ -37,13 +37,13 @@ class _EditSettingsState extends State<EditSettings> {
                             color: widget.e.indexOf(f) != widget.e.length - 1
                                 ? Colors.black.withOpacity(0.1)
                                 : Colors.transparent))),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
@@ -70,35 +70,35 @@ class _EditSettingsState extends State<EditSettings> {
                           ),
                         ],
                       ),
-                      widget.e.length > 3
-                          ? Center(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: TextField(
-                                  cursorWidth: 1,
-                                  keyboardType: f[1] == "Phone Number: "
-                                      ? TextInputType.phone
-                                      : f[1] == "PAN: " ||
-                                              f[1] == "Bank Account Number: "
-                                          ? TextInputType.number
-                                          : f[1] == "Email: "
-                                              ? TextInputType.emailAddress
-                                              : TextInputType.text,
-                                  cursorColor: Colors.blue,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: f[2].toString(),
-                                  ),
+                    ),
+                    widget.e.length > 3
+                        ? Center(
+                            child: Container(
+                              child: TextField(
+
+                                cursorWidth: 1,
+                                keyboardType: f[1] == "Phone Number: "
+                                    ? TextInputType.phone
+                                    : f[1] == "PAN: " ||
+                                            f[1] == "Bank Account Number: "
+                                        ? TextInputType.number
+                                        : f[1] == "Email: "
+                                            ? TextInputType.emailAddress
+                                            : TextInputType.text,
+                                cursorColor: Colors.blue,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: f[2].toString(),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
                                 ),
                               ),
-                            )
-                          : SettingsDropDown()
-                    ],
-                  ),
+                            ),
+                          )
+                        : SettingsDropDown()
+                  ],
                 ),
               ),
             )

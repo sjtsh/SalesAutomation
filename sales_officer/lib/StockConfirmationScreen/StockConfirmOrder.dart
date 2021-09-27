@@ -48,7 +48,7 @@ class _StockConfirmOrderState extends State<StockConfirmOrder> {
           },
           child: Center(
             child: Text(
-              "REVIEW ORDER",
+              "REVIEW STOCK",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
