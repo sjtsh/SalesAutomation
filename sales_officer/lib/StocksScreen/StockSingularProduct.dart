@@ -70,15 +70,6 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
-
-                //here________________________________________________
-                widget._textEditingControllers[allSKULocal.indexOf(item) * 2]
-                    .text = mySKUStock.primaryStock.toString();
-
-                widget
-                    ._textEditingControllers[allSKULocal.indexOf(item) * 2 + 1]
-                    .text = mySKUStock.alternativeStock.toString();
-                //here________________________________________________
               } catch (e) {
                 mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
