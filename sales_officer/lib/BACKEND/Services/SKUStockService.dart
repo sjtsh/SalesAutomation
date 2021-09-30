@@ -35,8 +35,8 @@ class SKUStockService {
           'secondaryAlternativeStock':
               skuStock.secondaryAlternativeStock.toString(),
           'updatedDate': DateTime.now().toString().substring(0, 19),
-          'lat': value.longitude.toString(),
-          'lng': value.latitude.toString(),
+          'lat': value.latitude.toString(),
+          'lng': value.longitude.toString(),
           'deactivated': skuStock.deactivated.toString()
         }),
       );

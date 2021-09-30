@@ -239,7 +239,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                           )
                         : MaterialButton(
                             onPressed: () {
-                              if (!isWarning) {
+                              if (!isWarning && !isLoading) {
                                 setState(() {
                                   isLoading = true;
                                 });
@@ -357,7 +357,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                 )
                               : MaterialButton(
                                   onPressed: () {
-                                    if (isWarning) {
+                                    if (isWarning && !isLoading) {
                                       setState(() {
                                         isLoading = true;
                                       });

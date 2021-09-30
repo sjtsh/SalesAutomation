@@ -226,43 +226,46 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                           )
                         : MaterialButton(
                             onPressed: () {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              createReturnOrder(
+                              if(!isLoading){
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                createReturnOrder(
+                                    widget.currentDistributor.distributorID,
+                                    widget.returnOrdersCountList,
+                                    context);
+                                updateStock(
+                                  widget.receiptData,
                                   widget.currentDistributor.distributorID,
-                                  widget.returnOrdersCountList,
-                                  context);
-                              updateStock(
-                                widget.receiptData,
-                                widget.currentDistributor.distributorID,
-                                widget._textEditingControllers,
-                              ).timeout(Duration(seconds: 30), onTimeout: () {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(
-                                        "Please connect to a stronger connection")));
-                                return false;
-                              }).then((value) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                if (value) {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Stock was successfully punched")));
-                                } else {
+                                  widget._textEditingControllers,
+                                ).timeout(Duration(seconds: 30), onTimeout: () {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               "Please connect to a stronger connection")));
-                                }
-                              });
+                                  return false;
+                                }).then((value) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  if (value) {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Stock was successfully punched")));
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Please connect to a stronger connection")));
+                                  }
+                                });
+                              }
                             },
                             child: Center(
                               child: Text(

@@ -11,7 +11,7 @@ class District {
       json['0'],
       json['1'],
       json['2'],
-      json['3'],
+      json['3'] == 0 ? false : true,
     );
   }
 }
