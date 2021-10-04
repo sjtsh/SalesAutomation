@@ -35,7 +35,7 @@ dependencies:
   url_launcher: ^6.0.0-nullsafety
   pdf: ^3.6.0
   share_plus: ^2.1.4
-  path_provider: ^2.0.5
+  path_provider: any
 #  super_tooltip: ^1.0.1
 
 

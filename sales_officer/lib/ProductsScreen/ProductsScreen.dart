@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -172,8 +171,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           : Expanded(
                               child: !isSearching && !isFiltered
                                   ? FutureBuilder(
-                                      future:
-                                          widget.skuStockService.fetchSKUStocks(),
+                                      future: widget.skuStockService
+                                          .fetchSKUStocks(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot<List<SKUStock>>
                                               snapshot) {
