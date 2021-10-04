@@ -19,12 +19,8 @@ class EnterActivation extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: TextField(
-            onChanged: (input){
-              if(input.length==5){
-                setTyped(true);
-              }else{
-                setTyped(false);
-              }
+            onChanged: (input) {
+              setTyped(input);
             },
             keyboardType: TextInputType.number,
             decoration: InputDecoration(

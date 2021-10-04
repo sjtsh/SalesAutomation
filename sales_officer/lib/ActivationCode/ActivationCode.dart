@@ -11,10 +11,19 @@ class ActivationCode extends StatefulWidget {
 
 class _ActivationCodeState extends State<ActivationCode> {
   bool _isTyped = false;
-
-  void setTyped(bool condition) {
+  int codeHere = 0;
+  void setTyped(String input) {
     setState(() {
-      _isTyped = condition;
+      if (input.length == 5) {
+        try {
+          codeHere = int.parse(input);
+          _isTyped = true;
+        } catch (e) {
+          _isTyped = false;
+        }
+      } else {
+        _isTyped = false;
+      }
     });
   }
 
@@ -29,7 +38,6 @@ class _ActivationCodeState extends State<ActivationCode> {
               margin: EdgeInsets.all(12),
               alignment: Alignment.centerLeft,
               child: InkWell(
-
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -49,7 +57,7 @@ class _ActivationCodeState extends State<ActivationCode> {
             SizedBox(
               height: 50,
             ),
-            ActivateButton(_isTyped),
+            ActivateButton(_isTyped, codeHere),
             Expanded(child: Container()),
             Expanded(child: Container()),
           ],
