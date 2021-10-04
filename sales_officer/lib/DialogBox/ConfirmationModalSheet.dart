@@ -17,8 +17,13 @@ class ConfirmationModalSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SubGroup subGroup = allSubGroupsLocal
-        .firstWhere((element) => element.subGroupID == f[0].subGroupID);
+    SubGroup subGroup = allSubGroupsLocal.firstWhere((element) {
+      if( element.subGroupID == f[0].subGroupID){
+        return true;
+      }
+      return false;
+    });
+
     String hintableText1 = f[1].toString();
     String hintableText2 = f[2].toString();
     ProductLine productLine = allProductLinesLocal.firstWhere((element) => element.productLineID == subGroup.productLineID);
@@ -124,7 +129,8 @@ class ConfirmationModalSheet extends StatelessWidget {
                             ),
                             child: Center(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: TextField(
                                   controller: _textEditingControllerPrimary,
                                   cursorWidth: 1,
@@ -158,8 +164,8 @@ class ConfirmationModalSheet extends StatelessWidget {
                             ),
                             child: Center(
                               child: Padding(
-
-                                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: TextField(
                                   controller: _textEditingControllerAlternative,
                                   cursorWidth: 1,

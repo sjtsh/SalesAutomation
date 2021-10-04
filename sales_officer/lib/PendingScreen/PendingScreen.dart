@@ -6,6 +6,8 @@ import 'package:sales_officer/PendingScreen/OrdersList.dart';
 import 'package:sales_officer/Skeletons/PendingOrderSkeleton.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../Database.dart';
+
 List headers = ["Pending Orders", "Approved Orders"];
 
 class PendingScreen extends StatefulWidget {
@@ -30,7 +32,7 @@ class _PendingScreenState extends State<PendingScreen> {
         if (snapshot.hasData) {
           List<DistributorOrder> distributorOrders = [];
           snapshot.data!.forEach((element) {
-            if (element.SOID == 1) {
+            if (element.SOID == meSO!.SOID) {
               distributorOrders.add(element);
             }
           });
@@ -41,9 +43,10 @@ class _PendingScreenState extends State<PendingScreen> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        offset: Offset(0, 2))
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
                   ],
                   color: Colors.white,
                 ),

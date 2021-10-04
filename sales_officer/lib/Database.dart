@@ -24,8 +24,8 @@ List<ProductLine> allProductLinesLocal = [];
 List<ProductGroup> allProductGroupsLocal = [];
 List<District> allDistrictsLocal = [];
 SO? meSO;
+int? meSOID;
 String meBeat = "";
-
 
 bool? isJoint;
 List products = [

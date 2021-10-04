@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND/Methods/login.dart';
+import 'package:sales_officer/BACKEND/Services/ActivationCodeService.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Database.dart';
 
 class ActivateButton extends StatelessWidget {
   final bool _isTyped;
+  final int codeHere;
 
-  ActivateButton(this._isTyped);
+  ActivateButton(this._isTyped, this.codeHere);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +25,32 @@ class ActivateButton extends StatelessWidget {
         ),
         child: MaterialButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LogInScreen(),
-                ));
+            ActivationCodeService activationCodeService =
+                ActivationCodeService();
+
+            activationCodeService.fetchActivationCodes().then((codes) {
+              try {
+                meSOID = codes
+                    .firstWhere((element) =>
+                        element.codeID == codeHere && element.post == "SO")
+                    .postID;
+
+                SharedPreferences.getInstance().then(((prefs) {
+                  prefs.setInt('meSOID', meSOID!);
+                }));
+
+                logIn(context);
+              } catch (e) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text("Incorrect code")));
+              }
+            });
           },
           child: Center(
             child: Text(
               "Activate",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(
+                  color: _isTyped ? Colors.white : Colors.black, fontSize: 16),
             ),
           ),
         ),
