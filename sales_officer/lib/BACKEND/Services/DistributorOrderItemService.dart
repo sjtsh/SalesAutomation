@@ -69,7 +69,7 @@ class DistributorOrderItemService {
               distributorOrderItem.alternativeItemCount.toString(),
           'secondaryAlternativeItemCount':
               distributorOrderItem.secondaryAlternativeItemCount.toString(),
-          'deactivated': false.toString(),
+          'deactivated': distributorOrderItem.deactivated.toString()
         },
       ),
     );

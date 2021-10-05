@@ -75,7 +75,6 @@ class _EditSettingsState extends State<EditSettings> {
                         ? Center(
                             child: Container(
                               child: TextField(
-
                                 cursorWidth: 1,
                                 keyboardType: f[1] == "Phone Number: "
                                     ? TextInputType.phone
