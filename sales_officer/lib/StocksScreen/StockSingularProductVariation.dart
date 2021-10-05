@@ -51,7 +51,7 @@ class _StockSingularProductVariationState
             color: Colors.black.withOpacity(0.1),
           ),
         ),
-        color: Color(0xffF5F5F5),
+        color: Color(0xffE3F2FD),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),

@@ -58,8 +58,9 @@ class BreadCrum2 extends StatelessWidget {
 class BreadCrum3 extends StatelessWidget {
   final String prefix;
   final String currentDistributor;
+  final String thirdText;
 
-  BreadCrum3(this.prefix, this.currentDistributor);
+  BreadCrum3(this.prefix, this.currentDistributor, this.thirdText);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class BreadCrum3 extends StatelessWidget {
             ),
           ),
           Text(
-            "Order Confirmation",
+            thirdText,
             style: TextStyle(
               fontSize: 12,
             ),

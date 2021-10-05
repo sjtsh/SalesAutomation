@@ -7,15 +7,16 @@ import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 class StockSingularProductHeader extends StatelessWidget {
   final SubGroup subGroup;
   final Function unExpand;
+  final IconData _icon;
 
-  StockSingularProductHeader(this.subGroup, this.unExpand);
+  StockSingularProductHeader(this.subGroup, this.unExpand, this._icon);
 
   @override
   Widget build(BuildContext context) {
     ProductLine productLine = allProductLinesLocal.firstWhere(
         (element) => element.productLineID == subGroup.productLineID);
     return Material(
-      color: Colors.white,
+      color: _icon == Icons.remove ? Color(0xffBBDEFB) : Colors.white,
       child: InkWell(
         onTap: () {
           unExpand();

@@ -51,10 +51,10 @@ class _StockSingularProductState extends State<StockSingularProduct> {
   @override
   Widget build(BuildContext context) {
     return ExpandablePanel(
-      collapsed: StockSingularProductHeader(widget.item, unExpand),
+      collapsed: StockSingularProductHeader(widget.item, unExpand, Icons.add),
       expanded: Column(
         children: [
-          StockSingularProductHeader(widget.item, unExpand),
+          StockSingularProductHeader(widget.item, unExpand, Icons.remove),
           Column(
             children: allSKULocal
                 .where(
