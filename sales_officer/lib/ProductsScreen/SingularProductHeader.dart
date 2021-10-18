@@ -15,7 +15,8 @@ class SingularProductHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductLine productLine = allProductLinesLocal.firstWhere((element) => element.productLineID == subGroup.productLineID);
+    ProductLine productLine = allProductLinesLocal.firstWhere(
+        (element) => element.productLineID == subGroup.productLineID);
     return Material(
       color: _icon == Icons.remove ? Color(0xffC8E6C9) : Colors.white,
       child: InkWell(
@@ -93,7 +94,11 @@ class SingularProductHeader extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  allProductGroupsLocal.firstWhere((element) => subGroup.productGroupID == element.productGroupID).productGroupName,
+                                  allProductGroupsLocal
+                                      .firstWhere((element) =>
+                                          subGroup.productGroupID ==
+                                          element.productGroupID)
+                                      .productGroupName,
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     color: Colors.black.withOpacity(0.5),
@@ -112,11 +117,14 @@ class SingularProductHeader extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5.0, vertical: 1),
                                     child: Text(
-                                      productLine.productLineName.substring(0, 1) +
+                                      productLine.productLineName.substring(
+                                              0, 1) +
                                           productLine.productLineName.substring(
-                                              productLine.productLineName.length -
+                                              productLine
+                                                      .productLineName.length -
                                                   1,
-                                              productLine.productLineName.length),
+                                              productLine
+                                                  .productLineName.length),
                                       style: TextStyle(
                                         fontSize: 8,
                                         color: Colors.white,

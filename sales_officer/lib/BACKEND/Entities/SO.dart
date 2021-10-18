@@ -11,7 +11,7 @@ class SO {
   final String img;
   final String email;
   final String bankAccountName;
-  final int bankAccountNumber;
+  final String bankAccountNumber;
   final String bankName;
   final bool deactivated;
   final String reportingManager;

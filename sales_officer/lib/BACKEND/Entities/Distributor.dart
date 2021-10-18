@@ -8,7 +8,7 @@ class Distributor {
   final String location;
   final String img;
   final String bankAccountName;
-  final int bankAccountNumber;
+  final String bankAccountNumber;
   final String bankAddress;
   final int VAT;
   final double lat;

@@ -91,9 +91,13 @@ class JointWorking extends StatelessWidget {
           child: InkWell(
             splashColor: Colors.greenAccent,
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                return LeaveScreen();
-              }));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return LeaveScreen();
+                  },
+                ),
+              );
             },
             child: Container(
               height: 60,
