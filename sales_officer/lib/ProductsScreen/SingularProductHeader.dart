@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
@@ -15,8 +14,6 @@ class SingularProductHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductLine productLine = allProductLinesLocal.firstWhere(
-        (element) => element.productLineID == subGroup.productLineID);
     return Material(
       color: _icon == Icons.remove ? Color(0xffC8E6C9) : Colors.white,
       child: InkWell(
@@ -107,30 +104,6 @@ class SingularProductHeader extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   width: 5,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1),
-                                    child: Text(
-                                      productLine.productLineName.substring(
-                                              0, 1) +
-                                          productLine.productLineName.substring(
-                                              productLine
-                                                      .productLineName.length -
-                                                  1,
-                                              productLine
-                                                  .productLineName.length),
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),

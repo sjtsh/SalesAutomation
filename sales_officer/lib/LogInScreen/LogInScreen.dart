@@ -9,7 +9,6 @@ import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND/Services/DistrictService.dart';
 import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
 import 'package:sales_officer/BACKEND/Services/ProductGroupService.dart';
-import 'package:sales_officer/BACKEND/Services/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND/Services/SKUService.dart';
 import 'package:sales_officer/BACKEND/Services/SOService.dart';
@@ -96,14 +95,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     districtService.fetchDistricts().then((value) {
                       allDistrictsLocal = value;
                       setState(() {
-                        loadingText = "Loading Product Groups";
+                        loadingText = "Loading Familiarities";
                       });
-                      ProductLineService productLines = ProductLineService();
-                      productLines.fetchProductLines().then((value) {
-                        allProductLinesLocal = value;
-                        setState(() {
-                          loadingText = "Loading Familiarities";
-                        });
                         FamiliarityService familiarityService =
                         FamiliarityService();
                         familiarityService.fetchFamiliaritys().then((value) {
@@ -119,7 +112,6 @@ class _LogInScreenState extends State<LogInScreen> {
                               isLoaded = true;
                             });
                           });
-                        });
                       });
                     });
                   });

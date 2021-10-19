@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 
 import '../Database.dart';
@@ -11,7 +10,6 @@ class ProductDialogContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductLine productLine = allProductLinesLocal.firstWhere((element) => element.productLineID == subGroup.productLineID);
     return Column(
       children: [
         Container(
@@ -42,26 +40,6 @@ class ProductDialogContent extends StatelessWidget {
                   ),
                   SizedBox(
                     width: 5,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5.0, vertical: 1),
-                      child: Text(
-                        productLine.productLineName.substring(0, 1) +
-                            productLine.productLineName.substring(
-                                productLine.productLineName.length - 1,
-                                productLine.productLineName.length),
-                        style: TextStyle(
-                          fontSize: 8,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
