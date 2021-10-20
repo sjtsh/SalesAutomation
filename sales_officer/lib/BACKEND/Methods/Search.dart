@@ -35,7 +35,7 @@ searchForDistributor(String distributor, Function setDistributors) {
       } catch (e) {}
     });
   }
-  setDistributors(distributors);
+  setDistributors(distributors.where((element) => element.SOID == meSO?.SOID).toList());
 }
 
 searchForProducts(String product, Function setProducts) {

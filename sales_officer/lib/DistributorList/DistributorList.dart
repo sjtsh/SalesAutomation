@@ -35,7 +35,6 @@ class DistributorList extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
-          NavBar.onItemTapped(6);
           Navigator.push(
             context,
             MaterialPageRoute(

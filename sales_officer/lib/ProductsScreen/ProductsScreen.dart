@@ -114,7 +114,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(7, false),
+            Header(widget.isNew ? 7 : 6, false),
             Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,

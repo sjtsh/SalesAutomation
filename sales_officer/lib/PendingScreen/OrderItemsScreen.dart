@@ -5,12 +5,14 @@ import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Methods/method.dart';
+import 'package:sales_officer/BACKEND/Methods/shareOrder.dart';
 import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsExpanded.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsHeader.dart';
+import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';
 
 class ApproveOrderScreen extends StatefulWidget {
   final DistributorOrder e;
@@ -71,6 +73,171 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
         .first;
     return SafeArea(
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(left: 12, right: 12),
+          child: !widget.e.orderStatus ? Row(
+            children: [
+              Expanded(
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 3,
+                          offset: Offset(0, 2))
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) {
+                            return ProductsScreen(
+                              distributor,
+                              6,
+                              widget.e,
+                              false,
+                            );
+                          }),
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        color: Colors.green,
+                        child: Builder(builder: (context) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                "Edit",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 3,
+                          offset: Offset(0, 2))
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        shareOrder(widget.e);
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        color: Colors.blue,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.share,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                "Share",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ) : Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2))
+              ],
+            ),
+            child: Material(
+              color: Colors.white,
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  shareOrder(widget.e);
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                child: Container(
+                  height: 50,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.share,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          "Share",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
         body: Column(
           children: [
             Header(2, false),
@@ -97,7 +264,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                   ),
                 ],
               ),
-              child: BreadCrum2("Pending Orders", distributor.distributorName),
+              child: BreadCrum2(widget.e.orderStatus ? "Approved Orders" : "Pending Orders", distributor.distributorName),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -178,7 +345,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                           ),
                           Column(
                             children: [
-                              ["Order ID :", "#OR${widget.e.distributorOrderID}"],
+                              [
+                                "Order ID :",
+                                "#OR${widget.e.distributorOrderID}"
+                              ],
                               ["Date :", "${widget.e.dateAndTime}"],
                               ["Last Updated :", widget.e.updatedTime],
                               [

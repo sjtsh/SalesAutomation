@@ -223,7 +223,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                       color: isWarning ? Colors.blueGrey : Colors.green,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: isLoading
+                    child: isLoading && !isWarning
                         ? MaterialButton(
                             onPressed: () async {},
                             child: SizedBox(
@@ -278,8 +278,6 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                     }
                                   });
                                 } else {
-                                  print(
-                                      "the function has started for update Order and is Loading is set to $isLoading\n");
                                   updateOrder(
                                     widget.distributorOrder,
                                     widget.distributorOrderItems,
@@ -300,6 +298,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                       isLoading = false;
                                     });
                                     if (value) {
+                                      Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                       ScaffoldMessenger.of(context)

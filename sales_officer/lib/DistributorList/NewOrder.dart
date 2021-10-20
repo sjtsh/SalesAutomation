@@ -94,7 +94,7 @@ class _NewOrderState extends State<NewOrder> {
                               if (_distributor != "") {
                                 searchForDistributor(_distributor, setDistributors);
                               } else {
-                                setDistributors(allDistributorsLocal);
+                                setDistributors(allDistributorsLocal.where((element) => element.SOID == meSO?.SOID).toList());
                               }
                             },
                           ),
@@ -134,7 +134,7 @@ class _NewOrderState extends State<NewOrder> {
                     ),
                     child: !isSearching
                         ? Column(
-                            children: allDistributorsLocal
+                            children: allDistributorsLocal.where((element) => element.SOID == meSO?.SOID).toList()
                                 .map(
                                   (item) => DistributorList(
                                     item,

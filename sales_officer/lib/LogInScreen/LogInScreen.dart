@@ -37,81 +37,78 @@ class _LogInScreenState extends State<LogInScreen> {
 
   bool isLoaded = false;
 
-  String loadingText = "Getting Distributors...";
+  String loadingText = "Getting SubGroups...";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
-      DistributorService distributorService = DistributorService();
-      distributorService.fetchDistributors().then((value) {
-        allDistributorsLocal = value;
+      SubGroupService subGroupService = SubGroupService();
+      subGroupService.fetchSubGroups().then((value) {
+        allSubGroupsLocal = value;
         setState(() {
-          loadingText = "Getting SubGroups";
+          loadingText = "Getting SKUs";
         });
-        SubGroupService subGroupService = SubGroupService();
-        subGroupService.fetchSubGroups().then((value) {
-          allSubGroupsLocal = value;
+        SKUService skuService = SKUService();
+        skuService.fetchSKUs().then((value) {
+          allSKULocal = value;
+          allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
-            loadingText = "Getting SKUs";
+            loadingText = "Getting SKU Distributor Wise";
           });
-          SKUService skuService = SKUService();
-          skuService.fetchSKUs().then((value) {
-            allSKULocal = value;
-            allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
+          SKUDistributorWiseService skuDistributorWiseService =
+              SKUDistributorWiseService();
+          skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
+            allSKUDistributorWiseLocal = value;
             setState(() {
-              loadingText = "Getting SKU Distributor Wise";
+              loadingText = "Getting Billing Companies";
             });
-            SKUDistributorWiseService skuDistributorWiseService =
-            SKUDistributorWiseService();
-            skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-              allSKUDistributorWiseLocal = value;
+          }).then((value) {
+            BillingCompanyService billingCompanyService =
+                BillingCompanyService();
+            billingCompanyService.fetchBillingCompanys().then((value) {
+              allBillingCompanysLocal = value;
               setState(() {
-                loadingText = "Getting Billing Companies";
+                loadingText = "Loading Units";
               });
-            }).then((value) {
-              BillingCompanyService billingCompanyService =
-              BillingCompanyService();
-              billingCompanyService.fetchBillingCompanys().then((value) {
-                allBillingCompanysLocal = value;
+              UnitService unitService = UnitService();
+              unitService.fetchUnits().then((value) {
+                allUnitsLocal = value;
                 setState(() {
-                  loadingText = "Loading Units";
+                  loadingText = "Loading Product Lines";
                 });
-                UnitService unitService = UnitService();
-                unitService.fetchUnits().then((value) {
-                  allUnitsLocal = value;
+                ProductGroupService productGroupService = ProductGroupService();
+                productGroupService.fetchProductGroups().then((value) {
+                  allProductGroupsLocal = value;
                   setState(() {
-                    loadingText = "Loading Product Lines";
+                    loadingText = "Loading Districts";
                   });
-                  ProductGroupService productGroupService =
-                  ProductGroupService();
-                  productGroupService.fetchProductGroups().then((value) {
-                    allProductGroupsLocal = value;
+                  DistrictService districtService = DistrictService();
+                  districtService.fetchDistricts().then((value) {
+                    allDistrictsLocal = value;
                     setState(() {
-                      loadingText = "Loading Districts";
+                      loadingText = "Loading Familiarities";
                     });
-                    DistrictService districtService = DistrictService();
-                    districtService.fetchDistricts().then((value) {
-                      allDistrictsLocal = value;
-                      setState(() {
-                        loadingText = "Loading Familiarities";
-                      });
-                        FamiliarityService familiarityService =
+                    FamiliarityService familiarityService =
                         FamiliarityService();
-                        familiarityService.fetchFamiliaritys().then((value) {
-                          allFamiliaritysLocal = value;
+                    familiarityService.fetchFamiliaritys().then((value) {
+                      allFamiliaritysLocal = value;
+                      setState(() {
+                        loadingText = "Almost Done";
+                      });
+                      SOService soService = SOService();
+                      soService.fetchSOs().then((value) {
+                        meSO = value
+                            .firstWhere((element) => element.SOID == meSOID);
+                        DistributorService distributorService =
+                            DistributorService();
+                        distributorService.fetchDistributors().then((value) {
+                          allDistributorsLocal = value;
                           setState(() {
-                            loadingText = "Almost Done";
+                            isLoaded = true;
                           });
-                          SOService soService = SOService();
-                          soService.fetchSOs().then((value) {
-                            meSO = value.firstWhere((element) => element.SOID ==
-                                meSOID);
-                            setState(() {
-                              isLoaded = true;
-                            });
-                          });
+                        });
                       });
                     });
                   });
@@ -128,121 +125,123 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoaded ?
-    //     ? SafeArea(
-    //   child: Scaffold(
-    //     backgroundColor: Color(0xffF5F5F5),
-    //     body: Column(
-    //       children: [
-    //         Container(
-    //           margin: EdgeInsets.all(12),
-    //           alignment: Alignment.centerLeft,
-    //           child: InkWell(
-    //             onTap: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: Icon(
-    //               Icons.arrow_back,
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.center,
-    //             children: [
-    //               Center(
-    //                 child: Container(
-    //                   height: 130,
-    //                   width: 100,
-    //                   decoration: BoxDecoration(
-    //                     shape: BoxShape.circle,
-    //                     color: Colors.green,
-    //                   ),
-    //                   child: Center(
-    //                     child: Text(
-    //                       getInitials(meSO!.SOName),
-    //                       style: TextStyle(
-    //                           color: Colors.white, fontSize: 30),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //               SizedBox(
-    //                 height: 10,
-    //               ),
-    //               Text(
-    //                 meSO!.SOName,
-    //                 style: TextStyle(
-    //                     fontWeight: FontWeight.bold, fontSize: 18),
-    //               ),
-    //               SizedBox(
-    //                 height: 5,
-    //               ),
-    //               Text(
-    //                 "Sales Officer",
-    //                 style: TextStyle(color: Colors.grey, fontSize: 18),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //         Column(
-    //           children: [
-    //             isSelected
-    //                 ? Text(
-    //               "Please select your today's beat",
-    //               style: TextStyle(fontSize: 18),
-    //             )
-    //                 : Container(),
-    //             Padding(
-    //               padding: const EdgeInsets.all(18.0),
-    //               child: AnimatedContainer(
-    //                 duration: Duration(milliseconds: 500),
-    //                 clipBehavior: Clip.hardEdge,
-    //                 height: isSelected ? 60 * 6 : null,
-    //                 decoration: BoxDecoration(
-    //                   color: Colors.white,
-    //                   borderRadius: BorderRadius.circular(12),
-    //                   boxShadow: [
-    //                     BoxShadow(
-    //                       color: Colors.grey.withOpacity(0.5),
-    //                       offset: Offset(0, 2),
-    //                       blurRadius: 3,
-    //                     ),
-    //                   ],
-    //                 ),
-    //                 child:
-    //                 isSelected ? SelectBeat() : JointWorking(select),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // )
-    HomeScreen() : SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset("icons/logo.svg"),
-              SizedBox(
-                width: 200,
-                child: LinearProgressIndicator(
-                  color: Colors.red,
-                  backgroundColor: Colors.red.withOpacity(0.5),
+    return isLoaded
+        ?
+        //     ? SafeArea(
+        //   child: Scaffold(
+        //     backgroundColor: Color(0xffF5F5F5),
+        //     body: Column(
+        //       children: [
+        //         Container(
+        //           margin: EdgeInsets.all(12),
+        //           alignment: Alignment.centerLeft,
+        //           child: InkWell(
+        //             onTap: () {
+        //               Navigator.pop(context);
+        //             },
+        //             child: Icon(
+        //               Icons.arrow_back,
+        //             ),
+        //           ),
+        //         ),
+        //         Expanded(
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               Center(
+        //                 child: Container(
+        //                   height: 130,
+        //                   width: 100,
+        //                   decoration: BoxDecoration(
+        //                     shape: BoxShape.circle,
+        //                     color: Colors.green,
+        //                   ),
+        //                   child: Center(
+        //                     child: Text(
+        //                       getInitials(meSO!.SOName),
+        //                       style: TextStyle(
+        //                           color: Colors.white, fontSize: 30),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //               SizedBox(
+        //                 height: 10,
+        //               ),
+        //               Text(
+        //                 meSO!.SOName,
+        //                 style: TextStyle(
+        //                     fontWeight: FontWeight.bold, fontSize: 18),
+        //               ),
+        //               SizedBox(
+        //                 height: 5,
+        //               ),
+        //               Text(
+        //                 "Sales Officer",
+        //                 style: TextStyle(color: Colors.grey, fontSize: 18),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         Column(
+        //           children: [
+        //             isSelected
+        //                 ? Text(
+        //               "Please select your today's beat",
+        //               style: TextStyle(fontSize: 18),
+        //             )
+        //                 : Container(),
+        //             Padding(
+        //               padding: const EdgeInsets.all(18.0),
+        //               child: AnimatedContainer(
+        //                 duration: Duration(milliseconds: 500),
+        //                 clipBehavior: Clip.hardEdge,
+        //                 height: isSelected ? 60 * 6 : null,
+        //                 decoration: BoxDecoration(
+        //                   color: Colors.white,
+        //                   borderRadius: BorderRadius.circular(12),
+        //                   boxShadow: [
+        //                     BoxShadow(
+        //                       color: Colors.grey.withOpacity(0.5),
+        //                       offset: Offset(0, 2),
+        //                       blurRadius: 3,
+        //                     ),
+        //                   ],
+        //                 ),
+        //                 child:
+        //                 isSelected ? SelectBeat() : JointWorking(select),
+        //               ),
+        //             )
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // )
+        HomeScreen()
+        : SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset("icons/logo.svg"),
+                    SizedBox(
+                      width: 200,
+                      child: LinearProgressIndicator(
+                        color: Colors.red,
+                        backgroundColor: Colors.red.withOpacity(0.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(loadingText),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(loadingText),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }
