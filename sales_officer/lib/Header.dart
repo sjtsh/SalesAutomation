@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/DialogBox/DiscardPrompt.dart';
 import 'package:sales_officer/Notification/NotificationScreen.dart';
 
 List heading = [
-  "Dashboard",
-  "Distributors",
-  "Orders",
-  "More",
-  "Tour Plan",
-  "Notifications",
-  "Edit Order",
-  "Create Order",
-  "Update Stock",
-  "Settings",
-  "FAQ"
+  "Dashboard", //0
+  "Distributors", //1
+  "Orders", //2
+  "More", //3
+  "Tour Plan", //4
+  "Notifications", //5
+  "Edit Order", //6
+  "Create Order", //7
+  "Update Stock", //8
+  "Settings", //9
+  "FAQ" //10
 ];
 
 class Header extends StatelessWidget {
   final int index;
-  final bool condition;
+  final bool isNotBackIcon;
 
-  Header(this.index, this.condition);
+  Header(this.index, this.isNotBackIcon);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class Header extends StatelessWidget {
       ),
       child: Row(
         children: [
-          condition
+          isNotBackIcon
               ? SizedBox(
                   width: 12,
                 )
@@ -44,9 +45,18 @@ class Header extends StatelessWidget {
                   color: Colors.white,
                   child: InkWell(
                     onTap: () {
-                      if (condition) {
+                      if (isNotBackIcon) {
                       } else {
-                        Navigator.of(context).pop();
+                        if (index == 6 || index == 7 || index == 8) {
+                          showDialog(
+                            context: context,
+                            builder: (_) {
+                              return DiscardPrompt();
+                            },
+                          );
+                        } else {
+                          Navigator.of(context).pop();
+                        }
                       }
                     },
                     child: Container(
@@ -66,14 +76,12 @@ class Header extends StatelessWidget {
           Material(
             color: Colors.white,
             child: InkWell(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: Container(
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(shape: BoxShape.circle),
-                child: condition
+                child: isNotBackIcon
                     ? Center(
                         child: Icon(
                         Icons.sync,
@@ -86,7 +94,7 @@ class Header extends StatelessWidget {
             color: Colors.white,
             child: InkWell(
               onTap: () {
-                if (condition) {
+                if (isNotBackIcon) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -97,7 +105,7 @@ class Header extends StatelessWidget {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(shape: BoxShape.circle),
-                child: condition
+                child: isNotBackIcon
                     ? Center(
                         child: Icon(
                         Icons.notifications_active_outlined,

@@ -33,7 +33,6 @@ class _MyTooltipState extends State<MyTooltip> {
         child: Tooltip(
           message: "Last updated: ${widget.mySKUStock.updatedDate}",
           key: _toolTipKey,
-
           triggerMode: TooltipTriggerMode.tap,
           child: Row(
             children: [

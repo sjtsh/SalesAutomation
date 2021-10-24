@@ -113,13 +113,28 @@ class _SingularPendingState extends State<SingularPending> {
                               !widget.e.orderStatus
                                   ? PopupMenuButton(
                                       onSelected: (option) {
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        shareOrder(widget.e);
-                                        setState(() {
-                                          isLoading = false;
-                                        });
+                                        print(option);
+                                        if (option == 1) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (_) {
+                                              return ProductsScreen(
+                                                distributor,
+                                                6,
+                                                widget.e,
+                                                false,
+                                              );
+                                            }),
+                                          );
+                                        } else if (option == 2) {
+                                          setState(() {
+                                            isLoading = true;
+                                          });
+                                          shareOrder(widget.e);
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                        }
                                       },
                                       itemBuilder: (BuildContext context) {
                                         return [
@@ -137,6 +152,7 @@ class _SingularPendingState extends State<SingularPending> {
                                                     MainAxisAlignment.center,
                                               )),
                                           PopupMenuItem(
+                                            value: 2,
                                               child: Row(
                                             children: [
                                               Icon(Icons.share),
@@ -153,32 +169,19 @@ class _SingularPendingState extends State<SingularPending> {
                                     )
                                   : PopupMenuButton(
                                       onSelected: (option) {
-                                        if (option == 1 &&
-                                            widget.e.orderStatus) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (_) {
-                                              return ProductsScreen(
-                                                distributor,
-                                                6,
-                                                widget.e,
-                                                false,
-                                              );
-                                            }),
-                                          );
-                                        } else {
-                                          setState(() {
-                                            isLoading = true;
-                                          });
-                                          shareOrder(widget.e);
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                        }
+                                        print(option);
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+                                        shareOrder(widget.e);
+                                        setState(() {
+                                          isLoading = false;
+                                        });
                                       },
                                       itemBuilder: (BuildContext context) {
                                         return [
                                           PopupMenuItem(
+                                            value: 2,
                                               child: Row(
                                             children: [
                                               Icon(Icons.share),

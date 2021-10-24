@@ -36,8 +36,9 @@ dependencies:
   pdf: ^3.6.0
   share_plus: ^2.1.4
   path_provider: any
-  super_tooltip:
-#  super_tooltip: ^1.0.1
+#  super_tooltip:
+  dotted_border: ^2.0.0+1
+  super_tooltip: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
