@@ -1,11 +1,10 @@
 class SubGroup {
   final int subGroupID;
   final int productGroupID;
-  final int productLineID;
   final String subGroupName;
   final bool deactivated;
 
-  SubGroup(this.subGroupID, this.productGroupID, this.productLineID,
+  SubGroup(this.subGroupID, this.productGroupID,
       this.subGroupName, this.deactivated);
 
   factory SubGroup.fromJson(Map<String, dynamic> json) {
@@ -13,8 +12,7 @@ class SubGroup {
       json['0'],
       json['1'],
       json['2'],
-      json['3'],
-      json['4'] == 0 ? false : true,
+      json['3'] == 0 ? false : true,
     );
   }
 }

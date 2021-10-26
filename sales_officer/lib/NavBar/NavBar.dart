@@ -9,14 +9,10 @@ class NavBar extends StatefulWidget {
         blurRadius: 3,
         offset: Offset(0, 2))
   ];
-  static int currentIndex = 0;
+  final int currentIndex;
   final Function _setIndex;
 
-  NavBar(this._setIndex);
-
-  static void onItemTapped(int i) {
-    currentIndex = i;
-  }
+  NavBar(this._setIndex, this.currentIndex);
 
   @override
   _NavBarState createState() => _NavBarState();
@@ -35,27 +31,26 @@ class _NavBarState extends State<NavBar> {
       child: CustomNavigationBar(
         strokeColor: Colors.blue.withOpacity(0.5),
         iconSize: 25,
-        currentIndex: NavBar.currentIndex,
+        currentIndex: widget.currentIndex,
         selectedColor: Colors.black,
         unSelectedColor: Colors.black.withOpacity(0.5),
         backgroundColor: Colors.white,
         opacity: 1,
         onTap: (int i) {
-          NavBar.onItemTapped(i);
           widget._setIndex(i);
         },
         items: [
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/dashboard.svg",
-              color: NavBar.currentIndex == 0
+              color: widget.currentIndex == 0
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Dashboard",
               style: TextStyle(
-                  color: NavBar.currentIndex == 0
+                  color: widget.currentIndex == 0
                       ? Colors.blue
                       : Colors.black.withOpacity(0.5),
                   fontSize: 10),
@@ -64,14 +59,14 @@ class _NavBarState extends State<NavBar> {
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/distributor.svg",
-              color: NavBar.currentIndex == 1
+              color: widget.currentIndex == 1
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Distributor",
               style: TextStyle(
-                  color: NavBar.currentIndex == 1
+                  color: widget.currentIndex == 1
                       ? Colors.blue
                       : Colors.black.withOpacity(0.5),
                   fontSize: 10),
@@ -80,14 +75,14 @@ class _NavBarState extends State<NavBar> {
           CustomNavigationBarItem(
             icon: SvgPicture.asset(
               "icons/pendingorder.svg",
-              color: NavBar.currentIndex == 2
+              color: widget.currentIndex == 2
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "Status",
               style: TextStyle(
-                  color: NavBar.currentIndex == 2
+                  color: widget.currentIndex == 2
                       ? Colors.blue
                       : Colors.black.withOpacity(0.5),
                   fontSize: 10),
@@ -96,14 +91,14 @@ class _NavBarState extends State<NavBar> {
           CustomNavigationBarItem(
             icon: Icon(
               Icons.menu,
-              color: NavBar.currentIndex == 3
+              color: widget.currentIndex == 3
                   ? Colors.blue
                   : Colors.black.withOpacity(0.5),
             ),
             title: Text(
               "More",
               style: TextStyle(
-                  color: NavBar.currentIndex == 3
+                  color: widget.currentIndex == 3
                       ? Colors.blue
                       : Colors.black.withOpacity(0.5),
                   fontSize: 10),

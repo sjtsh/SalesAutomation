@@ -13,8 +13,7 @@ class StockList extends StatefulWidget {
   final List returnOrdersCountList;
   final Function updateReturnOrdersCountList;
 
-  StockList(
-      this.subGroupList,
+  StockList(this.subGroupList,
       this._scrollController,
       this._textEditingControllers,
       this.currentDistributor,
@@ -26,26 +25,36 @@ class StockList extends StatefulWidget {
 }
 
 class _StockListState extends State<StockList> {
-  List<ExpandableController> _expandableControllers = [];
+
+  int currentlyExpanded = 0;
+
+  changeCurrentlyExpanded(int currentlyExpanded) {
+    setState(() {
+      if (this.currentlyExpanded == currentlyExpanded) {
+        this.currentlyExpanded = 0;
+      } else {
+        this.currentlyExpanded = currentlyExpanded;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    _expandableControllers = List.generate(
-        widget.subGroupList.length, (index) => ExpandableController());
 
     return ListView(
       controller: widget._scrollController,
       children: widget.subGroupList
           .map(
-            (item) => StockSingularProduct(
+            (item) =>
+            StockSingularProduct(
                 item,
-                widget.subGroupList.indexOf(item),
-                _expandableControllers,
+                currentlyExpanded,
+                changeCurrentlyExpanded,
                 widget._textEditingControllers,
                 widget.currentDistributor,
                 widget.returnOrdersCountList,
                 widget.updateReturnOrdersCountList),
-          )
+      )
           .toList(),
     );
   }

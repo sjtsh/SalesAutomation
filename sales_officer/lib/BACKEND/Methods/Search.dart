@@ -35,7 +35,6 @@ searchForDistributor(String distributor, Function setDistributors) {
       } catch (e) {}
     });
   }
-  setDistributors(distributors);
 }
 
 searchForProducts(String product, Function setProducts) {

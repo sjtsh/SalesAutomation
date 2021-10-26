@@ -1,7 +1,6 @@
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
 import 'package:sales_officer/BACKEND/Entities/ProductGroup.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
@@ -20,7 +19,6 @@ List<SKUStock>? allSKUStocksLocal;
 List<BillingCompany> allBillingCompanysLocal = [];
 List<Familiarity> allFamiliaritysLocal = [];
 List<Unit> allUnitsLocal = [];
-List<ProductLine> allProductLinesLocal = [];
 List<ProductGroup> allProductGroupsLocal = [];
 List<District> allDistrictsLocal = [];
 SO? meSO;

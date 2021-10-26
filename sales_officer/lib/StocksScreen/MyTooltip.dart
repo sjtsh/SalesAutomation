@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
@@ -33,7 +35,7 @@ class _MyTooltipState extends State<MyTooltip> {
         child: Tooltip(
           message: "Last updated: ${widget.mySKUStock.updatedDate}",
           key: _toolTipKey,
-          // triggerMode: TooltipTriggerMode.tap,
+          triggerMode: TooltipTriggerMode.tap,
           child: Row(
             children: [
               Icon(

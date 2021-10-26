@@ -58,7 +58,7 @@ class StockConfirmationScreen extends StatelessWidget {
                   ],
                 ),
                 child: BreadCrum3(
-                    "Distributor", currentDistributor.distributorName)),
+                    "Distributor", currentDistributor.distributorName, "Stock Confirmation")),
             Expanded(
               child: StockConfirmationReciept(
                   currentDistributor,

@@ -32,15 +32,16 @@ class _SingularProductState extends State<SingularProduct> {
   Widget build(BuildContext context) {
     if (widget.currentlyExpanded == widget.item.subGroupID) {
       _expandableController.expanded = true;
-    }else{
+    } else {
       _expandableController.expanded = false;
     }
     return ExpandablePanel(
-      collapsed:
-          SingularProductHeader(widget.item, widget.changeCurrentlyExpanded,Icons.add),
+      collapsed: SingularProductHeader(
+          widget.item, widget.changeCurrentlyExpanded, Icons.add),
       expanded: Column(
         children: [
-          SingularProductHeader(widget.item, widget.changeCurrentlyExpanded,Icons.remove),
+          SingularProductHeader(
+              widget.item, widget.changeCurrentlyExpanded, Icons.remove),
           Column(
             children: allSKULocal
                 .where(

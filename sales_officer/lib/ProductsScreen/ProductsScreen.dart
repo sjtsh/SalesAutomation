@@ -114,32 +114,35 @@ class _ProductsScreenState extends State<ProductsScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(7, false),
+            Header(widget.isNew ? 7 : 6, false),
             Container(
-                padding: EdgeInsets.only(left: 12),
-                alignment: Alignment.centerLeft,
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    bottom: BorderSide(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
+              padding: EdgeInsets.only(left: 12),
+              alignment: Alignment.centerLeft,
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+                  bottom: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
+                  ),
                 ),
-                child: BreadCrum2(
-                    "Distributor", widget.currentDistributor.distributorName)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: BreadCrum2(
+                "Distributor",
+                widget.currentDistributor.distributorName,
+              ),
+            ),
             Expanded(
               child: Form(
                 key: widget._formKey,

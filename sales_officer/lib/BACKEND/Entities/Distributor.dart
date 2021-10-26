@@ -1,5 +1,6 @@
 class Distributor {
   final int distributorID;
+  final int SOID;
   final String distributorName;
   final String ownerName;
   final int phone;
@@ -8,7 +9,7 @@ class Distributor {
   final String location;
   final String img;
   final String bankAccountName;
-  final int bankAccountNumber;
+  final String bankAccountNumber;
   final String bankAddress;
   final int VAT;
   final double lat;
@@ -17,6 +18,7 @@ class Distributor {
 
   Distributor(
       this.distributorID,
+      this.SOID,
       this.distributorName,
       this.ownerName,
       this.phone,
@@ -48,7 +50,8 @@ class Distributor {
       json['11'],
       json['12'],
       json['13'],
-      json['14'] == 0 ? false : true,
+      json['14'],
+      json['15'] == 0 ? false : true,
     );
   }
 }

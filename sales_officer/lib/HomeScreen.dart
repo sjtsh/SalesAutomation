@@ -13,16 +13,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int i = 0;
+  int currentIndex = 0;
 
   _setIndex(int i) {
     setState(() {
-      this.i = i;
+      this.currentIndex = i;
     });
   }
 
   Future<bool> _onBackPressed() async {
-    NavBar.currentIndex = 2;
     _setIndex(2);
     return false;
   }
@@ -47,12 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: _onBackPressed,
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: i < 5 ? NavBar(_setIndex) : Container(),
+          bottomNavigationBar: currentIndex < 5 ? NavBar(_setIndex, currentIndex) : Container(),
           backgroundColor: Color(0xffF5F5F5),
           body: Column(
             children: [
-              i == 5 ? Header(i, false) : Header(i, true),
-              Expanded(child: _changeActivity(i)),
+              currentIndex == 5 ? Header(currentIndex, false) : Header(currentIndex, true),
+              Expanded(child: _changeActivity(currentIndex)),
             ],
           ),
         ),

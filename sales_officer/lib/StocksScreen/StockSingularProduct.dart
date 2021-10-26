@@ -10,8 +10,8 @@ import 'StockSingularProductVariation.dart';
 
 class StockSingularProduct extends StatefulWidget {
   final SubGroup item;
-  final int expandableControllerIndex;
-  final List<ExpandableController> _expandableControllers;
+  final int currentlyExpanded;
+  final Function changeCurrentlyExpanded;
   final List<TextEditingController> _textEditingControllers;
   final Distributor currentDistributor;
   final List returnOrdersCountList;
@@ -19,8 +19,8 @@ class StockSingularProduct extends StatefulWidget {
 
   StockSingularProduct(
       this.item,
-      this.expandableControllerIndex,
-      this._expandableControllers,
+      this.currentlyExpanded,
+      this.changeCurrentlyExpanded,
       this._textEditingControllers,
       this.currentDistributor,
       this.returnOrdersCountList,
@@ -31,30 +31,22 @@ class StockSingularProduct extends StatefulWidget {
 }
 
 class _StockSingularProductState extends State<StockSingularProduct> {
-
-  unExpand() {
-    if (!widget
-        ._expandableControllers[widget.expandableControllerIndex].expanded) {
-      for (int i = 0; i < widget._expandableControllers.length; i++) {
-        if (i != widget.expandableControllerIndex) {
-          widget._expandableControllers[i].expanded = false;
-        } else {
-          widget._expandableControllers[i].expanded = true;
-        }
-      }
-    } else {
-      widget._expandableControllers[widget.expandableControllerIndex].expanded =
-          false;
-    }
-  }
+  ExpandableController _expandableController = ExpandableController();
 
   @override
   Widget build(BuildContext context) {
+    if (widget.currentlyExpanded == widget.item.subGroupID) {
+      _expandableController.expanded = true;
+    } else {
+      _expandableController.expanded = false;
+    }
     return ExpandablePanel(
-      collapsed: StockSingularProductHeader(widget.item, unExpand),
+      collapsed: StockSingularProductHeader(
+          widget.item, widget.changeCurrentlyExpanded, Icons.add),
       expanded: Column(
         children: [
-          StockSingularProductHeader(widget.item, unExpand),
+          StockSingularProductHeader(
+              widget.item, widget.changeCurrentlyExpanded, Icons.remove),
           Column(
             children: allSKULocal
                 .where(
@@ -66,24 +58,22 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
-
               } catch (e) {
                 mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               }
               return StockSingularProductVariation(
-                  item,
-                  widget._textEditingControllers,
-                  widget.currentDistributor,
-                  widget.returnOrdersCountList,
-                  mySKUStock,
-                  widget.updateReturnOrdersCountList,
+                item,
+                widget._textEditingControllers,
+                widget.currentDistributor,
+                widget.returnOrdersCountList,
+                mySKUStock,
+                widget.updateReturnOrdersCountList,
               );
             }).toList(),
           ),
         ],
       ),
-      controller:
-          widget._expandableControllers[widget.expandableControllerIndex],
+      controller: _expandableController,
     );
   }
 }

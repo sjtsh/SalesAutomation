@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';

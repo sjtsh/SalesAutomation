@@ -51,7 +51,7 @@ class _StockSingularProductVariationState
             color: Colors.black.withOpacity(0.1),
           ),
         ),
-        color: Color(0xffF5F5F5),
+        color: Color(0xffE3F2FD),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -94,19 +94,25 @@ class _StockSingularProductVariationState
                         });
                   },
                   child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: SvgPicture.asset(
-                          "icons/returnorder.svg",
-                          color: Colors.red,
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text(
+                          "Return",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.red,
+                          ),
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
                 Expanded(child: Container()),
                 Container(

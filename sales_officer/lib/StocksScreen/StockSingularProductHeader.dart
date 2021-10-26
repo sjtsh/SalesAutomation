@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductLine.dart';
 import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/DialogBox/ProductDialogBox.dart';
 
 class StockSingularProductHeader extends StatelessWidget {
   final SubGroup subGroup;
-  final Function unExpand;
+  final Function changeCurrentlyExpanded;
+  final IconData _icon;
 
-  StockSingularProductHeader(this.subGroup, this.unExpand);
+  StockSingularProductHeader(this.subGroup, this.changeCurrentlyExpanded, this._icon);
 
   @override
   Widget build(BuildContext context) {
-    ProductLine productLine = allProductLinesLocal.firstWhere(
-        (element) => element.productLineID == subGroup.productLineID);
     return Material(
-      color: Colors.white,
+      color: _icon == Icons.remove ? Color(0xffBBDEFB) : Colors.white,
       child: InkWell(
         onTap: () {
-          unExpand();
+          changeCurrentlyExpanded(subGroup.subGroupID);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -104,27 +102,6 @@ class StockSingularProductHeader extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   width: 5,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1),
-                                    child: Text(
-                                      productLine.productLineName.substring(0, 1) +
-                                          productLine.productLineName.substring(
-                                              productLine.productLineName.length -
-                                                  1,
-                                              productLine.productLineName.length),
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),

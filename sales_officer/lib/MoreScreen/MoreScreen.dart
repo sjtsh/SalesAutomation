@@ -156,7 +156,6 @@ class MoreScreen extends StatelessWidget {
               color: Colors.white,
               child: InkWell(
                 onTap: () {
-                  NavBar.onItemTapped(0);
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
                     return LogInScreen();
                   }));
