@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 
 class DistributorOrderItemService {
   final String url =

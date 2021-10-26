@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/DialogBox/StockReturnModal.dart';
 

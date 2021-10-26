@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:sales_officer/BACKEND%20Access/Entities/SubGroup.dart';
 
 class SubGroupService{
   final String url =

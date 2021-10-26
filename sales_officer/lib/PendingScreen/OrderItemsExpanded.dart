@@ -1,7 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 
 import '../Database.dart';
 

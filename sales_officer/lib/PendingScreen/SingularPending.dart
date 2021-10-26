@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Methods/method.dart';
-import 'package:sales_officer/BACKEND/Methods/shareOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/shareOrder.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
 import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';

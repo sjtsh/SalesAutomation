@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/ConfirmationScreen/ConfirmationReciept.dart';
 import 'package:sales_officer/Header.dart';

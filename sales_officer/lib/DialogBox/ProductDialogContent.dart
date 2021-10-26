@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
-
+import 'package:sales_officer/BACKEND%20Access/Entities/SubGroup.dart';
 import '../Database.dart';
 
 class ProductDialogContent extends StatelessWidget {

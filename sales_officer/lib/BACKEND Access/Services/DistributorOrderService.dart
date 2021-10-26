@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 
 class DistributorOrderService {
   Future<List<DistributorOrder>> fetchDistributorOrders() async {

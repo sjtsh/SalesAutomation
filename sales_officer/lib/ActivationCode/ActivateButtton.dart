@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Methods/login.dart';
-import 'package:sales_officer/BACKEND/Services/ActivationCodeService.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/login.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/ActivationCodeService.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

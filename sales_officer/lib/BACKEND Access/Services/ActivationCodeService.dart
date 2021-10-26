@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND/Entities/ActivationCode.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/ActivationCode.dart';
 
 class ActivationCodeService {
   Future<List<ActivationCode>> fetchActivationCodes() async {

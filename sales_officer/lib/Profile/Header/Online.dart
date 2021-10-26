@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Methods/method.dart';
-
+import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import '../../Database.dart';
 
 class Online extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 
 import '../Database.dart';
 

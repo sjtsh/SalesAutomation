@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/Search.dart';
 
-import '../BACKEND/Methods/Search.dart';
 import '../Database.dart';
 
 class SearchBar extends StatefulWidget {

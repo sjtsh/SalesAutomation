@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SubGroup.dart';
 import 'package:sales_officer/DialogBox/ProductDialogContent.dart';
 
 class ProductDialogBox extends StatefulWidget {

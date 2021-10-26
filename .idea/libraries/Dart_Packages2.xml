@@ -72,6 +72,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dotted_border">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/dotted_border-2.0.0+1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="equatable">
           <value>
             <list>
@@ -575,6 +582,7 @@
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/custom_navigation_bar-0.8.2/lib" />
+      <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/dotted_border-2.0.0+1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/expandable-5.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../src/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />

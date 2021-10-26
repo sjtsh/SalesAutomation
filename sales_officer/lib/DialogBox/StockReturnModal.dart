@@ -1,10 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
-
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import '../Database.dart';
 
 class StockReturnModal extends StatefulWidget {
@@ -91,7 +89,7 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                 style: TextStyle(fontSize: 16),
                               ),
                               Text(
-                                allDistributorsLocal
+                                personalDistributorsLocal
                                     .firstWhere((element) =>
                                         element.distributorID ==
                                         widget.skuDistributorWise.distributorID)

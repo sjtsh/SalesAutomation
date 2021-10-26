@@ -1,15 +1,11 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Services/DistributorOrderItemService.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/Database.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -95,7 +91,7 @@ shareOrder(
                             style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                           ),
                           pw.Text(
-                            allDistributorsLocal
+                            personalDistributorsLocal
                                 .firstWhere((element) =>
                                     distributorOrder.distributorID ==
                                     element.distributorID)

@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sales_officer/BACKEND/Entities/District.dart';
-import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
-import 'package:sales_officer/BACKEND/Methods/method.dart';
-import 'package:sales_officer/BACKEND/Services/BillingCompanyService.dart';
-import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
-import 'package:sales_officer/BACKEND/Services/DistrictService.dart';
-import 'package:sales_officer/BACKEND/Services/FamiliarityService.dart';
-import 'package:sales_officer/BACKEND/Services/ProductGroupService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUDistributorWiseService.dart';
-import 'package:sales_officer/BACKEND/Services/SKUService.dart';
-import 'package:sales_officer/BACKEND/Services/SOService.dart';
-import 'package:sales_officer/BACKEND/Services/SubGroupService.dart';
-import 'package:sales_officer/BACKEND/Services/UnitService.dart';
-import 'package:sales_officer/LogInScreen/JointWorking.dart';
-import 'package:sales_officer/LogInScreen/SelectBeat.dart';
-import 'package:sales_officer/SignIn/SignInButton.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/FamiliarityService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/ProductGroupService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SKUDistributorWiseService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SKUService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SODistributorConnectionService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
 
 import '../Database.dart';
 import '../HomeScreen.dart';
@@ -95,18 +92,46 @@ class _LogInScreenState extends State<LogInScreen> {
                     familiarityService.fetchFamiliaritys().then((value) {
                       allFamiliaritysLocal = value;
                       setState(() {
-                        loadingText = "Almost Done";
+                        loadingText = "Loading Distributors";
                       });
-                      SOService soService = SOService();
-                      soService.fetchSOs().then((value) {
-                        meSO = value
-                            .firstWhere((element) => element.SOID == meSOID);
-                        DistributorService distributorService =
-                            DistributorService();
-                        distributorService.fetchDistributors().then((value) {
-                          allDistributorsLocal = value;
-                          setState(() {
-                            isLoaded = true;
+                      DistributorService distributorService =
+                          DistributorService();
+                      distributorService.fetchDistributors().then((value) {
+                        allDistributorsLocal = value;
+                        setState(() {
+                          loadingText = "Almost Done";
+                        });
+                        SOService soService = SOService();
+                        soService.fetchSOs().then((value) {
+                          meSO = value
+                              .firstWhere((element) => element.SOID == meSOID);
+                          SODistributorConnectionService
+                              soDistributorConnectionService =
+                              SODistributorConnectionService();
+                          soDistributorConnectionService
+                              .fetchSODistributorConnections()
+                              .then((newValue) {
+                            allSODistributorConnectionsLocal = newValue;
+                            personalDistributorsLocal =
+                                allDistributorsLocal.where((element) {
+                              bool condition = false;
+                              allSODistributorConnectionsLocal
+                                  .forEach((element1) {
+                                if (element1.SOID == meSO?.SOID &&
+                                    element1.distributorID ==
+                                        element.distributorID) {
+                                  condition = true;
+                                }
+                              });
+                              return condition;
+                            }).toList();
+                            setState(() {
+                              loadingText = "Calculating Sales";
+                            });
+                            // calculateSales();
+                            setState(() {
+                              isLoaded = true;
+                            });
                           });
                         });
                       });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/DialogBox/ConfirmationModalSheet.dart';
 
 import '../Database.dart';

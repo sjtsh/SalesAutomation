@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:sales_officer/BACKEND/Methods/login.dart';
-import 'package:sales_officer/LogInScreen/LogInScreen.dart';
-
-import '../HomeScreen.dart';
 
 class SignInButton extends StatefulWidget {
   final _formKey;

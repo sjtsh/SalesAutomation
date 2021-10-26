@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 
 import 'SingularPending.dart';
 

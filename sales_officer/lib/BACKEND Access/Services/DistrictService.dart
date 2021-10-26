@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND/Entities/District.dart';
-
+import 'package:sales_officer/BACKEND%20Access/Entities/District.dart';
 import '../Entities/Familiarity.dart';
 
 class DistrictService {

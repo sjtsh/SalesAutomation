@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/SO.dart';
-import 'package:sales_officer/BACKEND/Methods/method.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/Database.dart';
 
 import '../../Header.dart';

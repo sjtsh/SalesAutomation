@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sales_officer/Header.dart';
-
-import 'BACKEND/Entities/Distributor.dart';
-import 'BACKEND/Entities/DistributorOrder.dart';
-import 'BACKEND/Methods/method.dart';
+import 'BACKEND Access/Entities/Distributor.dart';
+import 'BACKEND Access/Entities/DistributorOrder.dart';
+import 'BACKEND Access/Methods/method.dart';
 import 'ProductsScreen/ProductsScreen.dart';
 import 'StocksScreen/StocksScreen.dart';
 

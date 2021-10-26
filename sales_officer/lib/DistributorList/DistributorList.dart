@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Methods/method.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/DistributorInfo.dart';
-import 'package:sales_officer/NavBar/NavBar.dart';
-import 'package:sales_officer/StocksScreen/StocksScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../ProductsScreen/ProductsScreen.dart';
@@ -31,107 +28,138 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) {
-                return DistributorInfo(distributor);
-              },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12.0),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              offset: Offset(0, 2),
+              blurRadius: 3,
             ),
-          );
-        },
-        child: Container(
-          padding: EdgeInsets.only(left: 20),
-          alignment: Alignment.centerLeft,
-          height: 60,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.black.withOpacity(0.1),
-              ),
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: colors[index],
+          ],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Material(
+          color: Colors.white,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return DistributorInfo(distributor);
+                  },
                 ),
-                child: Center(
-                    child: Text(
-                  getInitials(distributor.distributorName),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                )),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${distributor.distributorName}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          distributor.location,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black.withOpacity(0.5)),
-                        ),
-                      ],
-                    ),
-                    Expanded(child: Container()),
-                    Container(
-                      decoration:
-                          BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                        BoxShadow(
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.all(12),
+              alignment: Alignment.centerLeft,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
                           color: colors[index],
-                          blurRadius: .5,
                         ),
-                      ]),
-                      child: Material(
-                        color: colorOpacity[index],
-                        clipBehavior: Clip.hardEdge,
-                        shape: CircleBorder(),
-                        child: InkWell(
-                          onTap: () => launch(
-                              "tel:+977${distributor.mobileNumber.toString()}"),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.call,
-                              color: colors[index],
-                            ),
+                        child: Center(
+                          child: Text(
+                            getInitials(distributor.distributorName),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${distributor.distributorName}",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  distributor.location,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black.withOpacity(0.5)),
+                                ),
+                              ],
+                            ),
+                            Expanded(child: Container()),
+                            Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: colors[index],
+                                      blurRadius: .5,
+                                    ),
+                                  ]),
+                              child: Material(
+                                color: colorOpacity[index],
+                                clipBehavior: Clip.hardEdge,
+                                shape: CircleBorder(),
+                                child: InkWell(
+                                  onTap: () => launch(
+                                      "tel:+977${distributor.mobileNumber.toString()}"),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.call,
+                                      color: colors[index],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                  Text(
+                    "mtd: , ytd: ",
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
                     ),
-                    SizedBox(
-                      width: 20,
+                  ),
+                  Text(
+                    "Outstanding: 5000, Last Order: ",
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
                     ),
-                  ],
-                ),
-              )
-            ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

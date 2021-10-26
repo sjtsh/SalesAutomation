@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Services/DistributorService.dart';
-import 'package:sales_officer/BACKEND/Methods/Search.dart';
-
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/Search.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import '../Database.dart';
 import 'DistributorList.dart';
 
@@ -92,9 +91,10 @@ class _NewOrderState extends State<NewOrder> {
                             ),
                             onChanged: (_distributor) {
                               if (_distributor != "") {
-                                searchForDistributor(_distributor, setDistributors);
+                                searchForDistributor(
+                                    _distributor, setDistributors);
                               } else {
-                                setDistributors(allDistributorsLocal.where((element) => element.SOID == meSO?.SOID).toList());
+                                setDistributors(personalDistributorsLocal);
                               }
                             },
                           ),
@@ -114,6 +114,9 @@ class _NewOrderState extends State<NewOrder> {
             ),
           ),
         ),
+        SizedBox(
+          height: 6,
+        ),
         isNotFound
             ? Expanded(
                 child: Center(
@@ -122,38 +125,27 @@ class _NewOrderState extends State<NewOrder> {
               )
             : Expanded(
                 child: SingleChildScrollView(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 2),
-                          blurRadius: 3,
+                  child: !isSearching
+                      ? Column(
+                          children: personalDistributorsLocal
+                              .map(
+                                (item) => DistributorList(
+                                  item,
+                                  widget.index,
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : Column(
+                          children: searchedDistributorsLocal
+                              .map(
+                                (item) => DistributorList(
+                                  item,
+                                  widget.index,
+                                ),
+                              )
+                              .toList(),
                         ),
-                      ],
-                    ),
-                    child: !isSearching
-                        ? Column(
-                            children: allDistributorsLocal.where((element) => element.SOID == meSO?.SOID).toList()
-                                .map(
-                                  (item) => DistributorList(
-                                    item,
-                                    widget.index,
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : Column(
-                            children: searchedDistributorsLocal
-                                .map(
-                                  (item) => DistributorList(
-                                    item,
-                                    widget.index,
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                  ),
                 ),
               ),
       ],

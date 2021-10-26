@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:sales_officer/BACKEND/Entities/SKU.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 
 class SKUService {
   final String url = "https://asia-south1-hilifedb.cloudfunctions.net/getSKUs";

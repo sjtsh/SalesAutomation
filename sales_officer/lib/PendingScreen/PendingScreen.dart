@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Services/DistributorOrderService.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderService.dart';
 import 'package:sales_officer/PendingScreen/OrdersList.dart';
 import 'package:sales_officer/Skeletons/PendingOrderSkeleton.dart';
 import 'package:shimmer/shimmer.dart';

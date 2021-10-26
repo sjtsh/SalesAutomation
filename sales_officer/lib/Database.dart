@@ -1,17 +1,24 @@
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/Familiarity.dart';
-import 'package:sales_officer/BACKEND/Entities/ProductGroup.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
-import 'BACKEND/Entities/BillingCompany.dart';
-import 'BACKEND/Entities/District.dart';
-import 'BACKEND/Entities/SKU.dart';
-import 'BACKEND/Entities/SO.dart';
-import 'BACKEND/Entities/Unit.dart';
+
+
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
+
+import 'BACKEND Access/Entities/BillingCompany.dart';
+import 'BACKEND Access/Entities/Distributor.dart';
+import 'BACKEND Access/Entities/District.dart';
+import 'BACKEND Access/Entities/Familiarity.dart';
+import 'BACKEND Access/Entities/ProductGroup.dart';
+import 'BACKEND Access/Entities/SKU.dart';
+import 'BACKEND Access/Entities/SKUDistributorWise.dart';
+import 'BACKEND Access/Entities/SKUStock.dart';
+import 'BACKEND Access/Entities/SO.dart';
+import 'BACKEND Access/Entities/SODistributorConnection.dart';
+import 'BACKEND Access/Entities/SubGroup.dart';
+import 'BACKEND Access/Entities/Unit.dart';
 
 List<Distributor> searchedDistributorsLocal = [];
 List<Distributor> allDistributorsLocal = [];
+List<Distributor> personalDistributorsLocal = [];
+List<DistributorSale> allDistributorSalesLocal = [];
 List<SubGroup> allSubGroupsLocal = [];
 List<SKU> allSKULocal = [];
 List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
@@ -21,9 +28,12 @@ List<Familiarity> allFamiliaritysLocal = [];
 List<Unit> allUnitsLocal = [];
 List<ProductGroup> allProductGroupsLocal = [];
 List<District> allDistrictsLocal = [];
+List<SODistributorConnection> allSODistributorConnectionsLocal = [];
+
 SO? meSO;
 int? meSOID;
 String meBeat = "";
+
 
 bool? isJoint;
 List products = [

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND/Entities/SKUStock.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 
 class SKUStockService {
   Future<List<SKUStock>> fetchSKUStocks() async {

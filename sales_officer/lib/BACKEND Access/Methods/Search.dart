@@ -1,41 +1,41 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/SubGroup.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SubGroup.dart';
 
 import '../../Database.dart';
 
 searchForDistributor(String distributor, Function setDistributors) {
   List<Distributor> distributors = [];
-  for (int i = 0; i < allDistributorsLocal.length; i++) {
+  for (int i = 0; i < personalDistributorsLocal.length; i++) {
     int numOfCharacters = distributor.length;
     if (numOfCharacters == 0) {
       break;
     }
     try {
       if (distributor.toLowerCase() ==
-          allDistributorsLocal[i]
+          personalDistributorsLocal[i]
               .distributorName
               .substring(0, numOfCharacters)
               .toLowerCase()) {
-        if (!distributors.contains(allDistributorsLocal[i])) {
-          distributors.add(allDistributorsLocal[i]);
+        if (!distributors.contains(personalDistributorsLocal[i])) {
+          distributors.add(personalDistributorsLocal[i]);
         }
       }
     } catch (e) {}
     List distributorWords =
-        allDistributorsLocal[i].distributorName.toLowerCase().split(" ");
+    personalDistributorsLocal[i].distributorName.toLowerCase().split(" ");
     distributorWords.forEach((element) {
       try {
         if (distributor.toLowerCase() ==
             element.substring(0, numOfCharacters)) {
-          if (!distributors.contains(allDistributorsLocal[i])) {
-            distributors.add(allDistributorsLocal[i]);
+          if (!distributors.contains(personalDistributorsLocal[i])) {
+            distributors.add(personalDistributorsLocal[i]);
           }
         }
       } catch (e) {}
     });
   }
-  setDistributors(distributors.where((element) => element.SOID == meSO?.SOID).toList());
+  setDistributors(distributors);
 }
 
 searchForProducts(String product, Function setProducts) {
@@ -56,7 +56,8 @@ searchForProducts(String product, Function setProducts) {
         }
       }
     } catch (e) {}
-    List productWords = allSubGroupsLocal[i].subGroupName.toLowerCase().split(" ");
+    List productWords =
+    allSubGroupsLocal[i].subGroupName.toLowerCase().split(" ");
     productWords.forEach((element) {
       try {
         if (product.toLowerCase() == element.substring(0, numOfCharacters)) {

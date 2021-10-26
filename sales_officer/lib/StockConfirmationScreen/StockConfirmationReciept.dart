@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND/Entities/Distributor.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND/Entities/DistributorOrderItem.dart';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
-import 'package:sales_officer/BACKEND/Methods/createOrder.dart';
-import 'package:sales_officer/BACKEND/Methods/updateStock.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/createOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/updateStock.dart';
 import 'package:sales_officer/Database.dart';
 
 import 'StockIndividualConfirmationVariation.dart';

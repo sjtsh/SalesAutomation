@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:sales_officer/BACKEND/Entities/SKUDistributorWise.dart';
 import 'package:http/http.dart' as http;
+import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 
 class SKUDistributorWiseService {
   final String url = "https://asia-south1-hilifedb.cloudfunctions.net/getSKUDistributorWises";

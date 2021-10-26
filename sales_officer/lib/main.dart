@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:sales_officer/BACKEND/Services/SOService.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Database.dart';
 
 void main() {
+  print(DateTime.now());
   runApp(Fusers());
+
 }
 
 class Fusers extends StatefulWidget {
@@ -29,7 +30,6 @@ class _FusersState extends State<Fusers> {
     return MaterialApp(
       theme: ThemeData(fontFamily: "lato"),
       routes: {
-        // '': (context) => const FirstScreen(),
       },
       title: 'Fusers',
       debugShowCheckedModeBanner: false,
