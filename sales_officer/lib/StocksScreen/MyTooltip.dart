@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 
@@ -8,11 +9,11 @@ import '../Database.dart';
 
 class MyTooltip extends StatefulWidget {
   final SKUStock mySKUStock;
-  final SKUDistributorWise skuDistributorWise;
+  final SKU sku;
 
   MyTooltip(
     this.mySKUStock,
-    this.skuDistributorWise,
+    this.sku,
   );
 
   @override
@@ -59,7 +60,7 @@ class _MyTooltipState extends State<MyTooltip> {
                   ? Container()
                   : Text(
                       widget.mySKUStock.primaryStock.toString() +
-                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.skuDistributorWise.primaryUnitID).unitName}",
+                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.sku.primaryUnitID).unitName}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 12,
@@ -74,7 +75,7 @@ class _MyTooltipState extends State<MyTooltip> {
                   ? Container()
                   : Text(
                       widget.mySKUStock.alternativeStock.toString() +
-                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.skuDistributorWise.alternativeUnitID).unitName}",
+                          "${allUnitsLocal.firstWhere((element) => element.unitID == widget.sku.alternativeUnitID).unitName}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 12,

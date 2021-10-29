@@ -11,7 +11,10 @@ import 'StocksScreen/StocksScreen.dart';
 class DistributorInfo extends StatelessWidget {
   final Distributor currentDistributor;
 
-  DistributorInfo(this.currentDistributor);
+  final Function refresh;
+
+
+  DistributorInfo(this.currentDistributor, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,7 @@ class DistributorInfo extends StatelessWidget {
                                 DistributorOrder(
                                     -1, -1, -1, true, false, "", "", "", 0, 0, false),
                                 true,
+                                refresh,
                               );
                             },
                           ),
@@ -109,6 +113,7 @@ class DistributorInfo extends StatelessWidget {
                                 1,
                                 DistributorOrder(
                                     -1, -1, -1, true, false, "", "", "", 0, 0, false),
+                                refresh,
                               );
                             },
                           ),

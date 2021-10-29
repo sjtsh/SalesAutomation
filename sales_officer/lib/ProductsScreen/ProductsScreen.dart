@@ -21,13 +21,14 @@ class ProductsScreen extends StatefulWidget {
   final int index;
   final DistributorOrder distributorOrder;
   final bool isNew;
+  final Function refresh;
 
   final SKUStockService skuStockService = SKUStockService();
   final ScrollController _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
   ProductsScreen(
-      this.currentDistributor, this.index, this.distributorOrder, this.isNew);
+      this.currentDistributor, this.index, this.distributorOrder, this.isNew, this.refresh);
 
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
@@ -114,7 +115,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(widget.isNew ? 7 : 6, false),
+            Header(widget.isNew ? 7 : 6, false, widget.refresh),
             Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,
@@ -216,6 +217,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 widget.isNew,
                 widget.distributorOrder,
                 distributorOrderItems,
+                widget.refresh,
               ),
             ),
           ],

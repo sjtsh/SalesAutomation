@@ -1,6 +1,9 @@
 class Distributor {
   final int distributorID;
+  final String distributorERPID;
   final String distributorName;
+  final String distributorType;
+  final int townID;
   final String ownerName;
   final int phone;
   final int mobileNumber;
@@ -9,6 +12,7 @@ class Distributor {
   final String img;
   final String bankAccountName;
   final String bankAccountNumber;
+  final String bankName;
   final String bankAddress;
   final int VAT;
   final double lat;
@@ -16,21 +20,26 @@ class Distributor {
   final bool deactivated;
 
   Distributor(
-      this.distributorID,
-      this.distributorName,
-      this.ownerName,
-      this.phone,
-      this.mobileNumber,
-      this.PAN,
-      this.location,
-      this.img,
-      this.bankAccountName,
-      this.bankAccountNumber,
-      this.bankAddress,
-      this.VAT,
-      this.lat,
-      this.lng,
-      this.deactivated);
+    this.distributorID,
+    this.distributorERPID,
+    this.distributorName,
+    this.distributorType,
+    this.townID,
+    this.ownerName,
+    this.phone,
+    this.mobileNumber,
+    this.PAN,
+    this.location,
+    this.img,
+    this.bankAccountName,
+    this.bankAccountNumber,
+    this.bankName,
+    this.bankAddress,
+    this.VAT,
+    this.lat,
+    this.lng,
+    this.deactivated,
+  );
 
   factory Distributor.fromJson(Map<String, dynamic> json) {
     return Distributor(
@@ -48,7 +57,11 @@ class Distributor {
       json['11'],
       json['12'],
       json['13'],
-      json['14'] == 0 ? false : true,
+      json['14'],
+      json['15'],
+      json['16'],
+      json['17'],
+      json['18'] == 0 ? false : true,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -116,12 +117,14 @@ shareOrder(DistributorOrder distributorOrder) {
                 children: distributorOrderItems.map((e) {
                   SKUDistributorWise mySKUDistributorWise = skuDistributorWises
                       .firstWhere((element) => element.SKUID == e.SKUID);
+                  SKU sku = allSKULocal
+                      .firstWhere((element) => element.SKUID == e.SKUID);
                   double mereTotal = e.primaryItemCount *
-                          mySKUDistributorWise.primaryCF *
-                          mySKUDistributorWise.MRP +
+                      sku.primaryCF *
+                      sku.MRP +
                       e.alternativeItemCount *
-                          mySKUDistributorWise.alternativeCF *
-                          mySKUDistributorWise.MRP;
+                          sku.alternativeCF *
+                          sku.MRP;
                   totalValue += mereTotal;
                   return pw.Container(
                       height: 100,
@@ -142,13 +145,13 @@ shareOrder(DistributorOrder distributorOrder) {
                         pw.SizedBox(
                           width: 50,
                           child: pw.Text(
-                            "Rs ${mySKUDistributorWise.MRP}",
+                            "Rs ${sku.MRP}",
                           ),
                         ),
                         pw.SizedBox(
                           width: 50,
                           child: pw.Text(
-                            "Rs ${e.primaryItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.primaryUnitID).unitName + " " + e.alternativeItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.alternativeUnitID).unitName}",
+                            "Rs ${e.primaryItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName + " " + e.alternativeItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
                           ),
                         ),
                         pw.SizedBox(

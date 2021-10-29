@@ -13,6 +13,7 @@ class SO {
   final String bankAccountName;
   final String bankAccountNumber;
   final String bankName;
+  final String bankAddress;
   final bool deactivated;
   final String reportingManager;
   final bool maritalStatus;
@@ -33,6 +34,7 @@ class SO {
       this.bankAccountName,
       this.bankAccountNumber,
       this.bankName,
+      this.bankAddress,
       this.deactivated,
       this.reportingManager,
       this.maritalStatus,
@@ -54,12 +56,13 @@ class SO {
       json['9'],
       json['10'],
       json['11'],
-      json['12'] == 0 ? false : true,
-      json['13'],
-      json['14'] == 0 ? false : true,
-      json['15'],
+      json['12'],
+      json['13'] == 0 ? false : true,
+      json['14'],
+      json['15'] == 0 ? false : true,
       json['16'],
       json['17'],
+      json['18'],
     );
   }
 }

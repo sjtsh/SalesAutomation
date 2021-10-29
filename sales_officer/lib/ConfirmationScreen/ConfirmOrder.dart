@@ -13,6 +13,7 @@ class ConfirmOrder extends StatefulWidget {
   final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
+  final Function refresh;
 
   ConfirmOrder(
     this.currentDistributor,
@@ -20,7 +21,7 @@ class ConfirmOrder extends StatefulWidget {
     this.index,
     this.isNew,
     this.distributorOrder,
-    this.distributorOrderItems,
+    this.distributorOrderItems, this.refresh,
   );
 
   @override
@@ -97,6 +98,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
             widget.isNew,
             widget.distributorOrder,
             widget.distributorOrderItems,
+            widget.refresh,
           );
         },
       ),

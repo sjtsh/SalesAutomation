@@ -24,12 +24,16 @@ class StocksScreen extends StatefulWidget {
   final DistributorOrder distributorOrder;
   final SKUStockService skuStockService = SKUStockService();
   final ScrollController _scrollController = ScrollController();
+
+  final Function refresh;
+
   final _formKey = GlobalKey<FormState>();
 
   StocksScreen(
     this.currentDistributor,
     this.index,
     this.distributorOrder,
+    this.refresh,
   );
 
   @override
@@ -104,7 +108,7 @@ class _StocksScreenState extends State<StocksScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(8, false),
+            Header(8, false, widget.refresh),
             Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,
@@ -199,7 +203,7 @@ class _StocksScreenState extends State<StocksScreen> {
                   widget.distributorOrder,
                   distributorOrderItems,
                   returnOrdersCountList,
-                  updateReturnOrdersCountList),
+                  updateReturnOrdersCountList, widget.refresh),
             ),
           ],
         ),

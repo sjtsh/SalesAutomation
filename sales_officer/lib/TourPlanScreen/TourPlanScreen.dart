@@ -7,6 +7,9 @@ import 'Calendar.dart';
 import 'EditTourPlanScreen.dart';
 
 class TourPlanScreen extends StatefulWidget {
+  final Function refresh;
+
+  TourPlanScreen(this.refresh);
   @override
   _TourPlanScreenState createState() => _TourPlanScreenState();
 }
@@ -41,7 +44,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
         backgroundColor: Color(0xffF5F5F5),
         body: Column(
           children: [
-            Header(4, false),
+            Header(4, false, widget.refresh),
             Container(
               height: 50,
               child: Row(
@@ -196,7 +199,7 @@ class _TourPlanScreenState extends State<TourPlanScreen> {
                       if (!isButton2Disabled) {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
-                          return EditTourPlanScreen(startDay, endDay, now);
+                          return EditTourPlanScreen(startDay, endDay, now, widget.refresh);
                         }));
                       }
                     }

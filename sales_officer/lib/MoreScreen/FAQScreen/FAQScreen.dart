@@ -5,13 +5,18 @@ import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/MoreScreen/FAQScreen/FAQExpandablePanel.dart';
 
 class FAQScreen extends StatelessWidget {
+
+  final Function refresh;
+
+  FAQScreen(this.refresh);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            Header(10, false),
+            Header(10, false, refresh),
             Expanded(
               child: ListView(
                 children: [

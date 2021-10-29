@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/DialogBox/DiscardPrompt.dart';
 import 'package:sales_officer/Notification/NotificationScreen.dart';
+import 'package:sales_officer/syncLogo.dart';
+
+import 'BACKEND Access/Methods/loadLocalData.dart';
 
 List heading = [
   "Dashboard", //0
@@ -16,11 +19,18 @@ List heading = [
   "FAQ" //10
 ];
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   final int index;
   final bool isNotBackIcon;
+  final Function refresh;
 
-  Header(this.index, this.isNotBackIcon);
+  Header(this.index, this.isNotBackIcon, this.refresh);
+
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +47,7 @@ class Header extends StatelessWidget {
       ),
       child: Row(
         children: [
-          isNotBackIcon
+          widget.isNotBackIcon
               ? SizedBox(
                   width: 12,
                 )
@@ -45,9 +55,11 @@ class Header extends StatelessWidget {
                   color: Colors.white,
                   child: InkWell(
                     onTap: () {
-                      if (isNotBackIcon) {
+                      if (widget.isNotBackIcon) {
                       } else {
-                        if (index == 6 || index == 7 || index == 8) {
+                        if (widget.index == 6 ||
+                            widget.index == 7 ||
+                            widget.index == 8) {
                           showDialog(
                             context: context,
                             builder: (_) {
@@ -67,49 +79,34 @@ class Header extends StatelessWidget {
                   ),
                 ),
           Text(
-            heading[index],
+            heading[widget.index],
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Expanded(
             child: Container(),
           ),
-          Material(
-            color: Colors.white,
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(shape: BoxShape.circle),
-                child: isNotBackIcon
-                    ? Center(
-                        child: Icon(
-                        Icons.sync,
-                      ))
-                    : Container(),
-              ),
-            ),
-          ),
+          SyncIcon(widget.refresh, widget.isNotBackIcon),
           Material(
             color: Colors.white,
             child: InkWell(
               onTap: () {
-                if (isNotBackIcon) {
+                if (widget.isNotBackIcon) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NotificationScreen()));
+                          builder: (context) => NotificationScreen(widget.refresh)));
                 }
               },
               child: Container(
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(shape: BoxShape.circle),
-                child: isNotBackIcon
+                child: widget.isNotBackIcon
                     ? Center(
                         child: Icon(
-                        Icons.notifications_active_outlined,
-                      ))
+                          Icons.notifications_active_outlined,
+                        ),
+                      )
                     : Container(),
               ),
             ),

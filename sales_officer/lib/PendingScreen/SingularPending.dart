@@ -9,8 +9,9 @@ import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';
 
 class SingularPending extends StatefulWidget {
   final DistributorOrder e;
+  final Function refresh;
 
-  SingularPending(this.e);
+  SingularPending(this.e, this.refresh);
 
   @override
   State<SingularPending> createState() => _SingularPendingState();
@@ -46,7 +47,7 @@ class _SingularPendingState extends State<SingularPending> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) {
-                          return ApproveOrderScreen(widget.e);
+                          return ApproveOrderScreen(widget.e, widget.refresh);
                         },
                       ),
                     );
@@ -123,6 +124,7 @@ class _SingularPendingState extends State<SingularPending> {
                                                 6,
                                                 widget.e,
                                                 false,
+                                                widget.refresh
                                               );
                                             }),
                                           );

@@ -21,10 +21,9 @@ class DistributorList extends StatelessWidget {
   final Distributor distributor;
   final int index;
 
-  DistributorList(
-    this.distributor,
-    this.index,
-  );
+  final Function refresh;
+
+  DistributorList(this.distributor, this.index, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class DistributorList extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) {
-                    return DistributorInfo(distributor);
+                    return DistributorInfo(distributor, refresh);
                   },
                 ),
               );

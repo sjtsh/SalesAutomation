@@ -153,7 +153,7 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: Text(
-                                      "Stock Present: ${widget.primaryStockController.text}${allUnitsLocal.firstWhere((element) => widget.skuDistributorWise.primaryUnitID == element.unitID).unitName} ${widget.alternativeStockController.text}${allUnitsLocal.firstWhere((element) => widget.skuDistributorWise.alternativeUnitID == element.unitID).unitName}",
+                                      "Stock Present: ${widget.primaryStockController.text}${allUnitsLocal.firstWhere((element) => widget.sku.primaryUnitID == element.unitID).unitName} ${widget.alternativeStockController.text}${allUnitsLocal.firstWhere((element) => widget.sku.alternativeUnitID == element.unitID).unitName}",
                                       style: TextStyle(
                                           fontSize: 10, color: Colors.green),
                                     ),

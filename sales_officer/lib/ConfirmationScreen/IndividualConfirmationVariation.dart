@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/DialogBox/ConfirmationModalSheet.dart';
 
@@ -24,6 +25,9 @@ class IndividualConfirmationVariation extends StatelessWidget {
         allSKUDistributorWiseLocal.firstWhere((element) =>
             element.distributorID == distributor.distributorID &&
             element.SKUID == f[0].SKUID);
+
+    SKU sku = allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
+
     return Material(
       color: Colors.white,
       child: InkWell(
@@ -85,7 +89,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),
@@ -109,7 +113,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),

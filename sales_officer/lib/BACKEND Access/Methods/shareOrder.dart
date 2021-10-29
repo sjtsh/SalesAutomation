@@ -4,6 +4,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/Database.dart';
@@ -12,10 +13,6 @@ import 'package:share_plus/share_plus.dart';
 shareOrder(
   DistributorOrder distributorOrder,
 ) {
-  List<SKUDistributorWise> skuDistributorWises = allSKUDistributorWiseLocal
-      .where(
-          (element) => element.distributorID == distributorOrder.distributorID)
-      .toList();
   double totalValue = 0;
   double companyValue = 0;
   int companyPrimaryUnit = 0;
@@ -249,16 +246,14 @@ shareOrder(
                               ),
                               pw.Column(
                                 children: company.value.map((e) {
-                                  SKUDistributorWise mySKUDistributorWise =
-                                      skuDistributorWises.firstWhere(
-                                          (element) =>
-                                              element.SKUID == e.SKUID);
+                                  SKU sku = allSKULocal.firstWhere(
+                                      (element) => element.SKUID == e.SKUID);
                                   double mereTotal = e.primaryItemCount *
-                                          mySKUDistributorWise.primaryCF *
-                                          mySKUDistributorWise.MRP +
+                                      sku.primaryCF *
+                                      sku.MRP +
                                       e.alternativeItemCount *
-                                          mySKUDistributorWise.alternativeCF *
-                                          mySKUDistributorWise.MRP;
+                                          sku.alternativeCF *
+                                          sku.MRP;
                                   totalValue += mereTotal;
                                   companyValue += mereTotal;
 
@@ -306,13 +301,13 @@ shareOrder(
                                           pw.SizedBox(
                                             width: 100,
                                             child: pw.Text(
-                                              "Rs ${mySKUDistributorWise.MRP}",
+                                              "Rs ${sku.MRP}",
                                             ),
                                           ),
                                           pw.SizedBox(
                                             width: 100,
                                             child: pw.Text(
-                                              "${e.primaryItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.primaryUnitID).unitName + " " + e.alternativeItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == mySKUDistributorWise.alternativeUnitID).unitName}",
+                                              "${e.primaryItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName + " " + e.alternativeItemCount.toString() + allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
                                             ),
                                           ),
                                           pw.SizedBox(
