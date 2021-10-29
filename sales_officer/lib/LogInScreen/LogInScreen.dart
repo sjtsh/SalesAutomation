@@ -150,6 +150,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    calculateSales();
     return isLoaded
         ?
         //     ? SafeArea(

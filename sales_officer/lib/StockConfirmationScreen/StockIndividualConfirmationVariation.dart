@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/DialogBox/ConfirmationModalSheet.dart';
 import 'package:sales_officer/DialogBox/StockReturnModal.dart';
@@ -52,6 +53,8 @@ class _StockIndividualConfirmationVariationState
         allSKUDistributorWiseLocal.firstWhere((element) =>
             element.distributorID == widget.distributor.distributorID &&
             element.SKUID == widget.f[0].SKUID);
+    SKU sku =
+    allSKULocal.firstWhere((element) => element.SKUID == widget.f[0].SKUID);
     TextEditingController primaryTextEditingController =
         widget.textEditingControllers[allSKULocal.indexOf(allSKULocal
                 .firstWhere((element) => element.SKUID == widget.f[0].SKUID)) *
@@ -157,7 +160,7 @@ class _StockIndividualConfirmationVariationState
                                         children: [
                                           counts[1] != 0
                                               ? Text(
-                                                  "${counts[1]}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
+                                                  "${counts[1]}${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                                                   style: TextStyle(
                                                       fontSize: 10,
                                                       color: Colors.white),
@@ -165,7 +168,7 @@ class _StockIndividualConfirmationVariationState
                                               : Container(),
                                           counts[2] != 0
                                               ? Text(
-                                                  " ${counts[2]}${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
+                                                  " ${counts[2]}${allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
                                                   style: TextStyle(
                                                       fontSize: 10,
                                                       color: Colors.white),
@@ -195,7 +198,7 @@ class _StockIndividualConfirmationVariationState
                           ),
                         ),
                         Text(
-                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.primaryUnitID).unitName}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),
@@ -219,7 +222,7 @@ class _StockIndividualConfirmationVariationState
                           ),
                         ),
                         Text(
-                          " ${allUnitsLocal.firstWhere((element) => element.unitID == skuDistributorWise.alternativeUnitID).unitName}",
+                          " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black.withOpacity(0.5),

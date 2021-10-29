@@ -15,16 +15,17 @@ class StockConfirmOrder extends StatefulWidget {
   final List<DistributorOrderItem> distributorOrderItems;
   final List returnOrdersCountList;
   final Function updateReturnOrdersCountList;
+  final Function refresh;
 
   StockConfirmOrder(
-    this.currentDistributor,
-    this._textEditingControllers,
-    this.index,
-    this.distributorOrder,
-    this.distributorOrderItems,
-    this.returnOrdersCountList,
-    this.updateReturnOrdersCountList,
-  );
+      this.currentDistributor,
+      this._textEditingControllers,
+      this.index,
+      this.distributorOrder,
+      this.distributorOrderItems,
+      this.returnOrdersCountList,
+      this.updateReturnOrdersCountList,
+      this.refresh);
 
   @override
   _StockConfirmOrderState createState() => _StockConfirmOrderState();
@@ -103,7 +104,8 @@ class _StockConfirmOrderState extends State<StockConfirmOrder> {
               widget.distributorOrder,
               widget.distributorOrderItems,
               widget.returnOrdersCountList,
-              widget.updateReturnOrdersCountList);
+              widget.updateReturnOrdersCountList,
+              widget.refresh);
         },
       ),
     );

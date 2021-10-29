@@ -7,6 +7,8 @@ import '../../Header.dart';
 import 'EditSettings.dart';
 
 class Settings extends StatefulWidget {
+  final Function refresh;
+  Settings(this.refresh);
   @override
   State<Settings> createState() => _SettingsState();
 }
@@ -20,7 +22,7 @@ class _SettingsState extends State<Settings> {
       child: Scaffold(
         body: Column(
           children: [
-            Header(9, false),
+            Header(9, false, widget.refresh),
             Expanded(
               child: ListView(
                 children: [

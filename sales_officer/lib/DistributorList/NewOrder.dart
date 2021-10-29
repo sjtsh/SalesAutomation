@@ -7,11 +7,12 @@ import 'DistributorList.dart';
 
 class NewOrder extends StatefulWidget {
   final int index;
-
+  final Function refresh;
   final DistributorService distributorService = DistributorService();
 
   NewOrder(
     this.index,
+    this.refresh,
   );
 
   @override
@@ -132,6 +133,7 @@ class _NewOrderState extends State<NewOrder> {
                                 (item) => DistributorList(
                                   item,
                                   widget.index,
+                                  widget.refresh,
                                 ),
                               )
                               .toList(),
@@ -142,6 +144,7 @@ class _NewOrderState extends State<NewOrder> {
                                 (item) => DistributorList(
                                   item,
                                   widget.index,
+                                  widget.refresh,
                                 ),
                               )
                               .toList(),

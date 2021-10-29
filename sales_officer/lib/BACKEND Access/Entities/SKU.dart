@@ -1,5 +1,6 @@
 class SKU {
   final int SKUID;
+  final String SKUERPID;
   final int pricingTypeID;
   final int subGroupID;
   final int defaultBillingCompanyID;
@@ -16,6 +17,7 @@ class SKU {
 
   SKU(
     this.SKUID,
+    this.SKUERPID,
     this.pricingTypeID,
     this.subGroupID,
     this.defaultBillingCompanyID,
@@ -46,7 +48,8 @@ class SKU {
       json['10'],
       json['11'],
       json['12'],
-      json['13'] == 0 ? false : true,
+      json['13'],
+      json['14'] == 0 ? false : true,
     );
   }
 }

@@ -28,16 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _changeActivity(int i) {
     if (i == 0) {
-      return Profile();
+      return Profile(refresh);
     } else if (i == 1) {
-      return NewOrder(i);
+      return NewOrder(i, refresh);
     } else if (i == 2) {
-      return PendingScreen();
+      return PendingScreen(refresh);
     } else if (i == 3) {
-      return MoreScreen();
+      return MoreScreen(refresh);
     } else {
       return Container();
     }
+  }
+
+  void refresh() {
+    setState(() {});
   }
 
   @override
@@ -50,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Color(0xffF5F5F5),
           body: Column(
             children: [
-              currentIndex == 5 ? Header(currentIndex, false) : Header(currentIndex, true),
+              currentIndex == 5 ? Header(currentIndex, false, refresh) : Header(currentIndex, true, refresh),
               Expanded(child: _changeActivity(currentIndex)),
             ],
           ),

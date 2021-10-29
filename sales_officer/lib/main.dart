@@ -5,12 +5,11 @@ import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'BACKEND Access/Methods/calculateSales.dart';
 import 'Database.dart';
 
 void main() {
-  print(DateTime.now());
   runApp(Fusers());
-
 }
 
 class Fusers extends StatefulWidget {

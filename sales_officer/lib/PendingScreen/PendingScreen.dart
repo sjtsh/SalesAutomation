@@ -14,6 +14,9 @@ class PendingScreen extends StatefulWidget {
   final DistributorOrderService distributorOrderService =
       DistributorOrderService();
 
+  final Function refresh;
+  PendingScreen(this.refresh);
+
   @override
   _PendingScreenState createState() => _PendingScreenState();
 }
@@ -138,8 +141,8 @@ class _PendingScreenState extends State<PendingScreen> {
                   },
                   controller: pageController,
                   children: [
-                    OrdersList(distributorOrders, false),
-                    OrdersList(distributorOrders, true)
+                    OrdersList(distributorOrders, false, widget.refresh),
+                    OrdersList(distributorOrders, true, widget.refresh)
                   ],
                 ),
               ),

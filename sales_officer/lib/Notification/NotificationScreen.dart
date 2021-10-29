@@ -4,6 +4,11 @@ import 'package:sales_officer/Notification/NotificationsList.dart';
 import '../Header.dart';
 
 class NotificationScreen extends StatelessWidget {
+
+  final Function refresh;
+
+  NotificationScreen(this.refresh);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -11,7 +16,7 @@ class NotificationScreen extends StatelessWidget {
         backgroundColor: Color(0xffF5F5F5),
         body: Column(
           children: [
-            Header(5, false),
+            Header(5, false, refresh),
             NotificationList(),
           ],
         ),

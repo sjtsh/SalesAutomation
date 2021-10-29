@@ -12,8 +12,8 @@ class EditTourPlanScreen extends StatefulWidget {
   final int startDate;
   final int endDate;
   final DateTime now;
-
-  EditTourPlanScreen(this.startDate, this.endDate, this.now);
+  final Function refresh;
+  EditTourPlanScreen(this.startDate, this.endDate, this.now, this.refresh);
 
   @override
   _EditTourPlanScreenState createState() => _EditTourPlanScreenState();
@@ -75,7 +75,7 @@ class _EditTourPlanScreenState extends State<EditTourPlanScreen> {
           children: [
             Column(
               children: [
-                Header(4, false),
+                Header(4, false, widget.refresh),
                 Container(
                   decoration: BoxDecoration(
                       border: Border(

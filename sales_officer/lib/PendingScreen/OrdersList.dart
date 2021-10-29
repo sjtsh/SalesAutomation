@@ -6,8 +6,8 @@ import 'SingularPending.dart';
 class OrdersList extends StatelessWidget {
   final List<DistributorOrder> distributorOrders;
   final bool condition;
-
-  OrdersList(this.distributorOrders, this.condition);
+  final Function refresh;
+  OrdersList(this.distributorOrders, this.condition, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class OrdersList extends StatelessWidget {
                 Column(
                   children: personalDistributorOrders
                       .map(
-                        (e) => SingularPending(e),
+                        (e) => SingularPending(e, refresh),
                       )
                       .toList(),
                 ),

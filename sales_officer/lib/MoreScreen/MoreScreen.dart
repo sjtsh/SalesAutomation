@@ -8,6 +8,10 @@ import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
 import 'FAQScreen/FAQScreen.dart';
 
 class MoreScreen extends StatelessWidget {
+  final Function refresh;
+
+  MoreScreen(this.refresh);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +34,7 @@ class MoreScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return TourPlanScreen();
+                    return TourPlanScreen(refresh);
                   }));
                 },
                 child: Container(
@@ -73,7 +77,7 @@ class MoreScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () =>
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return Settings();
+                  return Settings(refresh);
                 })),
                 child: Container(
                   height: 70,
@@ -203,7 +207,7 @@ class MoreScreen extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return FAQScreen();
+                    return FAQScreen(refresh);
                   }));
                 },
                 child: Container(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/shareOrder.dart';
@@ -16,8 +17,9 @@ import 'package:sales_officer/ProductsScreen/ProductsScreen.dart';
 
 class ApproveOrderScreen extends StatefulWidget {
   final DistributorOrder e;
+  final Function refresh;
 
-  ApproveOrderScreen(this.e);
+  ApproveOrderScreen(this.e, this.refresh);
 
   @override
   _ApproveOrderScreenState createState() => _ApproveOrderScreenState();
@@ -46,17 +48,17 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       value.forEach((element) {
         if (element.distributorOrderID == widget.e.distributorOrderID) {
           aList.add(element);
-          SKUDistributorWise skuDistributorWise =
-              skuDistributorWises.firstWhere((i) => i.SKUID == element.SKUID);
+          SKU sku =
+              allSKULocal.firstWhere((i) => i.SKUID == element.SKUID);
           totalAmount += element.primaryItemCount *
-              skuDistributorWise.primaryCF *
-              skuDistributorWise.MRP;
+              sku.primaryCF *
+              sku.MRP;
           totalAmount += element.alternativeItemCount *
-              skuDistributorWise.alternativeCF *
-              skuDistributorWise.MRP;
+              sku.alternativeCF *
+              sku.MRP;
           totalAmount += element.secondaryAlternativeItemCount *
-              skuDistributorWise.secondaryAlternativeCF *
-              skuDistributorWise.MRP;
+              sku.secondaryAlternativeCF *
+              sku.MRP;
         }
       });
       setState(() {
@@ -102,6 +104,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                               6,
                               widget.e,
                               false,
+                              widget.refresh
                             );
                           }),
                         );
@@ -240,7 +243,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
         ),
         body: Column(
           children: [
-            Header(2, false),
+            Header(2, false, widget.refresh),
             Container(
               padding: EdgeInsets.only(left: 12),
               alignment: Alignment.centerLeft,

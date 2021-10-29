@@ -14,6 +14,7 @@ class ConfirmationScreen extends StatelessWidget {
   final bool isNew;
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
+  final Function refresh;
 
   ConfirmationScreen(
       this.currentDistributor,
@@ -22,7 +23,7 @@ class ConfirmationScreen extends StatelessWidget {
       this.index,
       this.isNew,
       this.distributorOrder,
-      this.distributorOrderItems);
+      this.distributorOrderItems, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ConfirmationScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Header(7, false),
+            Header(7, false, refresh),
             Container(
                 padding: EdgeInsets.only(left: 12),
                 alignment: Alignment.centerLeft,

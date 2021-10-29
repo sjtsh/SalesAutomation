@@ -38,7 +38,7 @@ class FAQExpandablePanel extends StatelessWidget {
                 padding: EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    Expanded(child: Text(e as String)),
+                    Expanded(child: Text(e)),
                     Icon(Icons.keyboard_arrow_down_sharp)
                   ],
                 ),
@@ -77,7 +77,7 @@ class FAQExpandablePanel extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Expanded(child: Text(e as String)),
+                            Expanded(child: Text(e)),
                             Icon(Icons.keyboard_arrow_up)
                           ],
                         ),

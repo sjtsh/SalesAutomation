@@ -17,6 +17,9 @@ class StockConfirmationScreen extends StatelessWidget {
   final List returnOrdersCountList;
   final Function updateReturnOrdersCountList;
 
+  final Function refresh;
+
+
   StockConfirmationScreen(
       this.currentDistributor,
       this._textEditingControllers,
@@ -25,7 +28,7 @@ class StockConfirmationScreen extends StatelessWidget {
       this.distributorOrder,
       this.distributorOrderItems,
       this.returnOrdersCountList,
-      this.updateReturnOrdersCountList);
+      this.updateReturnOrdersCountList, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class StockConfirmationScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Header(8, false),
+            Header(8, false, refresh),
             Container(
                 padding: EdgeInsets.only(left: 12),
                 alignment: Alignment.centerLeft,

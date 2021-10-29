@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/createOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/updateOrder.dart';
@@ -536,20 +537,19 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       if (aTextEditingController.text != "" &&
           widget._textEditingControllers.indexOf(aTextEditingController) % 2 ==
               0) {
-        SKUDistributorWise skuDistributorWise =
-            allSKUDistributorWiseLocal.firstWhere((i) =>
-                i.SKUID ==
-                    allSKULocal[widget._textEditingControllers
-                                .indexOf(aTextEditingController) ~/
-                            2]
-                        .SKUID &&
-                i.distributorID == widget.currentDistributor.distributorID);
+        SKU sku = allSKULocal.firstWhere((element) {
+          return element.SKUID ==
+              allSKULocal[widget._textEditingControllers
+                          .indexOf(aTextEditingController) ~/
+                      2]
+                  .SKUID;
+        });
         setState(() {
           totalAmount += aTextEditingController.text == ""
               ? 0
               : int.parse(aTextEditingController.text) *
-                  skuDistributorWise.primaryCF *
-                  skuDistributorWise.MRP;
+              sku.primaryCF *
+              sku.MRP;
 
           totalAmount += widget
                       ._textEditingControllers[widget._textEditingControllers
@@ -563,8 +563,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                               .indexOf(aTextEditingController) +
                           1]
                       .text) *
-                  skuDistributorWise.alternativeCF *
-                  skuDistributorWise.MRP;
+              sku.alternativeCF *
+              sku.MRP;
         });
       }
     });

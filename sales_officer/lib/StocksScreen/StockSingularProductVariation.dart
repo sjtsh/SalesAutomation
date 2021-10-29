@@ -43,6 +43,9 @@ class _StockSingularProductVariationState
         allSKUDistributorWiseLocal.firstWhere((element) =>
             element.distributorID == widget.currentDistributor.distributorID &&
             element.SKUID == widget.item.SKUID);
+    SKU sku =
+    allSKULocal.firstWhere((element) =>
+        element.SKUID == widget.item.SKUID);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -71,7 +74,7 @@ class _StockSingularProductVariationState
                     ? Container()
                     : MyTooltip(
                         widget.mySKUStock,
-                        skuDistributorWise,
+                        sku,
                       ),
                 SizedBox(
                   width: 12,
@@ -139,7 +142,7 @@ class _StockSingularProductVariationState
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText:
-                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.primaryUnitID == element.unitID).unitName}",
+                              "${allUnitsLocal.firstWhere((element) => sku.primaryUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),
@@ -175,7 +178,7 @@ class _StockSingularProductVariationState
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText:
-                              "${allUnitsLocal.firstWhere((element) => skuDistributorWise.alternativeUnitID == element.unitID).unitName}",
+                              "${allUnitsLocal.firstWhere((element) => sku.alternativeUnitID == element.unitID).unitName}",
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),
