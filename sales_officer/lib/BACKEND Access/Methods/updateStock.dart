@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUStockService.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/StocksScreen/StocksScreen.dart';
@@ -35,7 +36,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
       SKUStockService skuStockService = SKUStockService();
       bool isContains = false;
       ourSKUStock.forEach((element) {
-      print("already there");
+        print("already there");
         if (element.SKUID == mySKUStock.SKUID &&
             element.primaryStock == myPrimaryCount &&
             element.alternativeStock == myAlternativeCount) {
@@ -43,19 +44,23 @@ Future<bool> updateStock(List recieptData, int distributorID,
         }
       });
       if (!isContains) {
-      print("incoming");
-        conditionOnly = Geolocator.getCurrentPosition().then(
-          (value) => skuStockService.updateSKUStock(SKUStock(
-              mySKUStock.SKUStockID,
-              mySKUStock.SKUID,
-              mySKUStock.distributorID,
-              myPrimaryCount,
-              myAlternativeCount,
-              0,
-              DateTime.now().toString(),
-              value.latitude,
-              value.longitude, false)),
-        );
+        NepaliDateService nepaliDateService = NepaliDateService();
+        conditionOnly = nepaliDateService.fetchNepaliDate().then((time) {
+          conditionOnly = Geolocator.getCurrentPosition().then(
+            (value) => skuStockService.updateSKUStock(SKUStock(
+                mySKUStock.SKUStockID,
+                mySKUStock.SKUID,
+                mySKUStock.distributorID,
+                myPrimaryCount,
+                myAlternativeCount,
+                0,
+                time,
+                value.latitude,
+                value.longitude,
+                false)),
+          );
+          return conditionOnly;
+        });
       }
     }
   });

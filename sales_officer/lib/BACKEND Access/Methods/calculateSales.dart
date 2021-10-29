@@ -26,15 +26,13 @@ calculateSales() {
                       aDistributor.distributorID &&
                   aDistributorOrder.orderStatus)
               .forEach((aDistributorOrder) {
-            print("time is " + aDistributorOrder.dateAndTime);
             //FOR MTD
             if (aDistributorOrder.dateAndTime.substring(0, 4) ==
                 time.substring(0, 4)) {
               if (aDistributorOrder.dateAndTime.substring(5, 7) ==
                   time.substring(5, 7)) {
-                print(aDistributorOrder.dateAndTime.substring(9,11));
-                if (int.parse(aDistributorOrder.dateAndTime.substring(9, 11)) <
-                    int.parse(time.substring(9, 11))) {
+                if (int.parse(aDistributorOrder.dateAndTime.substring(8, 10)) <=
+                    int.parse(time.substring(8, 10))) {
                   distributorOrderItem
                       .where((element) =>
                           element.distributorOrderID ==
@@ -54,8 +52,8 @@ calculateSales() {
                           aDistributorOrder.dateAndTime.substring(5, 7)) -
                       1 ==
                   int.parse(time.substring(5, 7))) {
-                if (int.parse(aDistributorOrder.dateAndTime.substring(9, 11)) >
-                    int.parse(time.substring(9, 11))) {
+                if (int.parse(aDistributorOrder.dateAndTime.substring(8, 10)) >
+                    int.parse(time.substring(8, 10))) {
                   distributorOrderItem
                       .where((element) =>
                           element.distributorOrderID ==
@@ -74,9 +72,9 @@ calculateSales() {
               }
             }
             //FOR YTD
-            else if (aDistributorOrder.dateAndTime.substring(0, 4) ==
+            if (aDistributorOrder.dateAndTime.substring(0, 4) ==
                 time.substring(0, 4)) {
-              if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) <
+              if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) <=
                   int.parse(time.substring(5, 7))) {
                 distributorOrderItem
                     .where((element) =>
@@ -92,27 +90,27 @@ calculateSales() {
                           aDistributorOrderItem.alternativeItemCount *
                           sku.alternativeCF;
                 });
-              } else if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(0, 4)) -
-                      1 ==
-                  int.parse(time.substring(0, 4))) {
-                if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
-                    int.parse(time.substring(5, 7))) {
-                  distributorOrderItem
-                      .where((element) =>
-                          element.distributorOrderID ==
-                          aDistributorOrder.distributorOrderID)
-                      .forEach((aDistributorOrderItem) {
-                    SKU sku = allSKULocal.firstWhere(
-                        (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                    ytd += sku.MRP *
-                            aDistributorOrderItem.primaryItemCount *
-                            sku.primaryCF +
-                        sku.MRP *
-                            aDistributorOrderItem.alternativeItemCount *
-                            sku.alternativeCF;
-                  });
-                }
+              }
+            } else if (int.parse(
+                        aDistributorOrder.dateAndTime.substring(0, 4)) -
+                    1 ==
+                int.parse(time.substring(0, 4))) {
+              if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
+                  int.parse(time.substring(5, 7))) {
+                distributorOrderItem
+                    .where((element) =>
+                        element.distributorOrderID ==
+                        aDistributorOrder.distributorOrderID)
+                    .forEach((aDistributorOrderItem) {
+                  SKU sku = allSKULocal.firstWhere(
+                      (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                  ytd += sku.MRP *
+                          aDistributorOrderItem.primaryItemCount *
+                          sku.primaryCF +
+                      sku.MRP *
+                          aDistributorOrderItem.alternativeItemCount *
+                          sku.alternativeCF;
+                });
               }
             }
           });
@@ -132,30 +130,16 @@ calculateSales() {
                 .last
                 .dateAndTime;
           }
-          print(aDistributor.distributorID.toString() +
-              " " +
-              mtd.toString() +
-              " " +
-              ytd.toString() +
-              " " +
-              lastOrder +
-              " " +
-              "\n");
-          // allDistributorSalesLocal.add(
-          //   DistributorSale(
-          //     aDistributor,
-          //     mtd,
-          //     ytd,
-          //     5000,
-          //     distributorOrder
-          //         .where((aDistributorOrder) =>
-          //             aDistributorOrder.distributorID ==
-          //                 aDistributor.distributorID &&
-          //             aDistributorOrder.orderStatus)
-          //         .last
-          //         .dateAndTime,
-          //   ),
-          // );
+          print(aDistributor.distributorID.toString() + " " + mtd.toString() + " " + ytd.toString());
+          allDistributorSalesLocal.add(
+            DistributorSale(
+              aDistributor,
+              mtd,
+              ytd,
+              5000,
+              lastOrder,
+            ),
+          );
         });
       });
     });

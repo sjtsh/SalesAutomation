@@ -573,7 +573,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+
     getTotalValue();
+    super.initState();
   }
 }

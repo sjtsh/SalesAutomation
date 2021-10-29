@@ -404,7 +404,7 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     getTotalValue();
+    super.initState();
   }
 }

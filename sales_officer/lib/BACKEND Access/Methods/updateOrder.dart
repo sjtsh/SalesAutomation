@@ -4,6 +4,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 
 import '../../Database.dart';
@@ -72,19 +73,22 @@ Future<bool> updateOrder(
     }
   });
   DistributorOrderService distributorOrderService = DistributorOrderService();
-  DistributorOrder newDistributorOrder = DistributorOrder(
-      distributorOrder.distributorOrderID,
-      distributorOrder.distributorID,
-      distributorOrder.SOID,
-      distributorOrder.joint,
-      !isWarning,
-      distributorOrder.remarks,
-      distributorOrder.dateAndTime,
-      DateTime.now().toString(),
-      distributorOrder.lat,
-      distributorOrder.lng,
-      false);
-  conditionOnly =
-      distributorOrderService.updateDistributorOrder(newDistributorOrder);
+  NepaliDateService nepaliDateService = NepaliDateService();
+
+  conditionOnly = nepaliDateService.fetchNepaliDate().then((time) {
+    return distributorOrderService.updateDistributorOrder(DistributorOrder(
+        distributorOrder.distributorOrderID,
+        distributorOrder.distributorID,
+        distributorOrder.SOID,
+        distributorOrder.joint,
+        !isWarning,
+        distributorOrder.remarks,
+        distributorOrder.dateAndTime,
+        time,
+        distributorOrder.lat,
+        distributorOrder.lng,
+        false));
+  });
+
   return conditionOnly;
 }

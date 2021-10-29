@@ -3,6 +3,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemServ
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorReturnOrderItemService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorReturnOrderService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 
 import '../../Database.dart';
@@ -14,51 +15,54 @@ Future<int> createOrder(int distributorID,
   bool _joint = true;
   bool _orderStatus = !isWarning;
   String _remarks = "Success";
-  String _dateAndTime = DateTime.now().toString();
   DistributorOrderService distributorOrderService = DistributorOrderService();
-  Future<int> value = distributorOrderService
-      .insertDistributorOrder(
-          _distributorID, _SOID, _joint, _orderStatus, _remarks, _dateAndTime)
-      .then((aCondition) {
-    try {
-      _textEditingControllers.forEach(
-        (element) {
-          if (_textEditingControllers.indexOf(element) % 2 == 0) {
-            int SKUID =
-                allSKULocal[_textEditingControllers.indexOf(element) ~/ 2]
-                    .SKUID;
-            int primaryItemCount = 0;
-            int alternativeItemCount = 0;
-            int secondaryAlternativeItemCount = 0;
-            if (element.text != "") {
-              primaryItemCount = int.parse(element.text);
-            }
-            if (_textEditingControllers[
+  NepaliDateService nepaliDateService = NepaliDateService();
+  Future<int> value = nepaliDateService.fetchNepaliDate().then((_dateAndTime) {
+    return distributorOrderService
+        .insertDistributorOrder(
+            _distributorID, _SOID, _joint, _orderStatus, _remarks, _dateAndTime)
+        .then((aCondition) {
+      try {
+        _textEditingControllers.forEach(
+          (element) {
+            if (_textEditingControllers.indexOf(element) % 2 == 0) {
+              int SKUID =
+                  allSKULocal[_textEditingControllers.indexOf(element) ~/ 2]
+                      .SKUID;
+              int primaryItemCount = 0;
+              int alternativeItemCount = 0;
+              int secondaryAlternativeItemCount = 0;
+              if (element.text != "") {
+                primaryItemCount = int.parse(element.text);
+              }
+              if (_textEditingControllers[
+                          _textEditingControllers.indexOf(element) + 1]
+                      .text !=
+                  "") {
+                alternativeItemCount = int.parse(_textEditingControllers[
                         _textEditingControllers.indexOf(element) + 1]
-                    .text !=
-                "") {
-              alternativeItemCount = int.parse(_textEditingControllers[
-                      _textEditingControllers.indexOf(element) + 1]
-                  .text);
+                    .text);
+              }
+              if (primaryItemCount != 0 || alternativeItemCount != 0) {
+                DistributorOrderItemService distributorOrderItemService =
+                    DistributorOrderItemService();
+                distributorOrderItemService.insertDistributorOrderItem(
+                    aCondition,
+                    SKUID,
+                    primaryItemCount,
+                    alternativeItemCount,
+                    secondaryAlternativeItemCount);
+              }
             }
-            if (primaryItemCount != 0 || alternativeItemCount != 0) {
-              DistributorOrderItemService distributorOrderItemService =
-                  DistributorOrderItemService();
-              distributorOrderItemService.insertDistributorOrderItem(
-                  aCondition,
-                  SKUID,
-                  primaryItemCount,
-                  alternativeItemCount,
-                  secondaryAlternativeItemCount);
-            }
-          }
-        },
-      );
-    } catch (e) {
-      print("wasnt successful");
-    }
-    return aCondition;
+          },
+        );
+      } catch (e) {
+        print("wasnt successful");
+      }
+      return aCondition;
+    });
   });
+
   return value;
 }
 
