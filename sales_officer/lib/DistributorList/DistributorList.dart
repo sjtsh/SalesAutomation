@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/DistributorInfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../Database.dart';
 import '../ProductsScreen/ProductsScreen.dart';
 
 List<Color> colors = <Color>[
@@ -27,6 +29,9 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DistributorSale distributorSales = allDistributorSalesLocal.firstWhere(
+        (element) =>
+            element.distributor.distributorID == distributor.distributorID);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12.0),
       child: Container(
@@ -144,17 +149,116 @@ class DistributorList extends StatelessWidget {
                     thickness: 1,
                     color: Colors.black.withOpacity(0.1),
                   ),
-                  Text(
-                    "mtd: , ytd: ",
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.calendar_today,
+                                    color: Colors.black.withOpacity(0.5)),
+                                Text(
+                                  "mtd:",
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "${distributorSales.mtd}",
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.calendar_today,
+                                    color: Colors.black.withOpacity(0.5)),
+                                Text(
+                                  "ytd:",
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "${distributorSales.ytd}",
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Outstanding: 5000, Last Order: ",
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.monetization_on_outlined,
+                                    color: Colors.black.withOpacity(0.5)),
+                                Text(
+                                  "Outstanding:",
+                                  style: TextStyle(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "${distributorSales.outstanding}",
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time_sharp,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Last Order:",
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "${distributorSales.lastOrder}",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
