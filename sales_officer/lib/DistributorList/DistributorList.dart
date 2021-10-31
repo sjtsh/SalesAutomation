@@ -88,7 +88,7 @@ class DistributorList extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: 10,
                         ),
                         Expanded(
                           child: Row(
@@ -138,9 +138,6 @@ class DistributorList extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20,
                               ),
                             ],
                           ),
@@ -276,7 +273,7 @@ class DistributorList extends StatelessWidget {
                                     width: 45,
                                     decoration: BoxDecoration(
                                         color:
-                                            Color(0xffEC2227).withOpacity(0.2),
+                                            Color(0xff61ABEF).withOpacity(0.2),
                                         shape: BoxShape.circle),
                                     child: Icon(
                                       Icons.access_time_sharp,
