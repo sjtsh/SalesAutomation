@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/LastUpdatedService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 
 import 'BACKEND Access/Methods/loadLocalData.dart';
-import 'Notification/NotificationScreen.dart';
 
 class SyncIcon extends StatefulWidget {
   final Function refresh;
@@ -27,6 +28,10 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
     curve: Curves.elasticOut,
   );
   String lastUpdated = "0000-00-00 00:00:00";
+  SuperTooltip tooltip = SuperTooltip(
+    popupDirection: TooltipDirection.down,
+    content: Container(),
+  );
 
   @override
   void dispose() {
@@ -34,11 +39,14 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void close() {
+    tooltip.close();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     LastUpdatedService lastUpdatedService = LastUpdatedService();
     lastUpdatedService.fetchLastUpdateds().then((value) {
       setState(() {
@@ -53,13 +61,137 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
       color: Colors.white,
       child: InkWell(
         onTap: () async {
-          loadLocalData(widget.refresh);
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          NepaliDateService nepaliDateService = NepaliDateService();
-          nepaliDateService.fetchNepaliDate().then((value) {
-            prefs.setString("lastUpdated", value);
-            setState(() {});
-          });
+          tooltip = SuperTooltip(
+              arrowLength: 15,
+              arrowBaseWidth: 5,
+              borderColor: Colors.transparent,
+              shadowColor: Colors.black.withOpacity(0.2),
+              content: SizedBox(
+                height: 80,
+                width: 190,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.sync),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            !condition
+                                ? Text(
+                                    "Loading ... ",
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                        decoration: TextDecoration.none),
+                                  )
+                                : Text(
+                                    "Last Sync Date",
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                        decoration: TextDecoration.none),
+                                  ),
+                            FutureBuilder(
+                              future: SharedPreferences.getInstance(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  SharedPreferences prefs = snapshot.data;
+                                  return Text(
+                                    prefs.getString("lastUpdated")!,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        decoration: TextDecoration.none),
+                                  );
+                                }
+                                return Text(
+                                  "0000-00-00 00:00:00",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      decoration: TextDecoration.none),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 3,
+                                offset: Offset(0, 2))
+                          ],
+                        ),
+                        child: !condition
+                            ? Container(
+                                alignment: Alignment.center,
+                                height: 30,
+                                color: Color(0xff60D74D),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Material(
+                                color: Colors.white,
+                                child: InkWell(
+                                  onTap: () async {
+                                    loadLocalData(widget.refresh, close);
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    NepaliDateService nepaliDateService =
+                                        NepaliDateService();
+                                    nepaliDateService
+                                        .fetchNepaliDate()
+                                        .then((value) {
+                                      prefs.setString("lastUpdated", value);
+                                      setState(() {});
+                                    });
+                                    tooltip.close();
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 30,
+                                    color: Color(0xff60D74D),
+                                    child: Builder(builder: (context) {
+                                      return Text(
+                                        "SYNC NOW",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              popupDirection: TooltipDirection.down);
+          tooltip.show(context);
         },
         child: Container(
           height: 50,

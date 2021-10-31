@@ -9,12 +9,13 @@ import 'package:sales_officer/BACKEND%20Access/Services/SODistributorConnectionS
 import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 
 import '../../Database.dart';
 
 bool condition = true;
 
-Future<void> loadLocalData(Function refresh) async {
+Future<void> loadLocalData(Function refresh, Function close) async {
   condition = false;
   refresh();
   SubGroupService subGroupService = SubGroupService();
@@ -76,6 +77,7 @@ Future<void> loadLocalData(Function refresh) async {
                             }).toList();
                         condition = true;
                         refresh();
+                        close();
                         return true;
                       });
                     });

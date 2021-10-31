@@ -60,7 +60,7 @@ class DistributorInfo extends StatelessWidget {
                       },
                       child: Container(
                         height: 50,
-                        color: Colors.green,
+                        color: Color(0xff60D74D),
                         child: Builder(builder: (context) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +145,7 @@ class DistributorInfo extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
