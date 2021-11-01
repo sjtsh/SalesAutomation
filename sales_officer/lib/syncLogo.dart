@@ -62,8 +62,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
       child: InkWell(
         onTap: () async {
           tooltip = SuperTooltip(
-              arrowLength: 15,
-              arrowBaseWidth: 5,
+              arrowTipDistance: 0,
               borderColor: Colors.transparent,
               shadowColor: Colors.black.withOpacity(0.2),
               content: SizedBox(
@@ -87,14 +86,15 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(0.5),
                                         fontSize: 12,
-                                        decoration: TextDecoration.none),
+                                        decoration: TextDecoration.none,fontFamily: "lato"),
                                   )
                                 : Text(
                                     "Last Sync Date",
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(0.5),
                                         fontSize: 12,
-                                        decoration: TextDecoration.none),
+                                        decoration: TextDecoration.none,fontFamily: "lato"
+                                    ),
                                   ),
                             FutureBuilder(
                               future: SharedPreferences.getInstance(),
@@ -106,7 +106,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
-                                        decoration: TextDecoration.none),
+                                        decoration: TextDecoration.none,fontFamily: "lato"),
                                   );
                                 }
                                 return Text(
@@ -114,7 +114,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
-                                      decoration: TextDecoration.none),
+                                      decoration: TextDecoration.none,fontFamily: "lato"),
                                 );
                               },
                             ),
@@ -178,7 +178,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                       return Text(
                                         "SYNC NOW",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.white,fontFamily: "lato",
                                         ),
                                       );
                                     }),

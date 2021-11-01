@@ -12,8 +12,29 @@ import '../../Database.dart';
 // hasIcon: true,
 // );
 
-class BezierData extends StatelessWidget {
-  final ExpandableController _expandableController = ExpandableController();
+class BezierData extends StatefulWidget {
+  final _expandableController;
+  final Function changeExpanded;
+  final bool isMTD;
+
+  BezierData(this._expandableController, this.changeExpanded, this.isMTD);
+
+  @override
+  _BezierDataState createState() => _BezierDataState();
+}
+
+class _BezierDataState extends State<BezierData> {
+  List listOfProducts = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    products.forEach((key, value) {
+      listOfProducts.add([key, value]);
+    });
+    print(listOfProducts);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +42,20 @@ class BezierData extends StatelessWidget {
       collapsed: Column(
         children: [
           Column(
-            children: products
-                .sublist(0, 4)
-                .map((item) => ExpandableHeader(item))
-                .toList(),
+            children: listOfProducts.length > 4
+                ? listOfProducts
+                    .sublist(0, 4)
+                    .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
+                    .toList()
+                : listOfProducts
+                    .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
+                    .toList(),
           ),
-          ExpandableButton(
+          InkWell(
+            onTap: () {
+              widget.changeExpanded(true);
+              widget._expandableController.expanded = true;
+            },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text("SEE ALL"),
@@ -37,17 +66,25 @@ class BezierData extends StatelessWidget {
       expanded: Column(
         children: [
           Column(
-            children: products.map((item) => ExpandableHeader(item)).toList(),
+            children: listOfProducts
+                .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
+                .toList(),
           ),
-          ExpandableButton(
+          InkWell(
+            onTap: () {
+              widget._expandableController.expanded = false;
+              Future.delayed(Duration(milliseconds: 400)).then((value) {
+                widget.changeExpanded(false);
+              });
+            },
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text("SEE ALL"),
             ),
-          )
+          ),
         ],
       ),
-      controller: _expandableController,
+      controller: widget._expandableController,
     );
   }
 }

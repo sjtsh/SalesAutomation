@@ -4,9 +4,11 @@ import '../../Database.dart';
 
 class ExpandableHeader extends StatelessWidget {
 
-  final String item;
+  final List listOfProducts;
+  final List item;
+  final bool isMTD;
 
-  ExpandableHeader(this.item);
+  ExpandableHeader(this.listOfProducts, this.item, this.isMTD);
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +27,19 @@ class ExpandableHeader extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              "${products.indexOf(item) + 1}",
+                (listOfProducts.indexOf(item)+1).toString() + "."
             ),
             SizedBox(
               width: 10,
             ),
             Expanded(
               child: Text(
-                item,
+                allSKULocal.firstWhere((element) => item[0] == element.SKUID).SKUName.substring(0,20),
               ),
             ),
             Text(
-              "Rs. ${sales[products.indexOf(item)]}",
-            )
+              "Rs. ${isMTD ? item[1][0]: item[1][1]}",
+            ),
           ],
         ),
       ),
