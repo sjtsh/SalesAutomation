@@ -7,7 +7,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 
 import '../../Database.dart';
 
-calculateSales() {
+calculateSales(setLoaded) {
   NepaliDateService nepaliDateService = NepaliDateService();
   nepaliDateService.fetchNepaliDate().then((time) {
     DistributorOrderService distributorOrderService = DistributorOrderService();
@@ -46,6 +46,12 @@ calculateSales() {
                         sku.MRP *
                             aDistributorOrderItem.alternativeItemCount *
                             sku.alternativeCF;
+                    if (products.containsKey(sku.SKUID)) {
+                      products[sku.SKUID][0] += mtd;
+                    } else {
+                      products.addAll({sku.SKUID: [mtd, 0]});
+                    }
+                    print(products);
                   });
                 }
               } else if (int.parse(
@@ -67,6 +73,13 @@ calculateSales() {
                         sku.MRP *
                             aDistributorOrderItem.alternativeItemCount *
                             sku.alternativeCF;
+
+                    if (products.containsKey(sku.SKUID)) {
+                      products[sku.SKUID][0] += mtd;
+                    } else {
+                      products.addAll({sku.SKUID: [mtd, 0]});
+                    }
+                    print(products);
                   });
                 }
               }
@@ -89,6 +102,12 @@ calculateSales() {
                       sku.MRP *
                           aDistributorOrderItem.alternativeItemCount *
                           sku.alternativeCF;
+
+                  if (products.containsKey(sku.SKUID)) {
+                    products[sku.SKUID][1] += ytd;
+                  } else {
+                    products.addAll({sku.SKUID: [0, ytd]});
+                  }
                 });
               }
             } else if (int.parse(
@@ -110,6 +129,12 @@ calculateSales() {
                       sku.MRP *
                           aDistributorOrderItem.alternativeItemCount *
                           sku.alternativeCF;
+
+                  if (products.containsKey(sku.SKUID)) {
+                    products[sku.SKUID][1] += ytd;
+                  } else {
+                    products.addAll({sku.SKUID: [0, ytd]});
+                  }
                 });
               }
             }
@@ -130,7 +155,11 @@ calculateSales() {
                 .last
                 .dateAndTime;
           }
-          print(aDistributor.distributorID.toString() + " " + mtd.toString() + " " + ytd.toString());
+          print(aDistributor.distributorID.toString() +
+              " " +
+              mtd.toString() +
+              " " +
+              ytd.toString());
           allDistributorSalesLocal.add(
             DistributorSale(
               aDistributor,
@@ -141,6 +170,8 @@ calculateSales() {
             ),
           );
         });
+        setLoaded();
+        print(products);
       });
     });
   });

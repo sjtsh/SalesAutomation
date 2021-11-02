@@ -128,10 +128,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             setState(() {
                               loadingText = "Calculating Sales";
                             });
-                            // calculateSales();
-                            setState(() {
-                              isLoaded = true;
-                            });
+
+                            calculateSales(setLoaded);
                           });
                         });
                       });
@@ -148,9 +146,14 @@ class _LogInScreenState extends State<LogInScreen> {
     }
   }
 
+  setLoaded() {
+    setState(() {
+      isLoaded = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    calculateSales();
     return isLoaded
         ?
         //     ? SafeArea(

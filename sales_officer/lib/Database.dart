@@ -1,5 +1,3 @@
-
-
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 
 import 'BACKEND Access/Entities/BillingCompany.dart';
@@ -34,16 +32,9 @@ SO? meSO;
 int? meSOID;
 String meBeat = "";
 
-
 bool? isJoint;
-List products = [
-  "Chiura",
-  "Choco plus",
-  "Superfine Chiura",
-  "Nutri Nuggets",
-  "Green Tea"
-];
-List sales = [200, 20003, 19000, 200, 30000];
+Map products = {};
+List sales = [];
 
 final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
 final int startDate1 = 3;
