@@ -103,8 +103,20 @@ class _LogInScreenState extends State<LogInScreen> {
                         });
                         SOService soService = SOService();
                         soService.fetchSOs().then((value) {
-                          meSO = value
-                              .firstWhere((element) => element.SOID == meSOID);
+                          try {
+                            meSO = value.firstWhere(
+                                (element) => element.SOID == meSOID);
+                          } catch (e) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return LogInScreen();
+                            }));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("NO SOID FOUND"),
+                              ),
+                            );
+                          }
                           SODistributorConnectionService
                               soDistributorConnectionService =
                               SODistributorConnectionService();
