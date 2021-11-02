@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/LastUpdatedService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +18,7 @@ class SyncIcon extends StatefulWidget {
 }
 
 class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
+
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -27,7 +27,6 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
     parent: _controller,
     curve: Curves.elasticOut,
   );
-  String lastUpdated = "0000-00-00 00:00:00";
   SuperTooltip tooltip = SuperTooltip(
     popupDirection: TooltipDirection.down,
     content: Container(),
@@ -41,18 +40,6 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
 
   void close() {
     tooltip.close();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    LastUpdatedService lastUpdatedService = LastUpdatedService();
-    lastUpdatedService.fetchLastUpdateds().then((value) {
-      setState(() {
-        lastUpdated = value;
-      });
-    });
   }
 
   @override
@@ -102,7 +89,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                 if (snapshot.hasData) {
                                   SharedPreferences prefs = snapshot.data;
                                   return Text(
-                                    prefs.getString("lastUpdated")!,
+                                    prefs.getString("lastUpdated") ?? "0000-00-00 00:00:00",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -198,105 +185,73 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
           width: 50,
           decoration: BoxDecoration(shape: BoxShape.circle),
           child: widget.isNotBackIcon
-              ? Stack(
-                  children: [
-                    Center(
-                      child: !condition
-                          ? RotationTransition(
-                              turns: _animation,
-                              child: Icon(
-                                Icons.sync,
-                                color: Colors.green,
+              ? FutureBuilder(
+                  future: SharedPreferences.getInstance().then((value) =>
+                      findIfNeedToUpdate(value.getString('lastUpdated') ??
+                          "0000-00-00 00:00:00")),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.data);
+                      return Stack(
+                        children: [
+                          Center(
+                            child: !condition
+                                ? RotationTransition(
+                                    turns: _animation,
+                                    child: Icon(
+                                      Icons.sync,
+                                      color: Colors.green,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.sync,
+                                    color: Colors.black,
+                                  ),
+                          ),
+                          Positioned(
+                            bottom: 10,
+                            right: 10,
+                            child: Container(
+                              height: 10,
+                              width: 10,
+                              decoration: BoxDecoration(
+                                color: snapshot.data
+                                    ? Colors.green
+                                    : Colors.transparent,
+                                shape: BoxShape.circle,
                               ),
-                            )
-                          : Icon(
-                              Icons.sync,
-                              color: Colors.black,
                             ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 10,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
+                          )
+                        ],
+                      );
+                    }
+                    return Stack(
+                      children: [
+                        Center(
+                          child: !condition
+                              ? RotationTransition(
+                                  turns: _animation,
+                                  child: Icon(
+                                    Icons.sync,
+                                    color: Colors.green,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.sync,
+                                  color: Colors.black,
+                                ),
                         ),
-                      ),
-                    )
-                  ],
-                )
-              // child: widget.isNotBackIcon
-              //     ? FutureBuilder(
-              //         future: SharedPreferences.getInstance(),
-              //         builder: (context, AsyncSnapshot snapshot) {
-              //           bool isToBeUpdated = false;
-              //           if (snapshot.hasData) {
-              //             SharedPreferences prefs = snapshot.data;
-              //             String date = prefs.getString('lastUpdated') ??
-              //                 "0000-00-00 00:00:00";
-              //             bool isToBeUpdated =
-              //                 findIfNeedToUpdate(lastUpdated, date);
-              //             return Stack(
-              //               children: [
-              //                 Center(
-              //                   child: !condition
-              //                       ? RotationTransition(
-              //                           turns: _animation,
-              //                           child: Icon(
-              //                             Icons.sync,
-              //                             color: Colors.green,
-              //                           ),
-              //                         )
-              //                       : Icon(
-              //                           Icons.sync,
-              //                           color: Colors.black,
-              //                         ),
-              //                 ),
-              //                 Container(
-              //                   height: 10,
-              //                   width: 10,
-              //                   decoration: BoxDecoration(
-              //                     color: isToBeUpdated
-              //                         ? Colors.green
-              //                         : Colors.transparent,
-              //                     shape: BoxShape.circle,
-              //                   ),
-              //                 )
-              //               ],
-              //             );
-              //           }
-              //           return Stack(
-              //             children: [
-              //               Center(
-              //                 child: !condition
-              //                     ? RotationTransition(
-              //                         turns: _animation,
-              //                         child: Icon(
-              //                           Icons.sync,
-              //                           color: Colors.green,
-              //                         ),
-              //                       )
-              //                     : Icon(
-              //                         Icons.sync,
-              //                         color: Colors.black,
-              //                       ),
-              //               ),
-              //               Container(
-              //                 height: 10,
-              //                 width: 10,
-              //                 decoration: BoxDecoration(
-              //                   color: isToBeUpdated
-              //                       ? Colors.green
-              //                       : Colors.transparent,
-              //                   shape: BoxShape.circle,
-              //                 ),
-              //               )
-              //             ],
-              //           );
-              //         })
+                        Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            shape: BoxShape.circle,
+                          ),
+                        )
+                      ],
+                    );
+                  })
               : Container(),
         ),
       ),
@@ -304,43 +259,46 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
   }
 }
 
-void findIfNeedToUpdate(String date) {
-    LastUpdatedService lastUpdatedService = LastUpdatedService();
-    lastUpdatedService.fetchLastUpdateds().then((value) {
-      String lastUpdated = value;
-      bool isToBeUpdated = false;
-      int year = int.parse(date.substring(0, 4));
-      int month = int.parse(date.substring(5, 7));
-      int day = int.parse(date.substring(8, 10));
-      int hour = int.parse(date.substring(11, 13));
-      int min = int.parse(date.substring(14, 16));
-      int sec = int.parse(date.substring(17, 19));
-      int updatedYear = int.parse(lastUpdated.substring(0, 4));
-      int updatedMonth = int.parse(lastUpdated.substring(5, 7));
-      int updatedDay = int.parse(lastUpdated.substring(8, 10));
-      int updatedHour = int.parse(lastUpdated.substring(11, 13));
-      int updatedMin = int.parse(lastUpdated.substring(14, 16));
-      int updatedSec = int.parse(lastUpdated.substring(17, 19));
-      if (updatedYear > year) {
+Future<bool> findIfNeedToUpdate(
+  String date,
+) async {
+  print("in to the function find if need to update");
+  LastUpdatedService lastUpdatedService = LastUpdatedService();
+  bool isToBeUpdated =
+      await lastUpdatedService.fetchLastUpdateds().then((value) {
+    String lastUpdated = value;
+    bool isToBeUpdated = false;
+    print(lastUpdated);
+    print(date);
+    int year = int.parse(date.substring(0, 4));
+    int month = int.parse(date.substring(5, 7));
+    int day = int.parse(date.substring(8, 10));
+    int hour = int.parse(date.substring(11, 13));
+    int min = int.parse(date.substring(14, 16));
+    int sec = int.parse(date.substring(17, 19));
+    int updatedYear = int.parse(lastUpdated.substring(0, 4));
+    int updatedMonth = int.parse(lastUpdated.substring(5, 7));
+    int updatedDay = int.parse(lastUpdated.substring(8, 10));
+    int updatedHour = int.parse(lastUpdated.substring(11, 13));
+    int updatedMin = int.parse(lastUpdated.substring(14, 16));
+    int updatedSec = int.parse(lastUpdated.substring(17, 19));
+    if (updatedYear > year) {
+      isToBeUpdated = true;
+    } else if (updatedYear == year) {
+      if (updatedMonth > month) {
         isToBeUpdated = true;
-      } else if (updatedYear == year) {
-        if (updatedMonth > month) {
+      } else if (updatedMonth == month) {
+        if (updatedDay > day) {
           isToBeUpdated = true;
-        } else if (updatedMonth == month) {
-          if (updatedDay > day) {
+        } else if (updatedDay == day) {
+          if (updatedHour > hour) {
             isToBeUpdated = true;
-          } else if (updatedDay == day) {
-            if (updatedHour > hour) {
+          } else if (updatedHour == hour) {
+            if (updatedMin > min) {
               isToBeUpdated = true;
-            } else if (updatedHour == hour) {
-              if (updatedMin > min) {
+            } else if (updatedMin == min) {
+              if (updatedSec > sec) {
                 isToBeUpdated = true;
-              } else if (updatedMin == min) {
-                if (updatedSec > sec) {
-                  isToBeUpdated = true;
-                } else {
-                  isToBeUpdated = false;
-                }
               } else {
                 isToBeUpdated = false;
               }
@@ -356,6 +314,11 @@ void findIfNeedToUpdate(String date) {
       } else {
         isToBeUpdated = false;
       }
-      print(isToBeUpdated);
-    });
+    } else {
+      isToBeUpdated = false;
+    }
+    print(isToBeUpdated);
+    return isToBeUpdated;
+  });
+  return isToBeUpdated;
 }

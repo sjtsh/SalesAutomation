@@ -153,15 +153,7 @@ class DistributorList extends StatelessWidget {
                         Expanded(
                           child: Row(
                             children: [
-                              Container(
-                                height: 45,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                    color: Color(0xff60D74D).withOpacity(0.2),
-                                    shape: BoxShape.circle),
-                                child: Icon(Icons.calendar_today,
-                                    color: Colors.black.withOpacity(0.5)),
-                              ),
+                              Icon(Icons.calendar_today,),
                               SizedBox(
                                 width: 10,
                               ),
@@ -172,13 +164,12 @@ class DistributorList extends StatelessWidget {
                                   Text(
                                     "MTD Sales",
                                     style: TextStyle(
+                                      fontSize: 12,
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                   ),
                                   Text(
                                     "${distributorSales.mtd}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),
@@ -188,15 +179,7 @@ class DistributorList extends StatelessWidget {
                         Expanded(
                           child: Row(
                             children: [
-                              Container(
-                                height: 45,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffF2B200).withOpacity(0.2),
-                                    shape: BoxShape.circle),
-                                child: Icon(Icons.calendar_today,
-                                    color: Colors.black.withOpacity(0.5)),
-                              ),
+                              Icon(Icons.calendar_today,),
                               SizedBox(
                                 width: 10,
                               ),
@@ -207,13 +190,12 @@ class DistributorList extends StatelessWidget {
                                   Text(
                                     "YTD Sales",
                                     style: TextStyle(
+                                      fontSize: 12,
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                   ),
                                   Text(
                                     "${distributorSales.ytd}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -230,15 +212,7 @@ class DistributorList extends StatelessWidget {
                         Expanded(
                           child: Row(
                             children: [
-                              Container(
-                                height: 45,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffEC2227).withOpacity(0.2),
-                                    shape: BoxShape.circle),
-                                child: Icon(Icons.monetization_on_outlined,
-                                    color: Colors.black.withOpacity(0.5)),
-                              ),
+                              Icon(Icons.monetization_on_outlined,),
                               SizedBox(
                                 width: 10,
                               ),
@@ -249,14 +223,12 @@ class DistributorList extends StatelessWidget {
                                   Text(
                                     "Outstanding",
                                     style: TextStyle(
+                                      fontSize: 12,
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                   ),
                                   Text(
                                     "${distributorSales.outstanding}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
                                   ),
                                 ],
                               ),
@@ -268,17 +240,8 @@ class DistributorList extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    height: 45,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                        color:
-                                            Color(0xff61ABEF).withOpacity(0.2),
-                                        shape: BoxShape.circle),
-                                    child: Icon(
-                                      Icons.access_time_sharp,
-                                      color: Colors.black.withOpacity(0.5),
-                                    ),
+                                  Icon(
+                                    Icons.access_time_sharp,
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -293,14 +256,12 @@ class DistributorList extends StatelessWidget {
                                         Text(
                                           "Last Order",
                                           style: TextStyle(
+                                            fontSize: 12,
                                               color:
                                                   Colors.black.withOpacity(0.5),),
                                         ),
                                         Text(
                                           "${distributorSales.lastOrder}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
                                         )
                                       ],
                                     ),
@@ -351,7 +312,7 @@ class DistributorList extends StatelessWidget {
                                   );
                                 },
                                 child: Container(
-                                  height: 50,
+                                  height: 40,
                                   color: Color(0xff60D74D),
                                   child: Builder(builder: (context) {
                                     return Row(
@@ -412,7 +373,7 @@ class DistributorList extends StatelessWidget {
                                   );
                                 },
                                 child: Container(
-                                  height: 50,
+                                  height: 40,
                                   color: Colors.blue,
                                   child: Center(
                                     child: Row(
