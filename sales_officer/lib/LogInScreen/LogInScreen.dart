@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
@@ -148,8 +149,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               loadingText = "Calculating Sales";
                               percentage = 100;
                             });
-                            print(allDistributorsLocal);
                             calculateSales(setLoaded,context);
+                            calculateWeeklySales(context);
                           });
                         });
                       });

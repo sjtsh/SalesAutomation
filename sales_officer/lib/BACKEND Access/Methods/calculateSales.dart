@@ -1,5 +1,3 @@
-
-
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
@@ -13,7 +11,10 @@ calculateSales(setLoaded, context) {
   NepaliDateService nepaliDateService = NepaliDateService();
   nepaliDateService.fetchNepaliDate().then((time) {
     DistributorOrderService distributorOrderService = DistributorOrderService();
-    distributorOrderService.fetchDistributorOrders(context).then((distributorOrder) {
+    distributorOrderService
+        .fetchDistributorOrders(context)
+        .then((distributorOrder) {
+        print(distributorOrder);
       DistributorOrderItemService distributorOrderItemService =
           DistributorOrderItemService();
       distributorOrderItemService
@@ -24,6 +25,7 @@ calculateSales(setLoaded, context) {
           double ytd = 0;
           distributorOrder
               .where((aDistributorOrder) =>
+                  aDistributorOrder.SOID == meSOID &&
                   aDistributorOrder.distributorID ==
                       aDistributor.distributorID &&
                   aDistributorOrder.orderStatus)
@@ -51,7 +53,9 @@ calculateSales(setLoaded, context) {
                     if (products.containsKey(sku.SKUID)) {
                       products[sku.SKUID][0] += mtd;
                     } else {
-                      products.addAll({sku.SKUID: [mtd, 0]});
+                      products.addAll({
+                        sku.SKUID: [mtd, 0]
+                      });
                     }
                     print(products);
                   });
@@ -79,7 +83,9 @@ calculateSales(setLoaded, context) {
                     if (products.containsKey(sku.SKUID)) {
                       products[sku.SKUID][0] += mtd;
                     } else {
-                      products.addAll({sku.SKUID: [mtd, 0]});
+                      products.addAll({
+                        sku.SKUID: [mtd, 0]
+                      });
                     }
                     print(products);
                   });
@@ -108,7 +114,9 @@ calculateSales(setLoaded, context) {
                   if (products.containsKey(sku.SKUID)) {
                     products[sku.SKUID][1] += ytd;
                   } else {
-                    products.addAll({sku.SKUID: [0, ytd]});
+                    products.addAll({
+                      sku.SKUID: [0, ytd]
+                    });
                   }
                 });
               }
@@ -135,7 +143,9 @@ calculateSales(setLoaded, context) {
                   if (products.containsKey(sku.SKUID)) {
                     products[sku.SKUID][1] += ytd;
                   } else {
-                    products.addAll({sku.SKUID: [0, ytd]});
+                    products.addAll({
+                      sku.SKUID: [0, ytd]
+                    });
                   }
                 });
               }
@@ -144,6 +154,7 @@ calculateSales(setLoaded, context) {
           String lastOrder = "None";
           List<DistributorOrder> distributorOrders = distributorOrder
               .where((aDistributorOrder) =>
+                  aDistributorOrder.SOID == meSOID &&
                   aDistributorOrder.distributorID ==
                       aDistributor.distributorID &&
                   aDistributorOrder.orderStatus)
@@ -157,11 +168,6 @@ calculateSales(setLoaded, context) {
                 .last
                 .dateAndTime;
           }
-          print(aDistributor.distributorID.toString() +
-              " " +
-              mtd.toString() +
-              " " +
-              ytd.toString());
           allDistributorSalesLocal.add(
             DistributorSale(
               aDistributor,
@@ -173,7 +179,6 @@ calculateSales(setLoaded, context) {
           );
         });
         setLoaded();
-        print(products);
       });
     });
   });
