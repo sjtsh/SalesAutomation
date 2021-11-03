@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
@@ -9,6 +10,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/SODistributorConnectionS
 import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
+import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
 import '../../Database.dart';
@@ -53,8 +55,12 @@ void loadLocalData(Function refresh, Function close, context) {
                     allDistributorsLocal = value;
                     SOService soService = SOService();
                     soService.fetchSOs().then((value) {
-                      meSO = value
-                          .firstWhere((element) => element.SOID == meSOID);
+                      try{
+                        meSO = value
+                            .firstWhere((element) => element.SOID == meSOID);
+                      }catch(e){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=>LogInScreen()));
+                      }
                       SODistributorConnectionService
                       soDistributorConnectionService =
                       SODistributorConnectionService();

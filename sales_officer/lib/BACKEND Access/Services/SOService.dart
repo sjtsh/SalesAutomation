@@ -11,8 +11,11 @@ class SOService{
       "https://asia-south1-hilifedb.cloudfunctions.net/getSOs";
 
   Future<List<SO>> fetchSOs() async {
+    int aStockCode = 0;
+    while (aStockCode!=200){
    try {
       final response = await http.get(Uri.parse(url));
+      aStockCode = response.statusCode;
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
         List<SO> SOs = values.map((e) => SO.fromJson(e)).toList();
@@ -25,6 +28,7 @@ class SOService{
    }on TimeoutException{
      throw Exception("failed to load post");
    }
+  } throw Exception("Something Went Wrong");
   }
 
 }

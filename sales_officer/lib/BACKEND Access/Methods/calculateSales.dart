@@ -1,3 +1,5 @@
+
+import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
@@ -14,7 +16,6 @@ calculateSales(setLoaded, context) {
     distributorOrderService
         .fetchDistributorOrders(context)
         .then((distributorOrder) {
-        print(distributorOrder);
       DistributorOrderItemService distributorOrderItemService =
           DistributorOrderItemService();
       distributorOrderItemService
@@ -42,8 +43,14 @@ calculateSales(setLoaded, context) {
                           element.distributorOrderID ==
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
-                    SKU sku = allSKULocal.firstWhere(
-                        (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                    SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                    try{
+                      SKU sku = allSKULocal.firstWhere(
+                          (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                    }catch(e){
+                      throw Exception("SKU Not Found");
+                    }
+
                     mtd += sku.MRP *
                             aDistributorOrderItem.primaryItemCount *
                             sku.primaryCF +
@@ -71,8 +78,18 @@ calculateSales(setLoaded, context) {
                           element.distributorOrderID ==
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
-                    SKU sku = allSKULocal.firstWhere(
-                        (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                    SKU sku = SKU(aDistributorOrderItem.SKUID, "", 1, 1, 1, 1, 0, 0, 0, 0, 0, "", 0, "", true);
+                    try {
+                      sku = allSKULocal.firstWhere(
+                          (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              "SKU NOT FOUND, Please contact IT"),
+                        ),
+                      );
+                    }
                     mtd += sku.MRP *
                             aDistributorOrderItem.primaryItemCount *
                             sku.primaryCF +
@@ -102,8 +119,16 @@ calculateSales(setLoaded, context) {
                         element.distributorOrderID ==
                         aDistributorOrder.distributorOrderID)
                     .forEach((aDistributorOrderItem) {
-                  SKU sku = allSKULocal.firstWhere(
-                      (e) => e.SKUID == aDistributorOrderItem.SKUID);
+
+                  SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                  try{
+                    SKU sku = allSKULocal.firstWhere(
+                        (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                  } catch(e){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("NO SKU FOUND, Please Contact IT", ),));
+
+                  }
                   ytd += sku.MRP *
                           aDistributorOrderItem.primaryItemCount *
                           sku.primaryCF +
@@ -131,8 +156,13 @@ calculateSales(setLoaded, context) {
                         element.distributorOrderID ==
                         aDistributorOrder.distributorOrderID)
                     .forEach((aDistributorOrderItem) {
-                  SKU sku = allSKULocal.firstWhere(
-                      (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                  SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                 try {
+                    sku = allSKULocal.firstWhere(
+                        (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                  }catch(e) {
+                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, Please contact IT,", ),));
+                 }
                   ytd += sku.MRP *
                           aDistributorOrderItem.primaryItemCount *
                           sku.primaryCF +

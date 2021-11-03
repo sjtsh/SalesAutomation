@@ -22,6 +22,7 @@ class SubGroupService {
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           subGroups = values.map((e) => SubGroup.fromJson(e)).toList();
+          return subGroups;
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Data Fetching Failed",

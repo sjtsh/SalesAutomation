@@ -15,6 +15,7 @@ class PendingScreen extends StatefulWidget {
       DistributorOrderService();
 
   final Function refresh;
+
   PendingScreen(this.refresh);
 
   @override
@@ -28,108 +29,124 @@ class _PendingScreenState extends State<PendingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.distributorOrderService.fetchDistributorOrders(context),
-      builder: (BuildContext context,
-          AsyncSnapshot<List<DistributorOrder>> snapshot) {
-        if (snapshot.hasData) {
-          List<DistributorOrder> distributorOrders = [];
-          snapshot.data!.forEach((element) {
-            if (element.SOID == meSO!.SOID) {
-              distributorOrders.add(element);
-            }
-          });
-          return Column(
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 3,
+                offset: Offset(0, 2),
+              ),
+            ],
+            color: Colors.white,
+          ),
+          child: Row(
             children: [
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isTabPending = true;
-                            pageController.previousPage(
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.easeIn);
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Colors.black.withOpacity(0.1)),
-                              bottom: BorderSide(
-                                color: isTabPending
-                                    ? Colors.blue
-                                    : Colors.black.withOpacity(0.1),
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "PENDING",
-                              style: TextStyle(
-                                  color: isTabPending
-                                      ? Colors.blue
-                                      : Colors.black.withOpacity(0.5)),
-                            ),
-                          ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isTabPending = true;
+                      pageController.previousPage(
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.black.withOpacity(0.1)),
+                        bottom: BorderSide(
+                          color: isTabPending
+                              ? Colors.blue
+                              : Colors.black.withOpacity(0.1),
+                          width: 2,
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isTabPending = false;
-                            pageController.nextPage(
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.easeIn);
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Colors.black.withOpacity(0.1)),
-                              bottom: BorderSide(
-                                color: isTabPending
-                                    ? Colors.black.withOpacity(0.1)
-                                    : Colors.blue,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "APPROVED",
-                              style: TextStyle(
-                                  color: isTabPending
-                                      ? Colors.black.withOpacity(0.5)
-                                      : Colors.blue),
-                            ),
-                          ),
-                        ),
+                    child: Center(
+                      child: Text(
+                        "PENDING",
+                        style: TextStyle(
+                            color: isTabPending
+                                ? Colors.blue
+                                : Colors.black.withOpacity(0.5)),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
               Expanded(
-                child: PageView(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isTabPending = false;
+                      pageController.nextPage(
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.black.withOpacity(0.1)),
+                        bottom: BorderSide(
+                          color: isTabPending
+                              ? Colors.black.withOpacity(0.1)
+                              : Colors.blue,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "APPROVED",
+                        style: TextStyle(
+                            color: isTabPending
+                                ? Colors.black.withOpacity(0.5)
+                                : Colors.blue),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder(
+              future: widget.distributorOrderService
+                  .fetchDistributorOrders(context),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<DistributorOrder>> snapshot) {
+                if (snapshot.hasData) {
+                  List<DistributorOrder> distributorOrders = [];
+                  snapshot.data!.forEach((element) {
+                    if (element.SOID == meSO!.SOID) {
+                      distributorOrders.add(element);
+                    }
+                  });
+                  return PageView(
+                    onPageChanged: (int i) {
+                      setState(() {
+                        if (i == 1) {
+                          isTabPending = false;
+                        } else if (i == 0) {
+                          isTabPending = true;
+                        }
+                      });
+                    },
+                    controller: pageController,
+                    children: [
+                      OrdersList(distributorOrders, false, widget.refresh),
+                      OrdersList(distributorOrders, true, widget.refresh)
+                    ],
+                  );
+                }
+                return PageView(
                   onPageChanged: (int i) {
                     setState(() {
                       if (i == 1) {
@@ -140,102 +157,19 @@ class _PendingScreenState extends State<PendingScreen> {
                     });
                   },
                   controller: pageController,
-                  children: [
-                    OrdersList(distributorOrders, false, widget.refresh),
-                    OrdersList(distributorOrders, true, widget.refresh)
-                  ],
-                ),
-              ),
-            ],
-          );
-        }
-        return Container(
-          decoration: BoxDecoration(
-            color: Color(0xffF5F5F5),
-          ),
-          child: ListView(
-            children: [
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        offset: Offset(0, 2))
-                  ],
-                  color: Colors.white,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                                color: Colors.black.withOpacity(0.1)),
-                            bottom: BorderSide(
-                              color: isTabPending
-                                  ? Colors.blue
-                                  : Colors.black.withOpacity(0.1),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "PENDING",
-                            style: TextStyle(
-                                color: isTabPending
-                                    ? Colors.blue
-                                    : Colors.black.withOpacity(0.5)),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  color: Colors.black.withOpacity(0.1)),
-                              bottom: BorderSide(
-                                color: isTabPending
-                                    ? Colors.black.withOpacity(0.1)
-                                    : Colors.blue,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "APPROVED",
-                              style: TextStyle(
-                                  color: isTabPending
-                                      ? Colors.black.withOpacity(0.5)
-                                      : Colors.blue),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 7),
-              Column(
-                children: List.generate(
-                    7,
-                    (index) => Shimmer(
-                        gradient:
-                            LinearGradient(colors: [Colors.white, Colors.grey]),
-                        child: PendingOrderSkeleton())).toList(),
-              ),
-            ],
-          ),
-        );
-      },
+                  children: ["", ""]
+                      .map((e) => ListView(
+                          children: List.generate(
+                              7,
+                              (index) => Shimmer(
+                                  gradient: LinearGradient(
+                                      colors: [Colors.white, Colors.grey]),
+                                  child: PendingOrderSkeleton())).toList()))
+                      .toList(),
+                );
+              }),
+        ),
+      ],
     );
   }
 }

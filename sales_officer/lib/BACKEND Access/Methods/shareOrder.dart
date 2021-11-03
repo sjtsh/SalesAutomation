@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -31,11 +32,17 @@ shareOrder(
         .toList();
     Map<int, List<DistributorOrderItem>> distributorOrderItemCompany = {};
     distributorOrderItems.forEach((element) {
-      SKUDistributorWise aSKU = allSKUDistributorWiseLocal.firstWhere(
-          (skuDistributorWise) =>
-              element.SKUID == skuDistributorWise.SKUID &&
-              skuDistributorWise.distributorID ==
-                  distributorOrder.distributorID);
+      SKUDistributorWise aSKU = SKUDistributorWise(1, 1, 1, 10, 1, 1, 10);
+      try{
+         aSKU = allSKUDistributorWiseLocal.firstWhere(
+            (skuDistributorWise) =>
+                element.SKUID == skuDistributorWise.SKUID &&
+                skuDistributorWise.distributorID ==
+                    distributorOrder.distributorID);
+      }catch(e){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO DISTRIBUTOR ID FOUND")));
+
+      }
       // allBillingCompanysLocal.firstWhere((element) => aSKU.defaultBillingCompanyID == element.billingCompanyID)
       if (distributorOrderItemCompany.containsKey(aSKU.billingCompanyID)) {
         distributorOrderItemCompany[aSKU.billingCompanyID]?.add(element);
@@ -247,8 +254,15 @@ shareOrder(
                               ),
                               pw.Column(
                                 children: company.value.map((e) {
-                                  SKU sku = allSKULocal.firstWhere(
-                                      (element) => element.SKUID == e.SKUID);
+                                  SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+
+                                 try {
+                                   sku = allSKULocal.firstWhere(
+                                        (element) => element.SKUID == e.SKUID);
+                                  }catch(e){
+
+
+                                 }
                                   double mereTotal = e.primaryItemCount *
                                       sku.primaryCF *
                                       sku.MRP +
