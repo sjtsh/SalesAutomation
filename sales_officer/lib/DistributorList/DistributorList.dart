@@ -151,53 +151,37 @@ class DistributorList extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.calendar_today,),
-                              SizedBox(
-                                width: 10,
+                              Text(
+                                "MTD Sales",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "MTD Sales",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${distributorSales.mtd}",
-                                  )
-                                ],
-                              ),
+                              Text(
+                                "${distributorSales.mtd}",
+                              )
                             ],
                           ),
                         ),
                         Expanded(
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.calendar_today,),
-                              SizedBox(
-                                width: 10,
+                              Text(
+                                "YTD Sales",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "YTD Sales",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${distributorSales.ytd}",
-                                  ),
-                                ],
+                              Text(
+                                "${distributorSales.ytd}",
                               ),
                             ],
                           ),
@@ -210,64 +194,40 @@ class DistributorList extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.monetization_on_outlined,),
-                              SizedBox(
-                                width: 10,
+                              Text(
+                                "Outstanding",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Outstanding",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black.withOpacity(0.5),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${distributorSales.outstanding}",
-                                  ),
-                                ],
+                              Text(
+                                "${distributorSales.outstanding}",
                               ),
                             ],
                           ),
                         ),
                         Expanded(
                           child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
                             children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.access_time_sharp,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Last Order",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                              color:
-                                                  Colors.black.withOpacity(0.5),),
-                                        ),
-                                        Text(
-                                          "${distributorSales.lastOrder}",
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                "Last Order",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                    color:
+                                        Colors.black.withOpacity(0.5),),
                               ),
+                              Text(
+                                "${distributorSales.lastOrder}",
+                              )
                             ],
                           ),
                         ),
