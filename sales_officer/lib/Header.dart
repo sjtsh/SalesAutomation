@@ -16,7 +16,8 @@ List heading = [
   "Create Order", //7
   "Update Stock", //8
   "Settings", //9
-  "FAQ" //10
+  "FAQ", //10
+  "Distributors" //11
 ];
 
 class Header extends StatefulWidget {
@@ -31,7 +32,6 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,7 +80,13 @@ class _HeaderState extends State<Header> {
                 ),
           Text(
             heading[widget.index],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              decoration: TextDecoration.none,
+              fontFamily: "lato",
+              color: Colors.black
+            ),
           ),
           Expanded(
             child: Container(),
@@ -94,7 +100,8 @@ class _HeaderState extends State<Header> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NotificationScreen(widget.refresh)));
+                          builder: (context) =>
+                              NotificationScreen(widget.refresh)));
                 }
               },
               child: Container(

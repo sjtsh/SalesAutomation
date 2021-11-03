@@ -39,9 +39,6 @@ class _BezierCardState extends State<BezierCard> {
           height: !aCondition ? 382.0 : 382.0 + 41*(products.length - 4),
           child: PageView(
             scrollDirection: Axis.horizontal,
-            // pageSnapping: false,
-            // physics: BouncingScrollPhysics(),
-            // controller: controller,
             children: [true, false].map((e) => Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

@@ -36,9 +36,15 @@ dependencies:
   pdf: ^3.6.0
   share_plus: ^2.1.4
   path_provider: any
-#  super_tooltip:
+  #  super_tooltip:
   dotted_border: ^2.0.0+1
   super_tooltip: ^1.0.1
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.2
+  firebase_auth: ^0.14.0+5
+  cloud_firestore: ^0.12.9+5
+  google_maps_flutter:
+  location:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -80,15 +86,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: lato
-       fonts:
-         - asset: fonts/Lato-Regular.ttf
-         - asset: fonts/Lato-Italic.ttf
-           style: italic
-         - asset: fonts/Lato-Bold.ttf
-           weight: 700
-         - asset: fonts/Lato-Light.ttf
-           weight: 200
+    - family: lato
+      fonts:
+        - asset: fonts/Lato-Regular.ttf
+        - asset: fonts/Lato-Italic.ttf
+          style: italic
+        - asset: fonts/Lato-Bold.ttf
+          weight: 700
+        - asset: fonts/Lato-Light.ttf
+          weight: 200
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
