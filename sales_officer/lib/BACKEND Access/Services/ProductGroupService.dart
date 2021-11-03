@@ -8,11 +8,16 @@ import 'package:sales_officer/BACKEND%20Access/Entities/ProductGroup.dart';
 class ProductGroupService {
   final String url =
       "https://asia-south1-hilifedb.cloudfunctions.net/getProductGroups";
-  List<ProductGroup> productGroups=[];
+
 
   Future<List<ProductGroup>> fetchProductGroups() async {
+    List<ProductGroup> productGroups=[];
+    int aStatusCode = 0;
+    while (aStatusCode !=200){
+
     try{
       final response = await http.get(Uri.parse(url));
+      aStatusCode =response.statusCode;
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
         List<ProductGroup> productGroups =
@@ -23,8 +28,10 @@ class ProductGroupService {
         throw Exception("failed to load post");
       }
     }on SocketException{
-      return [];
+      throw Exception("failed to load post");
 
     }
+  } return productGroups;
   }
+
 }

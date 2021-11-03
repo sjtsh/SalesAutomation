@@ -13,8 +13,12 @@ class FamiliarityService {
 
 
   Future<List<Familiarity>> fetchFamiliaritys(context) async {
+    int aStatusCode = 0;
+    List<Familiarity> familiaritys=[];
+    while(aStatusCode !=200){
     try{
       final response = await http.get(Uri.parse(url));
+      aStatusCode = response.statusCode;
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
         List<Familiarity> familiaritys =
@@ -34,4 +38,6 @@ class FamiliarityService {
 
 
   }
+  return familiaritys;
+}
 }

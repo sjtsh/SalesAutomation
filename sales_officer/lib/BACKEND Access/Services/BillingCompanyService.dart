@@ -22,7 +22,7 @@ class BillingCompanyService {
           List<dynamic> values = jsonDecode(response.body);
           List<BillingCompany> billingCompany =
               values.map((e) => BillingCompany.fromJson(e)).toList();
-
+          return billingCompany;
         } else {
           throw Exception("failed to load post");
         }

@@ -12,28 +12,25 @@ class DistributorOrderItemService {
 
 
   Future<List<DistributorOrderItem>> fetchDistributorOrderItems(context) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        List<dynamic> values = jsonDecode(response.body);
-        List<DistributorOrderItem> distributorOrderItems =
-        values.map((e) => DistributorOrderItem.fromJson(e)).toList();
-        return distributorOrderItems;
-      } else {
+    int aStatusCode = 0;
+    List<DistributorOrderItem> distributorOrderItems= [];
+    while(aStatusCode != 200) {
+      try {
+        final response = await http.get(Uri.parse(url));
+        if (response.statusCode == 200) {
+          List<dynamic> values = jsonDecode(response.body);
+          List<DistributorOrderItem> distributorOrderItems =
+          values.map((e) => DistributorOrderItem.fromJson(e)).toList();
+          return distributorOrderItems;
+        } else {
+          throw Exception("failed to load post");
+        }
+      } on SocketException {
+        throw Exception("failed to load post");
+      } on TimeoutException {
         throw Exception("failed to load post");
       }
-    } on SocketException {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
-          SnackBar(content: Text("No Internet Connection",textAlign: TextAlign.center
-            ,)));
-      throw Exception("failed to load post");
-    } on TimeoutException {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
-          SnackBar(content:  Text("Sorry, Failed to Load Data",textAlign: TextAlign.center,)));
-      throw Exception("failed to load post");
-    }
+    } return distributorOrderItems;
 
   }
 
@@ -98,10 +95,10 @@ class DistributorOrderItemService {
       return false;
     } on SocketException {
       throw Exception("failed to load post");
-      return false;
+
     } on TimeoutException {
       throw Exception("failed to load post");
-      return false;
+
     }
   }
 }

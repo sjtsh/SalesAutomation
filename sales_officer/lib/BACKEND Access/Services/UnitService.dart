@@ -11,8 +11,11 @@ class UnitService {
       "https://asia-south1-hilifedb.cloudfunctions.net/getUnits";
 
   Future<List<Unit>> fetchUnits() async {
+    int aStockStatus = 0;
+    while(aStockStatus!= 200){
    try {
       final response = await http.get(Uri.parse(url));
+      aStockStatus = response.statusCode;
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
         List<Unit> units = values.map((e) => Unit.fromJson(e)).toList();
@@ -26,4 +29,7 @@ class UnitService {
      throw Exception("failed to load post");
    }
   }
+  throw Exception("Something Went Wrong");
+  }
+
 }

@@ -14,8 +14,12 @@ class DistributorService {
 
 
   Future<List<Distributor>> fetchDistributors() async {
+    List<Distributor> distributors = [];
+    int aStatusCode = 0;
+    while (aStatusCode!=200){
     try{
       final response = await http.get(Uri.parse(url));
+      aStatusCode = response.statusCode;
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
         List<Distributor> distributors =
@@ -25,11 +29,13 @@ class DistributorService {
       } else {
         throw Exception("failed to load post");
       }
-    }catch(e) {
-      print(" Failed, No connectivity");
+    }on SocketException{
+      print("No internet connection, distributors");
       throw Exception("failed to load post");
-
     }
+
+    }return distributors;
     }
 
 }
+
