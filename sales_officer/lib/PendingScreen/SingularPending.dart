@@ -114,7 +114,6 @@ class _SingularPendingState extends State<SingularPending> {
                               !widget.e.orderStatus
                                   ? PopupMenuButton(
                                       onSelected: (option) {
-                                        print(option);
                                         if (option == 1) {
                                           Navigator.push(
                                             context,
@@ -132,7 +131,7 @@ class _SingularPendingState extends State<SingularPending> {
                                           setState(() {
                                             isLoading = true;
                                           });
-                                          shareOrder(widget.e);
+                                          shareOrder(widget.e, context);
                                           setState(() {
                                             isLoading = false;
                                           });
@@ -171,11 +170,10 @@ class _SingularPendingState extends State<SingularPending> {
                                     )
                                   : PopupMenuButton(
                                       onSelected: (option) {
-                                        print(option);
                                         setState(() {
                                           isLoading = true;
                                         });
-                                        shareOrder(widget.e);
+                                        shareOrder(widget.e, context);
                                         setState(() {
                                           isLoading = false;
                                         });

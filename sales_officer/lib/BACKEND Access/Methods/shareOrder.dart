@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,7 +12,7 @@ import 'package:sales_officer/Database.dart';
 import 'package:share_plus/share_plus.dart';
 
 shareOrder(
-  DistributorOrder distributorOrder,
+  DistributorOrder distributorOrder, context
 ) {
   double totalValue = 0;
   double companyValue = 0;
@@ -22,7 +23,7 @@ shareOrder(
   DistributorOrderItemService distributorOrderItemService =
       DistributorOrderItemService();
   distributorOrderItemService
-      .fetchDistributorOrderItems()
+      .fetchDistributorOrderItems(context)
       .then((allDistributorOrderItems) async {
     List<DistributorOrderItem> distributorOrderItems = allDistributorOrderItems
         .where((element) =>

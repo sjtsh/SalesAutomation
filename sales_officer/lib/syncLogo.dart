@@ -18,7 +18,6 @@ class SyncIcon extends StatefulWidget {
 }
 
 class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
-
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -73,15 +72,16 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(0.5),
                                         fontSize: 12,
-                                        decoration: TextDecoration.none,fontFamily: "lato"),
+                                        decoration: TextDecoration.none,
+                                        fontFamily: "lato"),
                                   )
                                 : Text(
                                     "Last Sync Date",
                                     style: TextStyle(
                                         color: Colors.black.withOpacity(0.5),
                                         fontSize: 12,
-                                        decoration: TextDecoration.none,fontFamily: "lato"
-                                    ),
+                                        decoration: TextDecoration.none,
+                                        fontFamily: "lato"),
                                   ),
                             FutureBuilder(
                               future: SharedPreferences.getInstance(),
@@ -89,11 +89,13 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                 if (snapshot.hasData) {
                                   SharedPreferences prefs = snapshot.data;
                                   return Text(
-                                    prefs.getString("lastUpdated") ?? "0000-00-00 00:00:00",
+                                    prefs.getString("lastUpdated") ??
+                                        "0000-00-00 00:00:00",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
-                                        decoration: TextDecoration.none,fontFamily: "lato"),
+                                        decoration: TextDecoration.none,
+                                        fontFamily: "lato"),
                                   );
                                 }
                                 return Text(
@@ -101,7 +103,8 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
-                                      decoration: TextDecoration.none,fontFamily: "lato"),
+                                      decoration: TextDecoration.none,
+                                      fontFamily: "lato"),
                                 );
                               },
                             ),
@@ -143,7 +146,8 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                 color: Colors.white,
                                 child: InkWell(
                                   onTap: () async {
-                                    loadLocalData(widget.refresh, close);
+                                    loadLocalData(
+                                        widget.refresh, close, context);
                                     SharedPreferences prefs =
                                         await SharedPreferences.getInstance();
                                     NepaliDateService nepaliDateService =
@@ -165,7 +169,8 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                       return Text(
                                         "SYNC NOW",
                                         style: TextStyle(
-                                          color: Colors.white,fontFamily: "lato",
+                                          color: Colors.white,
+                                          fontFamily: "lato",
                                         ),
                                       );
                                     }),
@@ -262,7 +267,6 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
 Future<bool> findIfNeedToUpdate(
   String date,
 ) async {
-  print("in to the function find if need to update");
   LastUpdatedService lastUpdatedService = LastUpdatedService();
   bool isToBeUpdated =
       await lastUpdatedService.fetchLastUpdateds().then((value) {

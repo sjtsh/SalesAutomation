@@ -250,7 +250,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   _editOrder(List<TextEditingController> _textEditingControllers) {
     DistributorOrderItemService distributorOrderItemService =
         DistributorOrderItemService();
-    distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+    distributorOrderItemService.fetchDistributorOrderItems(context).then((value) {
       List<DistributorOrderItem> newDistributorOrderItems = [];
 
       value.forEach((element) {

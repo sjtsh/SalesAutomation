@@ -16,8 +16,6 @@ class _BezierCardState extends State<BezierCard> {
   ExpandableController _expandableController = ExpandableController();
   bool aCondition = false;
   void changeExpanded(bool condition){
-    print("pressed");
-    print(condition);
     setState(() {
       aCondition = condition;
     });

@@ -25,7 +25,7 @@ class LogInScreen extends StatefulWidget {
 
 class _LogInScreenState extends State<LogInScreen> {
   bool isSelected = false;
-
+  int percentage = 0;
   select() {
     setState(() {
       isSelected = true;
@@ -42,10 +42,14 @@ class _LogInScreenState extends State<LogInScreen> {
     super.initState();
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
-      subGroupService.fetchSubGroups().then((value) {
+      subGroupService.fetchSubGroups(context).then((value) {
         allSubGroupsLocal = value;
+
+
+
         setState(() {
           loadingText = "Getting SKUs";
+          percentage = 10;
         });
         SKUService skuService = SKUService();
         skuService.fetchSKUs().then((value) {
@@ -64,10 +68,11 @@ class _LogInScreenState extends State<LogInScreen> {
           }).then((value) {
             BillingCompanyService billingCompanyService =
                 BillingCompanyService();
-            billingCompanyService.fetchBillingCompanys().then((value) {
+            billingCompanyService.fetchBillingCompanys(context).then((value) {
               allBillingCompanysLocal = value;
               setState(() {
                 loadingText = "Loading Units";
+                percentage = 20;
               });
               UnitService unitService = UnitService();
               unitService.fetchUnits().then((value) {
@@ -80,19 +85,21 @@ class _LogInScreenState extends State<LogInScreen> {
                   allProductGroupsLocal = value;
                   setState(() {
                     loadingText = "Loading Districts";
+                    percentage = 30;
                   });
                   DistrictService districtService = DistrictService();
-                  districtService.fetchDistricts().then((value) {
+                  districtService.fetchDistricts(context).then((value) {
                     allDistrictsLocal = value;
                     setState(() {
                       loadingText = "Loading Familiarities";
                     });
                     FamiliarityService familiarityService =
                         FamiliarityService();
-                    familiarityService.fetchFamiliaritys().then((value) {
+                    familiarityService.fetchFamiliaritys(context).then((value) {
                       allFamiliaritysLocal = value;
                       setState(() {
                         loadingText = "Loading Distributors";
+                        percentage = 40;
                       });
                       DistributorService distributorService =
                           DistributorService();
@@ -139,9 +146,10 @@ class _LogInScreenState extends State<LogInScreen> {
                             }).toList();
                             setState(() {
                               loadingText = "Calculating Sales";
+                              percentage = 100;
                             });
-
-                            calculateSales(setLoaded);
+                            print(allDistributorsLocal);
+                            calculateSales(setLoaded,context);
                           });
                         });
                       });
@@ -271,14 +279,20 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       width: 200,
                       child: LinearProgressIndicator(
+                        value: percentage/100,
+
                         color: Colors.red,
                         backgroundColor: Colors.red.withOpacity(0.5),
                       ),
+
+
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(loadingText),
+                    Text("$percentage%")
+
                   ],
                 ),
               ),

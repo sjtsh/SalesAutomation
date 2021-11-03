@@ -8,8 +8,11 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 
 import '../../Database.dart';
 
-Future<int> createOrder(int distributorID,
-    List<TextEditingController> _textEditingControllers, bool isWarning) {
+Future<int> createOrder(
+    int distributorID,
+    List<TextEditingController> _textEditingControllers,
+    bool isWarning,
+    context) {
   int _distributorID = distributorID;
   int _SOID = meSO!.SOID;
   bool _joint = true;
@@ -56,9 +59,7 @@ Future<int> createOrder(int distributorID,
             }
           },
         );
-      } catch (e) {
-        print("wasnt successful");
-      }
+      } catch (e) {}
       return aCondition;
     });
   });
@@ -73,7 +74,7 @@ Future<void> createReturnOrder(
   DistributorReturnOrderService distributorReturnOrderService =
       DistributorReturnOrderService();
   distributorReturnOrderService
-      .insertDistributorReturnOrder(distributorID, _SOID, true, false, _remarks)
+      .insertDistributorReturnOrder(distributorID, _SOID, true, false, _remarks, context)
       .then((value) async {
     int distributorReturnOrderID = value;
     returnOrdersCountList.forEach(
@@ -87,7 +88,8 @@ Future<void> createReturnOrder(
             element[1],
             element[2],
             secondaryAlternativeItemCount,
-            element[3]);
+            element[3],
+            context);
       }, //physical damage, near about expiry dateTime
     );
   });

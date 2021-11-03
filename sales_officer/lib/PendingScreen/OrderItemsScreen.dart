@@ -43,7 +43,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     });
     DistributorOrderItemService distributorOrderItemService =
         DistributorOrderItemService();
-    distributorOrderItemService.fetchDistributorOrderItems().then((value) {
+    distributorOrderItemService.fetchDistributorOrderItems(context).then((value) {
       List<DistributorOrderItem> aList = [];
       value.forEach((element) {
         if (element.distributorOrderID == widget.e.distributorOrderID) {
@@ -158,7 +158,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                         setState(() {
                           isLoading = true;
                         });
-                        shareOrder(widget.e);
+                        shareOrder(widget.e,context);
                         setState(() {
                           isLoading = false;
                         });
@@ -209,7 +209,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                   setState(() {
                     isLoading = true;
                   });
-                  shareOrder(widget.e);
+                  shareOrder(widget.e,context);
                   setState(() {
                     isLoading = false;
                   });

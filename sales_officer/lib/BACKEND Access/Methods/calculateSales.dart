@@ -1,3 +1,5 @@
+
+
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
@@ -7,15 +9,15 @@ import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 
 import '../../Database.dart';
 
-calculateSales(setLoaded) {
+calculateSales(setLoaded, context) {
   NepaliDateService nepaliDateService = NepaliDateService();
   nepaliDateService.fetchNepaliDate().then((time) {
     DistributorOrderService distributorOrderService = DistributorOrderService();
-    distributorOrderService.fetchDistributorOrders().then((distributorOrder) {
+    distributorOrderService.fetchDistributorOrders(context).then((distributorOrder) {
       DistributorOrderItemService distributorOrderItemService =
           DistributorOrderItemService();
       distributorOrderItemService
-          .fetchDistributorOrderItems()
+          .fetchDistributorOrderItems(context)
           .then((distributorOrderItem) {
         personalDistributorsLocal.forEach((aDistributor) {
           double mtd = 0;

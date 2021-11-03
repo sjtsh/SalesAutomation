@@ -9,7 +9,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:sales_officer/Database.dart';
 import 'package:share_plus/share_plus.dart';
 
-shareOrder(DistributorOrder distributorOrder) {
+shareOrder(DistributorOrder distributorOrder, context) {
   List<SKUDistributorWise> skuDistributorWises = allSKUDistributorWiseLocal
       .where(
           (element) => element.distributorID == distributorOrder.distributorID)
@@ -18,7 +18,7 @@ shareOrder(DistributorOrder distributorOrder) {
   DistributorOrderItemService distributorOrderItemService =
       DistributorOrderItemService();
   distributorOrderItemService
-      .fetchDistributorOrderItems()
+      .fetchDistributorOrderItems(context)
       .then((distributorOrderItems) async {
     final pdf = pw.Document();
     pdf.addPage(

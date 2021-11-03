@@ -383,11 +383,8 @@ class _StockReturnModalState extends State<StockReturnModal> {
                             }
                             Navigator.pop(context);
                             widget.refresh();
-                            print("______________________________________");
-                            print("primary stock has now the value of: " +
-                                widget.primaryStockController.text);
-                            print("primary stock has now the value of: " +
-                                widget.alternativeStockController.text);
+
+
 
                           },
                           child: Center(

@@ -36,7 +36,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
       SKUStockService skuStockService = SKUStockService();
       bool isContains = false;
       ourSKUStock.forEach((element) {
-        print("already there");
+
         if (element.SKUID == mySKUStock.SKUID &&
             element.primaryStock == myPrimaryCount &&
             element.alternativeStock == myAlternativeCount) {

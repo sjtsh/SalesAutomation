@@ -29,7 +29,7 @@ class _PendingScreenState extends State<PendingScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.distributorOrderService.fetchDistributorOrders(),
+      future: widget.distributorOrderService.fetchDistributorOrders(context),
       builder: (BuildContext context,
           AsyncSnapshot<List<DistributorOrder>> snapshot) {
         if (snapshot.hasData) {

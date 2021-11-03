@@ -34,7 +34,7 @@ String meBeat = "";
 
 bool? isJoint;
 Map products = {};
-List sales = [];
+List sales = [12, 142, 531, 15, 1];
 
 final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
 final int startDate1 = 3;

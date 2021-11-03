@@ -9,11 +9,13 @@ class NepaliDateService {
       "https://asia-south1-hilifedb.cloudfunctions.net/getNepaliDate";
 
   Future<String> fetchNepaliDate() async {
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception("failed to load post");
-    }
+
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        throw Exception("failed to load post");
+      }
+
   }
 }

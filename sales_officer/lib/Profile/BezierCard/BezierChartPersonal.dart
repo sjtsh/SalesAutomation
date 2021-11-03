@@ -9,7 +9,7 @@ class BezierChartPersonal extends StatefulWidget {
 }
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
-  List salesTaken = [0, 0, 0, 0, 0];
+  List salesTaken = [0,0,0,0,0];
 
   @override
   void initState() {

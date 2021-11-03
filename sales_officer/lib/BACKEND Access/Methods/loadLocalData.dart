@@ -15,11 +15,11 @@ import '../../Database.dart';
 
 bool condition = true;
 
-Future<void> loadLocalData(Function refresh, Function close) async {
+void loadLocalData(Function refresh, Function close, context) {
   condition = false;
   refresh();
   SubGroupService subGroupService = SubGroupService();
-  bool returnable = await subGroupService.fetchSubGroups().then((value) {
+  subGroupService.fetchSubGroups(context).then((value) {
     allSubGroupsLocal = value;
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
@@ -32,7 +32,7 @@ Future<void> loadLocalData(Function refresh, Function close) async {
       }).then((value) {
         BillingCompanyService billingCompanyService =
         BillingCompanyService();
-        billingCompanyService.fetchBillingCompanys().then((value) {
+        billingCompanyService.fetchBillingCompanys(context).then((value) {
           allBillingCompanysLocal = value;
           UnitService unitService = UnitService();
           unitService.fetchUnits().then((value) {
@@ -41,11 +41,11 @@ Future<void> loadLocalData(Function refresh, Function close) async {
             productGroupService.fetchProductGroups().then((value) {
               allProductGroupsLocal = value;
               DistrictService districtService = DistrictService();
-              districtService.fetchDistricts().then((value) {
+              districtService.fetchDistricts(context).then((value) {
                 allDistrictsLocal = value;
                 FamiliarityService familiarityService =
                 FamiliarityService();
-                familiarityService.fetchFamiliaritys().then((value) {
+                familiarityService.fetchFamiliaritys(context).then((value) {
                   allFamiliaritysLocal = value;
                   DistributorService distributorService =
                   DistributorService();
