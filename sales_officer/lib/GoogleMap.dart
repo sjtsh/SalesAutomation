@@ -13,7 +13,7 @@ class GoogleMapPersonal extends StatefulWidget {
 
 class _MapScreenState extends State<GoogleMapPersonal> {
   static const _initialCameraPosition = CameraPosition(
-    target: LatLng(27.672107, 85.428232),
+    target: LatLng(27.735553, 85.343021),
     zoom: 20,
     tilt: 50.0,
   );
@@ -53,11 +53,11 @@ class _MapScreenState extends State<GoogleMapPersonal> {
     _googleMapController = controller;
     _location.onLocationChanged.listen((l) {
       _googleMapController.animateCamera(
-        // CameraUpdate.newCameraPosition(
-          // CameraPosition(
-          //     target: LatLng(l.latitude as double, l.longitude as double),
-          //     zoom: 15),
-        // ),
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: LatLng(l.latitude as double, l.longitude as double),
+              zoom: 15),
+        ),
       );
       if (_origin == null) {
         setState(() {
