@@ -4,29 +4,43 @@ import 'package:flutter/material.dart';
 import '../../Database.dart';
 
 class BezierChartPersonal extends StatefulWidget {
+  final bool isMTD;
+
+  BezierChartPersonal(this.isMTD);
+
   @override
   _BezierChartPersonalState createState() => _BezierChartPersonalState();
 }
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
-  List salesTaken = [0,0,0,0,0];
+  List salesTaken = [0, 0, 0, 0, 0];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-      salesTaken
-          .asMap()
-          .entries
-          .forEach((e) {
-        for (int i = 0; i < sales[e.key]; i++) {
-            Future.delayed(Duration(seconds: 2), () {
+    // salesTaken
+    //     .asMap()
+    //     .entries
+    //     .forEach((e) {
+    //   for (int i = 0; i < sales[e.key]; i++) {
+    //       Future.delayed(Duration(seconds: 2), () {
+    //         setState(() {
+    //           salesTaken[e.key]++;
+    //         });
+    //     });
+    //   }
+    // });
+    Future.delayed(Duration(seconds: 2))
+        .then((value) => salesTaken.asMap().entries.forEach((element) {
               setState(() {
-                salesTaken[e.key]++;
+                if (widget.isMTD) {
+                  salesTaken[element.key] = sales1[element.key];
+                } else {
+                  salesTaken[element.key] = sales2[element.key];
+                }
               });
-          });
-        }
-      });
+            }));
   }
 
   @override
@@ -36,7 +50,12 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
         lineTouchData: LineTouchData(enabled: true),
         lineBarsData: [
           LineChartBarData(
-            spots: sales
+            spots: widget.isMTD ? sales1
+                .asMap()
+                .entries
+                .map(
+                    (content) => FlSpot(content.key + 1.0, content.value + 0.0))
+                .toList(): sales2
                 .asMap()
                 .entries
                 .map(

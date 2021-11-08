@@ -9,3 +9,10 @@ class DistributorSale{
 
   DistributorSale(this.distributor, this.mtd, this.ytd, this.outstanding, this.lastOrder);
 }
+
+class WeeklySale{
+  final int time;
+  final double amount;
+
+  WeeklySale(this.time, this.amount);
+}

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/MoreScreen/Settings/Settings.dart';

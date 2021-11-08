@@ -12,10 +12,10 @@ class BezierCard extends StatefulWidget {
 }
 
 class _BezierCardState extends State<BezierCard> {
-
   ExpandableController _expandableController = ExpandableController();
   bool aCondition = false;
-  void changeExpanded(bool condition){
+
+  void changeExpanded(bool condition) {
     setState(() {
       aCondition = condition;
     });
@@ -49,15 +49,14 @@ class _BezierCardState extends State<BezierCard> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   height: 100,
-                  child: BezierChartPersonal(),
+                  child: BezierChartPersonal(e),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: BezierData(_expandableController, changeExpanded, e),
-                ),
-              ],
-            ),).toList(),
-          ),
-        ));
+                ],
+              ),
+            )
+            .toList(),
+      ),
+    )
+    );
   }
 }

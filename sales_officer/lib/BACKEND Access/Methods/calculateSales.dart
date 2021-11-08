@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
@@ -25,6 +26,7 @@ calculateSales(setLoaded, context) {
           double ytd = 0;
           distributorOrder
               .where((aDistributorOrder) =>
+                  aDistributorOrder.SOID == meSOID &&
                   aDistributorOrder.distributorID ==
                       aDistributor.distributorID &&
                   aDistributorOrder.orderStatus)
@@ -182,6 +184,7 @@ calculateSales(setLoaded, context) {
           String lastOrder = "None";
           List<DistributorOrder> distributorOrders = distributorOrder
               .where((aDistributorOrder) =>
+                  aDistributorOrder.SOID == meSOID &&
                   aDistributorOrder.distributorID ==
                       aDistributor.distributorID &&
                   aDistributorOrder.orderStatus)
@@ -195,11 +198,6 @@ calculateSales(setLoaded, context) {
                 .last
                 .dateAndTime;
           }
-          print(aDistributor.distributorID.toString() +
-              " " +
-              mtd.toString() +
-              " " +
-              ytd.toString());
           allDistributorSalesLocal.add(
             DistributorSale(
               aDistributor,
@@ -211,7 +209,6 @@ calculateSales(setLoaded, context) {
           );
         });
         setLoaded();
-        print(products);
       });
     });
   });

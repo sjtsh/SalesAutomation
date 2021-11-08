@@ -7,6 +7,7 @@ import 'package:sales_officer/syncLogo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'BACKEND Access/Methods/calculateSales.dart';
+import 'BACKEND Access/Methods/calculateWeeklySales.dart';
 import 'Database.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class _FusersState extends State<Fusers> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       theme: ThemeData(fontFamily: "lato"),
       routes: {
