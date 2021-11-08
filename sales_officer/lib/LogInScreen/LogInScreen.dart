@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
@@ -57,6 +58,7 @@ class _LogInScreenState extends State<LogInScreen> {
           allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
             loadingText = "Getting SKU Distributor Wise";
+            percentage = 20;
           });
           SKUDistributorWiseService skuDistributorWiseService =
               SKUDistributorWiseService();
@@ -64,6 +66,7 @@ class _LogInScreenState extends State<LogInScreen> {
             allSKUDistributorWiseLocal = value;
             setState(() {
               loadingText = "Getting Billing Companies";
+              percentage = 30;
             });
           }).then((value) {
             BillingCompanyService billingCompanyService =
@@ -72,26 +75,28 @@ class _LogInScreenState extends State<LogInScreen> {
               allBillingCompanysLocal = value;
               setState(() {
                 loadingText = "Loading Units";
-                percentage = 20;
+                percentage = 40;
               });
               UnitService unitService = UnitService();
               unitService.fetchUnits().then((value) {
                 allUnitsLocal = value;
                 setState(() {
                   loadingText = "Loading Product Lines";
+                  percentage = 50;
                 });
                 ProductGroupService productGroupService = ProductGroupService();
                 productGroupService.fetchProductGroups().then((value) {
                   allProductGroupsLocal = value;
                   setState(() {
                     loadingText = "Loading Districts";
-                    percentage = 30;
+                    percentage = 60;
                   });
                   DistrictService districtService = DistrictService();
                   districtService.fetchDistricts(context).then((value) {
                     allDistrictsLocal = value;
                     setState(() {
                       loadingText = "Loading Familiarities";
+                      percentage = 75;
                     });
                     FamiliarityService familiarityService =
                         FamiliarityService();
@@ -99,7 +104,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       allFamiliaritysLocal = value;
                       setState(() {
                         loadingText = "Loading Distributors";
-                        percentage = 40;
+                        percentage = 85;
                       });
                       DistributorService distributorService =
                           DistributorService();
@@ -107,6 +112,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         allDistributorsLocal = value;
                         setState(() {
                           loadingText = "Almost Done";
+                          percentage = 95;
                         });
                         SOService soService = SOService();
                         soService.fetchSOs().then((value) {
@@ -148,8 +154,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               loadingText = "Calculating Sales";
                               percentage = 100;
                             });
-                            print(allDistributorsLocal);
                             calculateSales(setLoaded,context);
+                            calculateWeeklySales(context);
                           });
                         });
                       });

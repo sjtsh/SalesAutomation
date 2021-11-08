@@ -12,25 +12,33 @@ class DistrictService {
       "https://asia-south1-hilifedb.cloudfunctions.net/getDistricts";
 
   Future<List<District>> fetchDistricts(context) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        List<dynamic> values = jsonDecode(response.body);
-        List<District> districts =
-        values.map((e) => District.fromJson(e)).toList();
-        return districts;
-      } else {
+    int aStatusCode = 0;
+    List<District> districts = [];
+    while (aStatusCode != 200) {
+      try {
+        final response = await http.get(Uri.parse(url));
+        if (response.statusCode == 200) {
+          List<dynamic> values = jsonDecode(response.body);
+          List<District> districts =
+              values.map((e) => District.fromJson(e)).toList();
+          return districts;
+        } else {
+          throw Exception("failed to load post");
+        }
+      } on SocketException {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("No Internet Connection", textAlign: TextAlign.center),
+        ));
+        ;
+        throw Exception("failed to load post");
+      } on TimeoutException {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text("Sorry, Failed to Load Data", textAlign: TextAlign.center),
+        ));
         throw Exception("failed to load post");
       }
-    } on SocketException {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content:  Text("No Internet Connection",textAlign:TextAlign.center ),));
-      return [];
     }
-    on TimeoutException {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:  Text("Sorry, Failed to Load Data",textAlign:TextAlign.center ),));
-      return [];
-    }
+    return districts;
   }
 }

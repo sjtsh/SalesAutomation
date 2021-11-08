@@ -44,10 +44,15 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
     tempBillingAmounts = [];
     isWarning = false;
     widget.receiptData.forEach((element) {
-      SKUDistributorWise skuDistributorWise =
-          allSKUDistributorWiseLocal.firstWhere((aSKU) =>
-              aSKU.distributorID == widget.currentDistributor.distributorID &&
-              aSKU.SKUID == element[0].SKUID);
+      SKUDistributorWise skuDistributorWise = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+      try{
+         skuDistributorWise =
+            allSKUDistributorWiseLocal.firstWhere((aSKU) =>
+                aSKU.distributorID == widget.currentDistributor.distributorID &&
+                aSKU.SKUID == element[0].SKUID);
+      }catch(e){
+
+      }
       List aBillingAmount = billingAmounts.firstWhere(
           (element) => element[0] == skuDistributorWise.billingCompanyID);
       if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
@@ -379,7 +384,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                                                   "Please connect to a stronger connection"),
                                             ),
                                           );
-                                          return 0;
+                                          return -1;
                                         }).then((value) {
                                           setState(() {
                                             isLoading = false;
