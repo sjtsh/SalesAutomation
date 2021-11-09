@@ -8,7 +8,8 @@ class StockSingularProductHeader extends StatelessWidget {
   final Function changeCurrentlyExpanded;
   final IconData _icon;
 
-  StockSingularProductHeader(this.subGroup, this.changeCurrentlyExpanded, this._icon);
+  StockSingularProductHeader(this.subGroup, this.changeCurrentlyExpanded,
+      this._icon);
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +89,31 @@ class StockSingularProductHeader extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  allProductGroupsLocal
-                                      .firstWhere((element) =>
-                                          element.productGroupID ==
+                                Builder(builder: (context) {
+                                  try {
+                                    return Text(
+                                      allProductGroupsLocal
+                                          .firstWhere((element) =>
+                                      element.productGroupID ==
                                           subGroup.productGroupID)
-                                      .productGroupName,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontSize: 12,
-                                  ),
+                                          .productGroupName,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                      ),
+                                    );
+                                  }catch(e){
+                                    return Text(
+                                      "name not found",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                      ),
+                                    );
+                                  }
+                                }
                                 ),
                                 SizedBox(
                                   width: 5,

@@ -42,18 +42,25 @@ class _SingularProductState extends State<SingularProduct> {
         children: [
           SingularProductHeader(
               widget.item, widget.changeCurrentlyExpanded, Icons.remove),
-          Column(
-            children: allSKULocal
-                .where(
-                    (element) => element.subGroupID == widget.item.subGroupID)
-                .map((item) => SingularProductVariation(
-                    item,
-                    widget
-                        ._textEditingControllers[allSKULocal.indexOf(item) * 2],
-                    widget._textEditingControllers[
-                        allSKULocal.indexOf(item) * 2 + 1],
-                    widget.currentDistributor))
-                .toList(),
+          Builder(
+            builder: (context) {
+              print(allSKULocal
+                  .where(
+                      (element) => element.subGroupID == widget.item.subGroupID));
+              return Column(
+                children: allSKULocal
+                    .where(
+                        (element) => element.subGroupID == widget.item.subGroupID)
+                    .map((item) => SingularProductVariation(
+                        item,
+                        widget
+                            ._textEditingControllers[allSKULocal.indexOf(item) * 2],
+                        widget._textEditingControllers[
+                            allSKULocal.indexOf(item) * 2 + 1],
+                        widget.currentDistributor))
+                    .toList(),
+              );
+            }
           ),
         ],
       ),

@@ -90,7 +90,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                   SharedPreferences prefs = snapshot.data;
                                   return Text(
                                     prefs.getString("lastUpdated") ??
-                                        "0000-00-00 00:00:00",
+                                        "Not synched yet",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 12,
@@ -99,7 +99,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                                   );
                                 }
                                 return Text(
-                                  "0000-00-00 00:00:00",
+                                  "Not synched yet",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,

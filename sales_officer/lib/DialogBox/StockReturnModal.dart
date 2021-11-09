@@ -89,16 +89,31 @@ class _StockReturnModalState extends State<StockReturnModal> {
                                 "Return Stock",
                                 style: TextStyle(fontSize: 16),
                               ),
-                              Text(
-                                personalDistributorsLocal
-                                    .firstWhere((element) =>
-                                        element.distributorID ==
-                                        widget.skuDistributorWise.distributorID)
-                                    .distributorName,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5),
-                                  fontSize: 14,
-                                ),
+                              Builder(
+                                builder: (context) {
+                                  try {
+                                    return Text(
+                                      personalDistributorsLocal
+                                          .firstWhere((element) =>
+                                      element.distributorID ==
+                                          widget.skuDistributorWise
+                                              .distributorID)
+                                          .distributorName,
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 14,
+                                      ),
+                                    );
+                                  } catch(e){
+                                    return Text(
+                                      "unnamed",
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 14,
+                                      ),
+                                    );
+                                  }
+                                }
                               )
                             ],
                           ),

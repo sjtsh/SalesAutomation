@@ -212,7 +212,7 @@ class _SingularPendingState extends State<SingularPending> {
                                 (e) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 5),
-                                  child: Row(
+                                  child:e[1] =="null"||e[1] =="-1"  ? Container(): Row(
                                     children: [
                                       Text(
                                         e[0],

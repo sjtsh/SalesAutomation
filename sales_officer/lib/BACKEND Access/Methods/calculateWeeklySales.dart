@@ -25,6 +25,7 @@ calculateWeeklySales(context) {
               .where((aDistributorOrder) => aDistributorOrder.orderStatus)
               .forEach((aDistributorOrder) {
             //FOR MTD
+            if(aDistributorOrder.dateAndTime!="null"){
             if (aDistributorOrder.dateAndTime.substring(0, 4) ==
                 time.substring(0, 4)) {
               if (aDistributorOrder.dateAndTime.substring(5, 7) ==
@@ -166,7 +167,7 @@ calculateWeeklySales(context) {
                 }
               }
             }
-          });
+          }});
         });
 
 
