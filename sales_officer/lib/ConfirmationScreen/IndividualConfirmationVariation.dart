@@ -21,12 +21,19 @@ class IndividualConfirmationVariation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SKUDistributorWise skuDistributorWise =
+    SKU sku =SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+    SKUDistributorWise skuDistributorWise = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+    try{  skuDistributorWise =
         allSKUDistributorWiseLocal.firstWhere((element) =>
             element.distributorID == distributor.distributorID &&
             element.SKUID == f[0].SKUID);
 
-    SKU sku = allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
+
+       sku =
+          allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
+    } catch(e){
+      throw Exception(" Something Went Wrong");
+    }
 
     return Material(
       color: Colors.white,

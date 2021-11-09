@@ -41,7 +41,7 @@ class _FusersState extends State<Fusers> {
             if (snapshot.hasData) {
               SharedPreferences prefs = snapshot.data;
               meSOID = prefs.getInt('meSOID') ?? 0;
-              print(meSOID);
+
               if (meSOID! > 0) {
                 return LogInScreen();
               } else {

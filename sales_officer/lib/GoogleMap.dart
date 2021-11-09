@@ -69,7 +69,7 @@ class _MapScreenState extends State<GoogleMapPersonal> {
             position: LatLng(l.latitude as double, l.longitude as double),
           );
           for (int i = 0; i < _locations.length; i++) {
-            print('marker i added');
+
             _restaurants.add(Marker(
               markerId: MarkerId(_locationsName[i]),
               infoWindow: InfoWindow(title: "Appetit $i: " + _locationsName[i]),
@@ -89,6 +89,7 @@ class _MapScreenState extends State<GoogleMapPersonal> {
       child: Stack(
         children: [
           GoogleMap(
+
             // myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
             zoomGesturesEnabled: true,

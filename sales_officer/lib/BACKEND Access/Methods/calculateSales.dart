@@ -64,7 +64,7 @@ calculateSales(setLoaded, context) {
                         sku.SKUID: [mtd, 0]
                       });
                     }
-                    print(products);
+
                   });
                 }
               } else if (int.parse(
@@ -104,7 +104,7 @@ calculateSales(setLoaded, context) {
                         sku.SKUID: [mtd, 0]
                       });
                     }
-                    print(products);
+
                   });
                 }
               }

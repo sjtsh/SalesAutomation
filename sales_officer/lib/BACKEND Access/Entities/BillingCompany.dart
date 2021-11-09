@@ -13,10 +13,10 @@ class BillingCompany {
     return BillingCompany(
       json['0'],
       json['1'],
-      json['2'],
+      json['2'] == "null" ? "-1" : json['2'],
       json['3'],
       json['4'],
-      json['5'] == 0 ? false : true,
+      json['5'] == 0 ? false  : true ,
     );
   }
 }

@@ -53,8 +53,11 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       }catch(e){
 
       }
-      List aBillingAmount = billingAmounts.firstWhere(
-          (element) => element[0] == skuDistributorWise.billingCompanyID);
+      List aBillingAmount =[];
+     try {
+      aBillingAmount = billingAmounts.firstWhere(
+            (element) => element[0] == skuDistributorWise.billingCompanyID);
+      } catch (e){}
       if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
         isWarning = true;
         if (!tempBillingAmounts.contains(aBillingAmount)) {
@@ -542,13 +545,18 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       if (aTextEditingController.text != "" &&
           widget._textEditingControllers.indexOf(aTextEditingController) % 2 ==
               0) {
-        SKU sku = allSKULocal.firstWhere((element) {
-          return element.SKUID ==
-              allSKULocal[widget._textEditingControllers
-                          .indexOf(aTextEditingController) ~/
-                      2]
-                  .SKUID;
-        });
+        SKU sku =  SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+        try{
+         sku = allSKULocal.firstWhere((element) {
+            return element.SKUID ==
+                allSKULocal[widget._textEditingControllers
+                            .indexOf(aTextEditingController) ~/
+                        2]
+                    .SKUID;
+          });
+        } catch (e){
+          throw Exception("Something Went Wrong");
+        }
         setState(() {
           totalAmount += aTextEditingController.text == ""
               ? 0

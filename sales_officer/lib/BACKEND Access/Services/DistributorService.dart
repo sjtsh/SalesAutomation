@@ -15,15 +15,21 @@ class DistributorService {
     while (aStatusCode != 200) {
       final response = await http.get(Uri.parse(url));
       aStatusCode = response.statusCode;
+
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
+
         List<Distributor> distributors =
             values.map((e) => Distributor.fromJson(e)).toList();
+
         return distributors;
+
       } else {
         throw Exception("failed to load post");
       }
     }
+
     return distributors;
   }
+
 }

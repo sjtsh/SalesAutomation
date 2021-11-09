@@ -127,7 +127,10 @@ class DistributorList extends StatelessWidget {
                                   clipBehavior: Clip.hardEdge,
                                   shape: CircleBorder(),
                                   child: InkWell(
-                                    onTap: () => launch(
+                                    onTap: () => distributor.mobileNumber.toString() == "-1" ?
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Phone number is no assigned")))
+
+                                    :  launch(
                                         "tel:+977${distributor.mobileNumber.toString()}"),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),

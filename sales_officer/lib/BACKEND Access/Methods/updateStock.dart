@@ -27,12 +27,19 @@ Future<bool> updateStock(List recieptData, int distributorID,
                 _textEditingControllers.indexOf(textEditingController) + 1]
             .text);
       }
-      SKUStock mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
-          element.distributorID == distributorID &&
-          allSKULocal[_textEditingControllers.indexOf(textEditingController) ~/
-                      2]
-                  .SKUID ==
-              element.SKUID);
+      SKUStock mySKUStock = SKUStock(1, 1, 1, 1, 1, 1, "", 12.3, 12.3, false);
+      try{
+         mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
+            element.distributorID == distributorID &&
+            allSKULocal[_textEditingControllers
+                            .indexOf(textEditingController) ~/
+                        2]
+                    .SKUID ==
+                element.SKUID);
+      }catch (e){
+
+      }
+
       SKUStockService skuStockService = SKUStockService();
       bool isContains = false;
       ourSKUStock.forEach((element) {
