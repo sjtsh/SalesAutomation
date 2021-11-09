@@ -28,12 +28,11 @@ void loadLocalData(Function refresh, Function close, context) {
       allSKULocal = value;
       allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
       SKUDistributorWiseService skuDistributorWiseService =
-      SKUDistributorWiseService();
+          SKUDistributorWiseService();
       skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
         allSKUDistributorWiseLocal = value;
       }).then((value) {
-        BillingCompanyService billingCompanyService =
-        BillingCompanyService();
+        BillingCompanyService billingCompanyService = BillingCompanyService();
         billingCompanyService.fetchBillingCompanys(context).then((value) {
           allBillingCompanysLocal = value;
           UnitService unitService = UnitService();
@@ -45,45 +44,46 @@ void loadLocalData(Function refresh, Function close, context) {
               DistrictService districtService = DistrictService();
               districtService.fetchDistricts(context).then((value) {
                 allDistrictsLocal = value;
-                FamiliarityService familiarityService =
-                FamiliarityService();
+                FamiliarityService familiarityService = FamiliarityService();
                 familiarityService.fetchFamiliaritys(context).then((value) {
                   allFamiliaritysLocal = value;
-                  DistributorService distributorService =
-                  DistributorService();
+                  DistributorService distributorService = DistributorService();
                   distributorService.fetchDistributors().then((value) {
                     allDistributorsLocal = value;
                     SOService soService = SOService();
                     soService.fetchSOs().then((value) {
-                      try{
+                      try {
                         meSO = value
                             .firstWhere((element) => element.SOID == meSOID);
-                      }catch(e){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=>LogInScreen()));
+                      } catch (e) {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => LogInScreen()));
                       }
                       SODistributorConnectionService
-                      soDistributorConnectionService =
-                      SODistributorConnectionService();
+                          soDistributorConnectionService =
+                          SODistributorConnectionService();
                       soDistributorConnectionService
                           .fetchSODistributorConnections()
                           .then((newValue) {
                         allSODistributorConnectionsLocal = newValue;
                         personalDistributorsLocal =
                             allDistributorsLocal.where((element) {
-                              bool condition = false;
-                              allSODistributorConnectionsLocal
-                                  .forEach((element1) {
-                                if (element1.SOID == meSO?.SOID &&
-                                    element1.distributorID ==
-                                        element.distributorID) {
-                                  condition = true;
-                                }
-                              });
-                              return condition;
-                            }).toList();
+                          bool condition = false;
+                          allSODistributorConnectionsLocal.forEach((element1) {
+                            if (element1.SOID == meSO?.SOID &&
+                                element1.distributorID ==
+                                    element.distributorID) {
+                              condition = true;
+                            }
+                          });
+                          return condition;
+                        }).toList();
                         condition = true;
                         refresh();
                         close();
+                        personalDistributorsLocal.forEach((element) {
+
+                        });
                         return true;
                       });
                     });

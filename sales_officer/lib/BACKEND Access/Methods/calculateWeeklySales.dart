@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderService.dart';
@@ -40,8 +41,13 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = allSKULocal.firstWhere(
-                            (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                            SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                        try{
+                           sku = allSKULocal.firstWhere(
+                              (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                        }catch(e){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, Please contact IT,", ),));
+                        }
                         weeklySales[n] += sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -74,8 +80,13 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = allSKULocal.firstWhere(
-                            (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                        try{
+                           sku = allSKULocal.firstWhere(
+                              (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                        }catch(e){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, Please contact IT,", ),));
+                        }
                         weeklySales[n] += sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -103,8 +114,13 @@ calculateWeeklySales(context) {
                             element.distributorOrderID ==
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
-                      SKU sku = allSKULocal.firstWhere(
-                          (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                     try {
+                     sku = allSKULocal.firstWhere(
+                            (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      } catch(e){
+                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, PLEASE CONTACT IT")));
+                     }
                       monthlySales[n] += sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
@@ -131,8 +147,13 @@ calculateWeeklySales(context) {
                             element.distributorOrderID ==
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
-                      SKU sku = allSKULocal.firstWhere(
-                          (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                      try{
+                         sku = allSKULocal.firstWhere(
+                            (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      } catch(e){
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, PLEASE CONTACT IT")));
+                      }
                       monthlySales[n] += sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
@@ -148,8 +169,7 @@ calculateWeeklySales(context) {
           });
         });
 
-        print(weeklySales);
-        print(monthlySales);
+
         // setLoaded();
       });
     });

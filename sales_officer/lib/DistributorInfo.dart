@@ -13,11 +13,12 @@ class DistributorInfo extends StatelessWidget {
 
   final Function refresh;
 
-
   DistributorInfo(this.currentDistributor, this.refresh);
 
   @override
   Widget build(BuildContext context) {
+
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
@@ -49,8 +50,8 @@ class DistributorInfo extends StatelessWidget {
                               return ProductsScreen(
                                 currentDistributor,
                                 2,
-                                DistributorOrder(
-                                    -1, -1, -1, true, false, "", "", "", 0, 0, false),
+                                DistributorOrder(-1, -1, -1, true, false, "",
+                                    "", "", 0, 0, false),
                                 true,
                                 refresh,
                               );
@@ -111,8 +112,8 @@ class DistributorInfo extends StatelessWidget {
                               return StocksScreen(
                                 currentDistributor,
                                 1,
-                                DistributorOrder(
-                                    -1, -1, -1, true, false, "", "", "", 0, 0, false),
+                                DistributorOrder(-1, -1, -1, true, false, "",
+                                    "", "", 0, 0, false),
                                 refresh,
                               );
                             },
@@ -240,6 +241,7 @@ class DistributorInfo extends StatelessWidget {
                         ],
                         ["PAN Number: ", currentDistributor.PAN.toString()],
                         ["Address: ", currentDistributor.location],
+                        ["Town ID: ", currentDistributor.townID.toInt().toString()],
                         [
                           "Bank Account Name: ",
                           currentDistributor.bankAccountName
@@ -257,34 +259,36 @@ class DistributorInfo extends StatelessWidget {
                               currentDistributor.lng.toString()
                         ],
                       ]
-                          .map((e) => Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
-                                    child: Row(
-                                      children: [
-                                        Text(e[0]),
-                                        Expanded(child: Container()),
-                                        Text(
-                                          e[1],
-                                          style: TextStyle(
-                                              color: Colors.black
-                                                  .withOpacity(0.7)),
-                                        ),
-                                      ],
+                          .map((e) => e[1] == "null" || e[1] == "-1" || e[1] == "-2000.0, -2000.0"
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: Row(
+                                        children: [
+                                          Text(e[0]),
+                                          Expanded(child: Container()),
+                                          Text(
+                                            e[1],
+                                            style: TextStyle(
+                                                color: Colors.black
+                                                    .withOpacity(0.7)),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5.0),
-                                    child: Divider(
-                                      thickness: 1,
-                                      color: Colors.black.withOpacity(0.1),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0),
+                                      child: Divider(
+                                        thickness: 1,
+                                        color: Colors.black.withOpacity(0.1),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ))
+                                  ],
+                                ))
                           .toList(),
                     ),
                     Padding(

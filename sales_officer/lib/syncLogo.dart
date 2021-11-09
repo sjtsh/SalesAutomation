@@ -196,7 +196,7 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
                           "0000-00-00 00:00:00")),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
-                      print(snapshot.data);
+
                       return Stack(
                         children: [
                           Center(
@@ -272,8 +272,7 @@ Future<bool> findIfNeedToUpdate(
       await lastUpdatedService.fetchLastUpdateds().then((value) {
     String lastUpdated = value;
     bool isToBeUpdated = false;
-    print(lastUpdated);
-    print(date);
+
     int year = int.parse(date.substring(0, 4));
     int month = int.parse(date.substring(5, 7));
     int day = int.parse(date.substring(8, 10));
@@ -321,7 +320,7 @@ Future<bool> findIfNeedToUpdate(
     } else {
       isToBeUpdated = false;
     }
-    print(isToBeUpdated);
+
     return isToBeUpdated;
   });
   return isToBeUpdated;

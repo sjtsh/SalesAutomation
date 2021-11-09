@@ -32,7 +32,7 @@ class _BezierDataState extends State<BezierData> {
     products.forEach((key, value) {
       listOfProducts.add([key, value]);
     });
-    print(listOfProducts);
+
     super.initState();
   }
 

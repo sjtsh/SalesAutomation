@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../Entities/Distributor.dart';
@@ -14,15 +15,20 @@ class DistributorService {
     while (aStatusCode != 200) {
       final response = await http.get(Uri.parse(url));
       aStatusCode = response.statusCode;
+
       if (response.statusCode == 200) {
         List<dynamic> values = jsonDecode(response.body);
+
         List<Distributor> distributors =
             values.map((e) => Distributor.fromJson(e)).toList();
+
         return distributors;
+
       } else {
         throw Exception("failed to load post");
       }
     }
+
     return distributors;
   }
 }

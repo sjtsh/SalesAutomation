@@ -15,7 +15,7 @@ class SubGroupService {
     List<SubGroup> subGroups = [];
 
     while (aStatusCode != 200) {
-      print(aStatusCode);
+
       try {
         final response = await http.get(Uri.parse(url));
         aStatusCode = response.statusCode;
