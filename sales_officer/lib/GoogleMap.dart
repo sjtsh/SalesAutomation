@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -89,15 +89,22 @@ class _MapScreenState extends State<GoogleMapPersonal> {
       child: Stack(
         children: [
           GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: LatLng(27.735553, 85.343021),
+              zoom: 20,
+              tilt: 50.0,
+            ),
             // myLocationButtonEnabled: true,
-            zoomControlsEnabled: false,
-            zoomGesturesEnabled: true,
-            initialCameraPosition: _initialCameraPosition,
+
+            // zoomControlsEnabled: false,
+            // zoomGesturesEnabled: true,
+            // initialCameraPosition: _initialCameraPosition,
             onMapCreated: _onMapCreated,
-            markers: {
-              if (_origin != null) _origin,
-              ..._restaurants,
-            },
+            // markers: {
+            //   if (_origin != null) _origin,
+            //   ..._restaurants,
+            // },
+
             // onLongPress: _addMarker,
             // myLocationEnabled: true,
           ),

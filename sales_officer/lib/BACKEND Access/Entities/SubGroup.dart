@@ -10,8 +10,8 @@ class SubGroup {
   factory SubGroup.fromJson(Map<String, dynamic> json) {
     return SubGroup(
       json['0'],
-      json['1'],
-      json['2'],
+      json['1'] == null ? -1: json['1'].round(),
+      json['2'] == null ? "null": json['2'],
       json['3'] == 0 ? false : true,
     );
   }

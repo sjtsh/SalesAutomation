@@ -39,10 +39,6 @@ dependencies:
   #  super_tooltip:
   dotted_border: ^2.0.0+1
   super_tooltip: ^1.0.1
-  firebase_core: ^0.4.0+9
-  firebase_analytics: ^5.0.2
-  firebase_auth: ^0.14.0+5
-  cloud_firestore: ^0.12.9+5
   google_maps_flutter:
   location:
 

@@ -1,4 +1,4 @@
-package com.sales_officer
+package com.fusers
 
 import io.flutter.embedding.android.FlutterActivity
 

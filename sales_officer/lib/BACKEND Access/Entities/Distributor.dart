@@ -1,23 +1,23 @@
 class Distributor {
-  final int distributorID;
-  final String distributorERPID;
-  final String distributorName;
-  final String distributorType;
-  final int townID;
-  final String ownerName;
-  final int phone;
-  final int mobileNumber;
-  final int PAN;
-  final String location;
-  final String img;
-  final String bankAccountName;
-  final String bankAccountNumber;
-  final String bankName;
-  final String bankAddress;
-  final int VAT;
-  final double lat;
-  final double lng;
-  final bool deactivated;
+  final int distributorID; //0
+  final String distributorERPID; //1
+  final String distributorName; //2
+  final String distributorType; //3
+  final int townID; //4
+  final String ownerName; //5
+  final int phone; //6
+  final int mobileNumber; //7
+  final int PAN; //8
+  final String location; //9
+  final String img; //10
+  final String bankAccountName; //11
+  final String bankAccountNumber; //12
+  final String bankName; //13
+  final String bankAddress; //14
+  final int VAT; //15
+  final double lat; //16
+  final double lng; //17
+  final bool deactivated; //18
 
   Distributor(
     this.distributorID,
