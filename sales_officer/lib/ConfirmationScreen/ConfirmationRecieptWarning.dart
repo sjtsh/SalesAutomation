@@ -57,11 +57,21 @@ class ConfirmationRecieptWarning extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                allBillingCompanysLocal
-                                    .firstWhere((element) =>
-                                        element.billingCompanyID == e[0])
-                                    .billingCompanyName,
+                              Builder(
+                                builder: (context) {
+                                 try {
+                                  return Text(
+                                    allBillingCompanysLocal
+                                        .firstWhere((element) =>
+                                            element.billingCompanyID == e[0])
+                                        .billingCompanyName,
+                                  );
+                                }catch (e){
+                                   return Text(
+                                   "unnamed"
+                                   );
+                                 }
+                              }
                               ),
                               Expanded(
                                 child: Container(),

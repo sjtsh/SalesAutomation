@@ -31,9 +31,11 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DistributorSale distributorSales = allDistributorSalesLocal.firstWhere(
-        (element) =>
-            element.distributor.distributorID == distributor.distributorID);
+
+      DistributorSale distributorSales = allDistributorSalesLocal.firstWhere(
+          (element) =>
+              element.distributor.distributorID == distributor.distributorID);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12.0),
       child: Container(
@@ -104,6 +106,7 @@ class DistributorList extends StatelessWidget {
                                       fontSize: 16,
                                     ),
                                   ),
+                                  distributor.location=="null" ? Text(""):
                                   Text(
                                     distributor.location,
                                     style: TextStyle(
@@ -128,7 +131,7 @@ class DistributorList extends StatelessWidget {
                                   shape: CircleBorder(),
                                   child: InkWell(
                                     onTap: () => distributor.mobileNumber.toString() == "-1" ?
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Phone number is no assigned")))
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Phone number is not assigned.")))
 
                                     :  launch(
                                         "tel:+977${distributor.mobileNumber.toString()}"),

@@ -368,7 +368,8 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                   ["Location :", "${widget.e.lat}, ${widget.e.lng}"]
                                 ]
                                     .map(
-                                      (e) => Column(
+                                      (e) => e[1] == "null" || e[1]=="-1" || e[1] =="-2000.0, -2000.0" ? Container() :
+                                      Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.symmetric(

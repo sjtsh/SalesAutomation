@@ -12,28 +12,38 @@ searchForDistributor(String distributor, Function setDistributors) {
       break;
     }
     try {
-      if (distributor.toLowerCase() ==
-          personalDistributorsLocal[i]
-              .distributorName
-              .substring(0, numOfCharacters)
-              .toLowerCase()) {
-        if (!distributors.contains(personalDistributorsLocal[i])) {
-          distributors.add(personalDistributorsLocal[i]);
-        }
-      }
-    } catch (e) {}
-    List distributorWords =
-    personalDistributorsLocal[i].distributorName.toLowerCase().split(" ");
-    distributorWords.forEach((element) {
-      try {
+      if(personalDistributorsLocal[i]
+          .distributorName != "null"){
         if (distributor.toLowerCase() ==
-            element.substring(0, numOfCharacters)) {
+            personalDistributorsLocal[i]
+                .distributorName
+                .substring(0, numOfCharacters)
+                .toLowerCase()) {
           if (!distributors.contains(personalDistributorsLocal[i])) {
             distributors.add(personalDistributorsLocal[i]);
           }
         }
-      } catch (e) {}
-    });
+      }
+    } catch (e) {
+      throw Exception("Unable to change to lower case");
+    }
+    if(   personalDistributorsLocal[i]
+        .distributorName!="null"){
+      List distributorWords =
+          personalDistributorsLocal[i].distributorName.toLowerCase().split(" ");
+      distributorWords.forEach((element) {
+        try {
+          if (distributor.toLowerCase() ==
+              element.substring(0, numOfCharacters)) {
+            if (!distributors.contains(personalDistributorsLocal[i])) {
+              distributors.add(personalDistributorsLocal[i]);
+            }
+          }
+        } catch (e) {
+          throw Exception("Unable to change to lower case");
+        }
+      });
+    }
   }
   setDistributors(distributors);
 }
@@ -46,27 +56,32 @@ searchForProducts(String product, Function setProducts) {
       break;
     }
     try {
-      if (product.toLowerCase() ==
-          allSubGroupsLocal[i]
-              .subGroupName
-              .substring(0, numOfCharacters)
-              .toLowerCase()) {
-        if (!products.contains(allSubGroupsLocal[i])) {
-          products.add(allSubGroupsLocal[i]);
-        }
-      }
-    } catch (e) {}
-    List productWords =
-    allSubGroupsLocal[i].subGroupName.toLowerCase().split(" ");
-    productWords.forEach((element) {
-      try {
-        if (product.toLowerCase() == element.substring(0, numOfCharacters)) {
+     if(allSubGroupsLocal[i]
+         .subGroupName!="null") {
+        if (product.toLowerCase() ==
+            allSubGroupsLocal[i]
+                .subGroupName
+                .substring(0, numOfCharacters)
+                .toLowerCase()) {
           if (!products.contains(allSubGroupsLocal[i])) {
             products.add(allSubGroupsLocal[i]);
           }
         }
-      } catch (e) {}
-    });
+      }
+    } catch (e) {}
+    if (allSubGroupsLocal[i].subGroupName != "null") {
+      List productWords =
+          allSubGroupsLocal[i].subGroupName.toLowerCase().split(" ");
+      productWords.forEach((element) {
+        try {
+          if (product.toLowerCase() == element.substring(0, numOfCharacters)) {
+            if (!products.contains(allSubGroupsLocal[i])) {
+              products.add(allSubGroupsLocal[i]);
+            }
+          }
+        } catch (e) {}
+      });
+    }
   }
   setProducts(products);
 }

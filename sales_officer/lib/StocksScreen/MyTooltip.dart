@@ -34,7 +34,7 @@ class _MyTooltipState extends State<MyTooltip> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Tooltip(
-          message: "Last updated: ${widget.mySKUStock.updatedDate}",
+          message: "Last updated: ${widget.mySKUStock.updatedDate == "0000-00-00 00:00:00"? "No Stock":widget.mySKUStock.updatedDate}",
           key: _toolTipKey,
           triggerMode: TooltipTriggerMode.tap,
           child: Row(

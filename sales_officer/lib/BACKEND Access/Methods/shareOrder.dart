@@ -35,11 +35,16 @@ shareOrder(
               .toList();
       Map<int, List<DistributorOrderItem>> distributorOrderItemCompany = {};
       distributorOrderItems.forEach((element) {
-        SKUDistributorWise aSKU = allSKUDistributorWiseLocal.firstWhere(
-            (skuDistributorWise) =>
-                element.SKUID == skuDistributorWise.SKUID &&
-                skuDistributorWise.distributorID ==
-                    distributorOrder.distributorID);
+        SKUDistributorWise aSKU = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+       try {
+           aSKU = allSKUDistributorWiseLocal.firstWhere(
+              (skuDistributorWise) =>
+                  element.SKUID == skuDistributorWise.SKUID &&
+                  skuDistributorWise.distributorID ==
+                      distributorOrder.distributorID);
+        } catch(e){
+         throw Exception(" aSKU not found");
+       }
         // allBillingCompanysLocal.firstWhere((element) => aSKU.defaultBillingCompanyID == element.billingCompanyID)
         if (distributorOrderItemCompany.containsKey(aSKU.billingCompanyID)) {
           distributorOrderItemCompany[aSKU.billingCompanyID]?.add(element);

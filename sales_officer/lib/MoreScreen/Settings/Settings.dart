@@ -127,6 +127,7 @@ class _SettingsState extends State<Settings> {
                           Icons.location_on_rounded,
                           "Home Location: ",
                           meSO!.homeLocation
+
                         ],
                         [Icons.add_business_outlined, "PAN: ", meSO!.PAN],
                         [
@@ -138,6 +139,7 @@ class _SettingsState extends State<Settings> {
                           Icons.account_balance,
                           "Bank Account Name: ",
                           meSO!.bankAccountName
+
                         ],
                         [
                           Icons.account_balance_wallet_sharp,
@@ -197,7 +199,10 @@ class _SettingsState extends State<Settings> {
                                               padding: EdgeInsets.symmetric(
                                                 horizontal: 12,
                                               ),
-                                              child: Row(
+                                              child: f[2] == "null" || f[2] == "-1" ? Container():
+
+
+                                              Row(
                                                 children: [
                                                   Icon(
                                                     f[0] as IconData,

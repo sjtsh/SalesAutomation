@@ -72,13 +72,26 @@ class IndividualConfirmationVariation extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        allBillingCompanysLocal
-                            .firstWhere((element) =>
-                                skuDistributorWise.billingCompanyID ==
-                                element.billingCompanyID)
-                            .billingCompanyName,
-                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      child: Builder(
+                        builder: (context) {
+                          try {
+                            return Text(
+                              allBillingCompanysLocal
+                                  .firstWhere((element) =>
+                              skuDistributorWise.billingCompanyID ==
+                                  element.billingCompanyID)
+                                  .billingCompanyName,
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.white),
+                            );
+                          } catch (e){
+                            return Text(
+                              "unnamed",
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.white),
+                            );
+                          }
+                        }
                       ),
                     ),
                   ),

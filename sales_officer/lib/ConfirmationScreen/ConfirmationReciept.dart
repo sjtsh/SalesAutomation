@@ -19,8 +19,7 @@ class ConfirmationReciept extends StatefulWidget {
   final DistributorOrder distributorOrder;
   final List<DistributorOrderItem> distributorOrderItems;
 
-  ConfirmationReciept(
-      this.currentDistributor,
+  ConfirmationReciept(this.currentDistributor,
       this._textEditingControllers,
       this.receiptData,
       this.isNew,
@@ -44,20 +43,27 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
     tempBillingAmounts = [];
     isWarning = false;
     widget.receiptData.forEach((element) {
-      SKUDistributorWise skuDistributorWise = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
-      try{
-         skuDistributorWise =
+      SKUDistributorWise skuDistributorWise = SKUDistributorWise(
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1);
+      try {
+        skuDistributorWise =
             allSKUDistributorWiseLocal.firstWhere((aSKU) =>
-                aSKU.distributorID == widget.currentDistributor.distributorID &&
+            aSKU.distributorID == widget.currentDistributor.distributorID &&
                 aSKU.SKUID == element[0].SKUID);
-      }catch(e){
+      } catch (e) {
 
       }
-      List aBillingAmount =[];
-     try {
-      aBillingAmount = billingAmounts.firstWhere(
-            (element) => element[0] == skuDistributorWise.billingCompanyID);
-      } catch (e){}
+      List aBillingAmount = [];
+      try {
+        aBillingAmount = billingAmounts.firstWhere(
+                (element) => element[0] == skuDistributorWise.billingCompanyID);
+      } catch (e) {}
       if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
         isWarning = true;
         if (!tempBillingAmounts.contains(aBillingAmount)) {
@@ -92,10 +98,11 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
           Expanded(
               child: Center(
                   child: Text(
-            "No Orders",
-            style:
-                TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 30),
-          )))
+                    "No Orders",
+                    style:
+                    TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 30),
+                  )))
         ],
       );
     } else {
@@ -143,7 +150,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                 Column(
                   children: getSubProducts()
                       .map(
-                        (e) => Container(
+                        (e) =>
+                        Container(
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
@@ -159,17 +167,31 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                               ),
                               Container(
                                 padding:
-                                    const EdgeInsets.only(right: 20, left: 20),
+                                const EdgeInsets.only(right: 20, left: 20),
                                 child: Row(
                                   children: [
-                                    Text(
-                                      allSubGroupsLocal
-                                          .firstWhere((element) =>
+                                    Builder(
+                                        builder: (context) {
+                                          try {
+                                            return Text(
+                                              allSubGroupsLocal
+                                                  .firstWhere((element) =>
                                               element.subGroupID == e)
-                                          .subGroupName,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                                  .subGroupName,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          } catch(e){
+                                            return Text(
+                                              "unnamed",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          }
+
+                                        }
                                     ),
                                   ],
                                 ),
@@ -177,18 +199,19 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                               Column(
                                 children: getSubGroupItems(e)
                                     .map(
-                                      (f) => IndividualConfirmationVariation(
+                                      (f) =>
+                                      IndividualConfirmationVariation(
                                           updateReceiptData,
                                           f,
                                           deleteReceiptData,
                                           widget.currentDistributor),
-                                    )
+                                )
                                     .toList(),
                               ),
                             ],
                           ),
                         ),
-                      )
+                  )
                       .toList(),
                 ),
                 Container(
@@ -234,105 +257,105 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     ),
                     child: isLoading && !isWarning
                         ? MaterialButton(
-                            onPressed: () async {},
-                            child: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          )
-                        : MaterialButton(
-                            onPressed: () {
-                              if (!isWarning && !isLoading) {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                if (widget.isNew) {
-                                  createOrder(
-                                          widget
-                                              .currentDistributor.distributorID,
-                                          widget._textEditingControllers,
-                                          isWarning, context)
-                                      .timeout(Duration(seconds: 30),
-                                          onTimeout: () {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                "Please connect to a stronger connection")));
-                                    return -1;
-                                  }).then((value) {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    if (value != -1) {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "Order was successfully punched")));
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "Please connect to a stronger connection")));
-                                    }
-                                  });
-                                } else {
-                                  updateOrder(
-                                    widget.distributorOrder,
-                                    widget.distributorOrderItems,
-                                    widget._textEditingControllers,
-                                    isWarning,
-                                  ).timeout(Duration(seconds: 30),
-                                      onTimeout: () {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                "Please connect to a stronger connection")));
-                                    return false;
-                                  }).then((value) {
-                                    setState(() {
-                                      isLoading = false;
-                                    });
-                                    if (value) {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "Order was successfully punched")));
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  "Please connect to a stronger connection")));
-                                    }
-                                  });
-                                }
-                              }
-                            },
-                            child: Center(
-                              child: Text(
-                                "PLACE ORDER",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                      onPressed: () async {},
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
+                        ),
+                      ),
+                    )
+                        : MaterialButton(
+                      onPressed: () {
+                        if (!isWarning && !isLoading) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (widget.isNew) {
+                            createOrder(
+                                widget
+                                    .currentDistributor.distributorID,
+                                widget._textEditingControllers,
+                                isWarning, context)
+                                .timeout(Duration(seconds: 30),
+                                onTimeout: () {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Please connect to a stronger connection")));
+                                  return -1;
+                                }).then((value) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (value != -1) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Order was successfully punched")));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Please connect to a stronger connection")));
+                              }
+                            });
+                          } else {
+                            updateOrder(
+                              widget.distributorOrder,
+                              widget.distributorOrderItems,
+                              widget._textEditingControllers,
+                              isWarning,
+                            ).timeout(Duration(seconds: 30),
+                                onTimeout: () {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Please connect to a stronger connection")));
+                                  return false;
+                                }).then((value) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (value) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Order was successfully punched")));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Please connect to a stronger connection")));
+                              }
+                            });
+                          }
+                        }
+                      },
+                      child: Center(
+                        child: Text(
+                          "PLACE ORDER",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -340,120 +363,120 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                 ),
                 isWarning
                     ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          width: double.infinity,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Color(0xffF2B200),
-                            borderRadius: BorderRadius.circular(12),
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xffF2B200),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: isLoading
+                        ? MaterialButton(
+                      onPressed: () async {},
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
-                          child: isLoading
-                              ? MaterialButton(
-                                  onPressed: () async {},
-                                  child: SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : MaterialButton(
-                                  onPressed: () {
-                                    if (isWarning && !isLoading) {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-                                      if (widget.isNew) {
-                                        createOrder(
-                                                widget.currentDistributor
-                                                    .distributorID,
-                                                widget._textEditingControllers,
-                                                isWarning, context)
-                                            .timeout(Duration(seconds: 30),
-                                                onTimeout: () {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Please connect to a stronger connection"),
-                                            ),
-                                          );
-                                          return -1;
-                                        }).then((value) {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                          if (value != -1) {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).pop();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Order was successfully punched")));
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Please connect to a stronger connection")));
-                                          }
-                                        });
-                                      } else {
-                                        updateOrder(
-                                          widget.distributorOrder,
-                                          widget.distributorOrderItems,
-                                          widget._textEditingControllers,
-                                          isWarning,
-                                        ).timeout(Duration(seconds: 30),
-                                            onTimeout: () {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      "Please connect to a stronger connection")));
-                                          return false;
-                                        }).then((value) {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                          if (value) {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).pop();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Order was successfully punched")));
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(
-                                                        "Please connect to a stronger connection")));
-                                          }
-                                        });
-                                      }
-                                    }
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "Request for Approval",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                         ),
-                      )
+                      ),
+                    )
+                        : MaterialButton(
+                      onPressed: () {
+                        if (isWarning && !isLoading) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (widget.isNew) {
+                            createOrder(
+                                widget.currentDistributor
+                                    .distributorID,
+                                widget._textEditingControllers,
+                                isWarning, context)
+                                .timeout(Duration(seconds: 30),
+                                onTimeout: () {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          "Please connect to a stronger connection"),
+                                    ),
+                                  );
+                                  return -1;
+                                }).then((value) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (value != -1) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Order was successfully punched")));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Please connect to a stronger connection")));
+                              }
+                            });
+                          } else {
+                            updateOrder(
+                              widget.distributorOrder,
+                              widget.distributorOrderItems,
+                              widget._textEditingControllers,
+                              isWarning,
+                            ).timeout(Duration(seconds: 30),
+                                onTimeout: () {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Please connect to a stronger connection")));
+                                  return false;
+                                }).then((value) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (value) {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Order was successfully punched")));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Please connect to a stronger connection")));
+                              }
+                            });
+                          }
+                        }
+                      },
+                      child: Center(
+                        child: Text(
+                          "Request for Approval",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
                     : Container(),
                 SizedBox(
                   height: 12,
@@ -500,14 +523,14 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       widget.receiptData.remove(f);
       widget
           ._textEditingControllers[allSKULocal.indexOf(allSKULocal
-                  .firstWhere((element) => element.SKUID == f[0].SKUID)) *
-              2]
+          .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+          2]
           .text = "";
       widget
           ._textEditingControllers[allSKULocal.indexOf(allSKULocal
-                      .firstWhere((element) => element.SKUID == f[0].SKUID)) *
-                  2 +
-              1]
+          .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+          2 +
+          1]
           .text = "";
       getTotalValue();
     });
@@ -515,7 +538,10 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
 
   updateReceiptData(List f, int primaryCountNew, int alternativeCountNew) {
     setState(() {
-      widget.receiptData.asMap().entries.forEach((element) {
+      widget.receiptData
+          .asMap()
+          .entries
+          .forEach((element) {
         if (element.value[0] == f[0]) {
           widget.receiptData[element.key] = [
             f[0],
@@ -526,14 +552,14 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       });
       widget
           ._textEditingControllers[allSKULocal.indexOf(allSKULocal
-                  .firstWhere((element) => element.SKUID == f[0].SKUID)) *
-              2]
+          .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+          2]
           .text = primaryCountNew.toString();
       widget
           ._textEditingControllers[allSKULocal.indexOf(allSKULocal
-                      .firstWhere((element) => element.SKUID == f[0].SKUID)) *
-                  2 +
-              1]
+          .firstWhere((element) => element.SKUID == f[0].SKUID)) *
+          2 +
+          1]
           .text = alternativeCountNew.toString();
       getTotalValue();
     });
@@ -545,16 +571,31 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       if (aTextEditingController.text != "" &&
           widget._textEditingControllers.indexOf(aTextEditingController) % 2 ==
               0) {
-        SKU sku =  SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
-        try{
-         sku = allSKULocal.firstWhere((element) {
+        SKU sku = SKU(
+            1,
+            "1",
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            "",
+            1,
+            "",
+            false);
+        try {
+          sku = allSKULocal.firstWhere((element) {
             return element.SKUID ==
                 allSKULocal[widget._textEditingControllers
-                            .indexOf(aTextEditingController) ~/
-                        2]
+                    .indexOf(aTextEditingController) ~/
+                    2]
                     .SKUID;
           });
-        } catch (e){
+        } catch (e) {
           throw Exception("Something Went Wrong");
         }
         setState(() {
@@ -565,17 +606,17 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
               sku.MRP;
 
           totalAmount += widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text ==
-                  ""
+              ._textEditingControllers[widget._textEditingControllers
+              .indexOf(aTextEditingController) +
+              1]
+              .text ==
+              ""
               ? 0
               : int.parse(widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text) *
+              ._textEditingControllers[widget._textEditingControllers
+              .indexOf(aTextEditingController) +
+              1]
+              .text) *
               sku.alternativeCF *
               sku.MRP;
         });
