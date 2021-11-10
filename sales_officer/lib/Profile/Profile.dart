@@ -1,7 +1,7 @@
-import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
+import 'package:sales_officer/Profile/Header/Online.dart';
 import 'BezierCard/BezierCard.dart';
 
 class Profile extends StatefulWidget {
@@ -51,21 +51,23 @@ class _ProfileState extends State<Profile> {
             width: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
-              gradient: toggleValue ? LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.centerLeft,
-                colors: [
-                  Color(0xff34E77E),
-                  Color(0xff129C8D),
-                ],
-              ) : LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.centerLeft,
-                colors: [
-                  Color(0xffEB1469),
-                  Color(0xffFD5B11),
-                ],
-              ),
+              gradient: toggleValue
+                  ? LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [
+                        Color(0xff34E77E),
+                        Color(0xff129C8D),
+                      ],
+                    )
+                  : LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [
+                        Color(0xffEB1469),
+                        Color(0xffFD5B11),
+                      ],
+                    ),
               // color: toggleValue
               //     ? Colors.green.withOpacity(0.1)
               //     : Colors.red.withOpacity(0.1),
@@ -76,7 +78,7 @@ class _ProfileState extends State<Profile> {
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 1000),
                   curve: Curves.easeIn,
-                  left: toggleValue ? 300 : 0,
+                  left: toggleValue ? 30 : 0,
                   right: toggleValue ? 0 : 300,
                   child: InkWell(
                     onTap: toggleButton,
@@ -90,33 +92,66 @@ class _ProfileState extends State<Profile> {
                         );
                       },
                       child: toggleValue
-                          ? Row(
-                            children: [
-                              Container(
-                                  height: 64,
-                                  width: 64,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: AssetImage("assets/face.png"),
-                                    ),
+                          ? IntrinsicHeight(
+                              child: Row(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "STATUS",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 12,
+                                            color:Colors.white.withOpacity(0.5),),
+                                      ),
+                                      Text(
+                                        "Retailing",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                    ],
                                   ),
-                                  key: UniqueKey(),
-                                ),
-                              Expanded(child: Container()),
-
-                            ],
-                          )
-                          : Container(
-                              height: 64,
-                              width: 64,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/face.png"),
-                                ),
+                                  SizedBox(width: 20,),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    width: 1,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 20,),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "TOTAL TIME",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 12,
+                                            color: Colors.white.withOpacity(0.5),),
+                                      ),
+                                      Text(
+                                        "2h:04m:10s",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 18,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 50,
+                                  ),
+                                  Online(),
+                                ],
                               ),
-                            ),
+                            )
+                          : Online(),
                     ),
                   ),
                 ),

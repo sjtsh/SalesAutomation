@@ -13,7 +13,7 @@ class Online extends StatelessWidget {
           width: 64,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.red,
+            color: Colors.black,
           ),
           child: Center(
             child: Text(
