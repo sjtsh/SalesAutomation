@@ -90,17 +90,25 @@ class SingularProductHeader extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  allProductGroupsLocal
-                                      .firstWhere((element) =>
-                                          subGroup.productGroupID ==
-                                          element.productGroupID)
-                                      .productGroupName,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontSize: 12,
-                                  ),
+                                Builder(
+                                  builder: (context) {
+                                   try {
+                                    return Text(
+                                      allProductGroupsLocal
+                                          .firstWhere((element) =>
+                                              subGroup.productGroupID ==
+                                              element.productGroupID)
+                                          .productGroupName,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: Colors.black.withOpacity(0.5),
+                                        fontSize: 12,
+                                      ),
+                                    );
+                                  }catch (e){
+                                     return Container();
+                                   }
+                                }
                                 ),
                                 SizedBox(
                                   width: 5,

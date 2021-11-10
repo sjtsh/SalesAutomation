@@ -12,10 +12,8 @@ import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemServ
 import 'package:sales_officer/Database.dart';
 import 'package:share_plus/share_plus.dart';
 
-shareOrder(
-  DistributorOrder distributorOrder, context
-) {try{
-
+shareOrder(DistributorOrder distributorOrder, context) {
+  try {
     double totalValue = 0;
     double companyValue = 0;
     int companyPrimaryUnit = 0;
@@ -36,15 +34,14 @@ shareOrder(
       Map<int, List<DistributorOrderItem>> distributorOrderItemCompany = {};
       distributorOrderItems.forEach((element) {
         SKUDistributorWise aSKU = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
-       try {
-           aSKU = allSKUDistributorWiseLocal.firstWhere(
-              (skuDistributorWise) =>
-                  element.SKUID == skuDistributorWise.SKUID &&
-                  skuDistributorWise.distributorID ==
-                      distributorOrder.distributorID);
-        } catch(e){
-         throw Exception(" aSKU not found");
-       }
+        try {
+          aSKU = allSKUDistributorWiseLocal.firstWhere((skuDistributorWise) =>
+              element.SKUID == skuDistributorWise.SKUID &&
+              skuDistributorWise.distributorID ==
+                  distributorOrder.distributorID);
+        } catch (e) {
+          throw Exception(" aSKU not found");
+        }
         // allBillingCompanysLocal.firstWhere((element) => aSKU.defaultBillingCompanyID == element.billingCompanyID)
         if (distributorOrderItemCompany.containsKey(aSKU.billingCompanyID)) {
           distributorOrderItemCompany[aSKU.billingCompanyID]?.add(element);
@@ -451,7 +448,8 @@ shareOrder(
           text:
               "Distributor Order Number: #OR${distributorOrder.distributorOrderID}");
     });
-  } catch(e){
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sorry, File could not be shared")));
-}
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Sorry, File could not be shared")));
+  }
 }
