@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
@@ -23,7 +25,16 @@ class _BezierCardState extends State<BezierCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      height: !aCondition
+          ? 382.0
+          : 382.0 +
+              41 *
+                  (products.entries
+                          .where((element) => !(element.value[1] == 0))
+                          .length -
+                      4),
+      child: Container(
         margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -35,28 +46,30 @@ class _BezierCardState extends State<BezierCard> {
                 offset: Offset(0, 2))
           ],
         ),
-        child: SizedBox(
-          height: !aCondition ? 382.0 : 382.0 + 41*(products.length - 4),
-          child: PageView(
-            scrollDirection: Axis.horizontal,
-            children: [true, false].map((e) => Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 6,
+        child: PageView(
+          scrollDirection: Axis.horizontal,
+          children: [true, false]
+              .map(
+                (e) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 6,
+                    ),
+                    BezierHeading(e ? "MTD Sales" : "YTD Sales"),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      height: 100,
+                      child: BezierChartPersonal(
+                          e, e ? weeklySalesLocal : monthlySalesLocal),
+                    ),
+                    BezierData(_expandableController, changeExpanded, e),
+                  ],
                 ),
-                BezierHeading(e ? "MTD Sales" : "YTD Sales"),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  height: 100,
-                  child: BezierChartPersonal(e),
-                ),
-                ],
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       ),
-    )
     );
   }
 }
