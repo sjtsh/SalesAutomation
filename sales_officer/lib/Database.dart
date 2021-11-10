@@ -1,5 +1,4 @@
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
-
 import 'BACKEND Access/Entities/BillingCompany.dart';
 import 'BACKEND Access/Entities/Distributor.dart';
 import 'BACKEND Access/Entities/District.dart';
@@ -27,7 +26,8 @@ List<Unit> allUnitsLocal = [];
 List<ProductGroup> allProductGroupsLocal = [];
 List<District> allDistrictsLocal = [];
 List<SODistributorConnection> allSODistributorConnectionsLocal = [];
-
+List<double> weeklySalesLocal = [];
+List<double> monthlySalesLocal = [];
 
 
 SO? meSO;
@@ -36,9 +36,6 @@ String meBeat = "";
 
 bool? isJoint;
 Map products = {};
-List sales1 = [12, 142, 531, 15, 1];
-
-List sales2 = [133, 142, 531, 15, 222];
 
 final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
 final int startDate1 = 3;
