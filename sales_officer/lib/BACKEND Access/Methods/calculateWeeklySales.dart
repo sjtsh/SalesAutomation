@@ -49,13 +49,15 @@ calculateWeeklySales(context) {
                         }catch(e){
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, Please contact IT,", ),));
                         }
-                        weeklySales[n] += sku.MRP *
-                                aDistributorOrderItem.primaryItemCount *
-                                sku.primaryCF +
-                            sku.MRP *
-                                aDistributorOrderItem.alternativeItemCount *
-                                sku.alternativeCF;
-                      });
+                            if(sku.MRP!="-2000.0"){
+                            weeklySales[n] += sku.MRP *
+                                    aDistributorOrderItem.primaryItemCount *
+                                    sku.primaryCF +
+                                sku.MRP *
+                                    aDistributorOrderItem.alternativeItemCount *
+                                    sku.alternativeCF;
+                          }
+                        });
                       break;
                     }
                   }
@@ -88,13 +90,15 @@ calculateWeeklySales(context) {
                         }catch(e){
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, Please contact IT,", ),));
                         }
-                        weeklySales[n] += sku.MRP *
-                                aDistributorOrderItem.primaryItemCount *
-                                sku.primaryCF +
-                            sku.MRP *
-                                aDistributorOrderItem.alternativeItemCount *
-                                sku.alternativeCF;
-                      });
+                      if(sku.MRP!="-2000.0")  {
+                            weeklySales[n] += sku.MRP *
+                                    aDistributorOrderItem.primaryItemCount *
+                                    sku.primaryCF +
+                                sku.MRP *
+                                    aDistributorOrderItem.alternativeItemCount *
+                                    sku.alternativeCF;
+                          }
+                        });
                       break;
                     }
                   }
@@ -122,13 +126,15 @@ calculateWeeklySales(context) {
                       } catch(e){
                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, PLEASE CONTACT IT")));
                      }
-                      monthlySales[n] += sku.MRP *
-                              aDistributorOrderItem.primaryItemCount *
-                              sku.primaryCF +
-                          sku.MRP *
-                              aDistributorOrderItem.alternativeItemCount *
-                              sku.alternativeCF;
-                    });
+                     if(sku.MRP !="-2000.0") {
+                          monthlySales[n] += sku.MRP *
+                                  aDistributorOrderItem.primaryItemCount *
+                                  sku.primaryCF +
+                              sku.MRP *
+                                  aDistributorOrderItem.alternativeItemCount *
+                                  sku.alternativeCF;
+                        }
+                      });
                     break;
                   }
                 }
@@ -155,13 +161,15 @@ calculateWeeklySales(context) {
                       } catch(e){
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("NO SKU FOUND, PLEASE CONTACT IT")));
                       }
-                      monthlySales[n] += sku.MRP *
-                              aDistributorOrderItem.primaryItemCount *
-                              sku.primaryCF +
-                          sku.MRP *
-                              aDistributorOrderItem.alternativeItemCount *
-                              sku.alternativeCF;
-                    });
+                     if(sku.MRP !="-2000.0") {
+                          monthlySales[n] += sku.MRP *
+                                  aDistributorOrderItem.primaryItemCount *
+                                  sku.primaryCF +
+                              sku.MRP *
+                                  aDistributorOrderItem.alternativeItemCount *
+                                  sku.alternativeCF;
+                        }
+                      });
                     break;
                   }
                 }

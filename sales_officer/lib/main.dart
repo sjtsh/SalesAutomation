@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:sales_officer/SignIn/SignIn.dart';
-import 'package:sales_officer/syncLogo.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'BACKEND Access/Methods/calculateSales.dart';
-import 'BACKEND Access/Methods/calculateWeeklySales.dart';
+
 import 'Database.dart';
 
 void main() {
