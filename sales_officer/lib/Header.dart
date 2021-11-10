@@ -17,7 +17,8 @@ List heading = [
   "Update Stock", //8
   "Settings", //9
   "FAQ", //10
-  "Distributors" //11
+  "Distributors",//11
+  "Order Confirmation"//12
 ];
 
 class Header extends StatefulWidget {
