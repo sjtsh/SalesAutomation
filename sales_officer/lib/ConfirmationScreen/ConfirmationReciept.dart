@@ -106,7 +106,8 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                       child: Container(),
                     ),
                     Text(
-                      " Rs. $totalAmount",style: TextStyle(fontSize: 12),
+                      " Rs. $totalAmount",
+                      style: TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
@@ -129,7 +130,9 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
             margin: EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: [
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Text(
@@ -147,7 +150,9 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Text(
@@ -247,33 +252,26 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                       )
                       .toList(),
                 ),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 12),
-                //   height: 40,
-                //   child: Row(
-                //     children: [
-                //       Text(
-                //         "Total Value",
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //       Expanded(
-                //         child: Container(),
-                //       ),
-                //       Text(
-                //         totalAmount.toString(),
-                //         style: TextStyle(fontSize: 12),
-                //       ),
-                //       Text(
-                //         " Rs.",
-                //         style: TextStyle(fontSize: 12),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  height: 20,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 12),
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Total Value",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Text(
+                        "Rs.$totalAmount",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
                 ),
                 isWarning
                     ? ConfirmationRecieptWarning(tempBillingAmounts)

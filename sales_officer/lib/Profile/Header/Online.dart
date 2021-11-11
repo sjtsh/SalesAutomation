@@ -9,10 +9,10 @@ class Online extends StatelessWidget {
       children: [
         Container(
           clipBehavior: Clip.hardEdge,
-          height: 64,
-          width: 64,
+          height: 58,
+          width: 58,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
+            borderRadius: BorderRadius.circular(10),
             color: Colors.black,
           ),
           child: Center(
@@ -22,18 +22,18 @@ class Online extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          bottom: 6,
-          right: 2,
-          child: Container(
-            height: 15,
-            width: 15,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.green,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   bottom: 6,
+        //   right: 2,
+        //   child: Container(
+        //     height: 15,
+        //     width: 15,
+        //     decoration: BoxDecoration(
+        //       shape: BoxShape.circle,
+        //       color: Colors.green,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

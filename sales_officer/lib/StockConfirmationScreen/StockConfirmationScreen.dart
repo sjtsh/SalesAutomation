@@ -3,6 +3,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
+import 'package:sales_officer/DialogBox/DiscardPrompt.dart';
 import 'package:sales_officer/Header.dart';
 
 import 'StockConfirmationReciept.dart';
@@ -34,7 +35,16 @@ class StockConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
+        body: WillPopScope(
+          onWillPop: () async {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return DiscardPrompt();
+                });
+            return true;
+          },
+        child: Column(
           children: [
             Header(8, false, refresh),
             Container(
@@ -73,7 +83,7 @@ class StockConfirmationScreen extends StatelessWidget {
                   updateReturnOrdersCountList),
             ),
           ],
-        ),
+        ),),
       ),
     );
   }
