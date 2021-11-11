@@ -266,7 +266,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ),
-        BezierCard(),
+        BezierCard(toggleValue),
         Achievements(),
       ],
     );

@@ -6,8 +6,9 @@ import '../../Database.dart';
 class BezierChartPersonal extends StatefulWidget {
   final bool isMTD;
   final List<double> sales;
+  final bool toggleValue;
 
-  BezierChartPersonal(this.isMTD, this.sales);
+  BezierChartPersonal(this.isMTD, this.sales, this.toggleValue);
 
   @override
   _BezierChartPersonalState createState() => _BezierChartPersonalState();
@@ -40,32 +41,57 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
         showingTooltipIndicators: [],
         lineTouchData: LineTouchData(enabled: true),
         lineBarsData: [
-          LineChartBarData(
-            showingIndicators: [],
-            preventCurveOverShooting: true,
-            preventCurveOvershootingThreshold: 0,
-            spots: normalizedSales
-                .asMap()
-                .entries
-                .map(
-                    (content) => FlSpot(content.key + 1.0, content.value + 0.0))
-                .toList(),
-            isCurved: true,
-            colors: [
-              Color(0xff5A6FF0),
-              Color(0xffC31FE6),
-            ],
-            belowBarData: BarAreaData(
-              show: true,
-              colors: [
-                Color(0xff5A6FF0),
-                Color(0xffC31FE6),
-              ],
-            ),
-            dotData: FlDotData(
-              show: false,
-            ),
-          ),
+          widget.toggleValue ? LineChartBarData(
+      showingIndicators: [],
+        preventCurveOverShooting: true,
+        preventCurveOvershootingThreshold: 0,
+        spots: normalizedSales
+            .asMap()
+            .entries
+            .map((content) =>
+            FlSpot(content.key + 1.0, content.value + 0.0))
+            .toList(),
+        isCurved: true,
+        colors: [
+          Color(0xff129C8D),
+          Color(0xff34E77E),
+        ],
+        belowBarData: BarAreaData(
+          show: true,
+          colors: [
+            Color(0xff129C8D),
+            Color(0xff34E77E),
+          ],
+        ),
+        dotData: FlDotData(
+          show: false,
+        ),
+      ) : LineChartBarData(
+      showingIndicators: [],
+      preventCurveOverShooting: true,
+      preventCurveOvershootingThreshold: 0,
+      spots: normalizedSales
+          .asMap()
+          .entries
+          .map(
+              (content) => FlSpot(content.key + 1.0, content.value + 0.0))
+          .toList(),
+      isCurved: true,
+      colors: [
+        Color(0xffEB1469),
+        Color(0xffFD5B11),
+      ],
+      belowBarData: BarAreaData(
+        show: true,
+        colors: [
+          Color(0xffEB1469),
+          Color(0xffFD5B11),
+        ],
+      ),
+      dotData: FlDotData(
+        show: false,
+      ),
+    ),
         ],
         titlesData: FlTitlesData(
           bottomTitles: SideTitles(
