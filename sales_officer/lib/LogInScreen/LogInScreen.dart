@@ -27,6 +27,7 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   bool isSelected = false;
   int percentage = 0;
+
   select() {
     setState(() {
       isSelected = true;
@@ -46,10 +47,8 @@ class _LogInScreenState extends State<LogInScreen> {
       subGroupService.fetchSubGroups(context).then((value) {
         allSubGroupsLocal = value;
 
-
-
         setState(() {
-          loadingText = "Getting SKUs";
+          loadingText = "Loading SKUs";
           percentage = 10;
         });
         SKUService skuService = SKUService();
@@ -57,7 +56,7 @@ class _LogInScreenState extends State<LogInScreen> {
           allSKULocal = value;
           allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
-            loadingText = "Getting SKU Distributor Wise";
+            loadingText = "Loading SKU Distributor Wise";
             percentage = 20;
           });
           SKUDistributorWiseService skuDistributorWiseService =
@@ -65,7 +64,7 @@ class _LogInScreenState extends State<LogInScreen> {
           skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
             allSKUDistributorWiseLocal = value;
             setState(() {
-              loadingText = "Getting Billing Companies";
+              loadingText = "Loading Billing Companies";
               percentage = 30;
             });
           }).then((value) {
@@ -81,7 +80,7 @@ class _LogInScreenState extends State<LogInScreen> {
               unitService.fetchUnits().then((value) {
                 allUnitsLocal = value;
                 setState(() {
-                  loadingText = "Loading Product Lines";
+                  loadingText = "Loading Product Groups";
                   percentage = 50;
                 });
                 ProductGroupService productGroupService = ProductGroupService();
@@ -96,7 +95,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     allDistrictsLocal = value;
                     setState(() {
                       loadingText = "Loading Familiarities";
-                      percentage = 75;
+                      percentage = 70;
                     });
                     FamiliarityService familiarityService =
                         FamiliarityService();
@@ -104,7 +103,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       allFamiliaritysLocal = value;
                       setState(() {
                         loadingText = "Loading Distributors";
-                        percentage = 85;
+                        percentage = 80;
                       });
                       DistributorService distributorService =
                           DistributorService();
@@ -112,7 +111,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         allDistributorsLocal = value;
                         setState(() {
                           loadingText = "Almost Done";
-                          percentage = 95;
+                          percentage = 90;
                         });
                         SOService soService = SOService();
                         soService.fetchSOs().then((value) {
@@ -154,7 +153,7 @@ class _LogInScreenState extends State<LogInScreen> {
                               loadingText = "Calculating Sales";
                               percentage = 100;
                             });
-                            calculateSales(setLoaded,context);
+                            calculateSales(setLoaded, context);
                             calculateWeeklySales(context);
                           });
                         });
@@ -285,20 +284,21 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       width: 200,
                       child: LinearProgressIndicator(
-                        value: percentage/100,
-
+                        value: percentage / 100,
                         color: Colors.red,
                         backgroundColor: Colors.red.withOpacity(0.5),
                       ),
-
-
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Text(loadingText),
-                    Text("$percentage%")
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("$loadingText....($percentage%)"),
+                      ],
+                    ),
+                    // Text("($percentage%)")
                   ],
                 ),
               ),

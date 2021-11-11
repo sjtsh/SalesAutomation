@@ -32,12 +32,6 @@ class DistributorInfo extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: Offset(0, 2))
-                    ],
                   ),
                   child: Material(
                     color: Colors.white,
@@ -94,12 +88,6 @@ class DistributorInfo extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: Offset(0, 2))
-                    ],
                   ),
                   child: Material(
                     color: Colors.white,

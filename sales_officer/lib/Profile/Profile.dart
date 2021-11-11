@@ -1,20 +1,271 @@
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
-
+import 'package:sales_officer/Profile/Header/Online.dart';
+import 'package:shimmer/shimmer.dart';
 import 'BezierCard/BezierCard.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   final Function refresh;
+
   Profile(this.refresh);
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  double sliderValue = 0;
+  bool toggleValue = false;
+  bool toggleDataValue = true;
+
+  toggleButton() {
+    setState(() {
+      toggleDataValue = false;
+      toggleValue = !toggleValue;
+    });
+    Future.delayed(Duration(milliseconds: 1000), () {
+      setState(() {
+        toggleDataValue = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return ListView(
       children: [
         SizedBox(
           height: 10,
         ),
-        Header(),
+        // Header(),
+        // Padding(
+        //   padding: const EdgeInsets.all(12.0),
+        //   child: Container(
+        //     height: 90,
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(60),
+        //       color: Colors.grey,
+        //     ),
+        //   ),
+        // ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 1000),
+            height: 75,
+            width: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: toggleValue
+                  ? LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [
+                        Color(0xff34E77E),
+                        Color(0xff129C8D),
+                      ],
+                    )
+                  : LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [
+                        Color(0xffEB1469),
+                        Color(0xffFD5B11),
+                      ],
+                    ),
+              // color: toggleValue
+              //     ? Colors.green.withOpacity(0.1)
+              //     : Colors.red.withOpacity(0.1),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                toggleDataValue
+                    ? toggleValue
+                        ? Positioned(
+                            left: 30,
+                            right: 0,
+                            child: Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "STATUS",
+                                      style: TextStyle(
+                                        fontFamily: "lato",
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Retailing",
+                                      style: TextStyle(
+                                          fontFamily: "lato",
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(10),
+                                  width: 1,
+                                  height: 60,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "TOTAL TIME",
+                                      style: TextStyle(
+                                        fontFamily: "lato",
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      "2h:04m:10s",
+                                      style: TextStyle(
+                                          fontFamily: "lato",
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(child: Container()),
+                                SizedBox(
+                                  height: 58,
+                                  width: 58,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            ),
+                          )
+                        : Positioned(
+                            left: 0,
+                            right: 30,
+                            child: Shimmer.fromColors(
+                              highlightColor: Colors.grey,
+                              baseColor: Colors.white,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 58,
+                                    width: 58,
+                                  ),
+                                  Expanded(child: Container()),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  Expanded(child: Container()),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "STATUS",
+                                        style: TextStyle(
+                                          fontFamily: "lato",
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Retailing",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    width: 1,
+                                    height: 60,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "TOTAL TIME",
+                                        style: TextStyle(
+                                          fontFamily: "lato",
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "2h:04m:10s",
+                                        style: TextStyle(
+                                            fontFamily: "lato",
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                    : Container(),
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 1000),
+                  curve: Curves.easeInOut,
+                  alignment: toggleValue
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: (){
+                      showDialog(context: context, builder: (_){
+                        return Header();
+                      });
+                    },
+                    onHorizontalDragEnd: (a) {
+                      toggleButton();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Online(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         BezierCard(),
         Achievements(),
       ],
