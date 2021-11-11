@@ -106,7 +106,13 @@ class SingularProductHeader extends StatelessWidget {
                                       ),
                                     );
                                   }catch (e){
-                                     return Container();
+                                    return Text(
+                                       "No name Found",
+                                       style: TextStyle(
+                                         color: Colors.black.withOpacity(0.5),
+                                         fontSize: 12,
+                                       ),
+                                     );
                                    }
                                 }
                                 ),
