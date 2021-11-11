@@ -18,7 +18,7 @@ class SO {
   final String reportingManager;//14
   final bool maritalStatus;//15
   final String gender;//16
-  final String joiningData;//17
+  final String joiningDate;//17
   final String DOB;//18
 
   SO(
@@ -39,7 +39,7 @@ class SO {
       this.reportingManager,
       this.maritalStatus,
       this.gender,
-      this.joiningData,
+      this.joiningDate,
       this.DOB);
 
   factory SO.fromJson(Map<String, dynamic> json) {

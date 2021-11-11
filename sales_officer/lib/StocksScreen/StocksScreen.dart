@@ -9,6 +9,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SubGroup.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUStockService.dart';
 import 'package:sales_officer/BreadCrum/BreadCrum.dart';
+import 'package:sales_officer/DialogBox/DiscardPrompt.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/StockConfirmationScreen/StockConfirmOrder.dart';
 
@@ -106,106 +107,117 @@ class _StocksScreenState extends State<StocksScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Header(8, false, widget.refresh),
-            Container(
-              padding: EdgeInsets.only(left: 12),
-              alignment: Alignment.centerLeft,
-              height: 40,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
+        body: WillPopScope(
+          onWillPop: () async {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return DiscardPrompt();
+                });
+            return true;
+          },
+          child: Column(
+            children: [
+              Header(8, false, widget.refresh),
+              Container(
+                padding: EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
                   ),
-                  bottom: BorderSide(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: BreadCrum2(
-                "Distributor",
-                widget.currentDistributor.distributorName,
-              ),
-            ),
-            Expanded(
-              child: Form(
-                key: widget._formKey,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 3,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 200),
-                        height: scrollingDown ? 0 : 50,
-                        child: SearchBar(
-                            _setProducts, _setNewProducts, dropdownValue),
-                      ),
-                      isProductNotFound
-                          ? Expanded(
-                              child: Center(
-                                child: Text("No Search Found."),
-                              ),
-                            )
-                          : Expanded(
-                              child: !isSearching
-                                  ? StockList(
-                                      allSubGroupsLocal,
-                                      widget._scrollController,
-                                      _textEditingControllers,
-                                      widget.currentDistributor,
-                                      returnOrdersCountList,
-                                      updateReturnOrdersCountList)
-                                  : StockList(
-                                      productList,
-                                      widget._scrollController,
-                                      _textEditingControllers,
-                                      widget.currentDistributor,
-                                      returnOrdersCountList,
-                                      updateReturnOrdersCountList)),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
+                  boxShadow: [
+                    BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 3,
-                      offset: Offset(0, -2))
-                ],
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: BreadCrum2(
+                  "Distributor",
+                  widget.currentDistributor.distributorName,
+                ),
               ),
-              child: StockConfirmOrder(
-                  widget.currentDistributor,
-                  _textEditingControllers,
-                  widget.index,
-                  widget.distributorOrder,
-                  distributorOrderItems,
-                  returnOrdersCountList,
-                  updateReturnOrdersCountList, widget.refresh),
-            ),
-          ],
+              Expanded(
+                child: Form(
+                  key: widget._formKey,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 3,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        AnimatedContainer(
+                          duration: Duration(milliseconds: 200),
+                          height: scrollingDown ? 0 : 50,
+                          child: SearchBar(
+                              _setProducts, _setNewProducts, dropdownValue),
+                        ),
+                        isProductNotFound
+                            ? Expanded(
+                                child: Center(
+                                  child: Text("No Search Found."),
+                                ),
+                              )
+                            : Expanded(
+                                child: !isSearching
+                                    ? StockList(
+                                        allSubGroupsLocal,
+                                        widget._scrollController,
+                                        _textEditingControllers,
+                                        widget.currentDistributor,
+                                        returnOrdersCountList,
+                                        updateReturnOrdersCountList)
+                                    : StockList(
+                                        productList,
+                                        widget._scrollController,
+                                        _textEditingControllers,
+                                        widget.currentDistributor,
+                                        returnOrdersCountList,
+                                        updateReturnOrdersCountList)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, -2))
+                  ],
+                ),
+                child: StockConfirmOrder(
+                    widget.currentDistributor,
+                    _textEditingControllers,
+                    widget.index,
+                    widget.distributorOrder,
+                    distributorOrderItems,
+                    returnOrdersCountList,
+                    updateReturnOrdersCountList,
+                    widget.refresh),
+              ),
+            ],
+          ),
         ),
       ),
     );

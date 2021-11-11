@@ -4,14 +4,6 @@ import 'package:sales_officer/Profile/BezierCard/ExpandableHeader.dart';
 
 import '../../Database.dart';
 
-// ExpandablePanel(
-// header: Text(article.title),
-// collapsed: Text(article.body, softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,),
-// expanded: Text(article.body, softWrap: true, ),
-// tapHeaderToExpand: true,
-// hasIcon: true,
-// );
-
 class BezierData extends StatefulWidget {
   final _expandableController;
   final Function changeExpanded;
@@ -41,16 +33,53 @@ class _BezierDataState extends State<BezierData> {
     return ExpandablePanel(
       collapsed: Column(
         children: [
-          Column(
-            children: listOfProducts.length > 4
-                ? listOfProducts
-                    .sublist(0, 4)
-                    .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
-                    .toList()
-                : listOfProducts
-                    .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
-                    .toList(),
-          ),
+          Builder(builder: (context) {
+            if (widget.isMTD) {
+              if (listOfProducts.length > 4) {
+                return Column(
+                  children: listOfProducts
+                      .where((element) => !(element[1][0] == 0))
+                      .toList()
+                      .sublist(0, 4)
+                      .map((item) =>
+                          ExpandableHeader(listOfProducts, item, widget.isMTD))
+                      .toList(),
+                );
+              } else {
+                return Column(
+                  children: listOfProducts
+                      .where((element) => !(element[1][0] == 0))
+                      .toList()
+                      .map((item) =>
+                          ExpandableHeader(listOfProducts, item, widget.isMTD))
+                      .toList(),
+                );
+              }
+            } else {
+              listOfProducts.sort((a, b) => b[1][0].compareTo(a[1][0]));
+
+              if (listOfProducts.length > 4) {
+                return Column(
+                  children: listOfProducts
+                      .where((element) => !(element[1][1] == 0))
+                      .toList()
+                      .sublist(0, 4)
+                      .map((item) =>
+                          ExpandableHeader(listOfProducts, item, widget.isMTD))
+                      .toList(),
+                );
+              } else {
+                return Column(
+                  children: listOfProducts
+                      .where((element) => !(element[1][1] == 0))
+                      .toList()
+                      .map((item) =>
+                          ExpandableHeader(listOfProducts, item, widget.isMTD))
+                      .toList(),
+                );
+              }
+            }
+          }),
           InkWell(
             onTap: () {
               widget.changeExpanded(true);
@@ -65,11 +94,28 @@ class _BezierDataState extends State<BezierData> {
       ),
       expanded: Column(
         children: [
-          Column(
-            children: listOfProducts
-                .map((item) => ExpandableHeader(listOfProducts, item, widget.isMTD))
-                .toList(),
-          ),
+          Builder(builder: (context) {
+            if (widget.isMTD) {
+              return Column(
+                children: listOfProducts
+                    .where((element) => !(element[1][0] == 0))
+                    .toList()
+                    .map((item) =>
+                        ExpandableHeader(listOfProducts, item, widget.isMTD))
+                    .toList(),
+              );
+            } else {
+              listOfProducts.sort((a, b) => b[1][0].compareTo(a[1][0]));
+              return Column(
+                children: listOfProducts
+                    .where((element) => !(element[1][1] == 0))
+                    .toList()
+                    .map((item) =>
+                        ExpandableHeader(listOfProducts, item, widget.isMTD))
+                    .toList(),
+              );
+            }
+          }),
           InkWell(
             onTap: () {
               widget._expandableController.expanded = false;

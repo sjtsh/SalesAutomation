@@ -126,7 +126,7 @@ class _NewOrderState extends State<NewOrder> {
               )
             : Expanded(
                 child: SingleChildScrollView(
-                  child: !isSearching
+                    child: !isSearching
                       ? Column(
                           children: personalDistributorsLocal
                               .map(

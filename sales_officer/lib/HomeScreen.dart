@@ -21,8 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  int i = 0;
+
   Future<bool> _onBackPressed() async {
-    _setIndex(2);
+    if (i == 1) {
+      Navigator.pop(context);
+    }
+    i = 1;
+    Future.delayed(Duration(seconds: 1), () {
+      i = 0;
+    });
+
     return false;
   }
 
@@ -50,11 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: _onBackPressed,
       child: SafeArea(
         child: Scaffold(
-          bottomNavigationBar: currentIndex < 5 ? NavBar(_setIndex, currentIndex) : Container(),
+          bottomNavigationBar:
+              currentIndex < 5 ? NavBar(_setIndex, currentIndex) : Container(),
           backgroundColor: Color(0xffF5F5F5),
           body: Column(
             children: [
-              currentIndex == 5 ? Header(currentIndex, false, refresh) : Header(currentIndex, true, refresh),
+              currentIndex == 5
+                  ? Header(currentIndex, false, refresh)
+                  : Header(currentIndex, true, refresh),
               Expanded(child: _changeActivity(currentIndex)),
             ],
           ),

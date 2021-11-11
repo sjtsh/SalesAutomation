@@ -17,7 +17,7 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12.0),
-      child: Column(
+      child: ListView(
         children: [
           Container(
             clipBehavior: Clip.hardEdge,

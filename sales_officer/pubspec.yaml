@@ -41,6 +41,14 @@ dependencies:
   super_tooltip: ^1.0.1
   google_maps_flutter:
   location:
+#  slider_button:
+#  sliding_switch: ^1.0.0
+#  syncfusion_flutter_sliders: 19.3.48
+#  custom_switch:
+#  thememode_selector: ^0.1.0
+#  fswitch: ^1.1.2
+#  lite_rolling_switch: ^0.1.1
+
 
 
   # The following adds the Cupertino Icons font to your application.
