@@ -21,10 +21,11 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: messages
-            .map((e) => IndividualNotification(
-                e, setSeen, _isSeen[messages.indexOf(e)]))
-            .toList());
+    return ListView(
+      children: messages
+          .map((e) =>
+              IndividualNotification(e, setSeen, _isSeen[messages.indexOf(e)]))
+          .toList(),
+    );
   }
 }
