@@ -1,14 +1,31 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
+import 'package:sales_officer/Profile/BezierCard/DataDetails.dart';
 
-import '../../Database.dart';
-
-class ExpandableHeader extends StatelessWidget {
+class ExpandableHeader extends StatefulWidget {
 
   final List listOfProducts;
   final List item;
   final bool isMTD;
 
   ExpandableHeader(this.listOfProducts, this.item, this.isMTD);
+
+  @override
+  _ExpandableHeaderState createState() => _ExpandableHeaderState();
+}
+
+class _ExpandableHeaderState extends State<ExpandableHeader> {
+  List<bool> value = [];
+
+  expanded(int index, bool isChecked) {
+    setState(
+          () {
+        value[index] = isChecked;
+      },
+    );
+  }
+  List<String> expandedDetails = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +44,14 @@ class ExpandableHeader extends StatelessWidget {
         child: Row(
           children: [
             Text(
-                (listOfProducts.indexOf(item)+1).toString() + "."
+                (widget.listOfProducts.indexOf(widget.item)+1).toString() + "."
             ),
             SizedBox(
               width: 10,
             ),
-            Expanded(
-              child: Text(
-                allSKULocal.firstWhere((element) => item[0] == element.SKUID).SKUName.substring(0,20),
-              ),
-            ),
+            DataDetails(widget.item),
             Text(
-              "Rs. ${isMTD ? item[1][0]: item[1][1]}",
+              "Rs. ${widget.isMTD ? widget.item[1][0]: widget.item[1][1]}",
             ),
           ],
         ),

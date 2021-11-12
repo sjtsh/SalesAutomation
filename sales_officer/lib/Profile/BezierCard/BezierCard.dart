@@ -14,7 +14,6 @@ class BezierCard extends StatefulWidget {
   BezierCard(
     this.toggleValue,
   );
-
   @override
   _BezierCardState createState() => _BezierCardState();
 }
