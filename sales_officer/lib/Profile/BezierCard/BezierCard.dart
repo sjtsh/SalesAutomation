@@ -12,14 +12,16 @@ import 'BezierHeading.dart';
 class BezierCard extends StatefulWidget {
   final bool toggleValue;
 
-  BezierCard(this.toggleValue);
-
+  BezierCard(
+    this.toggleValue,
+  );
   @override
   _BezierCardState createState() => _BezierCardState();
 }
 
 class _BezierCardState extends State<BezierCard> {
   ExpandableController _expandableController = ExpandableController();
+  int pageNumber = 0;
   bool aCondition = false;
 
   void changeExpanded(bool condition) {
@@ -36,26 +38,33 @@ class _BezierCardState extends State<BezierCard> {
           : 382.0 +
               41 *
                   (products.entries
-                          .where((element) => !(element.value[1] == 0))
+                          .where((element) => !(element.value[pageNumber] == 0))
                           .length -
                       4),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 3,
-                offset: Offset(0, 2))
-          ],
-        ),
-        child: PageView(
-          scrollDirection: Axis.horizontal,
-          children: [true, false]
-              .map(
-                (e) => Column(
+      child: PageView(
+        onPageChanged: (int i) {
+          pageNumber = i;
+          _expandableController.expanded = false;
+          Future.delayed(Duration(milliseconds: 500), () {
+            changeExpanded(false);
+          });
+        },
+        scrollDirection: Axis.horizontal,
+        children: [true, false]
+            .map(
+              (e) => Container(
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2))
+                  ],
+                ),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
@@ -65,9 +74,9 @@ class _BezierCardState extends State<BezierCard> {
                    BezierChartnData(e,_expandableController,changeExpanded,widget.toggleValue),
                   ],
                 ),
-              )
-              .toList(),
-        ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
