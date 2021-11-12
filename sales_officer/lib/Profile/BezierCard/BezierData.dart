@@ -9,7 +9,11 @@ class BezierData extends StatefulWidget {
   final Function changeExpanded;
   final bool isMTD;
 
-  BezierData(this._expandableController, this.changeExpanded, this.isMTD);
+  BezierData(
+    this._expandableController,
+    this.changeExpanded,
+    this.isMTD,
+  );
 
   @override
   _BezierDataState createState() => _BezierDataState();
