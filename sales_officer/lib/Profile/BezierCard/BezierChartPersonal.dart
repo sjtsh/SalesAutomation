@@ -16,6 +16,7 @@ class BezierChartPersonal extends StatefulWidget {
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
   List<double> normalizedSales = [];
+  bool condition = false;
 
   @override
   void initState() {
@@ -23,14 +24,12 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
     // normalizedSales = widget.sales;
     normalizedSales = List.generate(widget.sales.length, (index) => 0);
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
-      int a = 0;
-      widget.sales.forEach((element) {
+    Future.delayed(Duration(milliseconds: 200), () {
+      for (int i = 0; i < widget.sales.length; i++) {
         setState(() {
-          normalizedSales[a] = (element / 1000000);
+          normalizedSales[i] += (widget.sales[i] / 1000000);
         });
-        a++;
-      });
+      }
     });
   }
 
@@ -41,57 +40,42 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
         showingTooltipIndicators: [],
         lineTouchData: LineTouchData(enabled: true),
         lineBarsData: [
-          widget.toggleValue ? LineChartBarData(
-      showingIndicators: [],
-        preventCurveOverShooting: true,
-        preventCurveOvershootingThreshold: 0,
-        spots: normalizedSales
-            .asMap()
-            .entries
-            .map((content) =>
-            FlSpot(content.key + 1.0, content.value + 0.0))
-            .toList(),
-        isCurved: true,
-        colors: [
-          Color(0xff129C8D),
-          Color(0xff34E77E),
-        ],
-        belowBarData: BarAreaData(
-          show: true,
-          colors: [
-            Color(0xff129C8D),
-            Color(0xff34E77E),
-          ],
-        ),
-        dotData: FlDotData(
-          show: false,
-        ),
-      ) : LineChartBarData(
-      showingIndicators: [],
-      preventCurveOverShooting: true,
-      preventCurveOvershootingThreshold: 0,
-      spots: normalizedSales
-          .asMap()
-          .entries
-          .map(
-              (content) => FlSpot(content.key + 1.0, content.value + 0.0))
-          .toList(),
-      isCurved: true,
-      colors: [
-        Color(0xffEB1469),
-        Color(0xffFD5B11),
-      ],
-      belowBarData: BarAreaData(
-        show: true,
-        colors: [
-          Color(0xffEB1469),
-          Color(0xffFD5B11),
-        ],
-      ),
-      dotData: FlDotData(
-        show: false,
-      ),
-    ),
+          LineChartBarData(
+            showingIndicators: [],
+            preventCurveOverShooting: true,
+            preventCurveOvershootingThreshold: 0,
+            spots: normalizedSales
+                .asMap()
+                .entries
+                .map(
+                    (content) => FlSpot(content.key + 1.0, content.value + 0.0))
+                .toList(),
+            isCurved: true,
+            colors: widget.toggleValue
+                ? [
+                    Color(0xff129C8D),
+                    Color(0xff34E77E),
+                  ]
+                : [
+                    Color(0xffEB1469),
+                    Color(0xffFD5B11),
+                  ],
+            belowBarData: BarAreaData(
+              show: true,
+              colors: widget.toggleValue
+                  ? [
+                      Color(0xff129C8D),
+                      Color(0xff34E77E),
+                    ]
+                  : [
+                      Color(0xffEB1469),
+                      Color(0xffFD5B11),
+                    ],
+            ),
+            dotData: FlDotData(
+              show: false,
+            ),
+          )
         ],
         titlesData: FlTitlesData(
           bottomTitles: SideTitles(
@@ -123,7 +107,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           show: false,
         ),
       ),
-      swapAnimationDuration: Duration(milliseconds: 500), // Optional
+      swapAnimationDuration: Duration(milliseconds: 200), // Optional
       swapAnimationCurve: Curves.easeInOut,
     );
   }

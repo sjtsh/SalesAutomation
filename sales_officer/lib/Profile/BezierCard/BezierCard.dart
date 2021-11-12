@@ -10,7 +10,9 @@ import 'BezierHeading.dart';
 
 class BezierCard extends StatefulWidget {
   final bool toggleValue;
+
   BezierCard(this.toggleValue);
+
   @override
   _BezierCardState createState() => _BezierCardState();
 }
@@ -63,7 +65,9 @@ class _BezierCardState extends State<BezierCard> {
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       height: 100,
                       child: BezierChartPersonal(
-                          e, e ? weeklySalesLocal : monthlySalesLocal,widget.toggleValue),
+                          e,
+                          e ? weeklySalesLocal : monthlySalesLocal,
+                          widget.toggleValue),
                     ),
                     BezierData(_expandableController, changeExpanded, e),
                   ],

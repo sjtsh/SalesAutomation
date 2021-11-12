@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
@@ -31,14 +33,69 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  Stopwatch watch = Stopwatch();
+  late Timer timer;
+  bool startStop = true;
+
+  String elapsedTime = '';
+
+  updateTime(Timer timer) {
+    if (watch.isRunning) {
+      setState(() {
+        print("startstop Inside=$startStop");
+        elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+      });
+    }
+  }
+
+  startOrStop() {
+    if(startStop) {
+      startWatch();
+    } else {
+      stopWatch();
+    }
+  }
+
+  startWatch() {
+    setState(() {
+      startStop = false;
+      watch.start();
+      timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+    });
+  }
+
+  stopWatch() {
+    setState(() {
+      startStop = true;
+      watch.stop();
+      setTime();
+    });
+  }
+
+  setTime() {
+    var timeSoFar = watch.elapsedMilliseconds;
+    setState(() {
+      elapsedTime = transformMilliSeconds(timeSoFar);
+    });
+  }
+
+  transformMilliSeconds(int milliseconds) {
+    int hundreds = (milliseconds / 10).truncate();
+    int seconds = (hundreds / 100).truncate();
+    int minutes = (seconds / 60).truncate();
+    int hours = (minutes / 60).truncate();
+
+    String hoursStr = (hours % 60).toString().padLeft(2, '0');
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return "${hoursStr}h:${minutesStr}m:${secondsStr}s";
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return ListView(
       children: [
-        SizedBox(
-          height: 10,
-        ),
         // Header(),
         // Padding(
         //   padding: const EdgeInsets.all(12.0),
@@ -52,11 +109,10 @@ class _ProfileState extends State<Profile> {
         //   ),
         // ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 12.0,bottom: 8,right: 12,top: 12),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 1000),
             height: 75,
-            width: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               gradient: toggleValue
@@ -136,8 +192,7 @@ class _ProfileState extends State<Profile> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    Text(
-                                      "2h:04m:10s",
+                                    Text(elapsedTime,
                                       style: TextStyle(
                                           fontFamily: "lato",
                                           fontSize: 18,
@@ -255,6 +310,7 @@ class _ProfileState extends State<Profile> {
                     },
                     onHorizontalDragEnd: (a) {
                       toggleButton();
+                      startOrStop();
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
