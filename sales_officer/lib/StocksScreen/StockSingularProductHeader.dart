@@ -105,7 +105,7 @@ class StockSingularProductHeader extends StatelessWidget {
                                     );
                                   }catch(e){
                                     return Text(
-                                      "name not found",
+                                      "Name not found",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: Colors.black.withOpacity(0.5),
