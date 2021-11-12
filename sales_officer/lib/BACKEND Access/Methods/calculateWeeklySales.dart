@@ -22,7 +22,7 @@ calculateWeeklySales(context) {
           .then((distributorOrderItem) {
         distributorOrderItem.forEach((aDistributorOrderItem) {
           distributorOrder
-              .where((aDistributorOrder) => aDistributorOrder.orderStatus)
+              .where((aDistributorOrder) => aDistributorOrder.orderStatus && aDistributorOrder.SOID == meSOID)
               .forEach((aDistributorOrder) {
             //FOR MTD
             if (aDistributorOrder.dateAndTime != "null") {

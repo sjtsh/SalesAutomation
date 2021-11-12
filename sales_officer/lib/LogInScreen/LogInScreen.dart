@@ -59,102 +59,103 @@ class _LogInScreenState extends State<LogInScreen> {
             loadingText = "Loading SKU Distributor Wise";
             percentage = 20;
           });
-          SKUDistributorWiseService skuDistributorWiseService =
-              SKUDistributorWiseService();
-          skuDistributorWiseService.fetchSKUDistributorWises().then((value) {
-            allSKUDistributorWiseLocal = value;
+          DistributorService distributorService = DistributorService();
+          distributorService.fetchDistributors().then((value) {
+            allDistributorsLocal = value;
             setState(() {
-              loadingText = "Loading Billing Companies";
-              percentage = 30;
+              loadingText = "Almost Done";
+              percentage = 90;
             });
-          }).then((value) {
-            BillingCompanyService billingCompanyService =
-                BillingCompanyService();
-            billingCompanyService.fetchBillingCompanys(context).then((value) {
-              allBillingCompanysLocal = value;
-              setState(() {
-                loadingText = "Loading Units";
-                percentage = 40;
-              });
-              UnitService unitService = UnitService();
-              unitService.fetchUnits().then((value) {
-                allUnitsLocal = value;
-                setState(() {
-                  loadingText = "Loading Product Groups";
-                  percentage = 50;
-                });
-                ProductGroupService productGroupService = ProductGroupService();
-                productGroupService.fetchProductGroups().then((value) {
-                  allProductGroupsLocal = value;
-                  setState(() {
-                    loadingText = "Loading Districts";
-                    percentage = 60;
+            SOService soService = SOService();
+            soService.fetchSOs().then((value) {
+              try {
+                meSO = value.firstWhere((element) => element.SOID == meSOID);
+              } catch (e) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return LogInScreen();
+                }));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("NO SOID FOUND"),
+                  ),
+                );
+              }
+              SODistributorConnectionService soDistributorConnectionService =
+                  SODistributorConnectionService();
+              soDistributorConnectionService
+                  .fetchSODistributorConnections()
+                  .then((newValue) {
+                allSODistributorConnectionsLocal = newValue;
+                personalDistributorsLocal =
+                    allDistributorsLocal.where((element) {
+                  bool condition = false;
+                  allSODistributorConnectionsLocal.forEach((element1) {
+                    if (element1.SOID == meSO?.SOID &&
+                        element1.distributorID == element.distributorID) {
+                      condition = true;
+                    }
                   });
-                  DistrictService districtService = DistrictService();
-                  districtService.fetchDistricts(context).then((value) {
-                    allDistrictsLocal = value;
+                  return condition;
+                }).toList();
+                setState(() {
+                  loadingText = "Calculating Sales";
+                  percentage = 100;
+                });
+                calculateWeeklySales(context);
+                calculateSales(setLoaded, context);
+                SKUDistributorWiseService skuDistributorWiseService =
+                    SKUDistributorWiseService();
+                skuDistributorWiseService
+                    .fetchSKUDistributorWises()
+                    .then((value) {
+                  allSKUDistributorWiseLocal = value;
+                  setState(() {
+                    loadingText = "Loading Billing Companies";
+                    percentage = 30;
+                  });
+                }).then((value) {
+                  BillingCompanyService billingCompanyService =
+                      BillingCompanyService();
+                  billingCompanyService
+                      .fetchBillingCompanys(context)
+                      .then((value) {
+                    allBillingCompanysLocal = value;
                     setState(() {
-                      loadingText = "Loading Familiarities";
-                      percentage = 70;
+                      loadingText = "Loading Units";
+                      percentage = 40;
                     });
-                    FamiliarityService familiarityService =
-                        FamiliarityService();
-                    familiarityService.fetchFamiliaritys(context).then((value) {
-                      allFamiliaritysLocal = value;
+                    UnitService unitService = UnitService();
+                    unitService.fetchUnits().then((value) {
+                      allUnitsLocal = value;
                       setState(() {
-                        loadingText = "Loading Distributors";
-                        percentage = 80;
+                        loadingText = "Loading Product Groups";
+                        percentage = 50;
                       });
-                      DistributorService distributorService =
-                          DistributorService();
-                      distributorService.fetchDistributors().then((value) {
-                        allDistributorsLocal = value;
+                      ProductGroupService productGroupService =
+                          ProductGroupService();
+                      productGroupService.fetchProductGroups().then((value) {
+                        allProductGroupsLocal = value;
                         setState(() {
-                          loadingText = "Almost Done";
-                          percentage = 90;
+                          loadingText = "Loading Districts";
+                          percentage = 60;
                         });
-                        SOService soService = SOService();
-                        soService.fetchSOs().then((value) {
-                          try {
-                            meSO = value.firstWhere(
-                                (element) => element.SOID == meSOID);
-                          } catch (e) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return LogInScreen();
-                            }));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("NO SOID FOUND"),
-                              ),
-                            );
-                          }
-                          SODistributorConnectionService
-                              soDistributorConnectionService =
-                              SODistributorConnectionService();
-                          soDistributorConnectionService
-                              .fetchSODistributorConnections()
-                              .then((newValue) {
-                            allSODistributorConnectionsLocal = newValue;
-                            personalDistributorsLocal =
-                                allDistributorsLocal.where((element) {
-                              bool condition = false;
-                              allSODistributorConnectionsLocal
-                                  .forEach((element1) {
-                                if (element1.SOID == meSO?.SOID &&
-                                    element1.distributorID ==
-                                        element.distributorID) {
-                                  condition = true;
-                                }
-                              });
-                              return condition;
-                            }).toList();
+                        DistrictService districtService = DistrictService();
+                        districtService.fetchDistricts(context).then((value) {
+                          allDistrictsLocal = value;
+                          setState(() {
+                            loadingText = "Loading Familiarities";
+                            percentage = 70;
+                          });
+                          FamiliarityService familiarityService =
+                              FamiliarityService();
+                          familiarityService
+                              .fetchFamiliaritys(context)
+                              .then((value) {
+                            allFamiliaritysLocal = value;
                             setState(() {
-                              loadingText = "Calculating Sales";
-                              percentage = 100;
+                              loadingText = "Loading Distributors";
+                              percentage = 80;
                             });
-                            calculateSales(setLoaded, context);
-                            calculateWeeklySales(context);
                           });
                         });
                       });

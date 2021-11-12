@@ -53,19 +53,22 @@ calculateSales(setLoaded, context) {
                         throw Exception("SKU Not Found");
                       }
                       if (sku.MRP != "-2000.0") {
-                        mtd += sku.MRP *
+                        double balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
                             sku.MRP *
                                 aDistributorOrderItem.alternativeItemCount *
                                 sku.alternativeCF;
-                      }
-                      if (products.containsKey(sku.SKUID)) {
-                        products[sku.SKUID][0] += mtd;
-                      } else {
-                        products.addAll({
-                          sku.SKUID: [mtd, 0]
-                        });
+
+                        mtd += balance;
+
+                        if (products.containsKey(sku.SKUID)) {
+                          products[sku.SKUID][0] += balance;
+                        } else {
+                          products.addAll({
+                            sku.SKUID: [balance, 0]
+                          });
+                        }
                       }
                     });
                   }
@@ -93,19 +96,22 @@ calculateSales(setLoaded, context) {
                           ),
                         );
                       }
+                      double balance = 0;
                       if (sku.MRP != "-2000.0") {
-                        mtd += sku.MRP *
+                        balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
                             sku.MRP *
                                 aDistributorOrderItem.alternativeItemCount *
                                 sku.alternativeCF;
+
+                        mtd += balance;
                       }
                       if (products.containsKey(sku.SKUID)) {
-                        products[sku.SKUID][0] += mtd;
+                        products[sku.SKUID][0] += balance;
                       } else {
                         products.addAll({
-                          sku.SKUID: [mtd, 0]
+                          sku.SKUID: [balance, 0]
                         });
                       }
                     });
@@ -113,8 +119,8 @@ calculateSales(setLoaded, context) {
                 }
               }
             }
-            //FOR YTD
 
+            //FOR YTD
             if (aDistributorOrder.dateAndTime != "null") {
               if (aDistributorOrder.dateAndTime.substring(0, 4) ==
                   time.substring(0, 4)) {
@@ -137,20 +143,23 @@ calculateSales(setLoaded, context) {
                         ),
                       ));
                     }
+                    double balance = 0;
                     if (sku.MRP != "-2000.0") {
-                      ytd += sku.MRP *
+                      balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
                           sku.MRP *
                               aDistributorOrderItem.alternativeItemCount *
                               sku.alternativeCF;
+
+                      ytd += balance;
                     }
 
                     if (products.containsKey(sku.SKUID)) {
-                      products[sku.SKUID][1] += ytd;
+                      products[sku.SKUID][1] += balance;
                     } else {
                       products.addAll({
-                        sku.SKUID: [0, ytd]
+                        sku.SKUID: [0, balance]
                       });
                     }
                   });
@@ -178,20 +187,20 @@ calculateSales(setLoaded, context) {
                         ),
                       ));
                     }
+                    double balance = 0;
                     if (sku.MRP != "-2000.0") {
-                      ytd += sku.MRP *
+                      balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
                           sku.MRP *
                               aDistributorOrderItem.alternativeItemCount *
                               sku.alternativeCF;
                     }
-
-                    if (products.containsKey(sku.SKUID)) {
-                      products[sku.SKUID][1] += ytd;
+                    if(products.containsKey(sku.SKUID)) {
+                      products[sku.SKUID][1] += balance;
                     } else {
                       products.addAll({
-                        sku.SKUID: [0, ytd]
+                        sku.SKUID: [0, balance]
                       });
                     }
                   });
