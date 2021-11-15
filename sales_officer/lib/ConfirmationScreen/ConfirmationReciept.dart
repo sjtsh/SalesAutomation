@@ -40,6 +40,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
 
   @override
   Widget build(BuildContext context) {
+
     List aList = getTotalItems();
     tempBillingAmounts = [];
     isWarning = false;
@@ -614,26 +615,30 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
           throw Exception("Something Went Wrong");
         }
         setState(() {
-          totalAmount += aTextEditingController.text == ""
-              ? 0
-              : int.parse(aTextEditingController.text) *
-                  sku.primaryCF *
-                  sku.MRP;
+          try{
+            totalAmount += aTextEditingController.text == ""
+                ? 0
+                : int.parse(aTextEditingController.text) *
+                    sku.primaryCF *
+                    sku.MRP;
 
-          totalAmount += widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text ==
-                  ""
-              ? 0
-              : int.parse(widget
-                      ._textEditingControllers[widget._textEditingControllers
-                              .indexOf(aTextEditingController) +
-                          1]
-                      .text) *
-                  sku.alternativeCF *
-                  sku.MRP;
+            totalAmount += widget
+                        ._textEditingControllers[widget._textEditingControllers
+                                .indexOf(aTextEditingController) +
+                            1]
+                        .text ==
+                    ""
+                ? 0
+                : int.parse(widget
+                        ._textEditingControllers[widget._textEditingControllers
+                                .indexOf(aTextEditingController) +
+                            1]
+                        .text) *
+                    sku.alternativeCF *
+                    sku.MRP;
+          }catch(e){
+
+          }
         });
       }
     });

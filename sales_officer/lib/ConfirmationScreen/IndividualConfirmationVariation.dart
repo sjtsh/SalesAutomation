@@ -32,7 +32,18 @@ class IndividualConfirmationVariation extends StatelessWidget {
        sku =
           allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
     } catch(e){
-      throw Exception(" Something Went Wrong");
+      return Padding(
+        padding: const EdgeInsets.only(left: 20,top: 8, bottom: 8),
+        child: Row(
+
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container( child: Text("SKU missing", style: TextStyle(color: Colors.red),),),
+          ],
+        ),
+      );
+      throw Exception("SKUID or DistributorID not found");
+
     }
 
     return Material(
@@ -58,12 +69,20 @@ class IndividualConfirmationVariation extends StatelessWidget {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: Text(
-                        f[0].SKUName,
-                        maxLines: 3,
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
+                      child: Builder(
+                        builder: (context) {
+                          try{
+                          return Text(
+                            f[0].SKUName,
+                            maxLines: 3,
+                            style: TextStyle(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          );
+                        }catch(e){
+                            return Text("sku missing");
+                          }
+                      }
                       )),
                   Container(
                     decoration: BoxDecoration(
@@ -102,12 +121,21 @@ class IndividualConfirmationVariation extends StatelessWidget {
                   ? Container()
                   : Row(
                       children: [
-                        Text(
-                          f[1].toString(),
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
+                        Builder(
+                          builder: (context) {
+                           try {
+                              return Text(
+                                f[1].toString(),
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                              );
+                            }catch(e){
+                             return Text("Unnamed");
+                           };
+                          }
                         ),
+
                         Text(
                           " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                           style: TextStyle(

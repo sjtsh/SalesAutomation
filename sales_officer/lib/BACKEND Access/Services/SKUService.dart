@@ -22,10 +22,10 @@ class SKUService {
           throw Exception("failed to load post");
         }
       } on SocketException {
-        throw Exception("failed to load post");
+        throw Exception("No internet connection");
       }
       on TimeoutException {
-        throw Exception("failed to load post");
+        throw Exception("Failed to load post, time out");
       }
     } throw Exception("Something Went Wrong ");
   }

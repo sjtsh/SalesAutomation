@@ -44,9 +44,7 @@ class _SingularProductState extends State<SingularProduct> {
               widget.item, widget.changeCurrentlyExpanded, Icons.remove),
           Builder(
             builder: (context) {
-              print(allSKULocal
-                  .where(
-                      (element) => element.subGroupID == widget.item.subGroupID));
+
               return Column(
                 children: allSKULocal
                     .where(

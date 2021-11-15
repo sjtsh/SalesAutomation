@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/Profile/BezierCard/BexierChartnData.dart';
+import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
 import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
 
 import '../../Database.dart';
@@ -11,16 +11,17 @@ import 'BezierHeading.dart';
 
 class BezierCard extends StatefulWidget {
   final bool toggleValue;
+  final Function refresh;
 
   BezierCard(
-    this.toggleValue,
+    this.toggleValue, this.refresh,
   );
+
   @override
   _BezierCardState createState() => _BezierCardState();
 }
 
 class _BezierCardState extends State<BezierCard> {
-  ExpandableController _expandableController = ExpandableController();
   int pageNumber = 0;
   bool aCondition = false;
 
@@ -44,7 +45,6 @@ class _BezierCardState extends State<BezierCard> {
       child: PageView(
         onPageChanged: (int i) {
           pageNumber = i;
-          _expandableController.expanded = false;
           Future.delayed(Duration(milliseconds: 500), () {
             changeExpanded(false);
           });
@@ -71,7 +71,16 @@ class _BezierCardState extends State<BezierCard> {
                       height: 6,
                     ),
                     BezierHeading(e ? "MTD Sales" : "YTD Sales"),
-                   BezierChartnData(e,_expandableController,changeExpanded,widget.toggleValue),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      height: 100,
+                      child: BezierChartPersonal(
+                          e,
+                          e ? weeklySalesLocal : monthlySalesLocal,
+                          widget.toggleValue),
+                    ),
+                    BezierData(changeExpanded, e,
+                        widget.toggleValue,widget.refresh),
                   ],
                 ),
               ),

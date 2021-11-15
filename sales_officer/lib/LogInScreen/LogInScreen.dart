@@ -45,7 +45,8 @@ class _LogInScreenState extends State<LogInScreen> {
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
       subGroupService.fetchSubGroups(context).then((value) {
-        allSubGroupsLocal = value;
+        allSubGroupsLocal =
+            value.where((element) => !element.deactivated).toList();
 
         setState(() {
           loadingText = "Loading SKUs";
@@ -63,7 +64,7 @@ class _LogInScreenState extends State<LogInScreen> {
           distributorService.fetchDistributors().then((value) {
             allDistributorsLocal = value;
             setState(() {
-                loadingText = "Loading Profile";
+              loadingText = "Loading Profile";
               percentage = 30;
             });
             SOService soService = SOService();

@@ -1,19 +1,18 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sales_officer/Profile/BezierCard/BexierChartnData.dart';
+import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
 import 'package:sales_officer/Profile/BezierCard/ExpandableHeader.dart';
-
+import 'package:sales_officer/Profile/BezierCard/SeeAllSalesScreen.dart';
 import '../../Database.dart';
-import 'BezierChartPersonal.dart';
 
 class BezierData extends StatefulWidget {
-  final _expandableController;
   final Function changeExpanded;
   final bool isMTD;
   final bool toggleValue;
+  final Function refresh;
 
-  BezierData(this._expandableController, this.changeExpanded, this.isMTD,
-      this.toggleValue);
+  BezierData(this.changeExpanded, this.isMTD,
+      this.toggleValue, this.refresh);
 
   @override
   _BezierDataState createState() => _BezierDataState();
@@ -34,8 +33,7 @@ class _BezierDataState extends State<BezierData> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandablePanel(
-      collapsed: Column(
+    return Column(
         children: [
           Builder(builder: (context) {
             if (widget.isMTD) {
@@ -85,15 +83,8 @@ class _BezierDataState extends State<BezierData> {
           }),
           InkWell(
             onTap: () {
-              // widget.changeExpanded(true);
-              // widget._expandableController.expanded = true;
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return Scaffold(
-                    body: BezierChartnData(
-                        widget.isMTD,
-                        widget._expandableController,
-                        widget.changeExpanded,
-                        widget.toggleValue));
+                return SeeAllSalesScreen(widget.isMTD,widget.refresh,widget.toggleValue,listOfProducts);
               }));
             },
             child: Padding(
@@ -102,47 +93,6 @@ class _BezierDataState extends State<BezierData> {
             ),
           ),
         ],
-      ),
-      expanded: Column(
-        children: [
-          Builder(builder: (context) {
-            if (widget.isMTD) {
-              return Column(
-                children: listOfProducts
-                    .where((element) => !(element[1][0] == 0))
-                    .toList()
-                    .map((item) =>
-                        ExpandableHeader(listOfProducts, item, widget.isMTD))
-                    .toList(),
-              );
-            } else {
-              listOfProducts.sort((a, b) => b[1][0].compareTo(a[1][0]));
-              return Column(
-                children: listOfProducts
-                    .where((element) => !(element[1][1] == 0))
-                    .toList()
-                    .map((item) =>
-                        ExpandableHeader(listOfProducts, item, widget.isMTD))
-                    .toList(),
-              );
-            }
-          }),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-              widget._expandableController.expanded = false;
-              Future.delayed(Duration(milliseconds: 400)).then((value) {
-                widget.changeExpanded(false);
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text("SEE LESS"),
-            ),
-          ),
-        ],
-      ),
-      controller: widget._expandableController,
     );
   }
 }

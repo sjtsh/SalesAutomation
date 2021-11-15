@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (i == 2) {
       return PendingScreen(refresh);
     } else if (i == 3) {
-      return MoreScreen(refresh);
+      return MoreScreen(refresh,i);
     } else {
       return Container();
     }

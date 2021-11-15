@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
+import 'package:sales_officer/MoreScreen/ViewStockScreen/ViewStock.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/MoreScreen/Settings/Settings.dart';
 import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
 
-import '../GoogleMap.dart';
+import 'GoogleMap.dart';
 import 'FAQScreen/FAQScreen.dart';
 
 class MoreScreen extends StatelessWidget {
   final Function refresh;
+  final int index;
 
-  MoreScreen(this.refresh);
+  MoreScreen(this.refresh,this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -293,32 +296,31 @@ class MoreScreen extends StatelessWidget {
                     offset: Offset(0, 2))
               ],
             ),
-            child: Container(
+            child: Material(
               color: Colors.white,
-              child: Material(
-                color: Colors.red.withOpacity(0.8),
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 70,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.trending_down,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Expanded(
-                              child: Text(
-                            "End Day",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                        ],
-                      ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_){
+                   return ViewStock();
+                  }));
+                },
+                child: Container(
+                  height: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.trending_down,color: Colors.red,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                            child: Text(
+                          "View Stock",
+                        )),
+                      ],
                     ),
                   ),
                 ),
