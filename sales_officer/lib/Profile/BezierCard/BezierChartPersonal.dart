@@ -27,7 +27,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
     Future.delayed(Duration(milliseconds: 200), () {
       for (int i = 0; i < widget.sales.length; i++) {
         setState(() {
-          normalizedSales[i] += (widget.sales[i] / 1000000);
+          normalizedSales[i] += widget.sales[i];
         });
       }
     });

@@ -63,8 +63,8 @@ class _LogInScreenState extends State<LogInScreen> {
           distributorService.fetchDistributors().then((value) {
             allDistributorsLocal = value;
             setState(() {
-              loadingText = "Almost Done";
-              percentage = 90;
+                loadingText = "Loading Profile";
+              percentage = 30;
             });
             SOService soService = SOService();
             soService.fetchSOs().then((value) {
@@ -99,7 +99,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 }).toList();
                 setState(() {
                   loadingText = "Calculating Sales";
-                  percentage = 100;
+                  percentage = 40;
                 });
                 calculateWeeklySales(context);
                 calculateSales(setLoaded, context);
@@ -111,7 +111,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   allSKUDistributorWiseLocal = value;
                   setState(() {
                     loadingText = "Loading Billing Companies";
-                    percentage = 30;
+                    percentage = 50;
                   });
                 }).then((value) {
                   BillingCompanyService billingCompanyService =
@@ -122,14 +122,14 @@ class _LogInScreenState extends State<LogInScreen> {
                     allBillingCompanysLocal = value;
                     setState(() {
                       loadingText = "Loading Units";
-                      percentage = 40;
+                      percentage = 60;
                     });
                     UnitService unitService = UnitService();
                     unitService.fetchUnits().then((value) {
                       allUnitsLocal = value;
                       setState(() {
                         loadingText = "Loading Product Groups";
-                        percentage = 50;
+                        percentage = 70;
                       });
                       ProductGroupService productGroupService =
                           ProductGroupService();
@@ -137,14 +137,14 @@ class _LogInScreenState extends State<LogInScreen> {
                         allProductGroupsLocal = value;
                         setState(() {
                           loadingText = "Loading Districts";
-                          percentage = 60;
+                          percentage = 80;
                         });
                         DistrictService districtService = DistrictService();
                         districtService.fetchDistricts(context).then((value) {
                           allDistrictsLocal = value;
                           setState(() {
                             loadingText = "Loading Familiarities";
-                            percentage = 70;
+                            percentage = 90;
                           });
                           FamiliarityService familiarityService =
                               FamiliarityService();
@@ -154,7 +154,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             allFamiliaritysLocal = value;
                             setState(() {
                               loadingText = "Loading Distributors";
-                              percentage = 80;
+                              percentage = 100;
                             });
                           });
                         });

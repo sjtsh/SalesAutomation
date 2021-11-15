@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -6,8 +8,9 @@ import 'package:sales_officer/SignIn/SignIn.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import 'Database.dart';
+
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(Fusers());
@@ -27,11 +30,9 @@ class _FusersState extends State<Fusers> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData(fontFamily: "lato"),
-      routes: {
-      },
+      routes: {},
       title: 'Fusers',
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(

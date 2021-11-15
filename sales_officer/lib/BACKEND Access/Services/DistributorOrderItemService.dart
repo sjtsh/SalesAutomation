@@ -6,21 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 
+import '../../Database.dart';
+
 class DistributorOrderItemService {
-  final String url =
-      "https://asia-south1-hilifedb.cloudfunctions.net/getDistributorOrderItems";
-
-
   Future<List<DistributorOrderItem>> fetchDistributorOrderItems(context) async {
     int aStatusCode = 0;
-    List<DistributorOrderItem> distributorOrderItems= [];
-    while(aStatusCode != 200) {
+    List<DistributorOrderItem> distributorOrderItems = [];
+    while (aStatusCode != 200) {
       try {
-        final response = await http.get(Uri.parse(url));
+        final response = await http.post(
+          Uri.parse(
+              "https://asia-south1-hilifedb.cloudfunctions.net/getDistributorOrderItem"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{"SOID": meSOID.toString()}),
+        );
         if (response.statusCode == 200) {
           List<dynamic> values = jsonDecode(response.body);
           List<DistributorOrderItem> distributorOrderItems =
-          values.map((e) => DistributorOrderItem.fromJson(e)).toList();
+              values.map((e) => DistributorOrderItem.fromJson(e)).toList();
           return distributorOrderItems;
         } else {
           throw Exception("failed to load post");
@@ -30,11 +35,12 @@ class DistributorOrderItemService {
       } on TimeoutException {
         throw Exception("failed to load post");
       }
-    } return distributorOrderItems;
-
+    }
+    return distributorOrderItems;
   }
 
-  Future<bool> insertDistributorOrderItem(int distributorOrderID,
+  Future<bool> insertDistributorOrderItem(
+      int distributorOrderID,
       int SKUID,
       int primaryItemCount,
       int alternativeItemCount,
@@ -52,7 +58,7 @@ class DistributorOrderItemService {
           'primaryItemCount': primaryItemCount.toString(),
           'alternativeItemCount': alternativeItemCount.toString(),
           'secondaryAlternativeItemCount':
-          secondaryAlternativeItemCount.toString(),
+              secondaryAlternativeItemCount.toString(),
           'deactivated': false.toString(),
         },
       ),
@@ -64,7 +70,8 @@ class DistributorOrderItemService {
   }
 
   Future<bool> updateDistributorOrderItem(
-      DistributorOrderItem distributorOrderItem,) async {
+    DistributorOrderItem distributorOrderItem,
+  ) async {
     try {
       final res = await http.put(
         Uri.parse(
@@ -75,16 +82,16 @@ class DistributorOrderItemService {
         body: jsonEncode(
           <String, String>{
             'distributorOrderItemID':
-            distributorOrderItem.distributorOrderItemID.toString(),
+                distributorOrderItem.distributorOrderItemID.toString(),
             'distributorOrderID':
-            distributorOrderItem.distributorOrderID.toString(),
+                distributorOrderItem.distributorOrderID.toString(),
             'SKUID': distributorOrderItem.SKUID.toString(),
             'primaryItemCount':
-            distributorOrderItem.primaryItemCount.toString(),
+                distributorOrderItem.primaryItemCount.toString(),
             'alternativeItemCount':
-            distributorOrderItem.alternativeItemCount.toString(),
+                distributorOrderItem.alternativeItemCount.toString(),
             'secondaryAlternativeItemCount':
-            distributorOrderItem.secondaryAlternativeItemCount.toString(),
+                distributorOrderItem.secondaryAlternativeItemCount.toString(),
             'deactivated': distributorOrderItem.deactivated.toString()
           },
         ),
@@ -95,10 +102,8 @@ class DistributorOrderItemService {
       return false;
     } on SocketException {
       throw Exception("failed to load post");
-
     } on TimeoutException {
       throw Exception("failed to load post");
-
     }
   }
 }

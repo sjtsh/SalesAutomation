@@ -22,7 +22,9 @@ calculateWeeklySales(context) {
           .then((distributorOrderItem) {
         distributorOrderItem.forEach((aDistributorOrderItem) {
           distributorOrder
-              .where((aDistributorOrder) => aDistributorOrder.orderStatus && aDistributorOrder.SOID == meSOID)
+              .where((aDistributorOrder) =>
+                  aDistributorOrder.orderStatus &&
+                  aDistributorOrder.SOID == meSOID)
               .forEach((aDistributorOrder) {
             //FOR MTD
             if (aDistributorOrder.dateAndTime != "null") {
@@ -198,6 +200,9 @@ calculateWeeklySales(context) {
             }
           });
         });
+
+        print(weeklySalesLocal);
+        print(monthlySalesLocal);
       });
     });
   });

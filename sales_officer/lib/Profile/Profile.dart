@@ -5,7 +5,11 @@ import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
 import 'package:sales_officer/Profile/Header/Online.dart';
 import 'package:shimmer/shimmer.dart';
+import '../Database.dart';
 import 'BezierCard/BezierCard.dart';
+
+Stopwatch watch = Stopwatch();
+String elapsedTime = '';
 
 class Profile extends StatefulWidget {
   final Function refresh;
@@ -18,7 +22,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   double sliderValue = 0;
-  bool toggleValue = false;
   bool toggleDataValue = true;
 
   toggleButton() {
@@ -33,23 +36,12 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Stopwatch watch = Stopwatch();
   late Timer timer;
   bool startStop = true;
 
-  String elapsedTime = '';
-
-  updateTime(Timer timer) {
-    if (watch.isRunning) {
-      setState(() {
-        print("startstop Inside=$startStop");
-        elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
-      });
-    }
-  }
 
   startOrStop() {
-    if(startStop) {
+    if (startStop) {
       startWatch();
     } else {
       stopWatch();
@@ -60,7 +52,13 @@ class _ProfileState extends State<Profile> {
     setState(() {
       startStop = false;
       watch.start();
-      timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+      timer = Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
+        if (watch.isRunning) {
+          setState(() {
+            elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+          });
+        }
+      });
     });
   }
 
@@ -93,6 +91,22 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    if (toggleValue) {
+      startOrStop();
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
@@ -109,7 +123,8 @@ class _ProfileState extends State<Profile> {
         //   ),
         // ),
         Padding(
-          padding: const EdgeInsets.only(left: 12.0,bottom: 8,right: 12,top: 12),
+          padding:
+              const EdgeInsets.only(left: 12.0, bottom: 8, right: 12, top: 12),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 1000),
             height: 75,
@@ -192,7 +207,8 @@ class _ProfileState extends State<Profile> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    Text(elapsedTime,
+                                    Text(
+                                      elapsedTime,
                                       style: TextStyle(
                                           fontFamily: "lato",
                                           fontSize: 18,
@@ -247,7 +263,7 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                       Text(
-                                        "Retailing",
+                                        "Not Retailing",
                                         style: TextStyle(
                                             fontFamily: "lato",
                                             fontSize: 18,
@@ -256,41 +272,49 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    width: 1,
-                                    height: 60,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "TOTAL TIME",
-                                        style: TextStyle(
-                                          fontFamily: "lato",
-                                          fontSize: 12,
+                                  elapsedTime != ""
+                                      ? Expanded(child: Container())
+                                      : Container(),
+                                  elapsedTime != ""
+                                      ? Container(
+                                          margin: EdgeInsets.all(10),
+                                          width: 1,
+                                          height: 60,
                                           color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "2h:04m:10s",
-                                        style: TextStyle(
-                                            fontFamily: "lato",
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
+                                        )
+                                      : Container(),
+                                  elapsedTime != ""
+                                      ? Expanded(child: Container())
+                                      : Container(),
+                                  elapsedTime != ""
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "TOTAL TIME",
+                                              style: TextStyle(
+                                                fontFamily: "lato",
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Builder(builder: (context) {
+                                              return Text(
+                                                elapsedTime,
+                                                style: TextStyle(
+                                                    fontFamily: "lato",
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              );
+                                            }),
+                                          ],
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -303,10 +327,12 @@ class _ProfileState extends State<Profile> {
                       ? Alignment.centerRight
                       : Alignment.centerLeft,
                   child: GestureDetector(
-                    onTap: (){
-                      showDialog(context: context, builder: (_){
-                        return Header();
-                      });
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return Header();
+                          });
                     },
                     onHorizontalDragEnd: (a) {
                       toggleButton();
@@ -322,7 +348,9 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ),
-        BezierCard(toggleValue,),
+        BezierCard(
+          toggleValue,
+        ),
         Achievements(),
       ],
     );
