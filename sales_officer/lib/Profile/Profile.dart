@@ -322,7 +322,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ),
-        BezierCard(toggleValue,),
+        BezierCard(toggleValue,widget.refresh),
         Achievements(),
       ],
     );
