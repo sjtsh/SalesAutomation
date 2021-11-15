@@ -45,7 +45,8 @@ class ViewStock extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.black.withOpacity(0.1),
+                                            color:
+                                                Colors.black.withOpacity(0.1),
                                             offset: Offset(0, 2),
                                             blurRadius: 3)
                                       ],
@@ -59,40 +60,47 @@ class ViewStock extends StatelessWidget {
                                           children: allSubGroupsLocal
                                               .map(
                                                 (e) => Container(
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                    color: Colors.black.withOpacity(0.1),
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                    const EdgeInsets.only(right: 20, left: 20),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          allSubGroupsLocal
-                                                              .firstWhere((element) =>
-                                                          element.subGroupID == e)
-                                                              .subGroupName,
-                                                          style: TextStyle(
-                                                            fontWeight: FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ],
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      bottom: BorderSide(
+                                                        color: Colors.black
+                                                            .withOpacity(0.1),
+                                                        width: 1,
+                                                      ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 20,
+                                                                left: 20),
+                                                        child: Row(
+                                                          children: [
+                                                            Builder(builder:
+                                                                (context) {
+                                                              return Text(
+                                                                e.subGroupName,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              );
+                                                            }),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
                                               .toList(),
                                         ),
                                       ],
