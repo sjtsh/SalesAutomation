@@ -6,7 +6,7 @@ class PendingOrderSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+      padding: const EdgeInsets.all(12),
       child: Container(
         width: double.infinity,
         height: 150,

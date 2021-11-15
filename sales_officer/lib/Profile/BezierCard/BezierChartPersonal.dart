@@ -75,7 +75,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
             dotData: FlDotData(
               show: false,
             ),
-          )
+          ),
         ],
         titlesData: FlTitlesData(
           bottomTitles: SideTitles(
