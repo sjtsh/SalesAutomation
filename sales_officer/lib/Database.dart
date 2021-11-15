@@ -29,7 +29,6 @@ List<SODistributorConnection> allSODistributorConnectionsLocal = [];
 List<double> weeklySalesLocal = [];
 List<double> monthlySalesLocal = [];
 
-
 SO? meSO;
 int? meSOID;
 String meBeat = "";

@@ -106,7 +106,7 @@ class _StockIndividualConfirmationVariationState
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: Text(
+                          child:  Text(
                             allBillingCompanysLocal
                                 .firstWhere((element) =>
                                     skuDistributorWise.billingCompanyID ==

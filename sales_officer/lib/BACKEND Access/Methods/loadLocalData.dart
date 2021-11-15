@@ -22,10 +22,10 @@ void loadLocalData(Function refresh, Function close, context) {
   refresh();
   SubGroupService subGroupService = SubGroupService();
   subGroupService.fetchSubGroups(context).then((value) {
-    allSubGroupsLocal = value;
+    allSubGroupsLocal = value.where((element) => !element.deactivated).toList();
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
-      allSKULocal = value;
+      allSKULocal = value.where((element) => !element.deactivated).toList();
       allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
       SKUDistributorWiseService skuDistributorWiseService =
           SKUDistributorWiseService();
@@ -34,22 +34,22 @@ void loadLocalData(Function refresh, Function close, context) {
       }).then((value) {
         BillingCompanyService billingCompanyService = BillingCompanyService();
         billingCompanyService.fetchBillingCompanys(context).then((value) {
-          allBillingCompanysLocal = value;
+          allBillingCompanysLocal = value.where((element) => !element.deactivated).toList();
           UnitService unitService = UnitService();
           unitService.fetchUnits().then((value) {
             allUnitsLocal = value;
             ProductGroupService productGroupService = ProductGroupService();
             productGroupService.fetchProductGroups().then((value) {
-              allProductGroupsLocal = value;
+              allProductGroupsLocal = value.where((element) => !element.deactivated).toList();
               DistrictService districtService = DistrictService();
               districtService.fetchDistricts(context).then((value) {
-                allDistrictsLocal = value;
+                allDistrictsLocal = value.where((element) => !element.deactivated).toList();
                 FamiliarityService familiarityService = FamiliarityService();
                 familiarityService.fetchFamiliaritys(context).then((value) {
-                  allFamiliaritysLocal = value;
+                  allFamiliaritysLocal = value.where((element) => !element.deactivated).toList();
                   DistributorService distributorService = DistributorService();
                   distributorService.fetchDistributors().then((value) {
-                    allDistributorsLocal = value;
+                    allDistributorsLocal = value.where((element) => !element.deactivated).toList();
                     SOService soService = SOService();
                     soService.fetchSOs().then((value) {
                       try {
