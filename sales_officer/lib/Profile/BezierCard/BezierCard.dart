@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:sales_officer/Profile/BezierCard/BexierChartnData.dart';
 import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
 
 import '../../Database.dart';
@@ -70,15 +71,7 @@ class _BezierCardState extends State<BezierCard> {
                       height: 6,
                     ),
                     BezierHeading(e ? "MTD Sales" : "YTD Sales"),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      height: 100,
-                      child: BezierChartPersonal(
-                          e,
-                          e ? weeklySalesLocal : monthlySalesLocal,
-                          widget.toggleValue),
-                    ),
-                    BezierData(_expandableController, changeExpanded, e),
+                   BezierChartnData(e,_expandableController,changeExpanded,widget.toggleValue),
                   ],
                 ),
               ),
