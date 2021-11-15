@@ -45,7 +45,7 @@ class _LogInScreenState extends State<LogInScreen> {
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
       subGroupService.fetchSubGroups(context).then((value) {
-        allSubGroupsLocal = value;
+        allSubGroupsLocal = value.where((element) => !element.deactivated).toList();
 
         setState(() {
           loadingText = "Loading SKUs";
@@ -71,7 +71,7 @@ class _LogInScreenState extends State<LogInScreen> {
             BillingCompanyService billingCompanyService =
                 BillingCompanyService();
             billingCompanyService.fetchBillingCompanys(context).then((value) {
-              allBillingCompanysLocal = value;
+              allBillingCompanysLocal = value.where((element) => !element.deactivated).toList();
               setState(() {
                 loadingText = "Loading Units";
                 percentage = 40;
@@ -85,14 +85,14 @@ class _LogInScreenState extends State<LogInScreen> {
                 });
                 ProductGroupService productGroupService = ProductGroupService();
                 productGroupService.fetchProductGroups().then((value) {
-                  allProductGroupsLocal = value;
+                  allProductGroupsLocal = value..where((element) => !element.deactivated).toList();
                   setState(() {
                     loadingText = "Loading Districts";
                     percentage = 60;
                   });
                   DistrictService districtService = DistrictService();
                   districtService.fetchDistricts(context).then((value) {
-                    allDistrictsLocal = value;
+                    allDistrictsLocal = value..where((element) => !element.deactivated).toList();
                     setState(() {
                       loadingText = "Loading Familiarities";
                       percentage = 70;
@@ -100,7 +100,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     FamiliarityService familiarityService =
                         FamiliarityService();
                     familiarityService.fetchFamiliaritys(context).then((value) {
-                      allFamiliaritysLocal = value;
+                      allFamiliaritysLocal = value..where((element) => !element.deactivated).toList();
                       setState(() {
                         loadingText = "Loading Distributors";
                         percentage = 80;
@@ -108,7 +108,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       DistributorService distributorService =
                           DistributorService();
                       distributorService.fetchDistributors().then((value) {
-                        allDistributorsLocal = value;
+                        allDistributorsLocal = value..where((element) => !element.deactivated).toList();
                         setState(() {
                           loadingText = "Almost Done";
                           percentage = 90;
