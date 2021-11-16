@@ -97,7 +97,7 @@ class _StockIndividualConfirmationVariationState
                   SizedBox(
                     height: 6,
                   ),
-                  Row(
+                  Row (
                     children: [
                       Container(
                         decoration: BoxDecoration(

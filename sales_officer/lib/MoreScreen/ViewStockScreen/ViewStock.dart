@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
-import 'package:sales_officer/DistributorList/DistributorList.dart';
 
 import '../../Database.dart';
-import '../../DistributorInfo.dart';
 
 class ViewStock extends StatelessWidget {
   @override
@@ -97,6 +94,24 @@ class ViewStock extends StatelessWidget {
                                                           ],
                                                         ),
                                                       ),
+                                                      Column(
+                                                          children: allSKULocal.where((element) => element.subGroupID == e.subGroupID)
+                                                              .map(
+                                                                (f) => Container(
+                                                                    width: MediaQuery.of(context).size.width / 2,
+                                                                    child: Text(
+                                                                      f.SKUName,
+                                                                      maxLines:
+                                                                          3,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .black
+                                                                            .withOpacity(0.5),
+                                                                      ),
+                                                                    )),
+                                                              )
+                                                              .toList()),
                                                     ],
                                                   ),
                                                 ),
@@ -170,7 +185,7 @@ class ViewStock extends StatelessWidget {
                                         Expanded(child: Container()),
                                       ],
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ],
