@@ -371,10 +371,10 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
               0) {
         SKU sku = allSKULocal.firstWhere((element) =>
             element.SKUID ==
-                allSKULocal[widget._textEditingControllers
-                            .indexOf(aTextEditingController) ~/
-                        2]
-                    .SKUID);
+            allSKULocal[widget._textEditingControllers
+                        .indexOf(aTextEditingController) ~/
+                    2]
+                .SKUID);
         setState(() {
           totalAmount += aTextEditingController.text == ""
               ? 0
@@ -394,8 +394,8 @@ class _StockConfirmationRecieptState extends State<StockConfirmationReciept> {
                               .indexOf(aTextEditingController) +
                           1]
                       .text) *
-              sku.alternativeCF *
-              sku.MRP;
+                  sku.alternativeCF *
+                  sku.MRP;
         });
       }
     });
