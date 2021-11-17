@@ -73,9 +73,8 @@ calculateSales(setLoaded, context) {
                     });
                   }
                 } else if (int.parse(
-                            aDistributorOrder.dateAndTime.substring(5, 7)) -
-                        1 ==
-                    int.parse(time.substring(5, 7))) {
+                            aDistributorOrder.dateAndTime.substring(5, 7)) ==
+                    int.parse(time.substring(5, 7))-1) {
                   if (int.parse(
                           aDistributorOrder.dateAndTime.substring(8, 10)) >
                       int.parse(time.substring(8, 10))) {
@@ -165,9 +164,8 @@ calculateSales(setLoaded, context) {
                   });
                 }
               } else if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(0, 4)) -
-                      1 ==
-                  int.parse(time.substring(0, 4))) {
+                          aDistributorOrder.dateAndTime.substring(0, 4)) ==
+                  int.parse(time.substring(0, 4))-1) {
                 if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
                     int.parse(time.substring(5, 7))) {
                   distributorOrderItem
