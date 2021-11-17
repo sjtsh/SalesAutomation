@@ -37,7 +37,7 @@ class _BezierDataState extends State<BezierData> {
         children: [
           Builder(builder: (context) {
             if (widget.isMTD) {
-              if (listOfProducts.length > 4) {
+              if (listOfProducts.where((element) => !(element[1][0] == 0)).length > 4) {
                 return Column(
                   children: listOfProducts
                       .where((element) => !(element[1][0] == 0))
@@ -59,7 +59,7 @@ class _BezierDataState extends State<BezierData> {
               }
             } else {
               listOfProducts.sort((a, b) => b[1][0].compareTo(a[1][0]));
-              if (listOfProducts.length > 4) {
+              if (listOfProducts.where((element) => !(element[1][1] == 0)).length > 4) {
                 return Column(
                   children: listOfProducts
                       .where((element) => !(element[1][1] == 0))
