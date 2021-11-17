@@ -31,12 +31,13 @@ List<double> monthlySalesLocal = [];
 
 SO? meSO;
 int? meSOID;
+int? soLogInDetailID;
+bool isRetailing = false;
 String meBeat = "";
 
 bool? isJoint;
 Map products = {};
 
-bool toggleValue = false;
 
 final List<int> dates = [31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30];
 final int startDate1 = 3;

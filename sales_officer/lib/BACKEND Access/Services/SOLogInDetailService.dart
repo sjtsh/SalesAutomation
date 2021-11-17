@@ -41,13 +41,13 @@ class SOLogInDetailService {
     throw Exception("Something Went Wrong");
   }
 
-  Future<void> logIn() async {
-    Geolocator.getCurrentPosition().then((location) {
+
+  Future<int> logIn() async {
+    Future<int> soLogInDetailsID =  Geolocator.getCurrentPosition().then((location) {
       NepaliDateService nepaliDateService = NepaliDateService();
-      nepaliDateService.fetchNepaliDate().then((date) {
-        http.post(
-          Uri.parse(
-              "https://asia-south1-hilifedb.cloudfunctions.net/insertSOLogInDetail"),
+      Future<int> soLogInDetailsID = nepaliDateService.fetchNepaliDate().then((date) async {
+        final response = await http.post(
+          Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/insertSOLogInDetail"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -59,8 +59,16 @@ class SOLogInDetailService {
             'logInLng': location.longitude.toString(),
           }),
         );
+        if (response.statusCode == 200) {
+          List<dynamic> aList = jsonDecode(response.body);
+          return aList[0]["0"];
+        } else {
+          return -1;
+        }
       });
+      return soLogInDetailsID;
     });
+    return soLogInDetailsID;
   }
 
   Future<void> updateSOLogInDetail(
