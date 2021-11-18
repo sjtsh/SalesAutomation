@@ -27,12 +27,16 @@ class SeeAllSalesScreen extends StatelessWidget {
                     margin: EdgeInsets.symmetric(
                         vertical: 8, horizontal: 16),
                     height: 150,
-                    child: BezierChartPersonal(
-                        isMTD,
-                        isMTD
-                            ? weeklySalesLocal
-                            : monthlySalesLocal,
-                        toggleValue),
+                    child: Hero(
+                      tag: "sajat",
+
+                      child: BezierChartPersonal(
+                          isMTD,
+                          isMTD
+                              ? weeklySalesLocal
+                              : monthlySalesLocal,
+                          toggleValue),
+                    ),
                   ),
                   Builder(builder: (context) {
                     if (isMTD) {
