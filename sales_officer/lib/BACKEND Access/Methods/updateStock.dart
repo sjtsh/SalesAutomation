@@ -37,6 +37,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
                     .SKUID ==
                 element.SKUID);
       }catch (e){
+        print("No sku stock ");
 
       }
 
