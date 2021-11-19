@@ -32,9 +32,15 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DistributorSale distributorSales = allDistributorSalesLocal.firstWhere(
-        (element) =>
-            element.distributor.distributorID == distributor.distributorID);
+    DistributorSale distributorSales = DistributorSale(distributor, 1, 1, 1, "");
+    try{
+       distributorSales = allDistributorSalesLocal.firstWhere(
+          (element) =>
+              element.distributor.distributorID == distributor.distributorID);
+    }catch(e){
+      print("no distributor sales");
+
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12.0),

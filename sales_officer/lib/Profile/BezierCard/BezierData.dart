@@ -33,6 +33,7 @@ class _BezierDataState extends State<BezierData> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
         children: [
           Builder(builder: (context) {
@@ -83,6 +84,7 @@ class _BezierDataState extends State<BezierData> {
           }),
           InkWell(
             onTap: () {
+
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return SeeAllSalesScreen(widget.isMTD,widget.refresh,widget.toggleValue,listOfProducts);
               }));

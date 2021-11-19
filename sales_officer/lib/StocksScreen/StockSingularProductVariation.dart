@@ -39,13 +39,24 @@ class _StockSingularProductVariationState
 
   @override
   Widget build(BuildContext context) {
-    SKUDistributorWise skuDistributorWise =
-        allSKUDistributorWiseLocal.firstWhere((element) =>
-            element.distributorID == widget.currentDistributor.distributorID &&
-            element.SKUID == widget.item.SKUID);
-    SKU sku =
-    allSKULocal.firstWhere((element) =>
-        element.SKUID == widget.item.SKUID);
+    SKUDistributorWise skuDistributorWise =SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+    try{
+       skuDistributorWise =
+          allSKUDistributorWiseLocal.firstWhere((element) =>
+              element.distributorID ==
+                  widget.currentDistributor.distributorID &&
+              element.SKUID == widget.item.SKUID);
+    }catch(e){
+      print("");
+
+    }
+    SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "img", false);
+    try{
+       sku = allSKULocal
+          .firstWhere((element) => element.SKUID == widget.item.SKUID);
+    }catch(e){
+
+    }
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(

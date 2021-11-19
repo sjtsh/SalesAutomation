@@ -48,12 +48,15 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                                 offset: Offset(0, 2))
                           ],
                         ),
-                        child: BezierChartPersonal(
-                            e == widget.isMTD,
-                            e == widget.isMTD
-                                ? weeklySalesLocal
-                                : monthlySalesLocal,
-                            widget.toggleValue),
+                        child: Hero(
+                          tag: "sajat",
+                          child: BezierChartPersonal(
+                              e == widget.isMTD,
+                              e == widget.isMTD
+                                  ? weeklySalesLocal
+                                  : monthlySalesLocal,
+                              widget.toggleValue),
+                        ),
                       ),
                       Expanded(
                         child: ListView(

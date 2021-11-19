@@ -53,13 +53,15 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                     (element) => element.subGroupID == widget.item.subGroupID)
                 .map((item) {
               SKUStock mySKUStock;
+            //  mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
               try {
                 mySKUStock = allSKUStocksLocal.firstWhere((element) =>
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
               } catch (e) {
-                mySKUStock = SKUStock(0, 0, 0, 0, 0, 0, "", 0, 0, false);
+                print("here");
+                return Text("NO STOCKS AVAILABLE");
               }
               return StockSingularProductVariation(
                 item,

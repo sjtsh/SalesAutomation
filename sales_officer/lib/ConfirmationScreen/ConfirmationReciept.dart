@@ -51,12 +51,16 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
         skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((aSKU) =>
             aSKU.distributorID == widget.currentDistributor.distributorID &&
             aSKU.SKUID == element[0].SKUID);
-      } catch (e) {}
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(" No sku distribtorwise")));
+      }
       List aBillingAmount = [];
       try {
         aBillingAmount = billingAmounts.firstWhere(
             (element) => element[0] == skuDistributorWise.billingCompanyID);
-      } catch (e) {}
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(" No Billing Amount")));
+      }
       if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
         isWarning = true;
         if (!tempBillingAmounts.contains(aBillingAmount)) {
@@ -612,7 +616,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                     .SKUID;
           });
         } catch (e) {
-          throw Exception("Something Went Wrong");
+          throw Exception("No sku in  confirmReciept, get total value");
         }
         setState(() {
           try{
