@@ -38,7 +38,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
     return LineChart(
       LineChartData(
         showingTooltipIndicators: [],
-        lineTouchData: LineTouchData(enabled: true),
+        lineTouchData: LineTouchData(enabled: false),
         lineBarsData: [
           LineChartBarData(
             showingIndicators: [],
@@ -82,7 +82,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
             showTitles: false,
           ),
           leftTitles: SideTitles(
-              showTitles: true,
+              showTitles: false,
               interval:
                   (normalizedSales.reduce(max) - normalizedSales.reduce(min)) /
                               normalizedSales.length ==

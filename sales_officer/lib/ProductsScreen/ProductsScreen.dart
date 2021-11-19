@@ -190,7 +190,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         builder: (BuildContext context,
                                             AsyncSnapshot<List<SKUStock>>
                                                 snapshot) {
-                                          allSKUStocksLocal = snapshot.data;
+                                          allSKUStocksLocal = snapshot.data!;
                                           return ProductList(
                                             allSubGroupsLocal,
                                             widget._scrollController,

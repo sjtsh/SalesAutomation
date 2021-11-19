@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sales_officer/MoreScreen/GoogleMap.dart';
 import 'BACKEND Access/Entities/Distributor.dart';
 import 'BACKEND Access/Entities/DistributorOrder.dart';
 import 'BACKEND Access/Methods/method.dart';
@@ -17,8 +19,6 @@ class DistributorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
@@ -44,8 +44,18 @@ class DistributorInfo extends StatelessWidget {
                               return ProductsScreen(
                                 currentDistributor,
                                 2,
-                                DistributorOrder(-1, -1, -1, true, false, "",
-                                    "", "", 0, 0, false),
+                                DistributorOrder(
+                                    -1,
+                                    -1,
+                                    -1,
+                                    true,
+                                    false,
+                                    "",
+                                    "",
+                                    "",
+                                    0,
+                                    0,
+                                    false),
                                 true,
                                 refresh,
                               );
@@ -100,8 +110,18 @@ class DistributorInfo extends StatelessWidget {
                               return StocksScreen(
                                 currentDistributor,
                                 1,
-                                DistributorOrder(-1, -1, -1, true, false, "",
-                                    "", "", 0, 0, false),
+                                DistributorOrder(
+                                    -1,
+                                    -1,
+                                    -1,
+                                    true,
+                                    false,
+                                    "",
+                                    "",
+                                    "",
+                                    0,
+                                    0,
+                                    false),
                                 refresh,
                               );
                             },
@@ -229,7 +249,10 @@ class DistributorInfo extends StatelessWidget {
                         ],
                         ["PAN Number: ", currentDistributor.PAN.toString()],
                         ["Address: ", currentDistributor.location],
-                        ["Town ID: ", currentDistributor.townID.toInt().toString()],
+                        [
+                          "Town ID: ",
+                          currentDistributor.townID.toInt().toString()
+                        ],
                         [
                           "Bank Account Name: ",
                           currentDistributor.bankAccountName
@@ -240,44 +263,72 @@ class DistributorInfo extends StatelessWidget {
                         ],
                         ["Bank Address: ", currentDistributor.bankAddress],
                         ["VAT Number: ", currentDistributor.VAT.toString()],
-                        [
-                          "Geo: ",
-                          currentDistributor.lat.toString() +
-                              ", " +
-                              currentDistributor.lng.toString()
-                        ],
+                        // [
+                        //   "Geo: ",
+                        //   currentDistributor.lat.toString() +
+                        //       ", " +
+                        //       currentDistributor.lng.toString()
+                        // ],
                       ]
-                          .map((e) => e[1] == "null" || e[1] == "-1" || e[1] == "-2000.0, -2000.0"
-                              ? Container()
-                              : Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0),
-                                      child: Row(
-                                        children: [
-                                          Text(e[0]),
-                                          Expanded(child: Container()),
-                                          Text(
-                                            e[1],
-                                            style: TextStyle(
-                                                color: Colors.black
-                                                    .withOpacity(0.7)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0),
-                                      child: Divider(
-                                        thickness: 1,
-                                        color: Colors.black.withOpacity(0.1),
-                                      ),
-                                    ),
-                                  ],
-                                ))
+                          .map((e) =>
+                      e[1] == "null" ||
+                          e[1] == "-1" ||
+                          e[1] == "-2000.0, -2000.0"
+                          ? Container()
+                          : Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0),
+                            child: Row(
+                              children: [
+                                Text(e[0]),
+                                Expanded(child: Container()),
+                                Text(
+                                  e[1],
+                                  style: TextStyle(
+                                      color: Colors.black
+                                          .withOpacity(0.7)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5.0),
+                            child: Divider(
+                              thickness: 1,
+                              color: Colors.black.withOpacity(0.1),
+                            ),
+                          ),
+                        ],
+                      ))
                           .toList(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Row(
+                        children: [
+                          Text("Geo: "),
+                          Expanded(child: Container()),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (_){
+                                    return GoogleMapPersonal(currentDistributor);
+                              }));
+                            },
+                            child: Icon(Icons.location_on_outlined,color: Colors.red,),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Divider(
+                        thickness: 1,
+                        color: Colors.black.withOpacity(0.1),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -288,7 +339,7 @@ class DistributorInfo extends StatelessWidget {
                           Text(
                             "Dhumbarahi Beat 1",
                             style:
-                                TextStyle(color: Colors.black.withOpacity(0.7)),
+                            TextStyle(color: Colors.black.withOpacity(0.7)),
                           ),
                         ],
                       ),
@@ -306,7 +357,8 @@ class DistributorInfo extends StatelessWidget {
                         "Beat6"
                       ]
                           .map(
-                            (e) => Padding(
+                            (e) =>
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -324,42 +376,42 @@ class DistributorInfo extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          )
+                      )
                           .toList(),
                     ),
-                    Container(
-                      clipBehavior: Clip.hardEdge,
-                      margin: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Material(
-                        color: Colors.white,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: 50,
-                            color: Color(0xffF5F5F5),
-                            child: Builder(builder: (context) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add,
-                                    color: Colors.black,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    "MORE FIELDS",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ],
-                              );
-                            }),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   clipBehavior: Clip.hardEdge,
+                    //   margin: EdgeInsets.all(12),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(12),
+                    //   ),
+                    //   child: Material(
+                    //     color: Colors.white,
+                    //     child: InkWell(
+                    //       onTap: () {},
+                    //       child: Container(
+                    //         height: 50,
+                    //         color: Color(0xffF5F5F5),
+                    //         child: Builder(builder: (context) {
+                    //           return Row(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: [
+                    //               Icon(
+                    //                 Icons.add,
+                    //                 color: Colors.black,
+                    //                 size: 25,
+                    //               ),
+                    //               Text(
+                    //                 "MORE FIELDS",
+                    //                 style: TextStyle(color: Colors.black),
+                    //               ),
+                    //             ],
+                    //           );
+                    //         }),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 74,
                     ),

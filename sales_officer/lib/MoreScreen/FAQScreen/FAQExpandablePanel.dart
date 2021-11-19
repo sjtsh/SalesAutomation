@@ -3,14 +3,40 @@ import 'package:flutter/material.dart';
 
 import 'FAQExpandablePanel2.dart';
 
-class FAQExpandablePanel extends StatelessWidget {
+class FAQExpandablePanel extends StatefulWidget {
   final String e;
-  final ExpandableController _expandableControllerMain = ExpandableController();
+  final Function expand;
+  final String currentExpanded;
 
-  FAQExpandablePanel(this.e);
+
+  FAQExpandablePanel(this.e, this.expand, this.currentExpanded);
+
+  @override
+  _FAQExpandablePanelState createState() => _FAQExpandablePanelState();
+}
+
+class _FAQExpandablePanelState extends State<FAQExpandablePanel> {
+  String currentlyExpanded = "";
+
+  expanded(String currentlyExpanded) {
+    setState(() {
+      if(this.currentlyExpanded == currentlyExpanded){
+        this.currentlyExpanded = "";
+      }
+      else{
+        this.currentlyExpanded = currentlyExpanded;
+      }
+    });
+  }
+  final ExpandableController _expandableControllerMain = ExpandableController();
 
   @override
   Widget build(BuildContext context) {
+    if (widget.currentExpanded == widget.e) {
+      _expandableControllerMain.expanded = true;
+    } else {
+      _expandableControllerMain.expanded = false;
+    }
     return ExpandablePanel(
       controller: _expandableControllerMain,
       collapsed: Padding(
@@ -30,6 +56,7 @@ class FAQExpandablePanel extends StatelessWidget {
             color: Colors.white,
             child: InkWell(
               onTap: () {
+                widget.expand(widget.e);
                 _expandableControllerMain.expanded =
                     !_expandableControllerMain.expanded;
               },
@@ -38,7 +65,7 @@ class FAQExpandablePanel extends StatelessWidget {
                 padding: EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    Expanded(child: Text(e)),
+                    Expanded(child: Text(widget.e)),
                     Icon(Icons.keyboard_arrow_down_sharp)
                   ],
                 ),
@@ -64,6 +91,7 @@ class FAQExpandablePanel extends StatelessWidget {
             color: Colors.white,
             child: InkWell(
               onTap: () {
+                widget.expand(widget.e);
                 _expandableControllerMain.expanded =
                     !_expandableControllerMain.expanded;
               },
@@ -77,7 +105,7 @@ class FAQExpandablePanel extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Expanded(child: Text(e)),
+                            Expanded(child: Text(widget.e)),
                             Icon(Icons.keyboard_arrow_up)
                           ],
                         ),
@@ -89,7 +117,7 @@ class FAQExpandablePanel extends StatelessWidget {
                             "Why is my app glitching?"
                           ]
                               .map(
-                                (e) => FAQExpandablePanel2(e),
+                                (e) => FAQExpandablePanel2(e,expanded,currentlyExpanded),
                           )
                               .toList(),
                         ),

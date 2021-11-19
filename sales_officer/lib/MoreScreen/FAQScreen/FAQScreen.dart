@@ -4,11 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:sales_officer/Header.dart';
 import 'package:sales_officer/MoreScreen/FAQScreen/FAQExpandablePanel.dart';
 
-class FAQScreen extends StatelessWidget {
+class FAQScreen extends StatefulWidget {
 
   final Function refresh;
 
   FAQScreen(this.refresh);
+
+  @override
+  _FAQScreenState createState() => _FAQScreenState();
+}
+
+class _FAQScreenState extends State<FAQScreen> {
+  String currentExpanded = "";
+
+  expand(String currentExpanded) {
+    setState(() {
+      if(this.currentExpanded == currentExpanded){
+        this.currentExpanded = "";
+      }
+      else{
+        this.currentExpanded = currentExpanded;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +34,7 @@ class FAQScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Header(10, false, refresh),
+            Header(10, false, widget.refresh),
             Expanded(
               child: ListView(
                 children: [
@@ -37,7 +55,7 @@ class FAQScreen extends StatelessWidget {
                       "Salary Related Questions",
                     ]
                         .map(
-                          (e) => FAQExpandablePanel(e ),
+                          (e) => FAQExpandablePanel(e,expand,currentExpanded),
                         )
                         .toList(),
                   ),

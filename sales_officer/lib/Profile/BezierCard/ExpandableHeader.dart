@@ -38,10 +38,9 @@ class _ExpandableHeaderState extends State<ExpandableHeader> {
             ),
           ),
         ),
-        child: Container(
+        child: Container( padding: const EdgeInsets.only(
+            left: 12, right: 12),
           height: 40,
-          padding:
-              const EdgeInsets.only(top: 16.0, right: 8, left: 8, bottom: 2),
           child: Row(
             children: [
               Text((widget.listOfProducts.indexOf(widget.item) + 1).toString() +

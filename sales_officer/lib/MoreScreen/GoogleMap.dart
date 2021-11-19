@@ -1,23 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 
 import '../Header.dart';
 
 class GoogleMapPersonal extends StatefulWidget {
+  final Distributor currentDistributor;
+
+  GoogleMapPersonal(this.currentDistributor);
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<GoogleMapPersonal> {
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(27.735553, 85.343021),
-    zoom: 20,
-    tilt: 50.0,
-  );
-
   refresh() {
     setState(() {});
   }
@@ -55,31 +53,11 @@ class _MapScreenState extends State<GoogleMapPersonal> {
       _googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-              target: LatLng(l.latitude as double, l.longitude as double),
+              target: LatLng(
+                  widget.currentDistributor.lat, widget.currentDistributor.lng),
               zoom: 15),
         ),
       );
-      if (_origin == null) {
-        setState(() {
-          _origin = Marker(
-            markerId: const MarkerId("origin"),
-            infoWindow: const InfoWindow(title: "Origin"),
-            icon:
-                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-            position: LatLng(l.latitude as double, l.longitude as double),
-          );
-          for (int i = 0; i < _locations.length; i++) {
-
-            _restaurants.add(Marker(
-              markerId: MarkerId(_locationsName[i]),
-              infoWindow: InfoWindow(title: "Appetit $i: " + _locationsName[i]),
-              icon: BitmapDescriptor.defaultMarkerWithHue(
-                  BitmapDescriptor.hueBlue),
-              position: _locations[i],
-            ));
-          }
-        });
-      }
     });
   }
 
@@ -90,20 +68,29 @@ class _MapScreenState extends State<GoogleMapPersonal> {
         children: [
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(27.735553, 85.343021),
+              target: LatLng(
+                  widget.currentDistributor.lat, widget.currentDistributor.lng),
               zoom: 20,
               tilt: 50.0,
             ),
-            // myLocationButtonEnabled: true,
+            myLocationButtonEnabled: true,
 
-            // zoomControlsEnabled: false,
-            // zoomGesturesEnabled: true,
+            zoomControlsEnabled: false,
+            zoomGesturesEnabled: true,
             // initialCameraPosition: _initialCameraPosition,
             onMapCreated: _onMapCreated,
-            // markers: {
-            //   if (_origin != null) _origin,
-            //   ..._restaurants,
-            // },
+            markers: {
+              Marker(
+                markerId:
+                MarkerId(widget.currentDistributor.distributorID.toString()),
+                infoWindow: InfoWindow(
+                    title: "${widget.currentDistributor.distributorName}: " +
+                        widget.currentDistributor.ownerName),
+                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                position: LatLng(
+                    widget.currentDistributor.lat, widget.currentDistributor.lng),
+              )
+            },
 
             // onLongPress: _addMarker,
             // myLocationEnabled: true,

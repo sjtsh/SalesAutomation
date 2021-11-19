@@ -28,7 +28,7 @@ class _SettingsState extends State<Settings> {
                 children: [
                   Container(
                     height: 100,
-                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    margin: EdgeInsets.only(top: 12, right: 12,left: 12),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -78,33 +78,36 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 12),
-                        Container(
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Material(
-                            color: Colors.white,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  isEditing = true;
-                                });
-                              },
-                              child: isEditing
-                                  ? Container()
-                                  : Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 30,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12),
+                        // SizedBox(width: 12),
+                        // Container(
+                        //   clipBehavior: Clip.hardEdge,
+                        //   decoration: BoxDecoration(
+                        //     shape: BoxShape.circle,
+                        //   ),
+                        //   child: Material(
+                        //     color: Colors.white,
+                        //     child: InkWell(
+                        //       onTap: (){
+                        //
+                        //       },
+                        //       // onTap: () {
+                        //       //   setState(() {
+                        //       //     isEditing = true;
+                        //       //   });
+                        //       // },
+                        //       child: isEditing
+                        //           ? Container()
+                        //           : Padding(
+                        //               padding: const EdgeInsets.all(8.0),
+                        //               child: Icon(
+                        //                 Icons.edit,
+                        //                 size: 30,
+                        //               ),
+                        //             ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(width: 12),
                       ],
                     ),
                   ),
@@ -170,7 +173,7 @@ class _SettingsState extends State<Settings> {
                               ? EditSettings(e.value)
                               : Container(
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 6),
+                                      horizontal: 12, vertical: 12),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),

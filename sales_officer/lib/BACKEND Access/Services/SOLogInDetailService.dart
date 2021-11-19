@@ -5,14 +5,9 @@ import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
-import 'package:sales_officer/BACKEND%20Access/Entities/SOLogInDetail.dart';
-import 'package:sales_officer/BACKEND%20Access/Entities/SOLogInDetail.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SOLogInDetail.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/Database.dart';
-
-import '../Entities/SO.dart';
 
 class SOLogInDetailService {
   final String url =

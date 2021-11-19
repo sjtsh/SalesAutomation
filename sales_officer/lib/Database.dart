@@ -19,7 +19,7 @@ List<DistributorSale> allDistributorSalesLocal = [];
 List<SubGroup> allSubGroupsLocal = [];
 List<SKU> allSKULocal = [];
 List<SKUDistributorWise> allSKUDistributorWiseLocal = [];
-List<SKUStock>? allSKUStocksLocal;
+List<SKUStock> allSKUStocksLocal = [];
 List<BillingCompany> allBillingCompanysLocal = [];
 List<Familiarity> allFamiliaritysLocal = [];
 List<Unit> allUnitsLocal = [];

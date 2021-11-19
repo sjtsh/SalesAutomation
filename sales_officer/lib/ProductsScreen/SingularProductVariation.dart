@@ -31,7 +31,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
     SKU sku =
     allSKULocal.firstWhere((element) => element.SKUID == widget.item.SKUID);
     try {
-      mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
+      mySKUStock = allSKUStocksLocal.firstWhere((element) =>
           element.distributorID == widget.currentDistributor.distributorID &&
           element.SKUID == widget.item.SKUID);
     } catch (e) {

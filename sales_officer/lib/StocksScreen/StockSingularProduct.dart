@@ -54,7 +54,7 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                 .map((item) {
               SKUStock mySKUStock;
               try {
-                mySKUStock = allSKUStocksLocal!.firstWhere((element) =>
+                mySKUStock = allSKUStocksLocal.firstWhere((element) =>
                     element.distributorID ==
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);

@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 
 class FAQExpandablePanel2 extends StatelessWidget {
   final String e;
+  final Function expanded;
+  final String currentlyExpanded;
   final ExpandableController _expandableControllerBase = ExpandableController();
 
-  FAQExpandablePanel2(this.e);
+  FAQExpandablePanel2(this.e, this.expanded, this.currentlyExpanded);
   @override
   Widget build(BuildContext context) {
+    if (currentlyExpanded == e) {
+      _expandableControllerBase.expanded = true;
+    } else {
+      _expandableControllerBase.expanded = false;
+    }
     return ExpandablePanel(
       controller: _expandableControllerBase,
       collapsed: Padding(
@@ -21,6 +28,7 @@ class FAQExpandablePanel2 extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () {
+              expanded(e);
               _expandableControllerBase.expanded =
                   !_expandableControllerBase.expanded;
             },
@@ -48,6 +56,7 @@ class FAQExpandablePanel2 extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () {
+              expanded(e);
               _expandableControllerBase.expanded =
                   !_expandableControllerBase.expanded;
             },

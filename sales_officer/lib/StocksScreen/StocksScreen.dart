@@ -249,7 +249,7 @@ class _StocksScreenState extends State<StocksScreen> {
       setState(() {
         allSKUStocksLocal = value;
       });
-      ourSKUStock = allSKUStocksLocal!
+      ourSKUStock = allSKUStocksLocal
           .where((element) =>
               element.distributorID == widget.currentDistributor.distributorID)
           .toList();

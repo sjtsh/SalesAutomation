@@ -43,6 +43,7 @@ class _BezierCardState extends State<BezierCard> {
                           .length -
                       4),
       child: PageView(
+        pageSnapping: true,
         onPageChanged: (int i) {
           pageNumber = i;
           Future.delayed(Duration(milliseconds: 500), () {
