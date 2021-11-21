@@ -27,6 +27,7 @@ dependencies:
   super_tooltip: ^1.0.1
   google_maps_flutter:
   location:
+  timelines: ^0.1.0
 #  slider_button:
 #  sliding_switch: ^1.0.0
 #  syncfusion_flutter_sliders: 19.3.48
