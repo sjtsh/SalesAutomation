@@ -107,8 +107,6 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           show: false,
         ),
       ),
-      swapAnimationDuration: Duration(milliseconds: 200), // Optional
-      swapAnimationCurve: Curves.easeInOut,
     );
   }
 }

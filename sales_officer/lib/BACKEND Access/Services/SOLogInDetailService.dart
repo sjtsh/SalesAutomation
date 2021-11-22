@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:geolocator/geolocator.dart';
@@ -49,7 +48,7 @@ class SOLogInDetailService {
           body: jsonEncode(<String, String>{
             'SOID': meSOID.toString(),
             'date': date.substring(0, 10),
-            'logInTime': date.substring(12, 20),
+            'logInTime': date.substring(12, 19),
             'logInLat': location.latitude.toString(),
             'logInLng': location.longitude.toString(),
           }),
@@ -74,14 +73,14 @@ class SOLogInDetailService {
       nepaliDateService.fetchNepaliDate().then((date) async {
         http.put(
           Uri.parse(
-              "https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrder"),
+              "https://asia-south1-hilifedb.cloudfunctions.net/updateSOLogInDetail"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(
             <String, String>{
               'SOLogInDetailID': SOLogInDetailID.toString(),
-              'logOutTime': date.substring(12, 20),
+              'logOutTime': date.substring(12, 19),
               'logOutLat': location.latitude.toString(),
               'logOutLng': location.longitude.toString(),
             },

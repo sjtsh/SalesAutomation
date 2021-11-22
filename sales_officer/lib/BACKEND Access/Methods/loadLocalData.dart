@@ -25,7 +25,7 @@ void loadLocalData(Function refresh, Function close, context) {
     allSubGroupsLocal = value.where((element) => !element.deactivated).toList();
     SKUService skuService = SKUService();
     skuService.fetchSKUs().then((value) {
-      allSKULocal = value.where((element) => !element.deactivated).toList();
+      allSKULocal = value;
       allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
       SKUDistributorWiseService skuDistributorWiseService =
           SKUDistributorWiseService();
