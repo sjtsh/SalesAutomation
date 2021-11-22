@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
         //   ),
         // ),
         SliderPersonal(refreshChart),
-        BezierCard(isRetailing, widget.refresh),
+        BezierCard(isRetailing!, widget.refresh),
         Achievements(),
       ],
     );

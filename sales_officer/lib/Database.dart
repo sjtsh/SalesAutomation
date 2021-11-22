@@ -32,7 +32,7 @@ List<double> monthlySalesLocal = [];
 SO? meSO;
 int? meSOID;
 int? soLogInDetailID;
-bool isRetailing = false;
+bool? isRetailing;
 String meBeat = "";
 
 bool? isJoint;

@@ -46,16 +46,11 @@ calculateWeeklySales(context) {
                                 aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              1, "", false);
+                              -2000, "", false);
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                "NO SKU FOUND, Please contact IT,",
-                              ),
-                            ));
                           }
                           if (sku.MRP != "-2000.0") {
                             weeklySalesLocal[3-n] += sku.MRP *
@@ -92,16 +87,11 @@ calculateWeeklySales(context) {
                                 aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              1, "", false);
+                              -2000, "", false);
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
                           } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                "NO SKU FOUND, Please contact IT,",
-                              ),
-                            ));
                           }
                           if (sku.MRP != "-2000.0") {
                             weeklySalesLocal[3-n] += sku.MRP *
@@ -134,15 +124,12 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1,
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
                             "", false);
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text("NO SKU FOUND, PLEASE CONTACT IT")));
                         }
                         if (sku.MRP != "-2000.0") {
                           monthlySalesLocal[11-n] += sku.MRP *
@@ -172,15 +159,12 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1,
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
                             "", false);
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text("NO SKU FOUND, PLEASE CONTACT IT")));
                         }
                         if (sku.MRP != "-2000.0") {
                           monthlySalesLocal[11-n] += sku.MRP *
