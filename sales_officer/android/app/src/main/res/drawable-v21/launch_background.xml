@@ -9,7 +9,6 @@
             android:gravity="center"
             android:src="@mipmap/launch_image" />
     </item> -->
-<<<<<<< HEAD
     <item
         android:left="500dp"
         android:right="500dp" >
@@ -17,6 +16,4 @@
             android:gravity="center|fill_horizontal"
             android:src="@mipmap/launch_image" />
     </item>
-=======
->>>>>>> 50fd19b3c7df9b88428ec300d48e9f0f1a61b798
 </layer-list>
