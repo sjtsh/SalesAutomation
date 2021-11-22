@@ -1,19 +1,19 @@
 import 'dart:convert';
+import 'dart:ui';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:sales_officer/LogInScreen/LogInScreen.dart';
-import 'package:sales_officer/SignIn/SignIn.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Database.dart';
+import 'LogInScreen/LogInScreen.dart';
+import 'SignIn/SignIn.dart';
 
-import 'package:http/http.dart' as http;
-
-void main() {
+Future<void> main() async {
   runApp(Fusers());
+  AndroidAlarmManager.initialize();
 }
 
 class Fusers extends StatefulWidget {

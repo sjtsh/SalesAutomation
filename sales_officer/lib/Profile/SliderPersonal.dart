@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SOLogInDetailService.dart';
@@ -8,9 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../Database.dart';
+import '../timer.dart';
 import 'Header/Online.dart';
 
-Stopwatch watch = Stopwatch();
+StopWatchPersonal watch = StopWatchPersonal();
 String elapsedTime = '';
 
 class SliderPersonal extends StatefulWidget {
@@ -40,41 +43,36 @@ class _SliderPersonalState extends State<SliderPersonal> {
     });
   }
 
-  startOrStop() {
+  startOrStop() async {
     if (startStop) {
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
-      soLogInDetailService.logIn().then((value) {
-        soLogInDetailID = value;
-      });
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setBool("isRetailing", true);
-      });
-      NepaliDateService nepaliDateService = NepaliDateService();
-      nepaliDateService.fetchNepaliDate().then((value) {
-        SharedPreferences.getInstance().then((prefs) {
-          prefs.setString("logInDateTime", value);
+      soLogInDetailService.logIn().then((id) {
+        soLogInDetailID = id;
+        NepaliDateService nepaliDateService = NepaliDateService();
+        nepaliDateService.fetchNepaliDate().then((value) {
+          SharedPreferences.getInstance().then((prefs) {
+            timerPrefs = prefs;
+            prefs.setBool("isRetailing", true);
+            prefs.setString("logInDateTime", value);
+            prefs.setInt("retailingTime", watch.elapsedMillis);
+            prefs.setInt("soLogInDetailID", id);
+          });
         });
-      });
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setInt("retailingTime", watch.elapsedMilliseconds);
       });
       startWatch();
+      AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
     } else {
+      stopWatch();
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
       soLogInDetailService.updateSOLogInDetail(soLogInDetailID!);
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setBool("isRetailing", false);
-      });
       NepaliDateService nepaliDateService = NepaliDateService();
       nepaliDateService.fetchNepaliDate().then((value) {
         SharedPreferences.getInstance().then((prefs) {
+          prefs.setBool("isRetailing", false);
           prefs.setString("logOutDateTime", value);
+          prefs.setInt("retailingTime", watch.elapsedMillis);
         });
       });
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setInt("retailingTime", watch.elapsedMilliseconds);
-      });
-      stopWatch();
     }
   }
 
@@ -83,9 +81,9 @@ class _SliderPersonalState extends State<SliderPersonal> {
       startStop = false;
       watch.start();
       timer = Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
-        if (watch.isRunning) {
+        if (watch.isRunning && mounted) {
           setState(() {
-            elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+            elapsedTime = transformMilliSeconds(watch.elapsedMillis);
           });
         }
       });
@@ -101,7 +99,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
   }
 
   setTime() {
-    var timeSoFar = watch.elapsedMilliseconds;
+    var timeSoFar = watch.elapsedMillis;
     setState(() {
       elapsedTime = transformMilliSeconds(timeSoFar);
     });
@@ -124,7 +122,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
   void initState() {
     // TODO: implement initState
     if (isRetailing) {
-      startOrStop();
+      startWatch();
     }
     super.initState();
   }
@@ -363,4 +361,26 @@ class _SliderPersonalState extends State<SliderPersonal> {
       ),
     );
   }
+}
+
+class StopWatchPersonal extends Stopwatch{
+  int _starterMilliseconds = 0;
+
+  StopWatchPersonal();
+
+  get elapsedDuration{
+    return Duration(
+        microseconds:
+        this.elapsedMicroseconds + (this._starterMilliseconds * 1000)
+    );
+  }
+
+  get elapsedMillis{
+    return this.elapsedMilliseconds + this._starterMilliseconds;
+  }
+
+  set milliseconds(int timeInMilliseconds){
+    this._starterMilliseconds = timeInMilliseconds;
+  }
+
 }

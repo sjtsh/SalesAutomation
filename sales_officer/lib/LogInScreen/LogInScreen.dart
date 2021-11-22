@@ -8,6 +8,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.da
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/FamiliarityService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/ProductGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUDistributorWiseService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUService.dart';
@@ -15,9 +16,11 @@ import 'package:sales_officer/BACKEND%20Access/Services/SODistributorConnectionS
 import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
 import '../HomeScreen.dart';
+import '../timer.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -42,6 +45,19 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SharedPreferences.getInstance().then((value) {
+      soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
+      isRetailing = value.getBool("isRetailing") ?? false;
+      if (isRetailing) {
+        NepaliDateService().fetchNepaliDate().then((date){
+          watch.milliseconds = DateTime.parse(date).difference(DateTime.parse(value.getString("logInDateTime") ?? date)).inMilliseconds;
+          elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+        });
+      } else {
+        watch.milliseconds = value.getInt("retailingTime") ?? 0;
+        elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+      }
+    });
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
       subGroupService.fetchSubGroups(context).then((value) {
@@ -54,7 +70,7 @@ class _LogInScreenState extends State<LogInScreen> {
         });
         SKUService skuService = SKUService();
         skuService.fetchSKUs().then((value) {
-          allSKULocal = value.where((element) => !element.deactivated).toList();
+          allSKULocal = value;
           allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
             loadingText = "Loading SKU Distributor Wise";

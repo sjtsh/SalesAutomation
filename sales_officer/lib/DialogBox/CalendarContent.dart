@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CalendarContent extends StatefulWidget {
   const CalendarContent({Key? key}) : super(key: key);
