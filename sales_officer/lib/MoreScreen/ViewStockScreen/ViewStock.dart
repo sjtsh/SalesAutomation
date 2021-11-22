@@ -78,9 +78,6 @@ class ViewStock extends StatelessWidget {
                                                         ),
                                                         child: Column(
                                                           children: [
-                                                            SizedBox(
-                                                              height: 20,
-                                                            ),
                                                             Column(
                                                               children:
                                                                   allSubGroupsLocal
@@ -121,50 +118,54 @@ class ViewStock extends StatelessWidget {
                                                                                   ],
                                                                                 ),
                                                                               ),
-                                                                              Column(
-                                                                                children: allSKULocal.where((element) => element.subGroupID == e.subGroupID).map((f) {
+                                                                              Container(
+                                                                                padding: const EdgeInsets.only(
+                                                                                  right: 20,
+                                                                                  left: 20,
+                                                                                  bottom: 10,
+                                                                                ),
+                                                                                child: Column(
+                                                                                  children: allSKULocal.where((element) => element.subGroupID == e.subGroupID).map((f) {
+                                                                                    SKUStock skuStock;
+                                                                                    try {
+                                                                                      skuStock = allSKUStocksLocal.firstWhere((element) => element.SKUID == f.SKUID && element.distributorID == item.distributorID);
+                                                                                    } catch (e) {
+                                                                                      skuStock = SKUStock(0, f.SKUID, item.distributorID, 0, 0, 0, 0, "", 0, 0, true);
+                                                                                    }
 
-                                                                                  SKUStock skuStock;
-                                                                                  try {
-                                                                                    skuStock = allSKUStocksLocal.firstWhere((element) => element.SKUID == f.SKUID && element.distributorID == item.distributorID);
-                                                                                  } catch (e) {
-                                                                                    skuStock = SKUStock(0, f.SKUID, item.distributorID, 0, 0, 0, "", 0, 0, true);
-                                                                                  }
-
-                                                                                  return Row(
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        width: MediaQuery.of(context).size.width / 2,
-                                                                                        child: Text(
-                                                                                          f.SKUName,
-                                                                                          maxLines: 3,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black.withOpacity(0.5),
+                                                                                    return Row(
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          width: MediaQuery.of(context).size.width / 2,
+                                                                                          child: Text(
+                                                                                            f.SKUName,
+                                                                                            maxLines: 3,
+                                                                                            style: TextStyle(
+                                                                                              color: Colors.black.withOpacity(0.5),
+                                                                                            ),
                                                                                           ),
                                                                                         ),
-                                                                                      ),
-                                                                                      Expanded(
-                                                                                        child: Container(),
-                                                                                      ),
-                                                                                      Container(
-                                                                                        width: MediaQuery.of(context).size.width / 2,
-                                                                                        child: Text(
-                                                                                          skuStock.primaryStock.toString(),
+                                                                                        Expanded(
+                                                                                          child: Container(),
                                                                                         ),
-                                                                                      ),
-                                                                                      Container(
-                                                                                        width: MediaQuery.of(context).size.width / 2,
-                                                                                        child: Text(
-                                                                                          skuStock.alternativeStock.toString(),
-                                                                                          maxLines: 3,
-                                                                                          style: TextStyle(
-                                                                                            color: Colors.black.withOpacity(0.5),
+                                                                                        Container(
+                                                                                          child: Text(
+                                                                                            skuStock.primaryStock.toString(),
                                                                                           ),
                                                                                         ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  );
-                                                                                }).toList(),
+                                                                                        Expanded(
+                                                                                          child: Container(),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          child: Text(
+                                                                                            skuStock.alternativeStock.toString(),
+                                                                                            maxLines: 3,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    );
+                                                                                  }).toList(),
+                                                                                ),
                                                                               ),
                                                                             ],
                                                                           ),

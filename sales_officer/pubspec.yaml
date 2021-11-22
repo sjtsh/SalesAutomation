@@ -28,6 +28,8 @@ dependencies:
   google_maps_flutter:
   location:
   timelines: ^0.1.0
+  syncfusion_flutter_calendar: ^18.4.46
+  nepali_date_picker: ^5.0.0
 #  slider_button:
 #  sliding_switch: ^1.0.0
 #  syncfusion_flutter_sliders: 19.3.48

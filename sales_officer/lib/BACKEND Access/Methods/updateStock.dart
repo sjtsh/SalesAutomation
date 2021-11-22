@@ -27,7 +27,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
                 _textEditingControllers.indexOf(textEditingController) + 1]
             .text);
       }
-      SKUStock mySKUStock = SKUStock(1, 1, 1, 1, 1, 1, "", 12.3, 12.3, false);
+      SKUStock mySKUStock = SKUStock(1, 1, 1, 1, 1, 1, 1, "", 12.3, 12.3, false);
       try{
          mySKUStock = allSKUStocksLocal.firstWhere((element) =>
             element.distributorID == distributorID &&
@@ -59,6 +59,7 @@ Future<bool> updateStock(List recieptData, int distributorID,
                 mySKUStock.SKUStockID,
                 mySKUStock.SKUID,
                 mySKUStock.distributorID,
+                mySKUStock.SOID,
                 myPrimaryCount,
                 myAlternativeCount,
                 0,

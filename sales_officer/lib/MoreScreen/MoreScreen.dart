@@ -8,6 +8,7 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/MoreScreen/Settings/Settings.dart';
 import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
 
+import 'ActivitiesScreen/ActivitiesScreen.dart';
 import 'GoogleMap.dart';
 import 'FAQScreen/FAQScreen.dart';
 
@@ -406,6 +407,49 @@ class MoreScreen extends StatelessWidget {
                         Expanded(
                             child: Text(
                               "Complain Box",
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 12,),
+          Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2))
+              ],
+            ),
+            child: Material(
+              color: Colors.white,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_){
+                    return ActivitiesScreen(refresh);
+                  }));
+                },
+                child: Container(
+                  height: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.work_outline_sharp,color: Colors.pinkAccent,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                            child: Text(
+                              "Activities",
                             )),
                       ],
                     ),

@@ -1,6 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_utils/nepali_utils.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;
+import 'package:sales_officer/Database.dart';
 import 'package:timelines/timelines.dart';
-class TimelineScreen extends StatelessWidget {
+
+class TimelineScreen extends StatefulWidget {
+  @override
+  _TimelineScreenState createState() => _TimelineScreenState();
+}
+
+class _TimelineScreenState extends State<TimelineScreen> {
+  NepaliDateTime _date = NepaliDateTime.now();
+
+  Future<Null> _selectDatePicker() async {
+    NepaliDateTime? _selectedDateTime = await picker.showMaterialDatePicker(
+      textDirection: TextDirection.ltr,
+      initialEntryMode: DatePickerEntryMode.calendar,
+      context: context,
+      initialDate: NepaliDateTime.now(),
+      firstDate: NepaliDateTime(2000),
+      lastDate: NepaliDateTime(2090),
+      initialDatePickerMode: DatePickerMode.day,
+    );
+    if (_selectedDateTime != null && _selectedDateTime != _date) {
+      setState(() {
+        _date = _selectedDateTime;
+        print(_date.toString());
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,7 +77,7 @@ class TimelineScreen extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   GestureDetector(
                       onTap: () {
@@ -59,8 +88,8 @@ class TimelineScreen extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    "19",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+                    _date.day.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
                   ),
                   SizedBox(
                     width: 10,
@@ -70,7 +99,7 @@ class TimelineScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Thu",
+                        weekday[_date.weekday],
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontWeight: FontWeight.bold,
@@ -80,7 +109,7 @@ class TimelineScreen extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "Nov 2021",
+                        "${month[_date.month]}, ${_date.year.toString()}",
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontWeight: FontWeight.bold,
@@ -89,30 +118,56 @@ class TimelineScreen extends StatelessWidget {
                     ],
                   ),
                   Expanded(child: Container()),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.red),
-                      child: Center(
-                        child: Text(
-                          "TODAY",
-                          style: TextStyle(
-                            color: Colors.white,
+                  // Expanded(
+                  //   child: Container(
+                  //     height: 50,
+                  //     decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(12),
+                  //         color: Colors.red),
+                  //     child: Center(
+                  //       child: Text(
+                  //         "TODAY",
+                  //         style: TextStyle(
+                  //           color: Colors.white,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Material(
+                      color: Color(0xffFDEEEE),
+                      clipBehavior: Clip.hardEdge,
+                      shape: CircleBorder(),
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selectDatePicker();
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.calendar_today,
+                            color: Colors.red,
                           ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Expanded(
               child: ListView.builder(
@@ -182,11 +237,11 @@ class _InnerTimeline extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xff9b9b9b),)
-                ),
+                    border: Border.all(
+                      color: Color(0xff9b9b9b),
+                    )),
                 child: MaterialButton(
-                  onPressed: (){
-                  },
+                  onPressed: () {},
                   child: Text(
                     "View Details",
                   ),
@@ -232,11 +287,11 @@ class _InnerTimeline extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xff9b9b9b),)
-                ),
+                    border: Border.all(
+                      color: Color(0xff9b9b9b),
+                    )),
                 child: MaterialButton(
-                  onPressed: (){
-                  },
+                  onPressed: () {},
                   child: Text(
                     "View Details",
                   ),
@@ -307,11 +362,11 @@ class _DeliveryProcesses extends StatelessWidget {
         child: FixedTimeline.tileBuilder(
           theme: TimelineThemeData(
             nodePosition: 0,
-            color: Colors.red,
+            color: Colors.white,
+            nodeItemOverlap: true,
+            indicatorPosition: -3,
             indicatorTheme: IndicatorThemeData(
-              position: 0,
-              size: 20.0,
-            ),
+                position: 0, size: 22.0, color: Colors.white),
             connectorTheme: ConnectorThemeData(
               thickness: 2.5,
             ),
@@ -382,7 +437,7 @@ class _DeliveryProcesses extends StatelessWidget {
               else {
                 return OutlinedDotIndicator(
                   backgroundColor: Colors.red,
-                  borderWidth: 2.5,
+                  borderWidth: 5.5,
                 );
               }
             },

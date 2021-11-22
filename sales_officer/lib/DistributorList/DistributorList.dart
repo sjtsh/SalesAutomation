@@ -32,14 +32,13 @@ class DistributorList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DistributorSale distributorSales = DistributorSale(distributor, 1, 1, 1, "");
-    try{
-       distributorSales = allDistributorSalesLocal.firstWhere(
-          (element) =>
-              element.distributor.distributorID == distributor.distributorID);
-    }catch(e){
+    DistributorSale distributorSales =
+        DistributorSale(distributor, 1, 1, 1, "");
+    try {
+      distributorSales = allDistributorSalesLocal.firstWhere((element) =>
+          element.distributor.distributorID == distributor.distributorID);
+    } catch (e) {
       print("no distributor sales");
-
     }
 
     return Padding(
@@ -162,7 +161,9 @@ class DistributorList extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -246,7 +247,9 @@ class DistributorList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -293,7 +296,8 @@ class DistributorList extends StatelessWidget {
                                     Text(
                                       "Add Order",
                                       style: TextStyle(
-                                        color: Color(0xff60D74D),),
+                                        color: Color(0xff60D74D),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -332,8 +336,7 @@ class DistributorList extends StatelessWidget {
                                   );
                                 },
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       Icons.production_quantity_limits,

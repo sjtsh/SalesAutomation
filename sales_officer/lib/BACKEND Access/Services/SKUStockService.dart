@@ -33,6 +33,7 @@ class SKUStockService {
             'SKUStockID': skuStock.SKUStockID.toString(),
             'SKUID': skuStock.SKUID.toString(),
             'distributorID': skuStock.distributorID.toString(),
+            'SOID': skuStock.SOID.toString(),
             'primaryStock': skuStock.primaryStock.toString(),
             'alternativeStock': skuStock.alternativeStock.toString(),
             'secondaryAlternativeStock':

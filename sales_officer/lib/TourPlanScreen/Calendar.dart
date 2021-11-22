@@ -3,7 +3,6 @@ import 'package:sales_officer/TourPlanScreen/SingularDate.dart';
 
 import '../Database.dart';
 
-
 class Calendar extends StatelessWidget {
   final int current;
   final int startDay;
@@ -39,30 +38,30 @@ class Calendar extends StatelessWidget {
           Expanded(
             child: Column(
               children: List.generate(
-                  (dates[current] + startPoint) ~/ 7 + 1,
-                  (index) => Expanded(
-                        child: Row(
-                          children: List.generate(
-                            7,
-                            (rowIndex) => Expanded(
-                              child: SingularDate(
-                                rowIndex,
-                                index,
-                                startPoint,
-                                current,
-                                startDay,
-                                endDay,
-                                setStartDay,
-                                setEndDay,
-                                isStartCondition,
-                              ),
-                            ),
-                          ),
+                (dates[current] + startPoint) ~/ 7 + 1,
+                (index) => Expanded(
+                  child: Row(
+                    children: List.generate(
+                      7,
+                      (rowIndex) => Expanded(
+                        child: SingularDate(
+                          rowIndex,
+                          index,
+                          startPoint,
+                          current,
+                          startDay,
+                          endDay,
+                          setStartDay,
+                          setEndDay,
+                          isStartCondition,
                         ),
-                        //
-                      )),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
