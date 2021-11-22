@@ -13,7 +13,6 @@ import '../Database.dart';
 import '../timer.dart';
 import 'Header/Online.dart';
 
-StopWatchPersonal watch = StopWatchPersonal();
 String elapsedTime = '';
 
 class SliderPersonal extends StatefulWidget {
@@ -33,7 +32,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
   toggleButton() {
     setState(() {
       toggleDataValue = false;
-      isRetailing = !isRetailing;
+      isRetailing = !isRetailing!;
       widget.refreshChart();
     });
     Future.delayed(Duration(milliseconds: 1000), () {
@@ -60,7 +59,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
         });
       });
       startWatch();
-      AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
+      // AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
     } else {
       stopWatch();
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
@@ -121,7 +120,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
   @override
   void initState() {
     // TODO: implement initState
-    if (isRetailing) {
+    if (isRetailing!) {
       startWatch();
     }
     super.initState();
@@ -145,7 +144,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
         height: 75,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          gradient: isRetailing
+          gradient: isRetailing!
               ? LinearGradient(
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
@@ -170,7 +169,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
           alignment: Alignment.center,
           children: [
             toggleDataValue
-                ? isRetailing
+                ? isRetailing!
                     ? Positioned(
                         left: 30,
                         right: 0,
@@ -337,7 +336,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
               duration: Duration(milliseconds: 1000),
               curve: Curves.easeInOut,
               alignment:
-                  isRetailing ? Alignment.centerRight : Alignment.centerLeft,
+                  isRetailing! ? Alignment.centerRight : Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
                   showDialog(
@@ -363,24 +362,22 @@ class _SliderPersonalState extends State<SliderPersonal> {
   }
 }
 
-class StopWatchPersonal extends Stopwatch{
+class StopWatchPersonal extends Stopwatch {
   int _starterMilliseconds = 0;
 
   StopWatchPersonal();
 
-  get elapsedDuration{
+  get elapsedDuration {
     return Duration(
         microseconds:
-        this.elapsedMicroseconds + (this._starterMilliseconds * 1000)
-    );
+            this.elapsedMicroseconds + (this._starterMilliseconds * 1000));
   }
 
-  get elapsedMillis{
+  get elapsedMillis {
     return this.elapsedMilliseconds + this._starterMilliseconds;
   }
 
-  set milliseconds(int timeInMilliseconds){
+  set milliseconds(int timeInMilliseconds) {
     this._starterMilliseconds = timeInMilliseconds;
   }
-
 }

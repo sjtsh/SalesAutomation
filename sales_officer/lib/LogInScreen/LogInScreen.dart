@@ -48,15 +48,17 @@ class _LogInScreenState extends State<LogInScreen> {
     SharedPreferences.getInstance().then((value) {
       soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
       isRetailing = value.getBool("isRetailing") ?? false;
-      if (isRetailing) {
+      if (isRetailing!) {
         NepaliDateService().fetchNepaliDate().then((date){
           watch.milliseconds = DateTime.parse(date).difference(DateTime.parse(value.getString("logInDateTime") ?? date)).inMilliseconds;
+          watch.milliseconds = watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
           elapsedTime = transformMilliSeconds(watch.elapsedMillis);
         });
       } else {
         watch.milliseconds = value.getInt("retailingTime") ?? 0;
         elapsedTime = transformMilliSeconds(watch.elapsedMillis);
       }
+
     });
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
