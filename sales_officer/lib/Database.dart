@@ -28,6 +28,7 @@ List<District> allDistrictsLocal = [];
 List<SODistributorConnection> allSODistributorConnectionsLocal = [];
 List<double> weeklySalesLocal = [];
 List<double> monthlySalesLocal = [];
+List<SO> allSOLocal = [];
 
 SO? meSO;
 int? meSOID;

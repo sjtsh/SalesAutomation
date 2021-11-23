@@ -339,11 +339,13 @@ class _SliderPersonalState extends State<SliderPersonal> {
                   isRetailing! ? Alignment.centerRight : Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return Header();
-                      });
+
+                  fireAlarm();
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (_) {
+                  //       return Header();
+                  //     });
                 },
                 onHorizontalDragEnd: (a) {
                   toggleButton();
