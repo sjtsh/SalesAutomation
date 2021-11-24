@@ -38,6 +38,7 @@ class ViewStock extends StatelessWidget {
                         int totalPrimaryUnit = 0;
                         int totalAlternativeUnit = 0;
                         DateTime lastUpdatedDate = DateTime(0);
+                        int so = 0;
                         myDistributorStocks.forEach((stock) {
                           try {
                             SKU mySKU = allSKULocal.firstWhere(
@@ -171,7 +172,7 @@ class ViewStock extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text(
-                                            "Taken by: ",
+                                            "Taken by: "+ (so == 0?"": allSOLocal.firstWhere((e)=>e.SOID == so).SOName),
                                             style: TextStyle(
                                                 color: Colors.black
                                                     .withOpacity(0.5)),

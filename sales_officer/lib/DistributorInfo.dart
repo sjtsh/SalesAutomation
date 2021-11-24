@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sales_officer/MapIntent/mapsIntent.dart';
 import 'package:sales_officer/MoreScreen/GoogleMap.dart';
 import 'BACKEND Access/Entities/Distributor.dart';
 import 'BACKEND Access/Entities/DistributorOrder.dart';
@@ -240,6 +241,7 @@ class DistributorInfo extends StatelessWidget {
                     ),
                     Column(
                       children: [
+                        ["DB Id: ", currentDistributor.distributorID.toString()],
                         ["Name: ", currentDistributor.distributorName],
                         ["Owner Name: ", currentDistributor.ownerName],
                         ["Phone Number: ", currentDistributor.phone.toString()],
@@ -311,14 +313,32 @@ class DistributorInfo extends StatelessWidget {
                         children: [
                           Text("Geo: "),
                           Expanded(child: Container()),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (_){
-                                    return GoogleMapPersonal(currentDistributor);
-                              }));
-                            },
-                            child: Icon(Icons.location_on_outlined,color: Colors.red,),
+                          Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.blue),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                MapUtils.openMap(currentDistributor.lat, currentDistributor.lng, context);
+
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(top: 3, bottom: 3, right: 8, left: 8),
+
+
+
+                                child: Builder(builder: (context) {
+                                  return Center(
+                                    child: Text(
+                                      "View on Maps",
+                                      style: TextStyle(color: Colors.black,fontSize: 12),
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
                           ),
                         ],
                       ),

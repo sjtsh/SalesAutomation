@@ -3,17 +3,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?android:colorBackground"/>
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
     <item
-        android:left="500dp"
-        android:right="500dp" >
-        <bitmap
-            android:gravity="center|fill_horizontal"
-            android:src="@mipmap/launch_image" />
+        android:drawable="@drawable/launcher_logo"
+        android:gravity="center">
+
     </item>
 </layer-list>
