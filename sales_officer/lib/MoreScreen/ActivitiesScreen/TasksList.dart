@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 
-class DistributorLists extends StatelessWidget {
-  final Distributor _distributor;
+class TasksList extends StatelessWidget {
+  final String e;
   final Function tap;
   final int onTapped;
   final int currentlyTapped;
 
-  DistributorLists(this._distributor, this.tap, this.onTapped, this.currentlyTapped);
+  TasksList(this.e, this.tap, this.onTapped, this.currentlyTapped);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class DistributorLists extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    getInitials(_distributor.distributorName),
+                    getInitials(e),
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -49,7 +48,7 @@ class DistributorLists extends StatelessWidget {
               width: 10,
             ),
             Text(
-              "${_distributor.distributorName}",
+              "${e}",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 16,
@@ -76,7 +75,9 @@ class DistributorLists extends StatelessWidget {
                     width: 15,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: onTapped == currentlyTapped ? Colors.red : Colors.transparent),
+                        color: onTapped == currentlyTapped
+                            ? Colors.red
+                            : Colors.transparent),
                   ),
                 ),
               ],
