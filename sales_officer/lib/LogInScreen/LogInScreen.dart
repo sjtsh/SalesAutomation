@@ -38,7 +38,6 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   bool isLoaded = false;
-
   String loadingText = "Getting SubGroups...";
 
   @override
@@ -88,6 +87,7 @@ class _LogInScreenState extends State<LogInScreen> {
             });
             SOService soService = SOService();
             soService.fetchSOs().then((value) {
+              allSOLocal = value;
               try {
                 meSO = value.firstWhere((element) => element.SOID == meSOID);
               } catch (e) {
@@ -330,7 +330,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     // Text("($percentage%)")
                     Expanded(child: Container()),
                     Text(
-                      "Version 1.0.0.0",
+                      "Version 1.0.0.1",
                       style: TextStyle(color: Colors.red),
                     ),
                     SizedBox(

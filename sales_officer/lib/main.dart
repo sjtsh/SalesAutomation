@@ -54,6 +54,7 @@ class _FusersState extends State<Fusers> {
                 );
               }
             }
+
             return SafeArea(
               child: Scaffold(
                 backgroundColor: Color(0xffF5F5F5),
