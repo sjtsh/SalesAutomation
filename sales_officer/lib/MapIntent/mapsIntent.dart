@@ -1,17 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MapUtils {
   MapUtils._();
 
-  static Future<void> openMap(double latitude, double longitude, context) async {
+  static Future<void> openMap(
+      double latitude, double longitude, context) async {
     String googleUrl =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     if (await canLaunch(googleUrl) != null) {
       await launch(googleUrl);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Unable to open Maps")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Unable to open Maps")));
     }
   }
 }
