@@ -21,9 +21,11 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.symmetric(horizontal: 12),
+
       child: ListView(
         children: [
+          SizedBox(height: 12,),
           Container(
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
@@ -458,8 +460,10 @@ class MoreScreen extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 12,)
         ],
       ),
+
     );
   }
 }
