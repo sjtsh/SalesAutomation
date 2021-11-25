@@ -205,7 +205,7 @@ class _SingularPendingState extends State<SingularPending> {
                         ),
                         Column(
                           children: [
-                            ["Order ID :", "#OR${widget.e.distributorOrderID}"],
+                            ["Order ID :", "#OR${widget.e.distributorOrderID.toString().padLeft(4, '0')}"],
                             ["Date :", "${widget.e.dateAndTime}"],
                           ]
                               .map(

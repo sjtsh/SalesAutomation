@@ -69,12 +69,12 @@ class _SettingsState extends State<Settings> {
                                 meSO!.SOName,
                                 style: TextStyle(fontSize: 20),
                               ),
-                              Text(
-                                meSO!.email,
+                              meSO!.email != null ? Text(
+                                meSO!.email.toString(),
                                 style: TextStyle(
                                     color: Colors.black.withOpacity(0.5),
                                     fontSize: 15),
-                              ),
+                              ): Container(),
                             ],
                           ),
                         ),

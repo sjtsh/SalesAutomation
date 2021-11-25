@@ -11,8 +11,6 @@ class MapUtils {
     if (await canLaunch(googleUrl) != null) {
       await launch(googleUrl);
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Unable to open Maps")));
     }
   }
 }

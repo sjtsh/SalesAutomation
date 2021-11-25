@@ -21,29 +21,30 @@ class IndividualConfirmationVariation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SKU sku =SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
-    SKUDistributorWise skuDistributorWise = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
-    try{  skuDistributorWise =
-        allSKUDistributorWiseLocal.firstWhere((element) =>
-            element.distributorID == distributor.distributorID &&
-            element.SKUID == f[0].SKUID);
+    SKU sku;
+    SKUDistributorWise skuDistributorWise;
+    try {
+      skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((element) =>
+          element.distributorID == distributor.distributorID &&
+          element.SKUID == f[0].SKUID);
 
-
-       sku =
-          allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
-    } catch(e){
+      sku = allSKULocal.firstWhere((element) => element.SKUID == f[0].SKUID);
+    } catch (e) {
       return Padding(
-        padding: const EdgeInsets.only(left: 20,top: 8, bottom: 8),
+        padding: const EdgeInsets.only(left: 20, top: 8, bottom: 8),
         child: Row(
-
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container( child: Text("SKU missing", style: TextStyle(color: Colors.red),),),
+            Container(
+              child: Text(
+                "SKU missing",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
           ],
         ),
       );
       throw Exception("SKUID or DistributorID not found");
-
     }
 
     return Material(
@@ -69,9 +70,8 @@ class IndividualConfirmationVariation extends StatelessWidget {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: Builder(
-                        builder: (context) {
-                          try{
+                      child: Builder(builder: (context) {
+                        try {
                           return Text(
                             f[0].SKUName,
                             maxLines: 3,
@@ -79,11 +79,10 @@ class IndividualConfirmationVariation extends StatelessWidget {
                               color: Colors.black.withOpacity(0.5),
                             ),
                           );
-                        }catch(e){
-                            return Text("sku missing");
-                          }
-                      }
-                      )),
+                        } catch (e) {
+                          return Text("sku missing");
+                        }
+                      })),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.green,
@@ -91,27 +90,23 @@ class IndividualConfirmationVariation extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: Builder(
-                        builder: (context) {
-                          try {
-                            return Text(
-                              allBillingCompanysLocal
-                                  .firstWhere((element) =>
-                              skuDistributorWise.billingCompanyID ==
-                                  element.billingCompanyID)
-                                  .billingCompanyName,
-                              style: TextStyle(
-                                  fontSize: 10, color: Colors.white),
-                            );
-                          } catch (e){
-                            return Text(
-                              "unnamed",
-                              style: TextStyle(
-                                  fontSize: 10, color: Colors.white),
-                            );
-                          }
+                      child: Builder(builder: (context) {
+                        try {
+                          return Text(
+                            allBillingCompanysLocal
+                                .firstWhere((element) =>
+                                    skuDistributorWise.billingCompanyID ==
+                                    element.billingCompanyID)
+                                .billingCompanyName,
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          );
+                        } catch (e) {
+                          return Text(
+                            "unnamed",
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          );
                         }
-                      ),
+                      }),
                     ),
                   ),
                 ],
@@ -121,21 +116,19 @@ class IndividualConfirmationVariation extends StatelessWidget {
                   ? Container()
                   : Row(
                       children: [
-                        Builder(
-                          builder: (context) {
-                           try {
-                              return Text(
-                                f[1].toString(),
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              );
-                            }catch(e){
-                             return Text("Unnamed");
-                           };
+                        Builder(builder: (context) {
+                          try {
+                            return Text(
+                              f[1].toString(),
+                              style: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            );
+                          } catch (e) {
+                            return Text("Unnamed");
                           }
-                        ),
-
+                          ;
+                        }),
                         Text(
                           " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                           style: TextStyle(

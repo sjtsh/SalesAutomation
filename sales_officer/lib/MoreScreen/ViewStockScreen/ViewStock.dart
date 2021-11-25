@@ -130,10 +130,10 @@ class ViewStock extends StatelessWidget {
                                                         fontSize: 16,
                                                       ),
                                                     ),
-                                                    item.location == "null"
+                                                    item.location == null
                                                         ? Text("")
                                                         : Text(
-                                                            item.location,
+                                                            item.location.toString(),
                                                             style: TextStyle(
                                                                 fontSize: 12,
                                                                 color: Colors
@@ -261,10 +261,10 @@ class ViewStock extends StatelessWidget {
                                                       fontSize: 16,
                                                     ),
                                                   ),
-                                                  item.location == "null"
+                                                  item.location == null
                                                       ? Text("")
                                                       : Text(
-                                                          item.location,
+                                                          item.location.toString(),
                                                           style: TextStyle(
                                                               fontSize: 12,
                                                               color: Colors

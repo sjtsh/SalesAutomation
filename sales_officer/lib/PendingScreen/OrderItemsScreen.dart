@@ -352,7 +352,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                 children: [
                                   [
                                     "Order ID :",
-                                    "#OR${widget.e.distributorOrderID}"
+                                    "#OR${widget.e.distributorOrderID.toString().padLeft(4, '0')}"
                                   ],
                                   ["Date :", "${widget.e.dateAndTime}"],
                                   ["Last Updated :", widget.e.updatedTime],

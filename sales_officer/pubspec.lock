@@ -380,6 +380,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  notification_permissions:
+    dependency: "direct main"
+    description:
+      name: notification_permissions
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
   path:
     dependency: transitive
     description:

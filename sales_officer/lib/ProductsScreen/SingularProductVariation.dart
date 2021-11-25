@@ -36,7 +36,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
           element.SKUID == widget.item.SKUID);
     } catch (e) {
       mySKUStock = SKUStock(0, widget.item.SKUID,
-          widget.currentDistributor.distributorID, 0, 0, 0, 0, "", 0, 0, false);
+          widget.currentDistributor.distributorID, meSOID!, false);
     }
     return Container(
       width: double.infinity,

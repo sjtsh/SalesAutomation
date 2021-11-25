@@ -27,24 +27,29 @@ Future<bool> updateStock(List recieptData, int distributorID,
                 _textEditingControllers.indexOf(textEditingController) + 1]
             .text);
       }
-      SKUStock mySKUStock = SKUStock(1, 1, 1, 1, 1, 1, 1, "", 12.3, 12.3, false);
-      try{
-         mySKUStock = allSKUStocksLocal.firstWhere((element) =>
+      SKUStock mySKUStock = SKUStock(
+        1,
+        allSKULocal[_textEditingControllers.indexOf(textEditingController) ~/ 2]
+            .SKUID,
+        distributorID,
+        meSOID!,
+        false,
+      );
+      try {
+        mySKUStock = allSKUStocksLocal.firstWhere((element) =>
             element.distributorID == distributorID &&
             allSKULocal[_textEditingControllers
                             .indexOf(textEditingController) ~/
                         2]
                     .SKUID ==
                 element.SKUID);
-      }catch (e){
+      } catch (e) {
         print("No sku stock ");
-
       }
 
       SKUStockService skuStockService = SKUStockService();
       bool isContains = false;
       ourSKUStock.forEach((element) {
-
         if (element.SKUID == mySKUStock.SKUID &&
             element.primaryStock == myPrimaryCount &&
             element.alternativeStock == myAlternativeCount) {
@@ -56,17 +61,18 @@ Future<bool> updateStock(List recieptData, int distributorID,
         conditionOnly = nepaliDateService.fetchNepaliDate().then((time) {
           conditionOnly = Geolocator.getCurrentPosition().then(
             (value) => skuStockService.updateSKUStock(SKUStock(
-                mySKUStock.SKUStockID,
-                mySKUStock.SKUID,
-                mySKUStock.distributorID,
-                mySKUStock.SOID,
-                myPrimaryCount,
-                myAlternativeCount,
-                0,
-                time,
-                value.latitude,
-                value.longitude,
-                false)),
+              mySKUStock.SKUStockID,
+              mySKUStock.SKUID,
+              mySKUStock.distributorID,
+              mySKUStock.SOID,
+              false,
+              primaryStock: myPrimaryCount,
+              alternativeStock: myAlternativeCount,
+              secondaryAlternativeStock: 0,
+              updatedDate: time,
+              lat: value.latitude,
+              lng: value.longitude,
+            )),
           );
           return conditionOnly;
         });

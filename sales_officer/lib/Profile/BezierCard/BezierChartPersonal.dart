@@ -15,23 +15,7 @@ class BezierChartPersonal extends StatefulWidget {
 }
 
 class _BezierChartPersonalState extends State<BezierChartPersonal> {
-  List<double> normalizedSales = [];
   bool condition = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    // normalizedSales = widget.sales;
-    normalizedSales = List.generate(widget.sales.length, (index) => 0);
-    super.initState();
-    Future.delayed(Duration(milliseconds: 200), () {
-      for (int i = 0; i < widget.sales.length; i++) {
-        setState(() {
-          normalizedSales[i] += widget.sales[i];
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +28,7 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
             showingIndicators: [],
             preventCurveOverShooting: true,
             preventCurveOvershootingThreshold: 0,
-            spots: normalizedSales
+            spots: widget.sales
                 .asMap()
                 .entries
                 .map(
@@ -83,14 +67,14 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           ),
           leftTitles: SideTitles(
               showTitles: false,
-              interval:
-                  (normalizedSales.reduce(max) - normalizedSales.reduce(min)) /
-                              normalizedSales.length ==
-                          0
-                      ? 1
-                      : (normalizedSales.reduce(max) -
-                              normalizedSales.reduce(min)) /
-                          normalizedSales.length,
+              // interval:
+              //     (normalizedSales.reduce(max) - normalizedSales.reduce(min)) /
+              //                 normalizedSales.length ==
+              //             0
+              //         ? 1
+              //         : (normalizedSales.reduce(max) -
+              //                 normalizedSales.reduce(min)) /
+              //             normalizedSales.length,
               getTextStyles: (context, double a) {
                 return TextStyle(fontSize: 8);
               }),

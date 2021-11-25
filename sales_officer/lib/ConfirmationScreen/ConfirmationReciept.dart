@@ -40,26 +40,30 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
 
   @override
   Widget build(BuildContext context) {
-
     List aList = getTotalItems();
     tempBillingAmounts = [];
     isWarning = false;
     widget.receiptData.forEach((element) {
-      SKUDistributorWise skuDistributorWise =
-          SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+      SKUDistributorWise skuDistributorWise = SKUDistributorWise(
+        1,
+        element[0].SKUID,
+        widget.currentDistributor.distributorID,
+      );
       try {
         skuDistributorWise = allSKUDistributorWiseLocal.firstWhere((aSKU) =>
             aSKU.distributorID == widget.currentDistributor.distributorID &&
             aSKU.SKUID == element[0].SKUID);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(" No sku distribtorwise")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(" No sku distribtorwise")));
       }
       List aBillingAmount = [];
       try {
         aBillingAmount = billingAmounts.firstWhere(
             (element) => element[0] == skuDistributorWise.billingCompanyID);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(" No Billing Amount")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(" No Billing Amount")));
       }
       if (aBillingAmount[1] >= 15000 && aBillingAmount[2] > 45) {
         isWarning = true;
@@ -606,20 +610,15 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
       if (aTextEditingController.text != "" &&
           widget._textEditingControllers.indexOf(aTextEditingController) % 2 ==
               0) {
-        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
-        try {
-          sku = allSKULocal.firstWhere((element) {
-            return element.SKUID ==
-                allSKULocal[widget._textEditingControllers
-                            .indexOf(aTextEditingController) ~/
-                        2]
-                    .SKUID;
-          });
-        } catch (e) {
-          throw Exception("No sku in  confirmReciept, get total value");
-        }
+        SKU sku = allSKULocal.firstWhere((element) {
+          return element.SKUID ==
+              allSKULocal[widget._textEditingControllers
+                          .indexOf(aTextEditingController) ~/
+                      2]
+                  .SKUID;
+        });
         setState(() {
-          try{
+          try {
             totalAmount += aTextEditingController.text == ""
                 ? 0
                 : int.parse(aTextEditingController.text) *
@@ -640,9 +639,7 @@ class _ConfirmationRecieptState extends State<ConfirmationReciept> {
                         .text) *
                     sku.alternativeCF *
                     sku.MRP;
-          }catch(e){
-
-          }
+          } catch (e) {}
         });
       }
     });

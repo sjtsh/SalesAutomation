@@ -45,14 +45,28 @@ calculateSales(setLoaded, context) {
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(
-                          1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        "",
+                        -2000,
+                        false,
+                        SKUERPID: "",
+                        img: "",
+                      );
+
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                      } catch (e) {
-                        throw Exception("SKU Not Found");
-                      }
-                      if (sku.MRP != "-2000.0") {
+                      } catch (e) {}
+                      if (sku.MRP != -2000.0) {
                         double balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -73,8 +87,8 @@ calculateSales(setLoaded, context) {
                     });
                   }
                 } else if (int.parse(
-                            aDistributorOrder.dateAndTime.substring(5, 7)) ==
-                    int.parse(time.substring(5, 7))-1) {
+                        aDistributorOrder.dateAndTime.substring(5, 7)) ==
+                    int.parse(time.substring(5, 7)) - 1) {
                   if (int.parse(
                           aDistributorOrder.dateAndTime.substring(8, 10)) >
                       int.parse(time.substring(8, 10))) {
@@ -83,20 +97,30 @@ calculateSales(setLoaded, context) {
                             element.distributorOrderID ==
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
-                      SKU sku = SKU(aDistributorOrderItem.SKUID, "", 1, 1, 1, 1,
-                          0, 0, 0, 0, 0, "", 0, "", true);
+                      SKU sku = SKU(
+                        aDistributorOrderItem.SKUID,
+                        1,
+                        1,
+                        1,
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        "",
+                        -2000,
+                        true,
+                        SKUERPID: "",
+                        img: "",
+                      );
+
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("SKU NOT FOUND, Please contact IT"),
-                          ),
-                        );
-                      }
+                      } catch (e) {}
                       double balance = 0;
-                      if (sku.MRP != "-2000.0") {
+                      if (sku.MRP != -2000.0) {
                         balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -130,20 +154,30 @@ calculateSales(setLoaded, context) {
                           element.distributorOrderID ==
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
-                    SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                    SKU sku = SKU(
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      "",
+                      -2000,
+                      true,
+                      SKUERPID: "",
+                      img: "",
+                    );
+
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          "NO SKU FOUND, Please Contact IT",
-                        ),
-                      ));
-                    }
+                    } catch (e) {}
                     double balance = 0;
-                    if (sku.MRP != "-2000.0") {
+                    if (sku.MRP != -2000.0) {
                       balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
@@ -164,8 +198,8 @@ calculateSales(setLoaded, context) {
                   });
                 }
               } else if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(0, 4)) ==
-                  int.parse(time.substring(0, 4))-1) {
+                      aDistributorOrder.dateAndTime.substring(0, 4)) ==
+                  int.parse(time.substring(0, 4)) - 1) {
                 if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
                     int.parse(time.substring(5, 7))) {
                   distributorOrderItem
@@ -173,20 +207,30 @@ calculateSales(setLoaded, context) {
                           element.distributorOrderID ==
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
-                    SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                    SKU sku = SKU(
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      "",
+                      -2000,
+                      true,
+                      SKUERPID: "",
+                      img: "",
+                    );
+
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          "NO SKU FOUND, Please contact IT,",
-                        ),
-                      ));
-                    }
+                    } catch (e) {}
                     double balance = 0;
-                    if (sku.MRP != "-2000.0") {
+                    if (sku.MRP != -2000.0) {
                       balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
@@ -194,7 +238,7 @@ calculateSales(setLoaded, context) {
                               aDistributorOrderItem.alternativeItemCount *
                               sku.alternativeCF;
                     }
-                    if(products.containsKey(sku.SKUID)) {
+                    if (products.containsKey(sku.SKUID)) {
                       products[sku.SKUID][1] += balance;
                     } else {
                       products.addAll({

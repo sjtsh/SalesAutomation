@@ -15,11 +15,11 @@ class Familiarity {
 
   factory Familiarity.fromJson(Map<String, dynamic> json) {
     return Familiarity(
-      json['0'],
-      json['1'] == 0 ? false : true,
-      json['2'] == 0 ? false : true,
-      json['3'] == 0 ? false : true,
-      json['4'] == 0 ? false : true,
+      json['subGroupID'],
+      json['isTrending'] == 0 ? false : true,
+      json['isNew'] == 0 ? false : true,
+      json['isPromoted'] == 0 ? false : true,
+      json['deactivated'] == 0 ? false : true,
     );
   }
 }

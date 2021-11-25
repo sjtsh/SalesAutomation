@@ -45,18 +45,8 @@ class DistributorInfo extends StatelessWidget {
                               return ProductsScreen(
                                 currentDistributor,
                                 2,
-                                DistributorOrder(
-                                    -1,
-                                    -1,
-                                    -1,
-                                    true,
-                                    false,
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    0,
-                                    false),
+                                DistributorOrder(-1, -1, -1, true, true, "", "",
+                                    -2000, -2000, true),
                                 true,
                                 refresh,
                               );
@@ -111,18 +101,8 @@ class DistributorInfo extends StatelessWidget {
                               return StocksScreen(
                                 currentDistributor,
                                 1,
-                                DistributorOrder(
-                                    -1,
-                                    -1,
-                                    -1,
-                                    true,
-                                    false,
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    0,
-                                    false),
+                                DistributorOrder(-1, -1, -1, true, true, "", "",
+                                    -2000, -2000, true),
                                 refresh,
                               );
                             },
@@ -241,7 +221,10 @@ class DistributorInfo extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        ["DB Id: ", currentDistributor.distributorID.toString()],
+
+
+                        ["DB Id: ", "DI${currentDistributor.distributorID.toString().padLeft(4, '0')}"],
+
                         ["Name: ", currentDistributor.distributorName],
                         ["Owner Name: ", currentDistributor.ownerName],
                         ["Phone Number: ", currentDistributor.phone.toString()],
@@ -272,39 +255,36 @@ class DistributorInfo extends StatelessWidget {
                         //       currentDistributor.lng.toString()
                         // ],
                       ]
-                          .map((e) =>
-                      e[1] == "null" ||
-                          e[1] == "-1" ||
-                          e[1] == "-2000.0, -2000.0"
-                          ? Container()
-                          : Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0),
-                            child: Row(
-                              children: [
-                                Text(e[0]),
-                                Expanded(child: Container()),
-                                Text(
-                                  e[1],
-                                  style: TextStyle(
-                                      color: Colors.black
-                                          .withOpacity(0.7)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5.0),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.black.withOpacity(0.1),
-                            ),
-                          ),
-                        ],
-                      ))
+                          .map((e) => e[1] == null
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: Row(
+                                        children: [
+                                          Text(e[0].toString()),
+                                          Expanded(child: Container()),
+                                          Text(
+                                            e[1].toString(),
+                                            style: TextStyle(
+                                                color: Colors.black
+                                                    .withOpacity(0.7)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0),
+                                      child: Divider(
+                                        thickness: 1,
+                                        color: Colors.black.withOpacity(0.1),
+                                      ),
+                                    ),
+                                  ],
+                                ))
                           .toList(),
                     ),
                     Padding(
@@ -321,19 +301,26 @@ class DistributorInfo extends StatelessWidget {
                             ),
                             child: InkWell(
                               onTap: () {
-                                MapUtils.openMap(currentDistributor.lat, currentDistributor.lng, context);
-
+                                if (currentDistributor.lat != null &&
+                                    currentDistributor.lat != null) {
+                                  MapUtils.openMap(currentDistributor.lat!,
+                                      currentDistributor.lng!, context);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text("Unable to open Maps")));
+                                }
                               },
                               child: Container(
-                                margin: EdgeInsets.only(top: 3, bottom: 3, right: 8, left: 8),
-
-
-
+                                margin: EdgeInsets.only(
+                                    top: 3, bottom: 3, right: 8, left: 8),
                                 child: Builder(builder: (context) {
                                   return Center(
                                     child: Text(
                                       "View on Maps",
-                                      style: TextStyle(color: Colors.black,fontSize: 12),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 12),
                                     ),
                                   );
                                 }),
@@ -359,7 +346,7 @@ class DistributorInfo extends StatelessWidget {
                           Text(
                             "Dhumbarahi Beat 1",
                             style:
-                            TextStyle(color: Colors.black.withOpacity(0.7)),
+                                TextStyle(color: Colors.black.withOpacity(0.7)),
                           ),
                         ],
                       ),
@@ -377,8 +364,7 @@ class DistributorInfo extends StatelessWidget {
                         "Beat6"
                       ]
                           .map(
-                            (e) =>
-                            Padding(
+                            (e) => Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -396,7 +382,7 @@ class DistributorInfo extends StatelessWidget {
                                 ),
                               ),
                             ),
-                      )
+                          )
                           .toList(),
                     ),
                     // Container(
