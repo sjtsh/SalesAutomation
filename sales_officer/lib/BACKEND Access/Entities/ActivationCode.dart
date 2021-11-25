@@ -7,9 +7,9 @@ class ActivationCode {
 
   factory ActivationCode.fromJson(Map<String, dynamic> json) {
     return ActivationCode(
-      int.parse(json["0"]),
+      int.parse(json["0"].toStringAsFixed(0)),
       json["1"],
-      int.parse(json["2"]),
+      int.parse(json["2"].toStringAsFixed(0)),
     );
   }
 }

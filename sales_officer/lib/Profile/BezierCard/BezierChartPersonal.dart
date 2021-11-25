@@ -4,11 +4,10 @@ import 'dart:math';
 import '../../Database.dart';
 
 class BezierChartPersonal extends StatefulWidget {
-  final bool isMTD;
   final List<double> sales;
   final bool toggleValue;
 
-  BezierChartPersonal(this.isMTD, this.sales, this.toggleValue);
+  BezierChartPersonal(this.sales, this.toggleValue);
 
   @override
   _BezierChartPersonalState createState() => _BezierChartPersonalState();

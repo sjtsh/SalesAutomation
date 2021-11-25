@@ -66,7 +66,7 @@ calculateWeeklySales(context) {
                                     (e) =>
                                 e.SKUID == aDistributorOrderItem.SKUID);
                           } catch (e) {}
-                          if (sku.MRP != -2000.0) {
+                          if (sku.MRP != -2000) {
                             weeklySalesLocal[3 - n] += sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -121,7 +121,7 @@ calculateWeeklySales(context) {
                                     (e) =>
                                 e.SKUID == aDistributorOrderItem.SKUID);
                           } catch (e) {}
-                          if (sku.MRP != -2000.0) {
+                          if (sku.MRP != -2000) {
                             weeklySalesLocal[3 - n] += sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -173,7 +173,7 @@ calculateWeeklySales(context) {
                         sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
                       } catch (e) {}
-                      if (sku.MRP != -2000.0) {
+                      if (sku.MRP != -2000) {
                         monthlySalesLocal[11 - n] += sku.MRP *
                             aDistributorOrderItem.primaryItemCount *
                             sku.primaryCF +
@@ -222,7 +222,7 @@ calculateWeeklySales(context) {
                         sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
                       } catch (e) {}
-                      if (sku.MRP != -2000.0) {
+                      if (sku.MRP != -2000) {
                         monthlySalesLocal[11 - n] += sku.MRP *
                             aDistributorOrderItem.primaryItemCount *
                             sku.primaryCF +
@@ -238,9 +238,9 @@ calculateWeeklySales(context) {
             }
           });
         });
+        print(weeklySalesLocal);
+        print(monthlySalesLocal);
       });
-      print(weeklySalesLocal);
-      print(monthlySalesLocal);
     });
   });
 }

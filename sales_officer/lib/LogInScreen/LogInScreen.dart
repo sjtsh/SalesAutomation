@@ -331,7 +331,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     Expanded(child: Container()),
                     Text(
                       "Version 1.0.0.1",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Colors.red.withOpacity(0.5)),
                     ),
                     SizedBox(
                       height: 20,

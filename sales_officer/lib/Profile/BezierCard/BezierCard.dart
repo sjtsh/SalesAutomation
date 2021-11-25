@@ -81,7 +81,6 @@ class _BezierCardState extends State<BezierCard> {
 
                         tag: "sajat",
                         child: BezierChartPersonal(
-                            e,
                             e ? weeklySalesLocal : monthlySalesLocal,
                             widget.toggleValue),
                       ),

@@ -28,8 +28,8 @@ class DistributorReturnOrder {
   factory DistributorReturnOrder.fromJson(Map<String, dynamic> json) {
     return DistributorReturnOrder(
         json['distributorReturnOrderID'],
-        int.parse(json['distributorID']),
-        int.parse(json['SOID']),
+        int.parse(json['distributorID'].toStringAsFixed(0)),
+        int.parse(json['SOID'].toStringAsFixed(0)),
         json['joint'] == 0 ? false : true,
         json['returnOrderStatus'],
         json['dateAndTime'],

@@ -43,14 +43,14 @@ class SO {
   factory SO.fromJson(Map<String, dynamic> json) {
     return SO(
       json['SOID'],
-      int.parse(json['ASMID']),
-      int.parse(json['districtID']),
+      int.parse(json['ASMID'].toStringAsFixed(0)),
+      int.parse(json['districtID'].toStringAsFixed(0)),
       json['SOName'],
       json['deactivated'] == 0 ? false : true,
       json['joiningDate'],
       homeLocation: json['homeLocation'],
-      PAN: int.tryParse(json['PAN']),
-      phone: int.tryParse(json['phone']),
+      PAN: int.tryParse(json['PAN'].toStringAsFixed(0)),
+      phone: int.tryParse(json['phone'].toStringAsFixed(0)),
       img: json['img'],
       email: json['email'],
       bankAccountName: json['bankAccountName'],

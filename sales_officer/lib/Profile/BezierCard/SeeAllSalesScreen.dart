@@ -27,42 +27,93 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Material(
-              color: Colors.white,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
+          child: Flex(
+            direction: Axis.horizontal,
+            children: [
+              Flexible(
+                flex: 1,
                 child: Container(
-                  height: 50,
-                  color: widget.toggleValue ? Color(0xff129C8D) : Color(0xffFD5B11),
-                  child: Builder(builder: (context) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                        SizedBox(
-                          width: 12,
-                        ),
-                        Text(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12)),
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                          ),
+                          child: Center(
+                              child: Icon(
+                            Icons.arrow_back_ios_outlined,
+                            color: Colors.white,
+                          ))),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              Flexible(
+                flex: 2,
+                child: Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 50,
+                      color: widget.toggleValue
+                          ? Color(0xff129C8D)
+                          : Color(0xffFD5B11),
+                      child: Center(
+                        child: Text(
                           "Back",
                           style: TextStyle(color: Colors.white),
                         ),
-                      ],
-                    );
-                  }),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(
+                width: 12,
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        bottomRight: Radius.circular(12)),
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         body: PageView(
@@ -92,7 +143,6 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                         child: Hero(
                           tag: "sajat",
                           child: BezierChartPersonal(
-                              e == widget.isMTD,
                               e == widget.isMTD
                                   ? weeklySalesLocal
                                   : monthlySalesLocal,

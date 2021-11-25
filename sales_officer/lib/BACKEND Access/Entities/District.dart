@@ -9,7 +9,7 @@ class District {
   factory District.fromJson(Map<String, dynamic> json) {
     return District(
       json['districtID'],
-      int.parse(json['areaID']),
+      int.parse(json['areaID'].toStringAsFixed(0)),
       json['districtName'],
       json['deactivated'] == 0 ? false : true,
     );

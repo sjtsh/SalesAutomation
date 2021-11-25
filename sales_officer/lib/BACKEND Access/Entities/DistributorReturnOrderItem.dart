@@ -22,11 +22,11 @@ class DistributorReturnOrderItem {
   factory DistributorReturnOrderItem.fromJson(Map<String, dynamic> json) {
     return DistributorReturnOrderItem(
       json['distributorReturnOrderItemID'],
-      int.parse(json['distributorReturnOrderID']),
-      int.parse(json['SKUID']),
-      int.parse(json['primaryItemCount']),
-      int.parse(json['alternativeItemCount']),
-      int.parse(json['secondaryAlternativeItemCount']),
+      int.parse(json['distributorReturnOrderID'].toStringAsFixed(0)),
+      int.parse(json['SKUID'].toStringAsFixed(0)),
+      int.parse(json['primaryItemCount'].toStringAsFixed(0)),
+      int.parse(json['alternativeItemCount'].toStringAsFixed(0)),
+      int.parse(json['secondaryAlternativeItemCount'].toStringAsFixed(0)),
       json['reason'],
       json['deactivated'] == 0 ? false: true,
     );
