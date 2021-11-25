@@ -8,10 +8,10 @@ class District {
 
   factory District.fromJson(Map<String, dynamic> json) {
     return District(
-      json['0'],
-      json['1'] == null ? -1: json['1'].round(),
-      json['2'] == null ? "null": json['2'],
-      json['3'] == 0 ? false : true,
+      json['districtID'],
+      json['areaID'] == null ? -1: json['1'].round(),
+      json['districtName'] == null ? "null": json['2'],
+      json['deactivated'] == 0 ? false : true,
     );
   }
 }

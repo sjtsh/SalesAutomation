@@ -44,27 +44,31 @@ class DistributorOrderService {
   }
 
   Future<int> insertDistributorOrder(int distributorID, int SOID, bool joint,
-      bool orderStatus, String remarks, String dateAndTime) {
+      bool orderStatus, String dateAndTime,
+      {String? remarks}) {
     Future<int> distributorID2 =
         Geolocator.getCurrentPosition().then((value) async {
+      Map<String, String> aMap = {};
+
+      aMap['distributorID'] = distributorID.toString();
+      aMap['SOID'] = SOID.toString();
+      aMap['joint'] = joint.toString();
+      aMap['orderStatus'] = orderStatus.toString();
+      remarks != null ? aMap['remarks'] = remarks : 1;
+
+      aMap['dateAndTime'] = dateAndTime.toString().substring(0, 19);
+      aMap['updatedTime'] = dateAndTime.toString().substring(0, 19);
+      aMap['lat'] = value.longitude.toString();
+      aMap['lng'] = value.latitude.toString();
+      aMap['deactivated'] = false.toString();
+
       final response = await http.post(
         Uri.parse(
             "https://asia-south1-hilifedb.cloudfunctions.net/insertDistributorOrder"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{
-          'distributorID': distributorID.toString(),
-          'SOID': SOID.toString(),
-          'joint': joint.toString(),
-          'orderStatus': orderStatus.toString(),
-          'remarks': remarks,
-          'dateAndTime': dateAndTime.toString().substring(0, 19),
-          'updatedTime': dateAndTime.toString().substring(0, 19),
-          'lat': value.longitude.toString(),
-          'lng': value.latitude.toString(),
-          'deactivated': false.toString()
-        }),
+        body: jsonEncode(aMap),
       );
       if (response.statusCode == 200) {
         List<dynamic> aList = jsonDecode(response.body);
@@ -77,28 +81,32 @@ class DistributorOrderService {
   }
 
   Future<bool> updateDistributorOrder(DistributorOrder distributorOrder) async {
+    Map<String, String> aMap = {};
+
+    aMap['distributorOrderID'] = distributorOrder.distributorOrderID.toString();
+
+    aMap['distributorID'] = distributorOrder.distributorID.toString();
+    aMap['SOID'] = distributorOrder.SOID.toString();
+    aMap['joint'] = distributorOrder.joint.toString();
+    aMap['orderStatus'] = distributorOrder.orderStatus.toString();
+    aMap['remarks'] = distributorOrder.remarks.toString();
+
+    aMap['dateAndTime'] = distributorOrder.dateAndTime.toString();
+    aMap['updatedTime'] =
+        distributorOrder.updatedTime.toString().substring(0, 19);
+
+    aMap['lat'] = distributorOrder.lat.toString();
+
+    aMap['lng'] = distributorOrder.lng.toString();
+    aMap['deactivated'] = distributorOrder.deactivated.toString();
+
     final res = await http.put(
       Uri.parse(
           "https://asia-south1-hilifedb.cloudfunctions.net/updateDistributorOrder"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(
-        <String, String>{
-          'distributorOrderID': distributorOrder.distributorOrderID.toString(),
-          'distributorID': distributorOrder.distributorID.toString(),
-          'SOID': distributorOrder.SOID.toString(),
-          'joint': distributorOrder.joint.toString(),
-          'orderStatus': distributorOrder.orderStatus.toString(),
-          'remarks': distributorOrder.remarks.toString(),
-          'dateAndTime': distributorOrder.dateAndTime.toString(),
-          'updatedTime':
-              distributorOrder.updatedTime.toString().substring(0, 19),
-          'lat': distributorOrder.lat.toString(),
-          'lng': distributorOrder.lng.toString(),
-          'deactivated': distributorOrder.deactivated.toString(),
-        },
-      ),
+      body: jsonEncode(aMap),
     );
     if (res.statusCode == 200) {
       return true;

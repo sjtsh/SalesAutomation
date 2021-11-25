@@ -43,14 +43,14 @@ Future<bool> updateOrder(
           conditionOnly =
               distributorOrderItemService.updateDistributorOrderItem(
             DistributorOrderItem(
-                distributorOrderItem.distributorOrderItemID,
-                distributorOrderItem.distributorOrderID,
-                distributorOrderItem.SKUID,
-                myPrimaryCount,
-                myAlternativeCount,
-                0,
-                false,
-           ),
+              distributorOrderItem.distributorOrderItemID,
+              distributorOrderItem.distributorOrderID,
+              distributorOrderItem.SKUID,
+              myPrimaryCount,
+              myAlternativeCount,
+              0,
+              false,
+            ),
           );
         }
       });
@@ -78,17 +78,18 @@ Future<bool> updateOrder(
 
   conditionOnly = nepaliDateService.fetchNepaliDate().then((time) {
     return distributorOrderService.updateDistributorOrder(DistributorOrder(
-        distributorOrder.distributorOrderID,
-        distributorOrder.distributorID,
-        distributorOrder.SOID,
-        distributorOrder.joint,
-        !isWarning,
-        distributorOrder.remarks,
-        distributorOrder.dateAndTime,
-        time,
-        distributorOrder.lat,
-        distributorOrder.lng,
-        false));
+      distributorOrder.distributorOrderID,
+      distributorOrder.distributorID,
+      distributorOrder.SOID,
+      distributorOrder.joint,
+      !isWarning,
+      distributorOrder.dateAndTime,
+      time,
+      distributorOrder.lat,
+      distributorOrder.lng,
+      false,
+      remarks: distributorOrder.remarks,
+    ));
   });
 
   return conditionOnly;

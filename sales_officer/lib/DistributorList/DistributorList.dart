@@ -111,10 +111,10 @@ class DistributorList extends StatelessWidget {
                                       fontSize: 16,
                                     ),
                                   ),
-                                  distributor.location == "null"
+                                  distributor.location == null
                                       ? Text("")
                                       : Text(
-                                          distributor.location,
+                                          distributor.location.toString(),
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: Colors.black
@@ -274,7 +274,7 @@ class DistributorList extends StatelessWidget {
                                           distributor,
                                           2,
                                           DistributorOrder(-1, -1, -1, true,
-                                              false, "", "", "", 0, 0, false),
+                                              true, "", "", -2000, -2000, true),
                                           true,
                                           refresh,
                                         );
@@ -328,7 +328,7 @@ class DistributorList extends StatelessWidget {
                                           distributor,
                                           1,
                                           DistributorOrder(-1, -1, -1, true,
-                                              false, "", "", "", 0, 0, false),
+                                              true, "", "", -2000, -2000, true),
                                           refresh,
                                         );
                                       },

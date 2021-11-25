@@ -1,6 +1,6 @@
 class SKU {
   final int SKUID; //0
-  final String SKUERPID; //1
+  String SKUERPID; //1
   final int pricingTypeID; //2
   final int subGroupID; //3
   final int defaultBillingCompanyID; //4
@@ -12,8 +12,9 @@ class SKU {
   final int secondaryAlternativeCF; //10
   final String SKUName; //11
   final double MRP; //12
-  final String img; //13
+
   final bool deactivated; //14
+  String? img; //13
 
   SKU(
     this.SKUID,
@@ -29,27 +30,26 @@ class SKU {
     this.secondaryAlternativeCF,
     this.SKUName,
     this.MRP,
+    this.deactivated, {
     this.img,
-    this.deactivated,
-  );
+  });
 
   factory SKU.fromJson(Map<String, dynamic> json) {
     return SKU(
-      json['0'],
-      json['1'] == null ? "null": json['1'],
-      json['2'] == null ? -1: json['2'].round(),
-      json['3'] == null ? -1: json['3'].round(),
-      json['4'] == null ? -1: json['4'].round(),
-      json['5'] == null ? -1: json['5'].round(),
-      json['6'] == null ? -1: json['6'].round(),
-      json['7'] == null ? -1: json['7'].round(),
-      json['8'] == null ? -1: json['8'].round(),
-      json['9'] == null ? -1: json['9'].round(),
-      json['10'] == null ? -1: json['10'].round(),
-      json['11'] == null ? "null": json['11'],
-      json['12'] == null ? -2000.0: json['12'],
-      json['13'] == null ? "null": json['13'],
-      json['14'] == 0 ? false : true,
-    );
+        json['SKUID'],
+        json['SKUERPID'],
+        json['pricingTypeID'],
+        json['subGroupID'],
+        json['defaultBillingCompanyID'],
+        json['primaryUnitID'],
+        json['primaryCF'],
+        json['alternativeUnitID'],
+        json['alternativeCF'],
+        json['secondaryAlternativeUnitID'],
+        json['secondaryAlternativeCF'],
+        json['SKUName'],
+        json['MRP'],
+        json['deactivated'] == 0 ? false : true,
+        img: json['img']);
   }
 }

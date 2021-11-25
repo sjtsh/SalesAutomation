@@ -33,7 +33,7 @@ shareOrder(DistributorOrder distributorOrder, context) {
               .toList();
       Map<int, List<DistributorOrderItem>> distributorOrderItemCompany = {};
       distributorOrderItems.forEach((element) {
-        SKUDistributorWise aSKU = SKUDistributorWise(1, 1, 1, 1, 1, 1, 1);
+        SKUDistributorWise aSKU = SKUDistributorWise(1, 1, 1, inventoryLevel: 1, target: 1);
         try {
           aSKU = allSKUDistributorWiseLocal.firstWhere((skuDistributorWise) =>
               element.SKUID == skuDistributorWise.SKUID &&
@@ -46,11 +46,9 @@ shareOrder(DistributorOrder distributorOrder, context) {
         if (distributorOrderItemCompany.containsKey(aSKU.billingCompanyID)) {
           distributorOrderItemCompany[aSKU.billingCompanyID]?.add(element);
         } else {
-          distributorOrderItemCompany.addAll(
-            {
-              aSKU.billingCompanyID: [element],
-            },
-          );
+          aSKU.billingCompanyID != null ? distributorOrderItemCompany[aSKU.billingCompanyID!] = [element]:1;
+
+
         }
       });
       final pdf = pw.Document();
@@ -267,7 +265,7 @@ shareOrder(DistributorOrder distributorOrder, context) {
                                 pw.Column(
                                   children: company.value.map((e) {
                                     SKU sku = SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1,
-                                        1, "", 1, "", false);
+                                        1, "", 1,false, img:"", );
 
                                     try {
                                       sku = allSKULocal.firstWhere((element) =>

@@ -4,40 +4,39 @@ class DistributorOrder {
   final int SOID;
   final bool joint;
   final bool orderStatus;
-  final String remarks;
   final String dateAndTime;
   final String updatedTime;
   final double lat;
   final double lng;
   final bool deactivated;
+  String? remarks;
 
   DistributorOrder(
-    this.distributorOrderID,
-    this.distributorID,
-    this.SOID,
-    this.joint,
-    this.orderStatus,
-    this.remarks,
-    this.dateAndTime,
-    this.updatedTime,
-    this.lat,
-    this.lng,
-    this.deactivated,
-  );
+      this.distributorOrderID,
+      this.distributorID,
+      this.SOID,
+      this.joint,
+      this.orderStatus,
+      this.dateAndTime,
+      this.updatedTime,
+      this.lat,
+      this.lng,
+      this.deactivated,
+      {this.remarks});
 
   factory DistributorOrder.fromJson(Map<String, dynamic> json) {
     return DistributorOrder(
-      json['0'],
-      json['1'] == null ? -1: json['1'].round(),
-      json['2'] == null ? -1: json['2'].round(),
-      json['3'] == 0 ? false : true,
-      json['4'] == 0 ? false : true,
-      json['5'] == null ? "null": json['5'],
-      json['6'] == null ? "null": json['6'],
-      json['7'] == null ? "null": json['7'],
-      json['8'] == null ? -2000.0: json['8'],
-      json['9'] == null ? -2000.0: json['9'],
-      json['10'] == 0 ? false : true,
+      json['distributorOrderID'],
+      json['distributorID'],
+      json['SOID'],
+      json['joint'] == 0 ? false : true,
+      json['orderStatus'] == 0 ? false : true,
+      json['dateAndTime'],
+      json['updatedTime'],
+      json['lat'],
+      json['lng'],
+      json['deactivated'] == 0 ? false : true,
+      remarks: json['remarks'],
     );
   }
 }

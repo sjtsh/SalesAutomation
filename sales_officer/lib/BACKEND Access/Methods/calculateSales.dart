@@ -45,7 +45,7 @@ calculateSales(setLoaded, context) {
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(
-                          1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", false);
+                          1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, false,img: "",) ;
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -84,7 +84,7 @@ calculateSales(setLoaded, context) {
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(aDistributorOrderItem.SKUID, "", 1, 1, 1, 1,
-                          0, 0, 0, 0, 0, "", 0, "", true);
+                          0, 0, 0, 0, 0, "", 0, true,img: "", );
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -131,7 +131,7 @@ calculateSales(setLoaded, context) {
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
                     SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, true,img: "", );
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -174,7 +174,7 @@ calculateSales(setLoaded, context) {
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
                     SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, "", true);
+                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1,true, img: "", );
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);

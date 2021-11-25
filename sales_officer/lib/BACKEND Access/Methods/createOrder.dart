@@ -23,7 +23,7 @@ Future<int> createOrder(
   Future<int> value = nepaliDateService.fetchNepaliDate().then((_dateAndTime) {
     return distributorOrderService
         .insertDistributorOrder(
-            _distributorID, _SOID, _joint, _orderStatus, _remarks, _dateAndTime)
+            _distributorID, _SOID, _joint, _orderStatus, _dateAndTime, remarks: _remarks)
         .then((aCondition) {
       try {
         _textEditingControllers.forEach(

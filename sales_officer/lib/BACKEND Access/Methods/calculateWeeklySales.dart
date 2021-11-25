@@ -46,7 +46,7 @@ calculateWeeklySales(context) {
                                 aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              -2000, "", false);
+                              -2000,false,img:  "", );
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -87,7 +87,7 @@ calculateWeeklySales(context) {
                                 aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              -2000, "", false);
+                              -2000, false, img: "", );
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -124,8 +124,8 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
-                            "", false);
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,false,
+                            img: "", );
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);
@@ -159,8 +159,8 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
-                            "", false);
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,false,
+                           img:  "", );
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);

@@ -103,12 +103,7 @@ class SingularStockScreen extends StatelessWidget {
                                               0,
                                               f.SKUID,
                                               distributor.distributorID,
-                                              0,
-                                              0,0,
-                                              0,
-                                              "",
-                                              0,
-                                              0,
+                                              meSOID!,
                                               true);
                                         }
 
