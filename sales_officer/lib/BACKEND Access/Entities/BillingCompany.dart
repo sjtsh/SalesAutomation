@@ -12,12 +12,12 @@ class BillingCompany {
 
   factory BillingCompany.fromJson(Map<String, dynamic> json) {
     return BillingCompany(
-      json['billingCompanyID'],
+      int.parse(json['billingCompanyID']),
       json['billingCompanyName'],
       json['deactivated'] == 0 ? false : true,
-      PAN: json['PAN'],
+      PAN: int.tryParse(json['PAN']),
       location: json['location'],
-      phone: json['phone'],
+      phone: int.tryParse(json['phone']),
     );
   }
 }

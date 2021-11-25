@@ -6,7 +6,6 @@ class SODistributorConnection {
 
   factory SODistributorConnection.fromJson(Map<String, dynamic> json) {
     return SODistributorConnection(
-      json['SOID'] ,
-      json['distributorID']
-    );
-  }}
+        int.parse(json['SOID']), int.parse(json['distributorID']));
+  }
+}

@@ -10,7 +10,7 @@ class SubGroup {
   factory SubGroup.fromJson(Map<String, dynamic> json) {
     return SubGroup(
       json['subGroupID'],
-      json['productGroupID'] ,
+      int.parse(json['productGroupID']) ,
       json['subGroupName'] ,
       json['deactivated'] == 0 ? false : true,
     );

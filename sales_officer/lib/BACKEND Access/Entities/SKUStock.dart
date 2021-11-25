@@ -29,13 +29,14 @@ class SKUStock {
   factory SKUStock.fromJson(Map<String, dynamic> json) {
     return SKUStock(
       json['SKUStockID'],
-      json['SKUID'],
-      json['distributorID'],
-      json['SOID'],
+      int.parse(json['SKUID']),
+      int.parse(json['distributorID']),
+      int.parse(json['SOID']),
       json['deactivated'] == 0 ? false : true,
-      primaryStock: json['primaryStock'],
-      alternativeStock: json['alternativeStock'],
-      secondaryAlternativeStock: json['secondaryAlternativeStock'],
+      primaryStock: int.tryParse(json['primaryStock']) ?? 0,
+      alternativeStock: int.tryParse(json['alternativeStock']) ?? 0,
+      secondaryAlternativeStock:
+          int.tryParse(json['secondaryAlternativeStock']) ?? 0,
       updatedDate: json['updatedDate'],
       lat: json['lat'],
       lng: json['lng'],

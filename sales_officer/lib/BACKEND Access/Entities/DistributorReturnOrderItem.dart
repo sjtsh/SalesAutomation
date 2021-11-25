@@ -22,13 +22,13 @@ class DistributorReturnOrderItem {
   factory DistributorReturnOrderItem.fromJson(Map<String, dynamic> json) {
     return DistributorReturnOrderItem(
       json['distributorReturnOrderItemID'],
-      json['distributorReturnOrderID'] == null ? -1: json['1'].round(),
-      json['SKUID'] == null ? -1: json['2'].round(),
-      json['primaryItemCount'] == null ? -1: json['3'].round(),
-      json['alternativeItemCount'] == null ? -1: json['4'].round(),
-      json['secondaryAlternativeItemCount'] == null ? -1: json['5'].round(),
-      json['reason'] == null ? "null": json['6'],
-      json['deactivated'] == 0 ? false : true,
+      int.parse(json['distributorReturnOrderID']),
+      int.parse(json['SKUID']),
+      int.parse(json['primaryItemCount']),
+      int.parse(json['alternativeItemCount']),
+      int.parse(json['secondaryAlternativeItemCount']),
+      json['reason'],
+      json['deactivated'] == 0 ? false: true,
     );
   }
 }

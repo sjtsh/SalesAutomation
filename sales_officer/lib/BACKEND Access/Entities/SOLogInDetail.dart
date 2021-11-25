@@ -14,8 +14,8 @@ class SOLogInDetail {
 
   factory SOLogInDetail.fromJson(Map<String, dynamic> json) {
     return SOLogInDetail(
-      json['SOLogInDetailID'] ,
-      json['SOID'],
+      json['SOLogInDetailID'],
+      int.parse(json['SOID']),
       json['date'],
       json['logInTime'],
       json['logInLat'] ,

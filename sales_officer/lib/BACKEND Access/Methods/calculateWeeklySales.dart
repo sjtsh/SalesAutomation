@@ -47,7 +47,6 @@ calculateWeeklySales(context) {
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(
                             1,
-                            "1",
                             1,
                             1,
                             1,
@@ -60,6 +59,7 @@ calculateWeeklySales(context) {
                             "",
                             -2000,
                             false,
+                            SKUERPID: "",
                             img: "",);
                           try {
                             sku = allSKULocal.firstWhere(
@@ -102,7 +102,6 @@ calculateWeeklySales(context) {
                             .forEach((aDistributorOrderItem) {
                           SKU sku = SKU(
                             1,
-                            "1",
                             1,
                             1,
                             1,
@@ -115,6 +114,7 @@ calculateWeeklySales(context) {
                             "",
                             -2000,
                             false,
+                            SKUERPID: "",
                             img: "",);
                           try {
                             sku = allSKULocal.firstWhere(
@@ -154,7 +154,6 @@ calculateWeeklySales(context) {
 
                       SKU sku = SKU(
                         1,
-                        "1",
                         1,
                         1,
                         1,
@@ -167,6 +166,7 @@ calculateWeeklySales(context) {
                         "",
                         -2000,
                         false,
+                        SKUERPID: "",
                         img: "",);
 
                       try {
@@ -203,7 +203,6 @@ calculateWeeklySales(context) {
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(
                         1,
-                        "1",
                         1,
                         1,
                         1,
@@ -216,6 +215,7 @@ calculateWeeklySales(context) {
                         "",
                         -2000,
                         false,
+                        SKUERPID: "",
                         img: "",);
 
                       try {

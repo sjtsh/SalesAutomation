@@ -18,11 +18,11 @@ class SKUDistributorWise {
   });
 
   factory SKUDistributorWise.fromJson(Map<String, dynamic> json) {
-    return SKUDistributorWise(
-        json['SKUDistributorWiseID'], json['SKUID'], json['distributorID'],
-        pricingTypeID: json['pricingTypeID'],
-        billingCompanyID: json['billingCompanyID'],
-        inventoryLevel: json['inventoryLevel'],
-        target: json['target']);
+    return SKUDistributorWise(json['SKUDistributorWiseID'],
+        int.parse(json['SKUID']), int.parse(json['distributorID']),
+        pricingTypeID: int.tryParse(json['pricingTypeID']),
+        billingCompanyID: int.tryParse(json['billingCompanyID']),
+        inventoryLevel: int.tryParse(json['inventoryLevel']) ?? 0,
+        target: int.tryParse(json['target']) ?? 0);
   }
 }
