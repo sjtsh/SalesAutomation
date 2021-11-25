@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/Database.dart';
-import 'package:sales_officer/DistributorList/DistributorList.dart';
-import 'package:sales_officer/MoreScreen/ActivitiesScreen/DistributorLists.dart';
-import 'package:timelines/timelines.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/DistributorHeader.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/TasksHeader.dart';
 
 import '../../Header.dart';
 
@@ -17,11 +15,15 @@ class ActivitiesScreen extends StatefulWidget {
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
-  bool onTapped = false;
+  String currentExpanded = "";
 
-  tap(bool notTapped) {
+  expand(String currentExpanded) {
     setState(() {
-      onTapped = !notTapped;
+      if (this.currentExpanded == currentExpanded) {
+        this.currentExpanded = "";
+      } else {
+        this.currentExpanded = currentExpanded;
+      }
     });
   }
 
@@ -35,51 +37,45 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
             Expanded(
               child: ListView(
                 children: [
+                  DistributorHeader(expand, currentExpanded),
+                  TasksHeader(expand, currentExpanded),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 3,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      child: Material(
-                        color: Colors.white,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text("Distributor Lists"),
-                                    ),
-                                    Icon(Icons.keyboard_arrow_down_sharp)
-                                  ],
-                                ),
-                                Column(
-                                  children: personalDistributorsLocal
-                                      .map((e) =>
-                                          DistributorLists(tap, onTapped, e))
-                                      .toList(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    padding: EdgeInsets.only(bottom: 12, left: 12, right: 12),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        labelText: 'Custom Message',
+                        hintText: 'Remark',
                       ),
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.red),
+                ),
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: Container(
+                    height: 50,
+                    width: 180,
+                    child: Builder(builder: (context) {
+                      return Center(
+                        child: Text(
+                          "Start Work",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
               ),
             ),
           ],
