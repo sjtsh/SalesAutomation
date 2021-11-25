@@ -2,7 +2,7 @@ class BillingCompany {
   final int billingCompanyID;
   String billingCompanyName;
   int? PAN;
-  String? location;
+  String ? location;
   int? phone;
   final bool deactivated;
 

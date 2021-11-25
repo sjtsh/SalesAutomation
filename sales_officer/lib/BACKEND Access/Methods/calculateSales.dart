@@ -45,14 +45,15 @@ calculateSales(setLoaded, context) {
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(
-                          1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, false,img: "",) ;
+
+                          1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000, false,img: "",) ;
+
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
                       } catch (e) {
-                        throw Exception("SKU Not Found");
                       }
-                      if (sku.MRP != "-2000.0") {
+                      if (sku.MRP != -2000.0) {
                         double balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -84,19 +85,16 @@ calculateSales(setLoaded, context) {
                             aDistributorOrder.distributorOrderID)
                         .forEach((aDistributorOrderItem) {
                       SKU sku = SKU(aDistributorOrderItem.SKUID, "", 1, 1, 1, 1,
-                          0, 0, 0, 0, 0, "", 0, true,img: "", );
+
+                          0, 0, 0, 0, 0, "", -2000, true,img: "", );
+
                       try {
                         sku = allSKULocal.firstWhere(
                             (e) => e.SKUID == aDistributorOrderItem.SKUID);
                       } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("SKU NOT FOUND, Please contact IT"),
-                          ),
-                        );
                       }
                       double balance = 0;
-                      if (sku.MRP != "-2000.0") {
+                      if (sku.MRP != -2000.0) {
                         balance = sku.MRP *
                                 aDistributorOrderItem.primaryItemCount *
                                 sku.primaryCF +
@@ -131,19 +129,17 @@ calculateSales(setLoaded, context) {
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
                     SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1, true,img: "", );
+
+                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000, true,img: "", );
+
+
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          "NO SKU FOUND, Please Contact IT",
-                        ),
-                      ));
                     }
                     double balance = 0;
-                    if (sku.MRP != "-2000.0") {
+                    if (sku.MRP != -2000.0) {
                       balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +
@@ -174,19 +170,16 @@ calculateSales(setLoaded, context) {
                           aDistributorOrder.distributorOrderID)
                       .forEach((aDistributorOrderItem) {
                     SKU sku =
-                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", 1,true, img: "", );
+
+                        SKU(1, "", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,true, img: "", );
+
                     try {
                       sku = allSKULocal.firstWhere(
                           (e) => e.SKUID == aDistributorOrderItem.SKUID);
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          "NO SKU FOUND, Please contact IT,",
-                        ),
-                      ));
                     }
                     double balance = 0;
-                    if (sku.MRP != "-2000.0") {
+                    if (sku.MRP != -2000.0) {
                       balance = sku.MRP *
                               aDistributorOrderItem.primaryItemCount *
                               sku.primaryCF +

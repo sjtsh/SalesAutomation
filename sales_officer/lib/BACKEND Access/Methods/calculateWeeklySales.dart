@@ -16,15 +16,15 @@ calculateWeeklySales(context) {
         .fetchDistributorOrders(context)
         .then((distributorOrder) {
       DistributorOrderItemService distributorOrderItemService =
-          DistributorOrderItemService();
+      DistributorOrderItemService();
       distributorOrderItemService
           .fetchDistributorOrderItems(context)
           .then((distributorOrderItem) {
         distributorOrderItem.forEach((aDistributorOrderItem) {
           distributorOrder
               .where((aDistributorOrder) =>
-                  aDistributorOrder.orderStatus &&
-                  aDistributorOrder.SOID == meSOID)
+          aDistributorOrder.orderStatus &&
+              aDistributorOrder.SOID == meSOID)
               .forEach((aDistributorOrder) {
             //FOR MTD
             if (aDistributorOrder.dateAndTime != "null") {
@@ -33,29 +33,43 @@ calculateWeeklySales(context) {
                 if (aDistributorOrder.dateAndTime.substring(5, 7) ==
                     time.substring(5, 7)) {
                   if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(8, 10)) <=
+                      aDistributorOrder.dateAndTime.substring(8, 10)) <=
                       int.parse(time.substring(8, 10))) {
                     for (int n = 0; n < 4; n++) {
                       if (int.parse(aDistributorOrder.dateAndTime
-                                  .substring(8, 10)) +
-                              7 * (n + 1) >
+                          .substring(8, 10)) +
+                          7 * (n + 1) >
                           int.parse(time.substring(8, 10))) {
                         distributorOrderItem
                             .where((element) =>
-                                element.distributorOrderID ==
-                                aDistributorOrder.distributorOrderID)
+                        element.distributorOrderID ==
+                            aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
-                          SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              -2000,false,img:  "", );
+                          SKU sku = SKU(
+                            1,
+                            "1",
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            "",
+                            -2000,
+                            false,
+                            img: "",);
                           try {
                             sku = allSKULocal.firstWhere(
-                                (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                          } catch (e) {
-                          }
-                          if (sku.MRP != "-2000.0") {
-                            weeklySalesLocal[3-n] += sku.MRP *
-                                    aDistributorOrderItem.primaryItemCount *
-                                    sku.primaryCF +
+                                    (e) =>
+                                e.SKUID == aDistributorOrderItem.SKUID);
+                          } catch (e) {}
+                          if (sku.MRP != -2000.0) {
+                            weeklySalesLocal[3 - n] += sku.MRP *
+                                aDistributorOrderItem.primaryItemCount *
+                                sku.primaryCF +
                                 sku.MRP *
                                     aDistributorOrderItem.alternativeItemCount *
                                     sku.alternativeCF;
@@ -66,37 +80,51 @@ calculateWeeklySales(context) {
                     }
                   }
                 } else if (int.parse(
-                            aDistributorOrder.dateAndTime.substring(5, 7)) ==
-                    int.parse(time.substring(5, 7))-1) {
+                    aDistributorOrder.dateAndTime.substring(5, 7)) ==
+                    int.parse(time.substring(5, 7)) - 1) {
                   if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(8, 10)) >
+                      aDistributorOrder.dateAndTime.substring(8, 10)) >
                       int.parse(time.substring(8, 10)) +
                           nepaliBreaks[int.parse(aDistributorOrder.dateAndTime
-                                  .substring(0, 4)) -
+                              .substring(0, 4)) -
                               2076][int.parse(aDistributorOrder.dateAndTime
-                                  .substring(5, 7)) -
+                              .substring(5, 7)) -
                               1]) {
                     for (int n = 0; n < 4; n++) {
                       if (int.parse(aDistributorOrder.dateAndTime
-                                  .substring(8, 10)) +
-                              7 * (n + 1) >
+                          .substring(8, 10)) +
+                          7 * (n + 1) >
                           int.parse(time.substring(8, 10))) {
                         distributorOrderItem
                             .where((element) =>
-                                element.distributorOrderID ==
-                                aDistributorOrder.distributorOrderID)
+                        element.distributorOrderID ==
+                            aDistributorOrder.distributorOrderID)
                             .forEach((aDistributorOrderItem) {
-                          SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
-                              -2000, false, img: "", );
+                          SKU sku = SKU(
+                            1,
+                            "1",
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
+                            "",
+                            -2000,
+                            false,
+                            img: "",);
                           try {
                             sku = allSKULocal.firstWhere(
-                                (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                          } catch (e) {
-                          }
-                          if (sku.MRP != "-2000.0") {
-                            weeklySalesLocal[3-n] += sku.MRP *
-                                    aDistributorOrderItem.primaryItemCount *
-                                    sku.primaryCF +
+                                    (e) =>
+                                e.SKUID == aDistributorOrderItem.SKUID);
+                          } catch (e) {}
+                          if (sku.MRP != -2000.0) {
+                            weeklySalesLocal[3 - n] += sku.MRP *
+                                aDistributorOrderItem.primaryItemCount *
+                                sku.primaryCF +
                                 sku.MRP *
                                     aDistributorOrderItem.alternativeItemCount *
                                     sku.alternativeCF;
@@ -116,76 +144,103 @@ calculateWeeklySales(context) {
                     int.parse(time.substring(5, 7))) {
                   for (int n = 0; n < 12; n++) {
                     if (int.parse(
-                                aDistributorOrder.dateAndTime.substring(5, 7)) +
-                            n >
+                        aDistributorOrder.dateAndTime.substring(5, 7)) +
+                        n >
                         int.parse(time.substring(5, 7))) {
                       distributorOrderItem
                           .where((element) =>
-                              element.distributorOrderID ==
-                              aDistributorOrder.distributorOrderID)
-                          .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,false,
-                            img: "", );
-                        try {
-                          sku = allSKULocal.firstWhere(
-                              (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                        } catch (e) {
-                        }
-                        if (sku.MRP != "-2000.0") {
-                          monthlySalesLocal[11-n] += sku.MRP *
-                                  aDistributorOrderItem.primaryItemCount *
-                                  sku.primaryCF +
-                              sku.MRP *
-                                  aDistributorOrderItem.alternativeItemCount *
-                                  sku.alternativeCF;
-                        }
-                      });
-                      break;
-                    }
+                      element.distributorOrderID ==
+                          aDistributorOrder.distributorOrderID);
+
+                      SKU sku = SKU(
+                        1,
+                        "1",
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        "",
+                        -2000,
+                        false,
+                        img: "",);
+
+                      try {
+                        sku = allSKULocal.firstWhere(
+                                (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      } catch (e) {}
+                      if (sku.MRP != -2000.0) {
+                        monthlySalesLocal[11 - n] += sku.MRP *
+                            aDistributorOrderItem.primaryItemCount *
+                            sku.primaryCF +
+                            sku.MRP *
+                                aDistributorOrderItem.alternativeItemCount *
+                                sku.alternativeCF;
+                      }
+                    };
+                    break;
                   }
                 }
-              } else if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(0, 4)) ==
-                  int.parse(time.substring(0, 4))-1) {
-                if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
-                    int.parse(time.substring(5, 7))) {
-                  for (int n = 0; n < 12; n++) {
-                    if (int.parse(
-                                aDistributorOrder.dateAndTime.substring(5, 7)) +
-                            n >
-                        int.parse(time.substring(5, 7)) + 12) {
-                      distributorOrderItem
-                          .where((element) =>
-                              element.distributorOrderID ==
-                              aDistributorOrder.distributorOrderID)
-                          .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,false,
-                           img:  "", );
-                        try {
-                          sku = allSKULocal.firstWhere(
-                              (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                        } catch (e) {
-                        }
-                        if (sku.MRP != "-2000.0") {
-                          monthlySalesLocal[11-n] += sku.MRP *
-                                  aDistributorOrderItem.primaryItemCount *
-                                  sku.primaryCF +
-                              sku.MRP *
-                                  aDistributorOrderItem.alternativeItemCount *
-                                  sku.alternativeCF;
-                        }
-                      });
-                      break;
-                    }
+              }
+            } else if (int.parse(
+                aDistributorOrder.dateAndTime.substring(0, 4)) ==
+                int.parse(time.substring(0, 4)) - 1) {
+              if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
+                  int.parse(time.substring(5, 7))) {
+                for (int n = 0; n < 12; n++) {
+                  if (int.parse(
+                      aDistributorOrder.dateAndTime.substring(5, 7)) +
+                      n >
+                      int.parse(time.substring(5, 7)) + 12) {
+                    distributorOrderItem
+                        .where((element) =>
+                    element.distributorOrderID ==
+                        aDistributorOrder.distributorOrderID)
+                        .forEach((aDistributorOrderItem) {
+                      SKU sku = SKU(
+                        1,
+                        "1",
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        1,
+                        "",
+                        -2000,
+                        false,
+                        img: "",);
+
+                      try {
+                        sku = allSKULocal.firstWhere(
+                                (e) => e.SKUID == aDistributorOrderItem.SKUID);
+                      } catch (e) {}
+                      if (sku.MRP != -2000.0) {
+                        monthlySalesLocal[11 - n] += sku.MRP *
+                            aDistributorOrderItem.primaryItemCount *
+                            sku.primaryCF +
+                            sku.MRP *
+                                aDistributorOrderItem.alternativeItemCount *
+                                sku.alternativeCF;
+                      }
+                    });
+                    break;
                   }
                 }
               }
             }
           });
         });
-        print(weeklySalesLocal);
-        print(monthlySalesLocal);
       });
+      print(weeklySalesLocal);
+      print(monthlySalesLocal);
     });
   });
 }

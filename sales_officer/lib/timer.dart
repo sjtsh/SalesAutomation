@@ -37,7 +37,7 @@ transformMilliSeconds(int milliseconds) {
 }
 
 fireAlarm() {
-  NotificationService.showNotification(
-      1, "this is a title", "this is a body", "this is a payload");
+  NotificationService().showNotification(
+      id: 0, title : "this is a title", body: "this is a body", payload: "this is a payload");
   print("hello");
 }
