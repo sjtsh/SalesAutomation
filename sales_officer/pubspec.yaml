@@ -17,6 +17,7 @@ dependencies:
   shimmer: ^2.0.0
   shared_preferences: ^2.0.6
   geolocator: ^7.7.1
+  notification_permissions: ^0.6.1
   nepali_utils: ^3.0.1
   url_launcher: ^6.0.0-nullsafety
   pdf: ^3.6.0

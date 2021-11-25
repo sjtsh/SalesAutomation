@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter/material.dart';
+import 'package:notification_permissions/notification_permissions.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SOLogInDetailService.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
@@ -102,19 +103,6 @@ class _SliderPersonalState extends State<SliderPersonal> {
     setState(() {
       elapsedTime = transformMilliSeconds(timeSoFar);
     });
-  }
-
-  transformMilliSeconds(int milliseconds) {
-    int hundreds = (milliseconds / 10).truncate();
-    int seconds = (hundreds / 100).truncate();
-    int minutes = (seconds / 60).truncate();
-    int hours = (minutes / 60).truncate();
-
-    String hoursStr = (hours % 60).toString().padLeft(2, '0');
-    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-
-    return "${hoursStr}h:${minutesStr}m:${secondsStr}s";
   }
 
   @override
@@ -340,6 +328,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
               child: GestureDetector(
                 onTap: () {
 
+                  NotificationPermissions.getNotificationPermissionStatus().then((value) => print(value));
                   fireAlarm();
                   // showDialog(
                   //     context: context,

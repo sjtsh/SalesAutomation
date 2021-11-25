@@ -50,10 +50,9 @@ calculateWeeklySales(context) {
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                          } catch (e) {
-                          }
-                          if (sku.MRP != "-2000.0") {
-                            weeklySalesLocal[3-n] += sku.MRP *
+                          } catch (e) {}
+                          if (sku.MRP != -2000.0) {
+                            weeklySalesLocal[3 - n] += sku.MRP *
                                     aDistributorOrderItem.primaryItemCount *
                                     sku.primaryCF +
                                 sku.MRP *
@@ -66,8 +65,8 @@ calculateWeeklySales(context) {
                     }
                   }
                 } else if (int.parse(
-                            aDistributorOrder.dateAndTime.substring(5, 7)) ==
-                    int.parse(time.substring(5, 7))-1) {
+                        aDistributorOrder.dateAndTime.substring(5, 7)) ==
+                    int.parse(time.substring(5, 7)) - 1) {
                   if (int.parse(
                           aDistributorOrder.dateAndTime.substring(8, 10)) >
                       int.parse(time.substring(8, 10)) +
@@ -91,10 +90,9 @@ calculateWeeklySales(context) {
                           try {
                             sku = allSKULocal.firstWhere(
                                 (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                          } catch (e) {
-                          }
-                          if (sku.MRP != "-2000.0") {
-                            weeklySalesLocal[3-n] += sku.MRP *
+                          } catch (e) {}
+                          if (sku.MRP != -2000.0) {
+                            weeklySalesLocal[3 - n] += sku.MRP *
                                     aDistributorOrderItem.primaryItemCount *
                                     sku.primaryCF +
                                 sku.MRP *
@@ -124,15 +122,14 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
-                            "", false);
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
+                            -2000, "", false);
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                        } catch (e) {
-                        }
-                        if (sku.MRP != "-2000.0") {
-                          monthlySalesLocal[11-n] += sku.MRP *
+                        } catch (e) {}
+                        if (sku.MRP != -2000.0) {
+                          monthlySalesLocal[11 - n] += sku.MRP *
                                   aDistributorOrderItem.primaryItemCount *
                                   sku.primaryCF +
                               sku.MRP *
@@ -145,8 +142,8 @@ calculateWeeklySales(context) {
                   }
                 }
               } else if (int.parse(
-                          aDistributorOrder.dateAndTime.substring(0, 4)) ==
-                  int.parse(time.substring(0, 4))-1) {
+                      aDistributorOrder.dateAndTime.substring(0, 4)) ==
+                  int.parse(time.substring(0, 4)) - 1) {
                 if (int.parse(aDistributorOrder.dateAndTime.substring(5, 7)) >
                     int.parse(time.substring(5, 7))) {
                   for (int n = 0; n < 12; n++) {
@@ -159,15 +156,14 @@ calculateWeeklySales(context) {
                               element.distributorOrderID ==
                               aDistributorOrder.distributorOrderID)
                           .forEach((aDistributorOrderItem) {
-                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "", -2000,
-                            "", false);
+                        SKU sku = SKU(1, "1", 1, 1, 1, 1, 1, 1, 1, 1, 1, "",
+                            -2000, "", false);
                         try {
                           sku = allSKULocal.firstWhere(
                               (e) => e.SKUID == aDistributorOrderItem.SKUID);
-                        } catch (e) {
-                        }
-                        if (sku.MRP != "-2000.0") {
-                          monthlySalesLocal[11-n] += sku.MRP *
+                        } catch (e) {}
+                        if (sku.MRP != -2000.0) {
+                          monthlySalesLocal[11 - n] += sku.MRP *
                                   aDistributorOrderItem.primaryItemCount *
                                   sku.primaryCF +
                               sku.MRP *

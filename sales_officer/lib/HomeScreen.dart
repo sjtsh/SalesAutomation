@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (i == 2) {
       return PendingScreen(refresh);
     } else if (i == 3) {
-      return MoreScreen(refresh,i);
+      return MoreScreen(refresh,i, _setIndex);
     } else {
       return Container();
     }
