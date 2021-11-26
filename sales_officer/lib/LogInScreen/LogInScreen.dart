@@ -48,22 +48,24 @@ class _LogInScreenState extends State<LogInScreen> {
       soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
       isRetailing = value.getBool("isRetailing") ?? false;
       if (isRetailing!) {
-        NepaliDateService().fetchNepaliDate().then((date){
-          watch.milliseconds = DateTime.parse(date).difference(DateTime.parse(value.getString("logInDateTime") ?? date)).inMilliseconds;
-          watch.milliseconds = watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
+        NepaliDateService().fetchNepaliDate().then((date) {
+          watch.milliseconds = DateTime.parse(date)
+              .difference(
+                  DateTime.parse(value.getString("logInDateTime") ?? date))
+              .inMilliseconds;
+          watch.milliseconds =
+              watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
           elapsedTime = transformMilliSeconds(watch.elapsedMillis);
         });
       } else {
         watch.milliseconds = value.getInt("retailingTime") ?? 0;
         elapsedTime = transformMilliSeconds(watch.elapsedMillis);
       }
-
     });
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
       subGroupService.fetchSubGroups(context).then((value) {
-        allSubGroupsLocal =
-            value.where((element) => !element.deactivated).toList();
+        allSubGroupsLocal = value;
 
         setState(() {
           loadingText = "Loading SKUs";
@@ -79,8 +81,7 @@ class _LogInScreenState extends State<LogInScreen> {
           });
           DistributorService distributorService = DistributorService();
           distributorService.fetchDistributors().then((value) {
-            allDistributorsLocal =
-                value.where((element) => !element.deactivated).toList();
+            allDistributorsLocal = value;
             setState(() {
               loadingText = "Loading Profile";
               percentage = 30;
@@ -139,8 +140,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   billingCompanyService
                       .fetchBillingCompanys(context)
                       .then((value) {
-                    allBillingCompanysLocal =
-                        value.where((element) => !element.deactivated).toList();
+                    allBillingCompanysLocal = value;
                     setState(() {
                       loadingText = "Loading Units";
                       percentage = 60;
@@ -155,18 +155,15 @@ class _LogInScreenState extends State<LogInScreen> {
                       ProductGroupService productGroupService =
                           ProductGroupService();
                       productGroupService.fetchProductGroups().then((value) {
-                        allProductGroupsLocal = value
-                            .where((element) => !element.deactivated)
-                            .toList();
+                        allProductGroupsLocal = value;
+                        allProductGroupsLocal.forEach((element) {print(element.productGroupID.toString() + " " + element.productGroupName);});
                         setState(() {
                           loadingText = "Loading Districts";
                           percentage = 80;
                         });
                         DistrictService districtService = DistrictService();
                         districtService.fetchDistricts(context).then((value) {
-                          allDistrictsLocal = value
-                              .where((element) => !element.deactivated)
-                              .toList();
+                          allDistrictsLocal = value;
                           setState(() {
                             loadingText = "Loading Familiarities";
                             percentage = 90;
@@ -176,9 +173,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           familiarityService
                               .fetchFamiliaritys(context)
                               .then((value) {
-                            allFamiliaritysLocal = value
-                                .where((element) => !element.deactivated)
-                                .toList();
+                            allFamiliaritysLocal = value;
                             setState(() {
                               loadingText = "Loading Distributors";
                               percentage = 100;
@@ -208,99 +203,7 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return isLoaded
-        ?
-        //     ? SafeArea(
-        //   child: Scaffold(
-        //     backgroundColor: Color(0xffF5F5F5),
-        //     body: Column(
-        //       children: [
-        //         Container(
-        //           margin: EdgeInsets.all(12),
-        //           alignment: Alignment.centerLeft,
-        //           child: InkWell(
-        //             onTap: () {
-        //               Navigator.pop(context);
-        //             },
-        //             child: Icon(
-        //               Icons.arrow_back,
-        //             ),
-        //           ),
-        //         ),
-        //         Expanded(
-        //           child: Column(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               Center(
-        //                 child: Container(
-        //                   height: 130,
-        //                   width: 100,
-        //                   decoration: BoxDecoration(
-        //                     shape: BoxShape.circle,
-        //                     color: Colors.green,
-        //                   ),
-        //                   child: Center(
-        //                     child: Text(
-        //                       getInitials(meSO!.SOName),
-        //                       style: TextStyle(
-        //                           color: Colors.white, fontSize: 30),
-        //                     ),
-        //                   ),
-        //                 ),
-        //               ),
-        //               SizedBox(
-        //                 height: 10,
-        //               ),
-        //               Text(
-        //                 meSO!.SOName,
-        //                 style: TextStyle(
-        //                     fontWeight: FontWeight.bold, fontSize: 18),
-        //               ),
-        //               SizedBox(
-        //                 height: 5,
-        //               ),
-        //               Text(
-        //                 "Sales Officer",
-        //                 style: TextStyle(color: Colors.grey, fontSize: 18),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //         Column(
-        //           children: [
-        //             isSelected
-        //                 ? Text(
-        //               "Please select your today's beat",
-        //               style: TextStyle(fontSize: 18),
-        //             )
-        //                 : Container(),
-        //             Padding(
-        //               padding: const EdgeInsets.all(18.0),
-        //               child: AnimatedContainer(
-        //                 duration: Duration(milliseconds: 500),
-        //                 clipBehavior: Clip.hardEdge,
-        //                 height: isSelected ? 60 * 6 : null,
-        //                 decoration: BoxDecoration(
-        //                   color: Colors.white,
-        //                   borderRadius: BorderRadius.circular(12),
-        //                   boxShadow: [
-        //                     BoxShadow(
-        //                       color: Colors.grey.withOpacity(0.5),
-        //                       offset: Offset(0, 2),
-        //                       blurRadius: 3,
-        //                     ),
-        //                   ],
-        //                 ),
-        //                 child:
-        //                 isSelected ? SelectBeat() : JointWorking(select),
-        //               ),
-        //             )
-        //           ],
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // )
-        HomeScreen()
+        ? HomeScreen()
         : SafeArea(
             child: Scaffold(
               backgroundColor: Colors.white,

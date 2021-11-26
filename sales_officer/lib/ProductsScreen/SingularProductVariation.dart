@@ -29,7 +29,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
   Widget build(BuildContext context) {
     SKUStock mySKUStock;
     SKU sku =
-    allSKULocal.firstWhere((element) => element.SKUID == widget.item.SKUID);
+        allSKULocal.firstWhere((element) => element.SKUID == widget.item.SKUID);
     try {
       mySKUStock = allSKUStocksLocal.firstWhere((element) =>
           element.distributorID == widget.currentDistributor.distributorID &&
@@ -62,55 +62,53 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
             ),
             Row(
               children: [
-                allSKUStocksLocal == null
-                    ? Container()
-                    : Container(
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Stock: ",
+                Container(
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Stock: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.green,
+                          ),
+                        ),
+                        mySKUStock.primaryStock == 0
+                            ? Container()
+                            : Text(
+                                mySKUStock.primaryStock.toString() +
+                                    "${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.green,
                                 ),
                               ),
-                              mySKUStock.primaryStock == 0
-                                  ? Container()
-                                  : Text(
-                                      mySKUStock.primaryStock.toString() +
-                                          "${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                              mySKUStock.primaryStock == 0 ||
-                                      mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : SizedBox(width: 5),
-                              mySKUStock.alternativeStock == 0
-                                  ? Container()
-                                  : Text(
-                                      mySKUStock.alternativeStock.toString() +
-                                          "${allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ),
+                        mySKUStock.primaryStock == 0 ||
+                                mySKUStock.alternativeStock == 0
+                            ? Container()
+                            : SizedBox(width: 5),
+                        mySKUStock.alternativeStock == 0
+                            ? Container()
+                            : Text(
+                                mySKUStock.alternativeStock.toString() +
+                                    "${allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.green,
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
                 Expanded(child: Container()),
                 Container(
                   height: 30,
@@ -134,7 +132,10 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                         ),
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                          hintText: allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName,
+                          hintText: allUnitsLocal
+                              .firstWhere((element) =>
+                                  element.unitID == sku.primaryUnitID)
+                              .unitName,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),
                           border: InputBorder.none,
@@ -168,7 +169,10 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                         ),
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
-                          hintText: allUnitsLocal.firstWhere((element) => element.unitID == sku.alternativeUnitID).unitName,
+                          hintText: allUnitsLocal
+                              .firstWhere((element) =>
+                                  element.unitID == sku.alternativeUnitID)
+                              .unitName,
                           border: InputBorder.none,
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.3)),

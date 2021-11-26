@@ -8,7 +8,7 @@ class ProductGroup {
   factory ProductGroup.fromJson(Map<String, dynamic> json) {
     return ProductGroup(
       json['productGroupID'],
-      json['productGroupName'] ,
+      json['productGroupName'],
       json['deactivated'] == 0 ? false : true,
     );
   }

@@ -6,12 +6,10 @@ import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import '../../Database.dart';
 
 class ExpandableHeader extends StatefulWidget {
-  final List listOfProducts;
-  final List item;
+  final MapEntry item;
   final bool isMTD;
 
   ExpandableHeader(
-    this.listOfProducts,
     this.item,
     this.isMTD,
   );
@@ -48,10 +46,7 @@ class _ExpandableHeaderState extends State<ExpandableHeader> {
         height: 40,
         child: Row(
           children: [
-            Text((widget.listOfProducts
-                            .where((element) => element[1][0] != 0)
-                            .toList()
-                            .indexOf(widget.item) +
+            Text((widget.item.key +
                         1)
                     .toString() +
                 "."),
@@ -61,13 +56,13 @@ class _ExpandableHeaderState extends State<ExpandableHeader> {
             Expanded(
               child: Text(
                 allSKULocal
-                    .firstWhere((element) => widget.item[0] == element.SKUID)
+                    .firstWhere((element) => widget.item.value[0] == element.SKUID)
                     .SKUName
                     .substring(0, 20),
               ),
             ),
             Text(
-              "Rs. ${widget.isMTD ? widget.item[1][0] : widget.item[1][1]}",
+              "Rs. ${widget.isMTD ? widget.item.value[1][0] : widget.item.value[1][1]}",
             ),
           ],
         ),

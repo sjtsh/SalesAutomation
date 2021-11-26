@@ -14,7 +14,8 @@ class BezierCard extends StatefulWidget {
   final Function refresh;
 
   BezierCard(
-    this.toggleValue, this.refresh,
+    this.toggleValue,
+    this.refresh,
   );
 
   @override
@@ -33,8 +34,6 @@ class _BezierCardState extends State<BezierCard> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return SizedBox(
       height: !aCondition
           ? 382.0
@@ -78,15 +77,14 @@ class _BezierCardState extends State<BezierCard> {
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       height: 100,
                       child: Hero(
-
                         tag: "sajat",
                         child: BezierChartPersonal(
                             e ? weeklySalesLocal : monthlySalesLocal,
                             widget.toggleValue),
                       ),
                     ),
-                    BezierData(changeExpanded, e,
-                        widget.toggleValue,widget.refresh),
+                    BezierData(
+                        changeExpanded, e, widget.toggleValue, widget.refresh),
                   ],
                 ),
               ),
