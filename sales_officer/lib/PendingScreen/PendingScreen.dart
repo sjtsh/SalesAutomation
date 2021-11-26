@@ -24,7 +24,8 @@ class PendingScreen extends StatefulWidget {
 
 class _PendingScreenState extends State<PendingScreen> {
   int index = 0;
-  bool isTabPending = true;
+ // bool isTabPending = true;
+  int page = 0;
   PageController pageController = PageController();
 
   @override
@@ -49,7 +50,7 @@ class _PendingScreenState extends State<PendingScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      isTabPending = true;
+                      page =0;
                       pageController.previousPage(
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
@@ -60,7 +61,7 @@ class _PendingScreenState extends State<PendingScreen> {
                       border: Border(
                         top: BorderSide(color: Colors.black.withOpacity(0.1)),
                         bottom: BorderSide(
-                          color: isTabPending
+                          color: page == 0
                               ? Colors.blue
                               : Colors.black.withOpacity(0.1),
                           width: 2,
@@ -71,7 +72,7 @@ class _PendingScreenState extends State<PendingScreen> {
                       child: Text(
                         "PENDING",
                         style: TextStyle(
-                            color: isTabPending
+                            color: page == 0
                                 ? Colors.blue
                                 : Colors.black.withOpacity(0.5)),
                       ),
@@ -83,7 +84,7 @@ class _PendingScreenState extends State<PendingScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      isTabPending = false;
+                     page = 1;
                       pageController.nextPage(
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
@@ -94,9 +95,9 @@ class _PendingScreenState extends State<PendingScreen> {
                       border: Border(
                         top: BorderSide(color: Colors.black.withOpacity(0.1)),
                         bottom: BorderSide(
-                          color: isTabPending
-                              ? Colors.black.withOpacity(0.1)
-                              : Colors.blue,
+                          color:  page == 1
+                              ? Colors.blue
+                              : Colors.black.withOpacity(0.1),
                           width: 2,
                         ),
                       ),
@@ -105,9 +106,43 @@ class _PendingScreenState extends State<PendingScreen> {
                       child: Text(
                         "APPROVED",
                         style: TextStyle(
-                            color: isTabPending
-                                ? Colors.black.withOpacity(0.5)
-                                : Colors.blue),
+                            color: page == 1
+                                ? Colors.blue
+                                : Colors.black.withOpacity(0.5)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      page = 2;
+                      pageController.nextPage(
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeIn);
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Colors.black.withOpacity(0.1)),
+                        bottom: BorderSide(
+                          color:  page == 2
+                              ? Colors.blue
+                              : Colors.black.withOpacity(0.1),
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "DISPATCHED",
+                        style: TextStyle(
+                            color: page == 2
+                                ? Colors.blue
+                                : Colors.black.withOpacity(0.5)),
                       ),
                     ),
                   ),
@@ -132,27 +167,32 @@ class _PendingScreenState extends State<PendingScreen> {
                   return PageView(
                     onPageChanged: (int i) {
                       setState(() {
-                        if (i == 1) {
-                          isTabPending = false;
-                        } else if (i == 0) {
-                          isTabPending = true;
+                        if (i == 0) {
+                          page =0;
+                        } else if (i == 1) {
+                          page = 1;
+                        }else if (i == 2){
+                          page = 2;
                         }
                       });
                     },
                     controller: pageController,
                     children: [
                       OrdersList(distributorOrders, false, widget.refresh),
-                      OrdersList(distributorOrders, true, widget.refresh)
+                      OrdersList(distributorOrders, true, widget.refresh),
+                      OrdersList(distributorOrders, false, widget.refresh)
                     ],
                   );
                 }
                 return PageView(
                   onPageChanged: (int i) {
                     setState(() {
-                      if (i == 1) {
-                        isTabPending = false;
-                      } else if (i == 0) {
-                        isTabPending = true;
+                      if (i == 0) {
+                        page =0;
+                      } else if (i == 1) {
+                        page = 1;
+                      }else if (i == 2){
+                        page = 2;
                       }
                     });
                   },
