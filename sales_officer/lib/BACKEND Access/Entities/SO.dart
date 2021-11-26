@@ -49,8 +49,12 @@ class SO {
       json['deactivated'] == 0 ? false : true,
       json['joiningDate'],
       homeLocation: json['homeLocation'],
-      PAN: int.tryParse(json['PAN'].toStringAsFixed(0)),
-      phone: int.tryParse(json['phone'].toStringAsFixed(0)),
+      PAN: json['PAN'] == null
+          ? null
+          : int.tryParse(json['PAN'].toStringAsFixed(0)),
+      phone: json['phone'] == null
+          ? null
+          : int.tryParse(json['phone'].toStringAsFixed(0)),
       img: json['img'],
       email: json['email'],
       bankAccountName: json['bankAccountName'],
@@ -58,7 +62,11 @@ class SO {
       bankName: json['bankName'],
       bankAddress: json['bankAddress'],
       reportingManager: json['reportingManager'],
-      maritalStatus: json['maritalStatus'] == 0 ? false : true,
+      maritalStatus: json['maritalStatus'] == null
+          ? null
+          : json['maritalStatus'] == 0
+          ? false
+          : true,
       gender: json['gender'],
       DOB: json['DOB'],
     );
