@@ -68,7 +68,7 @@ class FAQExpandablePanel2 extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(child: Text(e)),
-                      Icon(Icons.keyboard_arrow_down_sharp)
+                      Icon(Icons.keyboard_arrow_up)
                     ],
                   ),
                   Text(

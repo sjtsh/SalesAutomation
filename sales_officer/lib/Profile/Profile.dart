@@ -5,6 +5,7 @@ import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
 import 'package:sales_officer/Profile/Header/Online.dart';
 import 'package:sales_officer/Profile/SliderPersonal.dart';
+import 'package:sales_officer/Profile/StatScreen.dart';
 import 'package:shimmer/shimmer.dart';
 import '../Database.dart';
 import 'BezierCard/BezierCard.dart';
@@ -40,6 +41,7 @@ class _ProfileState extends State<Profile> {
         //   ),
         // ),
         SliderPersonal(refreshChart),
+        StatScreen(),
         BezierCard(isRetailing!, widget.refresh),
         Achievements(),
       ],

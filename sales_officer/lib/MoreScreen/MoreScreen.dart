@@ -12,6 +12,7 @@ import 'package:sales_officer/TourPlanScreen/TourPlanScreen.dart';
 import 'ActivitiesScreen/ActivitiesScreen.dart';
 import 'GoogleMap.dart';
 import 'FAQScreen/FAQScreen.dart';
+import 'ProductsScreen/OurProductsScreen.dart';
 
 class MoreScreen extends StatelessWidget {
   final Function refresh;
@@ -36,8 +37,14 @@ class MoreScreen extends StatelessWidget {
           Icons.work_outline_sharp,
           Colors.pinkAccent,
           "Tasks",
-          ActivitiesScreen(refresh)
+          ActivitiesScreen(refresh),
         ],
+        [
+          Icons.production_quantity_limits,
+          Colors.yellow,
+          "Our Products",
+          OurProductsScreen(refresh),
+        ]
       ]
           .map(
             (e) => Padding(
@@ -58,11 +65,9 @@ class MoreScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       if (e[2] == "Performance") {
-
                         _setIndex(0);
                       } else {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return e[3] as Widget;
                         }));
                       }

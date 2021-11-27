@@ -23,6 +23,7 @@ List heading = [
   "YTD Sales",//14
   "View Stock",//15
   "Activities",//16
+  "Our Products",//17
 ];
 
 class Header extends StatefulWidget {
