@@ -78,36 +78,36 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                         ),
-                        // SizedBox(width: 12),
-                        // Container(
-                        //   clipBehavior: Clip.hardEdge,
-                        //   decoration: BoxDecoration(
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Material(
-                        //     color: Colors.white,
-                        //     child: InkWell(
-                        //       onTap: (){
-                        //
-                        //       },
-                        //       // onTap: () {
-                        //       //   setState(() {
-                        //       //     isEditing = true;
-                        //       //   });
-                        //       // },
-                        //       child: isEditing
-                        //           ? Container()
-                        //           : Padding(
-                        //               padding: const EdgeInsets.all(8.0),
-                        //               child: Icon(
-                        //                 Icons.edit,
-                        //                 size: 30,
-                        //               ),
-                        //             ),
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(width: 12),
+                        SizedBox(width: 12),
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Material(
+                            color: Colors.white,
+                            child: InkWell(
+                              onTap: (){
+
+                              },
+                              // onTap: () {
+                              //   setState(() {
+                              //     isEditing = true;
+                              //   });
+                              // },
+                              child: isEditing
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(
+                                        Icons.edit,
+                                        size: 30,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 12),
                       ],
                     ),
                   ),

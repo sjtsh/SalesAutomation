@@ -5,6 +5,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrderItem.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUDistributorWise.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/mapsIntent.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/shareOrder.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorOrderItemService.dart';
@@ -365,7 +366,6 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                     widget.e.joint ? "Joint" : "Single"
                                   ],
                                   ["Remarks :", "${widget.e.remarks}"],
-                                  ["Location :", "${widget.e.lat}, ${widget.e.lng}"]
                                 ]
                                     .map(
                                       (e) => e[1] == "null" || e[1]=="-1" || e[1] =="-2000.0, -2000.0" ? Container() :
@@ -392,6 +392,60 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       ),
                                     )
                                     .toList(),
+                              ),
+
+                              Column(
+                                children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5.0, horizontal: 12),
+                                    child: Row(
+                                      children: [
+                                        Text("Geo: "),
+                                        Expanded(child: Container()),
+                                        Container(
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Material(
+                                            color: Colors.white,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(12),
+                                                border: Border.all(color: Colors.blue),
+                                              ),
+                                              child: InkWell(
+                                                onTap: () {
+                                                    MapUtils.openMap(widget.e.lat,
+                                                        widget.e.lng, context);
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 3, bottom: 3, right: 8, left: 8),
+                                                  child: Builder(builder: (context) {
+                                                    return Center(
+                                                      child: Text(
+                                                        "View on Maps",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 12),
+                                                      ),
+                                                    );
+                                                  }),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colors.black.withOpacity(0.1),
+                                    thickness: 1,
+                                  ),
+                                ],
                               ),
                               ExpandablePanel(
                                 collapsed: OrderItemsHeader(),

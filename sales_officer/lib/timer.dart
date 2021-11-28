@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -40,4 +41,9 @@ fireAlarm() {
   NotificationService().showNotification(
       id: 0, title : "this is a title", body: "this is a body", payload: "this is a payload");
   print("hello");
+}
+
+runAlarm(){
+
+  AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
 }

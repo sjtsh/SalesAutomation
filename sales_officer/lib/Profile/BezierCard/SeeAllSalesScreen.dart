@@ -201,9 +201,6 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                                       }),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 74,
-                                  ),
                                 ],
                               ),
                             ),
@@ -212,6 +209,7 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                       )
                       .toList()),
             ),
+            SizedBox(height: 12,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Flex(
@@ -316,6 +314,7 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                 ],
               ),
             ),
+            SizedBox(height: 12,),
           ],
         ),
       ),

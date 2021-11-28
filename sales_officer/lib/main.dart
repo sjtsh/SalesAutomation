@@ -6,6 +6,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +24,9 @@ Future<void> main() async {
       macOS: MacOSInitializationSettings());
   // await notifications.initialize(initializationSettings,
   //     onSelectNotification: (String? payload)=> print("selected a notification $payload"));
-  await notifications.initialize(initializationSettings,);
+  await notifications.initialize(
+    initializationSettings,
+  );
   AndroidAlarmManager.initialize();
 }
 
@@ -33,7 +36,6 @@ class Fusers extends StatefulWidget {
 }
 
 class _FusersState extends State<Fusers> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +55,6 @@ class _FusersState extends State<Fusers> {
             if (snapshot.hasData) {
               SharedPreferences prefs = snapshot.data;
               meSOID = prefs.getInt('meSOID') ?? 0;
-
               if (meSOID! > 0) {
                 return LogInScreen();
               } else {
@@ -65,11 +66,12 @@ class _FusersState extends State<Fusers> {
                 );
               }
             }
-
             return SafeArea(
               child: Scaffold(
                 backgroundColor: Color(0xffF5F5F5),
-                body: SignIn(),
+                body: Center(
+                  child: SvgPicture.asset("icons/logo.svg"),
+                ),
               ),
             );
           }),

@@ -50,16 +50,24 @@ class Distributor {
       json['deactivated'] == 0 ? false : true,
       distributorERPID: json['distributorERPID'],
       ownerName: json['ownerName'],
-      phone: int.tryParse(json['phone'].toStringAsFixed(0)),
-      mobileNumber: int.tryParse(json['mobileNumber'].toStringAsFixed(0)),
-      PAN: int.tryParse(json['PAN'].toStringAsFixed(0)),
+      phone: json['phone'] == null
+          ? null
+          : int.tryParse(json['phone'].toStringAsFixed(0)),
+      mobileNumber: json['mobileNumber'] == null
+          ? null
+          : int.tryParse(json['mobileNumber'].toStringAsFixed(0)),
+      PAN: json['PAN'] == null
+          ? null
+          : int.tryParse(json['PAN'].toStringAsFixed(0)),
       location: json['location'],
       img: json['img'],
       bankAccountName: json['bankAccountName'],
       bankAccountNumber: json['bankAccountNumber'],
       bankName: json['bankName'],
       bankAddress: json['bankAddress'],
-      VAT: int.tryParse(json['VAT'].toStringAsFixed(0)),
+      VAT: json['VAT'] == null
+          ? null
+          : int.tryParse(json['VAT'].toStringAsFixed(0)),
       lat: json['lat'],
       lng: json['lng'],
     );

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/checkLogInStatus.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
@@ -16,6 +17,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/SODistributorConnectionS
 import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
+import 'package:sales_officer/DidnotEndDay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
@@ -44,31 +46,14 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedPreferences.getInstance().then((value) {
-      soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
-      isRetailing = value.getBool("isRetailing") ?? false;
-      if (isRetailing!) {
-        NepaliDateService().fetchNepaliDate().then((date) {
-          watch.milliseconds = DateTime.parse(date)
-              .difference(
-                  DateTime.parse(value.getString("logInDateTime") ?? date))
-              .inMilliseconds;
-          watch.milliseconds =
-              watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
-          elapsedTime = transformMilliSeconds(watch.elapsedMillis);
-        });
-      } else {
-        watch.milliseconds = value.getInt("retailingTime") ?? 0;
-        elapsedTime = transformMilliSeconds(watch.elapsedMillis);
-      }
-    });
+    checkLogInStatus(context);
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
       subGroupService.fetchSubGroups(context).then((value) {
         allSubGroupsLocal = value;
 
         setState(() {
-          loadingText = "Loading SKUs";
+          loadingText = "Loading SKUs...";
           percentage = 10;
         });
         SKUService skuService = SKUService();
@@ -76,14 +61,14 @@ class _LogInScreenState extends State<LogInScreen> {
           allSKULocal = value;
           allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
           setState(() {
-            loadingText = "Loading SKU Distributor Wise";
+            loadingText = "Loading Distributors...";
             percentage = 20;
           });
           DistributorService distributorService = DistributorService();
           distributorService.fetchDistributors().then((value) {
             allDistributorsLocal = value;
             setState(() {
-              loadingText = "Loading Profile";
+              loadingText = "Loading Profile...";
               percentage = 30;
             });
             SOService soService = SOService();
@@ -102,81 +87,81 @@ class _LogInScreenState extends State<LogInScreen> {
                 );
               }
               SODistributorConnectionService soDistributorConnectionService =
-                  SODistributorConnectionService();
+              SODistributorConnectionService();
               soDistributorConnectionService
                   .fetchSODistributorConnections()
                   .then((newValue) {
                 allSODistributorConnectionsLocal = newValue;
                 personalDistributorsLocal =
                     allDistributorsLocal.where((element) {
-                  bool condition = false;
-                  allSODistributorConnectionsLocal.forEach((element1) {
-                    if (element1.SOID == meSO?.SOID &&
-                        element1.distributorID == element.distributorID) {
-                      condition = true;
-                    }
-                  });
-                  return condition;
-                }).toList();
+                      bool condition = false;
+                      allSODistributorConnectionsLocal.forEach((element1) {
+                        if (element1.SOID == meSO?.SOID &&
+                            element1.distributorID == element.distributorID) {
+                          condition = true;
+                        }
+                      });
+                      return condition;
+                    }).toList();
                 setState(() {
-                  loadingText = "Calculating Sales";
+                  loadingText = "Calculating Sales...";
                   percentage = 40;
                 });
                 calculateWeeklySales(context);
-                calculateSales(setLoaded, context);
+                calculateSales(context);
                 SKUDistributorWiseService skuDistributorWiseService =
-                    SKUDistributorWiseService();
+                SKUDistributorWiseService();
                 skuDistributorWiseService
                     .fetchSKUDistributorWises()
                     .then((value) {
                   allSKUDistributorWiseLocal = value;
                   setState(() {
-                    loadingText = "Loading Billing Companies";
+                    loadingText = "Loading Billing Companies...";
                     percentage = 50;
                   });
                 }).then((value) {
                   BillingCompanyService billingCompanyService =
-                      BillingCompanyService();
+                  BillingCompanyService();
                   billingCompanyService
                       .fetchBillingCompanys(context)
                       .then((value) {
                     allBillingCompanysLocal = value;
                     setState(() {
-                      loadingText = "Loading Units";
+                      loadingText = "Loading Units...";
                       percentage = 60;
                     });
                     UnitService unitService = UnitService();
                     unitService.fetchUnits().then((value) {
                       allUnitsLocal = value;
                       setState(() {
-                        loadingText = "Loading Product Groups";
+                        loadingText = "Loading Product Groups...";
                         percentage = 70;
                       });
                       ProductGroupService productGroupService =
-                          ProductGroupService();
+                      ProductGroupService();
                       productGroupService.fetchProductGroups().then((value) {
                         allProductGroupsLocal = value;
-                        allProductGroupsLocal.forEach((element) {print(element.productGroupID.toString() + " " + element.productGroupName);});
                         setState(() {
-                          loadingText = "Loading Districts";
+                          loadingText = "Loading Districts...";
                           percentage = 80;
                         });
                         DistrictService districtService = DistrictService();
                         districtService.fetchDistricts(context).then((value) {
                           allDistrictsLocal = value;
                           setState(() {
-                            loadingText = "Loading Familiarities";
+                            loadingText = "Almost Done...";
                             percentage = 90;
                           });
                           FamiliarityService familiarityService =
-                              FamiliarityService();
+                          FamiliarityService();
                           familiarityService
                               .fetchFamiliaritys(context)
                               .then((value) {
                             allFamiliaritysLocal = value;
                             setState(() {
-                              loadingText = "Loading Distributors";
+                              loadingText = "Thank You for your patience";
                               percentage = 100;
+                              isLoaded = true;
                             });
                           });
                         });
@@ -200,10 +185,18 @@ class _LogInScreenState extends State<LogInScreen> {
     });
   }
 
+  setEndDay() {
+    setState(() {
+      didnotEndDay = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoaded
-        ? HomeScreen()
+        ? didnotEndDay
+            ? DidnotEndDay(setEndDay)
+            : HomeScreen()
         : SafeArea(
             child: Scaffold(
               backgroundColor: Colors.white,
@@ -227,7 +220,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("$loadingText....($percentage%)"),
+                        Text("$loadingText($percentage%)"),
                       ],
                     ),
                     // Text("($percentage%)")

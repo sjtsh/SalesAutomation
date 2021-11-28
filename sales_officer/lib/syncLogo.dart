@@ -38,7 +38,9 @@ class _SyncIconState extends State<SyncIcon> with TickerProviderStateMixin {
   }
 
   void close() {
-    tooltip.close();
+    if(tooltip.isOpen){
+      tooltip.close();
+    }
   }
 
   @override

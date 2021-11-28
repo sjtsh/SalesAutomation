@@ -10,7 +10,6 @@ class Achievements extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         padding: EdgeInsets.only(top: 6),
-        height: 150,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -24,38 +23,44 @@ class Achievements extends StatelessWidget {
         child: Column(
           children: [
             AchievementsHeader(),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset(
-                        "assets/BestSOTrophy.png",
-                        fit: BoxFit.contain,
-                      ),
+            Row(
+              children: [
+              SizedBox(width: 12,),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/BestSOTrophy.png",
+                      width: 80,
+                      fit: BoxFit.contain,
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset(
-                        "assets/BestPerformerTrophy.png",
-                        fit: BoxFit.contain,
-                      ),
+                    Image.asset(
+                      "assets/BestPerformerTrophy.png",
+                      width: 80,
+                      fit: BoxFit.contain,
                     ),
+                  ],
+                ),
+                Expanded(
+                  child: Image.asset(
+                    "assets/BestEmployeeTrophy.png",
+                    fit: BoxFit.contain,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.asset(
-                        "assets/BestEmployeeTrophy.png",
-                        fit: BoxFit.contain,
-                      ),
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/BestPerformerTrophy.png",
+                      width: 80,
+                      fit: BoxFit.contain,
+                    ),Image.asset(
+                      "assets/BestSOTrophy.png",
+                      width: 80,
+                      fit: BoxFit.contain,
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                SizedBox(width: 12,),
+              ],
             )
           ],
         ),
