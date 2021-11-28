@@ -60,7 +60,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
         });
       });
       startWatch();
-      // AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
+      runAlarm();
     } else {
       stopWatch();
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
@@ -330,6 +330,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
 
                   NotificationPermissions.getNotificationPermissionStatus().then((value) => print(value));
                   fireAlarm();
+                  print("hello world here");
                   // showDialog(
                   //     context: context,
                   //     builder: (_) {

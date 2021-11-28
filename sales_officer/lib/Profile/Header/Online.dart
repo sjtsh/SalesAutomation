@@ -16,9 +16,39 @@ class Online extends StatelessWidget {
             color: Colors.black,
           ),
           child: Center(
-            child: Text(
-              getInitials(meSO!.SOName),
-              style: TextStyle(color: Colors.white, fontSize: 30),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      getInitials(meSO!.SOName),
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        "assets/BestSOTrophy.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Expanded(
+                      child: Image.asset(
+                        "assets/BestEmployeeTrophy.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Expanded(
+                      child: Image.asset(
+                        "assets/BestPerformerTrophy.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
         ),

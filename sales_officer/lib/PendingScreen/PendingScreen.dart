@@ -156,12 +156,10 @@ class _PendingScreenState extends State<PendingScreen> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<DistributorOrder>> snapshot) {
                 if (snapshot.hasData) {
-                  List<DistributorOrder> distributorOrders = [];
-                  snapshot.data!.forEach((element) {
-                    if (element.SOID == meSO!.SOID) {
-                      distributorOrders.add(element);
-                    }
-                  });
+                  List<DistributorOrder> distributorOrders = snapshot.data!
+                      .where((element) =>
+                          (element.SOID == meSO!.SOID) && !element.deactivated)
+                      .toList();
                   return PageView(
                     onPageChanged: (int i) {
                       setState(() {

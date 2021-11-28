@@ -25,7 +25,7 @@ class _NewOrderState extends State<NewOrder> {
 
   void setDistributors(List<Distributor> searchedDistributors) {
     setState(() {
-      searchedDistributorsLocal = searchedDistributors;
+      searchedDistributorsLocal = searchedDistributors.where((element) => !element.deactivated).toList();
       if (searchedDistributorsLocal.length > 0) {
         isSearching = true;
         isNotFound = false;
@@ -95,7 +95,7 @@ class _NewOrderState extends State<NewOrder> {
                                 searchForDistributor(
                                     _distributor, setDistributors);
                               } else {
-                                setDistributors(personalDistributorsLocal);
+                                setDistributors(personalDistributorsLocal.where((element) => !element.deactivated).toList());
                               }
                             },
                           ),
@@ -128,7 +128,7 @@ class _NewOrderState extends State<NewOrder> {
                 child: SingleChildScrollView(
                     child: !isSearching
                       ? Column(
-                          children: personalDistributorsLocal
+                          children: personalDistributorsLocal.where((element) => !element.deactivated).toList()
                               .map(
                                 (item) => DistributorList(
                                   item,

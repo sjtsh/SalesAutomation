@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sales_officer/MapIntent/mapsIntent.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/mapsIntent.dart';
 import 'package:sales_officer/MoreScreen/GoogleMap.dart';
 import 'BACKEND Access/Entities/Distributor.dart';
 import 'BACKEND Access/Entities/DistributorOrder.dart';
@@ -221,9 +221,10 @@ class DistributorInfo extends StatelessWidget {
                     ),
                     Column(
                       children: [
-
-
-                        ["DB Id: ", "DI${currentDistributor.distributorID.toString().padLeft(4, '0')}"],
+                        [
+                          "DB Id: ",
+                          "DI${currentDistributor.distributorID.toString().padLeft(4, '0')}"
+                        ],
 
                         ["Name: ", currentDistributor.distributorName],
                         ["Owner Name: ", currentDistributor.ownerName],
@@ -297,33 +298,42 @@ class DistributorInfo extends StatelessWidget {
                             clipBehavior: Clip.hardEdge,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.blue),
                             ),
-                            child: InkWell(
-                              onTap: () {
-                                if (currentDistributor.lat != null &&
-                                    currentDistributor.lat != null) {
-                                  MapUtils.openMap(currentDistributor.lat!,
-                                      currentDistributor.lng!, context);
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text("Unable to open Maps")));
-                                }
-                              },
+                            child: Material(
+                              color: Colors.white,
                               child: Container(
-                                margin: EdgeInsets.only(
-                                    top: 3, bottom: 3, right: 8, left: 8),
-                                child: Builder(builder: (context) {
-                                  return Center(
-                                    child: Text(
-                                      "View on Maps",
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 12),
-                                    ),
-                                  );
-                                }),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: Colors.blue),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    if (currentDistributor.lat != null &&
+                                        currentDistributor.lat != null) {
+                                      MapUtils.openMap(currentDistributor.lat!,
+                                          currentDistributor.lng!, context);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text("Unable to open Maps")));
+                                    }
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: 3, bottom: 3, right: 8, left: 8),
+                                    child: Builder(builder: (context) {
+                                      return Center(
+                                        child: Text(
+                                          "View on Maps",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -385,39 +395,39 @@ class DistributorInfo extends StatelessWidget {
                           )
                           .toList(),
                     ),
-                    // Container(
-                    //   clipBehavior: Clip.hardEdge,
-                    //   margin: EdgeInsets.all(12),
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(12),
-                    //   ),
-                    //   child: Material(
-                    //     color: Colors.white,
-                    //     child: InkWell(
-                    //       onTap: () {},
-                    //       child: Container(
-                    //         height: 50,
-                    //         color: Color(0xffF5F5F5),
-                    //         child: Builder(builder: (context) {
-                    //           return Row(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             children: [
-                    //               Icon(
-                    //                 Icons.add,
-                    //                 color: Colors.black,
-                    //                 size: 25,
-                    //               ),
-                    //               Text(
-                    //                 "MORE FIELDS",
-                    //                 style: TextStyle(color: Colors.black),
-                    //               ),
-                    //             ],
-                    //           );
-                    //         }),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      margin: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Material(
+                        color: Colors.white,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Container(
+                            height: 50,
+                            color: Color(0xffF5F5F5),
+                            child: Builder(builder: (context) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Colors.black,
+                                    size: 25,
+                                  ),
+                                  Text(
+                                    "MORE FIELDS",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              );
+                            }),
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 74,
                     ),

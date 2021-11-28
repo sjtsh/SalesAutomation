@@ -15,7 +15,6 @@ class BillingCompany {
       int.parse(json['billingCompanyID'].toStringAsFixed(0)),
       json['billingCompanyName'],
       json['deactivated'] == 0 ? false : true,
-      // PAN: int.tryParse(((json['PAN'] as double?).toString().toStringAsFixed(0))),
       PAN: json['PAN'] == null
           ? null
           : int.tryParse(json['PAN'].toStringAsFixed(0)),

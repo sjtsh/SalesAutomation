@@ -190,9 +190,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         builder: (BuildContext context,
                                             AsyncSnapshot<List<SKUStock>>
                                                 snapshot) {
-                                          allSKUStocksLocal = snapshot.data!;
+                                          allSKUStocksLocal = snapshot.data!.where((element) => !element.deactivated).toList();
                                           return ProductList(
-                                            allSubGroupsLocal,
+                                            allSubGroupsLocal.where((element) => !element.deactivated).toList(),
                                             widget._scrollController,
                                             _textEditingControllers,
                                             widget.currentDistributor,

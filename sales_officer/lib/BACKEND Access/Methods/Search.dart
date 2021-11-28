@@ -45,7 +45,7 @@ searchForDistributor(String distributor, Function setDistributors) {
       });
     }
   }
-  setDistributors(distributors);
+  setDistributors(distributors.where((element) => !element.deactivated).toList());
 }
 
 searchForProducts(String product, Function setProducts) {
@@ -83,5 +83,5 @@ searchForProducts(String product, Function setProducts) {
       });
     }
   }
-  setProducts(products);
+  setProducts(products.where((element) => !element.deactivated).toList());
 }

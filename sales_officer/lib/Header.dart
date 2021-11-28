@@ -102,13 +102,13 @@ class _HeaderState extends State<Header> {
             color: Colors.white,
             child: InkWell(
               onTap: () {
-                if (widget.isNotBackIcon) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              NotificationScreen(widget.refresh)));
-                }
+                // if (widget.isNotBackIcon) {
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) =>
+                //               NotificationScreen(widget.refresh)));
+                // }
               },
               child: Container(
                 height: 50,

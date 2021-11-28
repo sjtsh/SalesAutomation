@@ -8,7 +8,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 
 import '../../Database.dart';
 
-calculateSales(setLoaded, context) {
+calculateSales(context) {
   NepaliDateService nepaliDateService = NepaliDateService();
   nepaliDateService.fetchNepaliDate().then((time) {
     DistributorOrderService distributorOrderService = DistributorOrderService();
@@ -277,7 +277,6 @@ calculateSales(setLoaded, context) {
             ),
           );
         });
-        setLoaded();
       });
     });
   });

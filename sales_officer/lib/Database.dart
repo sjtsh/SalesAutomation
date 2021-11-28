@@ -35,6 +35,7 @@ int? meSOID;
 int? soLogInDetailID;
 bool? isRetailing;
 String meBeat = "";
+bool didnotEndDay = false;
 
 bool? isJoint;
 Map products = {};
