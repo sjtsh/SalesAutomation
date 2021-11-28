@@ -37,6 +37,7 @@ dependencies:
   rxdart:
   flutter_native_timezone:
   device_info_plus:
+  timezone: ^0.8.0
 
 #  slider_button:
 #  sliding_switch: ^1.0.0

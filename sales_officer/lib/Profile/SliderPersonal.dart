@@ -5,6 +5,7 @@ import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter/material.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/NotificationService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SOLogInDetailService.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,6 +74,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
           prefs.setInt("retailingTime", watch.elapsedMillis);
         });
       });
+      NotificationService().cancelAllNotifications();
     }
   }
 
@@ -328,14 +330,14 @@ class _SliderPersonalState extends State<SliderPersonal> {
               child: GestureDetector(
                 onTap: () {
 
-                  NotificationPermissions.getNotificationPermissionStatus().then((value) => print(value));
-                  fireAlarm();
-                  print("hello world here");
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (_) {
-                  //       return Header();
-                  //     });
+                  // NotificationPermissions.getNotificationPermissionStatus().then((value) => print(value));
+                  // fireAlarm();
+                  // print("hello world here");
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return Header();
+                      });
                 },
                 onHorizontalDragEnd: (a) {
                   toggleButton();

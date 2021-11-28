@@ -6,6 +6,8 @@ import 'package:sales_officer/DistributorList/NewOrder.dart';
 import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
 
+import 'BACKEND Access/Services/NotificationService.dart';
+import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'MoreScreen/MoreScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (i == 2) {
       return PendingScreen(refresh);
     } else if (i == 3) {
-      return MoreScreen(refresh,i, _setIndex);
+      return MoreScreen(refresh, i, _setIndex);
     } else {
       return Container();
     }
@@ -52,6 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void refresh() {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    NotificationService.onNotifications.stream.listen((String? payload) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return ActivitiesScreen(refresh);
+      }));
+    });
   }
 
   @override

@@ -38,12 +38,14 @@ transformMilliSeconds(int milliseconds) {
 }
 
 fireAlarm() {
-  NotificationService().showNotification(
-      id: 0, title : "this is a title", body: "this is a body", payload: "this is a payload");
-  print("hello");
+  NotificationService().showNotificationEveryTwoHours(
+      0,
+      "Update Activity",
+      "Click the message to update what your recent activity will be.",
+      "activity");
+  print("fired the alarm");
 }
 
-runAlarm(){
-
-  AndroidAlarmManager.periodic(Duration(seconds: 5), 1, fireAlarm);
+runAlarm() {
+  AndroidAlarmManager.oneShot(Duration(seconds: 0), 1, fireAlarm);
 }
