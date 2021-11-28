@@ -8,6 +8,7 @@ class Distributor {
   String? ownerName; //5
   int? phone; //6
   int? mobileNumber; //7
+  String? email;
   int? PAN; //8
   String? location; //9
   String? img; //10
@@ -29,6 +30,7 @@ class Distributor {
     this.ownerName,
     this.phone,
     this.mobileNumber,
+    this.email,
     this.PAN,
     this.location,
     this.img,
@@ -56,6 +58,7 @@ class Distributor {
       mobileNumber: json['mobileNumber'] == null
           ? null
           : int.tryParse(json['mobileNumber'].toStringAsFixed(0)),
+      email: json['email'],
       PAN: json['PAN'] == null
           ? null
           : int.tryParse(json['PAN'].toStringAsFixed(0)),

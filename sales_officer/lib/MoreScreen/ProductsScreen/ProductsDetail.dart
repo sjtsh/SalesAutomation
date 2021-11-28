@@ -29,14 +29,28 @@ class ProductsDetail extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      child: Image.asset(
-                        "products/Rectangle 135.png",
-                        fit: BoxFit.fill,
+                    ShaderMask(
+                      shaderCallback: (rect) {
+                        return LinearGradient(
+                          end: Alignment.center,
+                          begin: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Colors.white],
+                        ).createShader(
+                            Rect.fromLTRB(0, 0, rect.width, rect.height));
+                      },
+                      blendMode: BlendMode.dstATop,
+                      child: Container(
+                        height: 300,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: AssetImage(
+                            "products/Rectangle 135.png",
+                          ),
+                          fit: BoxFit.cover,
+                        )),
+                        // color: Colors.blue,
                       ),
-                      // color: Colors.blue,
                     ),
                     Container(
                       height: 50,
@@ -76,45 +90,45 @@ class ProductsDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Positioned(
-                      bottom: -1,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                      ),
-                      // Positioned(child: Text("data"))
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(
-                            sigmaX: 0.2,
-                            sigmaY: 0.2,
-                          ),
-                          child: Container(
-                            height: 150,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.white.withOpacity(0.9),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Positioned(child: Text("data"))
-                    ),
+                    // Positioned(
+                    //   bottom: -1,
+                    //   left: 0,
+                    //   right: 0,
+                    //   child: Container(
+                    //     height: 2,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    //   // Positioned(child: Text("data"))
+                    // ),
+                    // Positioned(
+                    //   bottom: 0,
+                    //   left: 0,
+                    //   right: 0,
+                    //   child: ClipRect(
+                    //     child: BackdropFilter(
+                    //       filter: ImageFilter.blur(
+                    //         sigmaX: 0.2,
+                    //         sigmaY: 0.2,
+                    //       ),
+                    //       child: Container(
+                    //         height: 150,
+                    //         decoration: BoxDecoration(
+                    //           gradient: LinearGradient(
+                    //             colors: [
+                    //               Colors.transparent,
+                    //               Colors.white.withOpacity(0.9),
+                    //             ],
+                    //             begin: Alignment.topCenter,
+                    //             end: Alignment.bottomCenter,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   // Positioned(child: Text("data"))
+                    // ),
                   ],
                 ),
                 Padding(
@@ -265,23 +279,23 @@ class ProductsDetail extends StatelessWidget {
                         children: points
                             .map(
                               (e) => Column(
-                            children: [
-                              Row(
                                 children: [
-                                  SizedBox(
-                                    width: 5,
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text((points.indexOf(e) + 1).toString() +
+                                          "."),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(e),
+                                    ],
                                   ),
-                                  Text((points.indexOf(e) + 1).toString() +
-                                      "."),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(e),
                                 ],
                               ),
-                            ],
-                          ),
-                        )
+                            )
                             .toList(),
                       ),
                     ],

@@ -5,16 +5,21 @@ import 'SingularPending.dart';
 
 class OrdersList extends StatelessWidget {
   final List<DistributorOrder> distributorOrders;
-  final bool condition;
+  final int condition;
   final Function refresh;
-  OrdersList(this.distributorOrders, this.condition, this.refresh);
+  final int page;
+
+  OrdersList(this.distributorOrders, this.page, this.refresh, this.condition);
 
   @override
   Widget build(BuildContext context) {
     List personalDistributorOrders = [];
     distributorOrders.reversed
         .where(
-            (element) => condition ? element.orderStatus : !element.orderStatus)
+            (element) =>
+        condition == 0 ? element.orderStatus : condition == 1
+            ? !element.orderStatus
+            : false)
         .forEach((element) {
       personalDistributorOrders.add(element);
     });
@@ -24,29 +29,33 @@ class OrdersList extends StatelessWidget {
       ),
       child: personalDistributorOrders.length != 0
           ? ListView(
-              children: [
-                SizedBox(height: 7),
-                Column(
-                  children: personalDistributorOrders
-                      .map(
-                        (e) => SingularPending(e, refresh),
-                      )
-                      .toList(),
-                ),
-                SizedBox(height: 7),
-              ],
+        children: [
+          SizedBox(height: 7),
+          Column(
+            children: personalDistributorOrders
+                .map(
+                  (e) => SingularPending(e, refresh),
             )
+                .toList(),
+          ),
+          SizedBox(height: 7),
+        ],
+      )
           : Center(
-              child: !condition
-                  ? Text(
-                      "NO PENDING ORDERS",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
-                    )
-                  : Text(
-                      "NO APPROVED ORDERS",
-                      style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
-                    ),
-            ),
+        child: condition == 0
+            ? Text(
+          "NO PENDING ORDERS",
+          style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
+        )
+            : condition == 1
+            ? Text(
+          "NO APPROVED ORDERS",
+          style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
+        ) :Text(
+          "NO DISPATCHED ORDERS",
+          style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
+        ),
+      ),
     );
   }
 }

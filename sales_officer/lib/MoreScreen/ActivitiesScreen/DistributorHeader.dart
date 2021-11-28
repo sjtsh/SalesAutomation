@@ -54,9 +54,10 @@ class _DistributorHeaderState extends State<DistributorHeader> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  offset: Offset(0, 2))
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 3,
+                offset: Offset(0, 2),
+              ),
             ],
           ),
           clipBehavior: Clip.hardEdge,
@@ -74,7 +75,7 @@ class _DistributorHeaderState extends State<DistributorHeader> {
                 child: Row(
                   children: [
                     Expanded(child: Text("Distributor Lists")),
-                    Icon(Icons.keyboard_arrow_down_sharp)
+                    Icon(Icons.keyboard_arrow_down_sharp),
                   ],
                 ),
               ),
@@ -89,9 +90,10 @@ class _DistributorHeaderState extends State<DistributorHeader> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  offset: Offset(0, 2))
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 3,
+                offset: Offset(0, 2),
+              ),
             ],
           ),
           clipBehavior: Clip.hardEdge,
@@ -110,17 +112,23 @@ class _DistributorHeaderState extends State<DistributorHeader> {
                   children: [
                     Row(
                       children: [
-                        Expanded(child: Text("Distributor Lists")),
-                        Icon(Icons.keyboard_arrow_up)
+                        Expanded(
+                          child: Text("Distributor Lists"),
+                        ),
+                        Icon(Icons.keyboard_arrow_up),
                       ],
                     ),
                     SizedBox(
                       height: 12,
                     ),
                     Column(
-                      children: personalDistributorsLocal.asMap().entries
-                          .map((element) => DistributorLists(element.value,tap,onTapped,element.key)).toList(),
-                    )
+                      children: personalDistributorsLocal
+                          .asMap()
+                          .entries
+                          .map((element) => DistributorLists(
+                              element.value, tap, onTapped, element.key))
+                          .toList(),
+                    ),
                   ],
                 ),
               ),
