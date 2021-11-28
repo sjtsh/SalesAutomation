@@ -126,7 +126,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, bottom: 8, right: 12, top: 12),
+      padding: const EdgeInsets.only(left: 12.0, bottom: 6, right: 12, top: 12),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1000),
         height: 75,
