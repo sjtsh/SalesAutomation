@@ -23,8 +23,6 @@ class PendingScreen extends StatefulWidget {
 }
 
 class _PendingScreenState extends State<PendingScreen> {
-  int index = 0;
- // bool isTabPending = true;
   int page = 0;
   PageController pageController = PageController();
 
@@ -51,7 +49,7 @@ class _PendingScreenState extends State<PendingScreen> {
                   onTap: () {
                     setState(() {
                       page =0;
-                      pageController.previousPage(
+                      pageController.animateToPage(0,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
                     });
@@ -85,7 +83,7 @@ class _PendingScreenState extends State<PendingScreen> {
                   onTap: () {
                     setState(() {
                      page = 1;
-                      pageController.nextPage(
+                      pageController.animateToPage(1,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
                     });
@@ -119,7 +117,7 @@ class _PendingScreenState extends State<PendingScreen> {
                   onTap: () {
                     setState(() {
                       page = 2;
-                      pageController.nextPage(
+                      pageController.animateToPage(2,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
                     });
@@ -167,20 +165,14 @@ class _PendingScreenState extends State<PendingScreen> {
                   return PageView(
                     onPageChanged: (int i) {
                       setState(() {
-                        if (i == 0) {
-                          page =0;
-                        } else if (i == 1) {
-                          page = 1;
-                        }else if (i == 2){
-                          page = 2;
-                        }
+                        page = i;
                       });
                     },
                     controller: pageController,
                     children: [
-                      OrdersList(distributorOrders, false, widget.refresh),
-                      OrdersList(distributorOrders, true, widget.refresh),
-                      OrdersList(distributorOrders, false, widget.refresh)
+                      OrdersList(distributorOrders, page, widget.refresh, 0),
+                      OrdersList(distributorOrders, page, widget.refresh, 1),
+                      OrdersList(distributorOrders, page, widget.refresh, 2)
                     ],
                   );
                 }
@@ -197,7 +189,7 @@ class _PendingScreenState extends State<PendingScreen> {
                     });
                   },
                   controller: pageController,
-                  children: ["", ""]
+                  children: ["", "",""]
                       .map((e) => ListView(
                           children: List.generate(
                               7,
