@@ -81,7 +81,7 @@ class _HeaderState extends State<Header> {
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Center(child: Icon(Icons.arrow_back))),
+                        child: Center(child: Icon(Icons.arrow_back_ios))),
                   ),
                 ),
           Text(
