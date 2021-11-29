@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -17,12 +18,16 @@ import 'package:rxdart/subjects.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'BACKEND Access/Services/NotificationService.dart';
+import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'Profile/SliderPersonal.dart';
 
 SharedPreferences? timerPrefs;
 StopWatchPersonal watch = StopWatchPersonal();
 String elapsedTime = '';
 final ReceivePort port = ReceivePort();
+
+final GlobalKey<NavigatorState> navigatorKey =
+new GlobalKey<NavigatorState>();
 
 transformMilliSeconds(int milliseconds) {
   int hundreds = (milliseconds / 10).truncate();
@@ -43,9 +48,16 @@ fireAlarm() {
       "Update Activity",
       "Click the message to update what your recent activity will be.",
       "activity");
-  print("fired the alarm");
 }
 
 runAlarm() {
   AndroidAlarmManager.oneShot(Duration(seconds: 0), 1, fireAlarm);
+}
+
+listenForNotification(refresh, navigatorKey) {
+  NotificationService.onNotifications.stream.listen((String? payload) {
+    navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
+      return ActivitiesScreen(refresh);
+    }));
+  });
 }

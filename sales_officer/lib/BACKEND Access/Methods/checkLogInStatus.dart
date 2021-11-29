@@ -15,10 +15,10 @@ void checkLogInStatus(context) {
       if ((value.getString("logInDateTime") ?? "0000-00-00 00:00:00")
               .substring(0, 10) !=
           date.substring(0, 10)) {
-        if ((value.getString("logInDateTime") ?? "0000-00-00 00:00:00")
-                .substring(0, 10) !=
-            (value.getString("logOutDateTime") ?? "0000-00-00 00:00:00")
-                .substring(0, 10)) {
+        if (DateTime.parse(
+                (value.getString("logInDateTime") ?? "0000-00-00 00:00:00"))
+            .isAfter(DateTime.parse((value.getString("logOutDateTime") ??
+                "0000-00-00 00:00:00")))) {
           print("the day ended without a logout");
           didnotEndDay = true;
         }

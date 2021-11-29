@@ -329,10 +329,6 @@ class _SliderPersonalState extends State<SliderPersonal> {
                   isRetailing! ? Alignment.centerRight : Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
-
-                  // NotificationPermissions.getNotificationPermissionStatus().then((value) => print(value));
-                  // fireAlarm();
-                  // print("hello world here");
                   showDialog(
                       context: context,
                       builder: (_) {

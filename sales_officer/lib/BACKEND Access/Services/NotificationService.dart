@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:timezone/standalone.dart' as tz;
+
+import '../../timer.dart';
 
 FlutterLocalNotificationsPlugin notifications =
     FlutterLocalNotificationsPlugin();
 
 class NotificationService {
-
   static final onNotifications = BehaviorSubject<String?>();
 
   Future showNotification(
@@ -51,6 +53,9 @@ class NotificationService {
     await notifications.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
       onNotifications.add(payload);
+      navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
+        return ActivitiesScreen(() {});
+      }));
     });
   }
 

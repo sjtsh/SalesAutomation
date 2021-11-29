@@ -117,10 +117,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
       child: Scaffold(
         body: WillPopScope(
           onWillPop: () async {
-
-            showDialog(context: context, builder: (_){
-              return DiscardPrompt();
-            });
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return DiscardPrompt();
+                });
             return true;
           },
           child: Column(
@@ -190,13 +191,30 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         builder: (BuildContext context,
                                             AsyncSnapshot<List<SKUStock>>
                                                 snapshot) {
-                                          allSKUStocksLocal = snapshot.data!.where((element) => !element.deactivated).toList();
+                                          if (snapshot.hasData) {
+                                            allSKUStocksLocal = snapshot.data!
+                                                .where((element) =>
+                                                    !element.deactivated)
+                                                .toList();
+                                            return ProductList(
+                                              allSubGroupsLocal
+                                                  .where((element) =>
+                                                      !element.deactivated)
+                                                  .toList(),
+                                              widget._scrollController,
+                                              _textEditingControllers,
+                                              widget.currentDistributor,
+                                            );
+                                          }
                                           return ProductList(
-                                            allSubGroupsLocal.where((element) => !element.deactivated).toList(),
+                                            allSubGroupsLocal
+                                                .where((element) =>
+                                            !element.deactivated)
+                                                .toList(),
                                             widget._scrollController,
                                             _textEditingControllers,
                                             widget.currentDistributor,
-                                          );
+                                          );;
                                         },
                                       )
                                     : ProductList(
@@ -204,7 +222,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                         widget._scrollController,
                                         _textEditingControllers,
                                         widget.currentDistributor,
-                                      )),
+                                      ),
+                              ),
                       ],
                     ),
                   ),

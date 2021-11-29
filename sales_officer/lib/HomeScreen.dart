@@ -5,6 +5,7 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
+import 'package:sales_officer/timer.dart';
 
 import 'BACKEND Access/Services/NotificationService.dart';
 import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
@@ -60,11 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    NotificationService.onNotifications.stream.listen((String? payload) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return ActivitiesScreen(refresh);
-      }));
-    });
   }
 
   @override

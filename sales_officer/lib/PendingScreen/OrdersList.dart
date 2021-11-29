@@ -17,7 +17,7 @@ class OrdersList extends StatelessWidget {
     distributorOrders.reversed
         .where(
             (element) =>
-        condition == 0 ? element.orderStatus : condition == 1
+        condition == 1 ? element.orderStatus : condition == 0
             ? !element.orderStatus
             : false)
         .forEach((element) {
