@@ -135,7 +135,7 @@ class OurProductsScreen extends StatelessWidget {
                                     children: ["", "", "", "", ""]
                                         .map(
                                           (e) => Padding(
-                                            padding: const EdgeInsets.all(6.0),
+                                            padding: const EdgeInsets.only(right: 6.0,bottom:6.0,top:6.0),
                                             child: Container(
                                               clipBehavior: Clip.hardEdge,
                                               decoration: BoxDecoration(
@@ -156,7 +156,8 @@ class OurProductsScreen extends StatelessWidget {
                                                     Navigator.push(context,
                                                         MaterialPageRoute(
                                                             builder: (_) {
-                                                      return ProductsDetail(refresh);
+                                                      return ProductsDetail(
+                                                          refresh);
                                                     }));
                                                   },
                                                   child: Column(

@@ -119,12 +119,11 @@ class _SingularPendingState extends State<SingularPending> {
                                             context,
                                             MaterialPageRoute(builder: (_) {
                                               return ProductsScreen(
-                                                distributor,
-                                                6,
-                                                widget.e,
-                                                false,
-                                                widget.refresh
-                                              );
+                                                  distributor,
+                                                  6,
+                                                  widget.e,
+                                                  false,
+                                                  widget.refresh);
                                             }),
                                           );
                                         } else if (option == 2) {
@@ -153,18 +152,19 @@ class _SingularPendingState extends State<SingularPending> {
                                                     MainAxisAlignment.center,
                                               )),
                                           PopupMenuItem(
-                                            value: 2,
+                                              value: 2,
                                               child: Row(
-                                            children: [
-                                              Icon(Icons.share),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(child: Text("Share")),
-                                            ],
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                          )),
+                                                children: [
+                                                  Icon(Icons.share),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                      child: Text("Share")),
+                                                ],
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                              )),
                                         ];
                                       },
                                     )
@@ -181,18 +181,19 @@ class _SingularPendingState extends State<SingularPending> {
                                       itemBuilder: (BuildContext context) {
                                         return [
                                           PopupMenuItem(
-                                            value: 2,
+                                              value: 2,
                                               child: Row(
-                                            children: [
-                                              Icon(Icons.share),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(child: Text("Share")),
-                                            ],
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                          )),
+                                                children: [
+                                                  Icon(Icons.share),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                      child: Text("Share")),
+                                                ],
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                              )),
                                         ];
                                       },
                                     ),
@@ -205,27 +206,33 @@ class _SingularPendingState extends State<SingularPending> {
                         ),
                         Column(
                           children: [
-                            ["Order ID :", "#OR${widget.e.distributorOrderID.toString().padLeft(4, '0')}"],
+                            [
+                              "Order ID :",
+                              "#OR${widget.e.distributorOrderID.toString().padLeft(4, '0')}"
+                            ],
                             ["Date :", "${widget.e.dateAndTime}"],
                           ]
                               .map(
                                 (e) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 5),
-                                  child:e[1] =="null"||e[1] =="-1"  ? Container(): Row(
-                                    children: [
-                                      Text(
-                                        e[0],
-                                        style: TextStyle(
-                                          color: Colors.black.withOpacity(0.5),
+                                  child: e[1] == "null" || e[1] == "-1"
+                                      ? Container()
+                                      : Row(
+                                          children: [
+                                            Text(
+                                              e[0],
+                                              style: TextStyle(
+                                                color: Colors.black
+                                                    .withOpacity(0.5),
+                                              ),
+                                            ),
+                                            Expanded(child: Container()),
+                                            Text(
+                                              e[1],
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Expanded(child: Container()),
-                                      Text(
-                                        e[1],
-                                      ),
-                                    ],
-                                  ),
                                 ),
                               )
                               .toList(),
