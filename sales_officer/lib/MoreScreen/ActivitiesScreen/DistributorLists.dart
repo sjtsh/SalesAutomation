@@ -6,9 +6,8 @@ class DistributorLists extends StatelessWidget {
   final Distributor _distributor;
   final Function tap;
   final int onTapped;
-  final int currentlyTapped;
 
-  DistributorLists(this._distributor, this.tap, this.onTapped, this.currentlyTapped);
+  DistributorLists(this._distributor, this.tap, this.onTapped,);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class DistributorLists extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          tap(currentlyTapped);
+          tap(_distributor.distributorID);
         },
         child: Row(
           children: [
@@ -76,7 +75,7 @@ class DistributorLists extends StatelessWidget {
                     width: 15,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: onTapped == currentlyTapped ? Colors.red : Colors.transparent),
+                        color: onTapped == _distributor.distributorID ? Colors.red : Colors.transparent),
                   ),
                 ),
               ],

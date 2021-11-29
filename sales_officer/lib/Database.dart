@@ -10,6 +10,7 @@ import 'BACKEND Access/Entities/SKUStock.dart';
 import 'BACKEND Access/Entities/SO.dart';
 import 'BACKEND Access/Entities/SODistributorConnection.dart';
 import 'BACKEND Access/Entities/SubGroup.dart';
+import 'BACKEND Access/Entities/Task.dart';
 import 'BACKEND Access/Entities/Unit.dart';
 
 List<Distributor> searchedDistributorsLocal = [];
@@ -29,6 +30,8 @@ List<SODistributorConnection> allSODistributorConnectionsLocal = [];
 List<double> weeklySalesLocal = [];
 List<double> monthlySalesLocal = [];
 List<SO> allSOLocal = [];
+List<Task> allTaskLocal = [];
+
 
 SO? meSO;
 int? meSOID;
