@@ -81,15 +81,15 @@ class _StatScreenState extends State<StatScreen> {
               Row(
                 children: [
                   Text(
-                    "Total Sales",
+                    "Rs. 50000",
                     style:
-                    TextStyle(color: Colors.black.withOpacity(0.5)),
+                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                   Expanded(child: Container()),
                   Text(
                     "Rs 500000",
                     style:
-                    TextStyle(color: Colors.black.withOpacity(0.5)),
+                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                 ],
               ),
@@ -99,7 +99,7 @@ class _StatScreenState extends State<StatScreen> {
                     margin: EdgeInsets.only(
                       top: 5,
                     ),
-                    height: 20,
+                    height: 10,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffe8e8e8),
@@ -107,31 +107,12 @@ class _StatScreenState extends State<StatScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5, right: 250),
-                    height: 20,
+                    height: 10,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       gradient: LinearGradient(
                         colors: [Color(0xff5A6FF0), Color(0xffC31FE6)],
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 50,
-                    bottom: 2,
-                    child: Text(
-                      "50,000",
-                      textAlign: TextAlign.center,
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 13),
-                    ),
-                  ),
-                  Positioned(
-                    right: 6,
-                    bottom: 2,
-                    child: Text(
-                      "Sell 2 Lakhs order to get Rs 1000 bonus",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13),
                     ),
                   ),
                 ],
@@ -142,15 +123,15 @@ class _StatScreenState extends State<StatScreen> {
               Row(
                 children: [
                   Text(
-                    "Average SKU",
+                    "5 SKU",
                     style:
-                    TextStyle(color: Colors.black.withOpacity(0.5)),
+                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                   Expanded(child: Container()),
                   Text(
                     "80 SKU",
                     style:
-                    TextStyle(color: Colors.black.withOpacity(0.5)),
+                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                 ],
               ),
@@ -160,7 +141,7 @@ class _StatScreenState extends State<StatScreen> {
                     margin: EdgeInsets.only(
                       top: 5,
                     ),
-                    height: 20,
+                    height: 10,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffe8e8e8),
@@ -168,32 +149,13 @@ class _StatScreenState extends State<StatScreen> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5, right: 300),
-                    height: 20,
+                    height: 10,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       gradient: LinearGradient(colors: [
                         Color(0xff129C8D),
                         Color(0xff34E77E),
                       ]),
-                    ),
-                  ),
-                  Positioned(
-                    left: 4,
-                    bottom: 2,
-                    child: Text(
-                      "5 SKU",
-                      textAlign: TextAlign.center,
-                      style:
-                      TextStyle(color: Colors.white, fontSize: 13),
-                    ),
-                  ),
-                  Positioned(
-                    right: 6,
-                    bottom: 2,
-                    child: Text(
-                      "Sell 2 more sku to get Rs 1000 bonus",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13),
                     ),
                   ),
                 ],

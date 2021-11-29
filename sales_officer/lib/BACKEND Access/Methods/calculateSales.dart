@@ -8,16 +8,16 @@ import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 
 import '../../Database.dart';
 
-calculateSales(context) {
+calculateSales(context) async {
   NepaliDateService nepaliDateService = NepaliDateService();
-  nepaliDateService.fetchNepaliDate().then((time) {
+  await nepaliDateService.fetchNepaliDate().then((time) async {
     DistributorOrderService distributorOrderService = DistributorOrderService();
-    distributorOrderService
+    await distributorOrderService
         .fetchDistributorOrders(context)
-        .then((distributorOrder) {
+        .then((distributorOrder) async {
       DistributorOrderItemService distributorOrderItemService =
           DistributorOrderItemService();
-      distributorOrderItemService
+      await distributorOrderItemService
           .fetchDistributorOrderItems(context)
           .then((distributorOrderItem) {
         personalDistributorsLocal.forEach((aDistributor) {

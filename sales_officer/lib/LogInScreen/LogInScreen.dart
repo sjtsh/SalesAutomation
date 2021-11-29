@@ -46,6 +46,7 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // listenForNotification(() {}, navigatorKey);
     checkLogInStatus(context);
     if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
       SubGroupService subGroupService = SubGroupService();
@@ -87,22 +88,22 @@ class _LogInScreenState extends State<LogInScreen> {
                 );
               }
               SODistributorConnectionService soDistributorConnectionService =
-              SODistributorConnectionService();
+                  SODistributorConnectionService();
               soDistributorConnectionService
                   .fetchSODistributorConnections()
                   .then((newValue) {
                 allSODistributorConnectionsLocal = newValue;
                 personalDistributorsLocal =
                     allDistributorsLocal.where((element) {
-                      bool condition = false;
-                      allSODistributorConnectionsLocal.forEach((element1) {
-                        if (element1.SOID == meSO?.SOID &&
-                            element1.distributorID == element.distributorID) {
-                          condition = true;
-                        }
-                      });
-                      return condition;
-                    }).toList();
+                  bool condition = false;
+                  allSODistributorConnectionsLocal.forEach((element1) {
+                    if (element1.SOID == meSO?.SOID &&
+                        element1.distributorID == element.distributorID) {
+                      condition = true;
+                    }
+                  });
+                  return condition;
+                }).toList();
                 setState(() {
                   loadingText = "Calculating Sales...";
                   percentage = 40;
@@ -110,7 +111,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 calculateWeeklySales(context);
                 calculateSales(context);
                 SKUDistributorWiseService skuDistributorWiseService =
-                SKUDistributorWiseService();
+                    SKUDistributorWiseService();
                 skuDistributorWiseService
                     .fetchSKUDistributorWises()
                     .then((value) {
@@ -121,7 +122,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   });
                 }).then((value) {
                   BillingCompanyService billingCompanyService =
-                  BillingCompanyService();
+                      BillingCompanyService();
                   billingCompanyService
                       .fetchBillingCompanys(context)
                       .then((value) {
@@ -138,7 +139,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         percentage = 70;
                       });
                       ProductGroupService productGroupService =
-                      ProductGroupService();
+                          ProductGroupService();
                       productGroupService.fetchProductGroups().then((value) {
                         allProductGroupsLocal = value;
                         setState(() {
@@ -153,7 +154,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             percentage = 90;
                           });
                           FamiliarityService familiarityService =
-                          FamiliarityService();
+                              FamiliarityService();
                           familiarityService
                               .fetchFamiliaritys(context)
                               .then((value) {

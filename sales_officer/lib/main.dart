@@ -8,25 +8,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:sales_officer/timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'BACKEND Access/Services/NotificationService.dart';
 import 'Database.dart';
 import 'LogInScreen/LogInScreen.dart';
+import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'SignIn/SignIn.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   runApp(Fusers());
-
-  final InitializationSettings initializationSettings = InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-      iOS: IOSInitializationSettings(),
-      macOS: MacOSInitializationSettings());
-  // await notifications.initialize(initializationSettings,
-  //     onSelectNotification: (String? payload)=> print("selected a notification $payload"));
-  await notifications.initialize(
-    initializationSettings,
-  );
+  NotificationService.initializeNotification();
+  tz.initializeTimeZones();
   AndroidAlarmManager.initialize();
 }
 
@@ -37,14 +32,9 @@ class Fusers extends StatefulWidget {
 
 class _FusersState extends State<Fusers> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: ThemeData(fontFamily: "lato"),
       routes: {},
       title: 'Fusers',

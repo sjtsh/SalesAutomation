@@ -5,7 +5,10 @@ import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/DistributorList/NewOrder.dart';
 import 'package:sales_officer/PendingScreen/PendingScreen.dart';
 import 'package:sales_officer/Profile/Profile.dart';
+import 'package:sales_officer/timer.dart';
 
+import 'BACKEND Access/Services/NotificationService.dart';
+import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'MoreScreen/MoreScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (i == 2) {
       return PendingScreen(refresh);
     } else if (i == 3) {
-      return MoreScreen(refresh,i, _setIndex);
+      return MoreScreen(refresh, i, _setIndex);
     } else {
       return Container();
     }
@@ -52,6 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void refresh() {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
