@@ -184,7 +184,7 @@ class DistributorInfo extends StatelessWidget {
                             ),
                             child: Center(
                               child: Icon(
-                                Icons.arrow_back,
+                                Icons.arrow_back_ios_outlined,
                                 color: Colors.white,
                               ),
                             ),

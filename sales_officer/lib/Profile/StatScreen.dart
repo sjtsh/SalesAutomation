@@ -19,7 +19,7 @@ class _StatScreenState extends State<StatScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -33,8 +33,7 @@ class _StatScreenState extends State<StatScreen> {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, bottom: 12.0),
+          padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0),
           child: Column(
             children: [
               Row(
@@ -82,14 +81,14 @@ class _StatScreenState extends State<StatScreen> {
                 children: [
                   Text(
                     "Rs. 50000",
-                    style:
-                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                   Expanded(child: Container()),
                   Text(
                     "Rs 500000",
-                    style:
-                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                 ],
               ),
@@ -124,14 +123,14 @@ class _StatScreenState extends State<StatScreen> {
                 children: [
                   Text(
                     "5 SKU",
-                    style:
-                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                   Expanded(child: Container()),
                   Text(
                     "80 SKU",
-                    style:
-                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 12),
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 12),
                   ),
                 ],
               ),
@@ -152,10 +151,12 @@ class _StatScreenState extends State<StatScreen> {
                     height: 10,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(colors: [
-                        Color(0xff129C8D),
-                        Color(0xff34E77E),
-                      ]),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff129C8D),
+                          Color(0xff34E77E),
+                        ],
+                      ),
                     ),
                   ),
                 ],

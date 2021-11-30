@@ -165,7 +165,7 @@ class OurProductsScreen extends StatelessWidget {
                                                       Container(
                                                         child: Image.asset(
                                                           f[1],
-                                                          fit: BoxFit.fill,
+                                                          fit: BoxFit.cover,
                                                         ),
                                                       ),
                                                       SizedBox(

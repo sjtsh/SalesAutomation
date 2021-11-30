@@ -57,9 +57,10 @@ class MoreScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 3,
-                          offset: Offset(0, 2))
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2),
+                      ),
                     ],
                   ),
                   child: Material(
@@ -69,7 +70,8 @@ class MoreScreen extends StatelessWidget {
                         if (e[2] == "Performance") {
                           _setIndex(0);
                         } else {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
                             return e[3] as Widget;
                           }));
                         }
