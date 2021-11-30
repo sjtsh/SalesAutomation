@@ -8,8 +8,10 @@ import 'package:sales_officer/MoreScreen/ActivitiesScreen/DistributorLists.dart'
 class DistributorHeader extends StatefulWidget {
   final Function expand;
   final String currentExpanded;
+  final Function tap;
+  final int onTapped;
 
-  DistributorHeader(this.expand, this.currentExpanded);
+  DistributorHeader(this.expand, this.currentExpanded, this.tap, this.onTapped);
 
   @override
   _DistributorHeaderState createState() => _DistributorHeaderState();
@@ -30,13 +32,6 @@ class _DistributorHeaderState extends State<DistributorHeader> {
 
   final ExpandableController _expandableControllerMain = ExpandableController();
 
-  int onTapped = 0;
-
-  tap(int notTapped) {
-    setState(() {
-      onTapped = notTapped;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +121,7 @@ class _DistributorHeaderState extends State<DistributorHeader> {
                           .asMap()
                           .entries
                           .map((element) => DistributorLists(
-                              element.value, tap, onTapped, element.key))
+                              element.value, widget.tap, widget.onTapped))
                           .toList(),
                     ),
                   ],

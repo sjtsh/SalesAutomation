@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Task.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 
 class TasksList extends StatelessWidget {
-  final String e;
+  final Task task;
   final Function tap;
   final int onTapped;
-  final int currentlyTapped;
 
-  TasksList(this.e, this.tap, this.onTapped, this.currentlyTapped);
+  TasksList(this.task, this.tap, this.onTapped);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class TasksList extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          tap(currentlyTapped);
+          tap(task.taskID);
         },
         child: Row(
           children: [
@@ -35,7 +35,7 @@ class TasksList extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    getInitials(e),
+                    getInitials(task.taskName),
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -48,7 +48,7 @@ class TasksList extends StatelessWidget {
               width: 10,
             ),
             Text(
-              "${e}",
+              "${task.taskName}",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 16,
@@ -75,7 +75,7 @@ class TasksList extends StatelessWidget {
                     width: 15,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: onTapped == currentlyTapped
+                        color: onTapped == task.taskID
                             ? Colors.red
                             : Colors.transparent),
                   ),

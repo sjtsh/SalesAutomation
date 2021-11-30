@@ -1,16 +1,21 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
+import 'package:sales_officer/Database.dart';
 
 import 'TasksList.dart';
 
 class TasksHeader extends StatefulWidget {
   final Function expand;
   final String currentExpanded;
+  final Function tap;
+  final int onTapped;
 
   TasksHeader(
     this.expand,
     this.currentExpanded,
+    this.tap,
+    this.onTapped,
   );
 
   @override
@@ -27,14 +32,6 @@ class _TasksHeaderState extends State<TasksHeader> {
       } else {
         this.currentlyExpanded = currentlyExpanded;
       }
-    });
-  }
-
-  int onTapped = 0;
-
-  tap(int notTapped) {
-    setState(() {
-      onTapped = notTapped;
     });
   }
 
@@ -120,11 +117,9 @@ class _TasksHeaderState extends State<TasksHeader> {
                       height: 12,
                     ),
                     Column(
-                      children: ["Visit", "Stock", "Order"]
-                          .asMap()
-                          .entries
-                          .map((element) => TasksList(
-                              element.value, tap, onTapped, element.key))
+                      children: allTaskLocal
+                          .map((element) =>
+                              TasksList(element, widget.tap, widget.onTapped))
                           .toList(),
                     )
                   ],
