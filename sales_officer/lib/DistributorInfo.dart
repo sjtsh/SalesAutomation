@@ -223,7 +223,7 @@ class DistributorInfo extends StatelessWidget {
                       children: [
                         [
                           "DB Id: ",
-                          "DI${currentDistributor.distributorID.toString().padLeft(4, '0')}"
+                          "#DI${currentDistributor.distributorID.toString().padLeft(4, '0')}"
                         ],
 
                         ["Name: ", currentDistributor.distributorName],

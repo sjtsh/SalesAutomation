@@ -6,11 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
 
-class ActivateButton extends StatelessWidget {
+class ActivateButton extends StatefulWidget {
   final bool _isTyped;
   final int codeHere;
 
   ActivateButton(this._isTyped, this.codeHere);
+
+  @override
+  State<ActivateButton> createState() => _ActivateButtonState();
+}
+
+class _ActivateButtonState extends State<ActivateButton> {
+  bool isLoaded = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +28,21 @@ class ActivateButton extends StatelessWidget {
         height: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: _isTyped ? Colors.red : Colors.black.withOpacity(0.1),
+          color: widget._isTyped ? Colors.red : Colors.black.withOpacity(0.1),
         ),
-        child: MaterialButton(
+        child: isLoaded ?  MaterialButton(
           onPressed: () {
+            setState(() {
+              isLoaded = false;
+            });
             ActivationCodeService activationCodeService =
                 ActivationCodeService();
-
             activationCodeService.fetchActivationCodes().then((codes) {
               try {
                 meSOID = codes
                     .firstWhere((element) =>
-                        element.codeID == codeHere && element.post == "SO")
+                        element.codeID == widget.codeHere &&
+                        element.post == "SO")
                     .postID;
 
                 SharedPreferences.getInstance().then(((prefs) {
@@ -44,14 +54,25 @@ class ActivateButton extends StatelessWidget {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("Incorrect code")));
               }
+
+              setState(() {
+                isLoaded = true;
+              });
             });
           },
           child: Center(
             child: Text(
               "Activate",
               style: TextStyle(
-                  color: _isTyped ? Colors.white : Colors.black, fontSize: 16),
+                  color: widget._isTyped ? Colors.white : Colors.black,
+                  fontSize: 16),
             ),
+          ),
+        ): MaterialButton(
+          onPressed: () {
+          },
+          child: Center(
+            child: CircularProgressIndicator(),
           ),
         ),
       ),

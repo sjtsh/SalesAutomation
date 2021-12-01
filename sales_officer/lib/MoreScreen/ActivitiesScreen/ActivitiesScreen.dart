@@ -81,55 +81,63 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.red),
                 ),
-                child: isLoaded ? MaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      isLoaded = false;
-                    });
-                    SOActivityService()
-                        .insertSOActivity(meSOID!, onDistributorTapped,
-                            onTaskTapped, controller.text)
-                        .then((value) {
-                      if (value) {
-                        Navigator.pop(context);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                "Activity could not be added. Please try again"),
-                          ),
-                        );
-                      }
-                      setState(() {
-                        isLoaded = true;
-                      });
-                    });
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 180,
-                    child: Builder(builder: (context) {
-                      return Center(
-                        child: Text(
-                          "Start Work",
-                          style: TextStyle(color: Colors.red),
+                child: isLoaded
+                    ? MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            isLoaded = false;
+                          });
+                          SOActivityService()
+                              .insertSOActivity(meSOID!, onDistributorTapped,
+                                  onTaskTapped, controller.text)
+                              .then((value) {
+                            if (value) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Thank you for keeping update"),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      "Activity could not be added. Please try again"),
+                                ),
+                              );
+                            }
+                            setState(() {
+                              isLoaded = true;
+                            });
+                          });
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 180,
+                          child: Builder(builder: (context) {
+                            return Center(
+                              child: Text(
+                                "Start Work",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            );
+                          }),
                         ),
-                      );
-                    }),
-                  ),
-                ): MaterialButton(
-                  onPressed: () {
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 180,
-                    child: Builder(builder: (context) {
-                      return Center(
-                        child: CircularProgressIndicator(color: Colors.white,),
-                      );
-                    }),
-                  ),
-                ),
+                      )
+                    : MaterialButton(
+                        onPressed: () {},
+                        child: Container(
+                          height: 50,
+                          width: 180,
+                          child: Builder(builder: (context) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.red,
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
               ),
             ),
           ],

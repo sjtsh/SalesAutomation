@@ -31,7 +31,13 @@ class SOActivityService {
     throw Exception("Something Went Wrong");
   }
 
-  Future<bool> insertSOActivity(int SOID, int distributorID, int taskID, String remark) async {
+  Future<bool> insertSOActivity(int SOID, int distributorID, int taskID, String remark,) async {
+  print(<String, String>{
+    "SOID": SOID.toString(),
+    "distributorID": distributorID.toString(),
+    "taskID": taskID.toString(),
+    "remark": remark
+  },);
     final response = await http.post(
       Uri.parse(
           "https://asia-south1-hilifedb.cloudfunctions.net/insertSOActivity"),

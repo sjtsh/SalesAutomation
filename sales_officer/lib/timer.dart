@@ -25,6 +25,7 @@ SharedPreferences? timerPrefs;
 StopWatchPersonal watch = StopWatchPersonal();
 String elapsedTime = '';
 final ReceivePort port = ReceivePort();
+bool isNotificationClicked = false;
 
 final GlobalKey<NavigatorState> navigatorKey =
 new GlobalKey<NavigatorState>();
@@ -54,9 +55,12 @@ runAlarm() {
   AndroidAlarmManager.oneShot(Duration(seconds: 0), 1, fireAlarm);
 }
 
-listenForNotification(refresh, navigatorKey) {
+listenForNotification(refresh) {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   NotificationService.onNotifications.stream.listen((String? payload) {
+    runApp(MaterialApp(navigatorKey: navigatorKey,));
     navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
+      isNotificationClicked = true;
       return ActivitiesScreen(refresh);
     }));
   });

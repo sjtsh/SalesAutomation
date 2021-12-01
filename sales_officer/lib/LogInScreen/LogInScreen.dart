@@ -19,6 +19,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/TaskService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
 import 'package:sales_officer/DidnotEndDay.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
@@ -166,7 +167,13 @@ class _LogInScreenState extends State<LogInScreen> {
                               setState(() {
                                 loadingText = "Thank You for your patience";
                                 percentage = 100;
-                                isLoaded = true;
+                                SharedPreferences.getInstance().then((prefs) {
+                                  isNotificationClicked =
+                                      prefs.getBool("isNotificationClicked") ??
+                                          false;
+                                  isLoaded = true;
+                                  prefs.setBool("isNotificationClicked", true);
+                                });
                               });
                             });
                           });
@@ -202,7 +209,9 @@ class _LogInScreenState extends State<LogInScreen> {
     return isLoaded
         ? didnotEndDay
             ? DidnotEndDay(setEndDay)
-            : HomeScreen()
+            : isNotificationClicked
+                ? ActivitiesScreen(() {})
+                : HomeScreen()
         : SafeArea(
             child: Scaffold(
               backgroundColor: Colors.white,

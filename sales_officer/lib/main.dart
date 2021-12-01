@@ -32,6 +32,12 @@ class Fusers extends StatefulWidget {
 
 class _FusersState extends State<Fusers> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
