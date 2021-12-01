@@ -38,25 +38,37 @@ class _TimelineScreenState extends State<TimelineScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12),
-          child: Container(
-            clipBehavior: Clip.hardEdge,
+          child: Container(clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.red),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 3,
+                  offset: Offset(0, 2),
+                ),
+              ],
             ),
-            child: MaterialButton(
-              onPressed: () {},
-              child: Container(
-                height: 50,
-                width: 180,
-                child: Builder(builder: (context) {
-                  return Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  );
-                }),
+            child: Material(
+              color: Colors.white,
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 50,
+                  width: 180,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Builder(builder: (context) {
+                    return Center(
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
           ),
@@ -234,16 +246,33 @@ class _InnerTimeline extends StatelessWidget {
               Expanded(child: Container()),
               Container(
                 clipBehavior: Clip.hardEdge,
-                height: 40,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Color(0xff9b9b9b),
-                    )),
-                child: MaterialButton(
-                  onPressed: () {},
-                  child: Text(
-                    "View Details",
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Color(0xff9b9b9b),
+                        ),),
+                      child: Center(
+                        child: Text(
+                          "View Details",
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -284,16 +313,33 @@ class _InnerTimeline extends StatelessWidget {
               Expanded(child: Container()),
               Container(
                 clipBehavior: Clip.hardEdge,
-                height: 40,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Color(0xff9b9b9b),
-                    )),
-                child: MaterialButton(
-                  onPressed: () {},
-                  child: Text(
-                    "View Details",
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Color(0xff9b9b9b),
+                      ),),
+                      child: Center(
+                        child: Text(
+                          "View Details",
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
