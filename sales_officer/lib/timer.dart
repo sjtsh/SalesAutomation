@@ -58,9 +58,9 @@ runAlarm() {
 listenForNotification(refresh) {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   NotificationService.onNotifications.stream.listen((String? payload) {
-    runApp(MaterialApp(navigatorKey: navigatorKey,));
+    // runApp(MaterialApp(navigatorKey: navigatorKey,));
     navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
-      isNotificationClicked = true;
+      // isNotificationClicked = true;
       return ActivitiesScreen(refresh);
     }));
   });

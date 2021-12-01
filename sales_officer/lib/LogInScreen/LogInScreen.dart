@@ -209,9 +209,7 @@ class _LogInScreenState extends State<LogInScreen> {
     return isLoaded
         ? didnotEndDay
             ? DidnotEndDay(setEndDay)
-            : isNotificationClicked
-                ? ActivitiesScreen(() {})
-                : HomeScreen()
+            : HomeScreen()
         : SafeArea(
             child: Scaffold(
               backgroundColor: Colors.white,
