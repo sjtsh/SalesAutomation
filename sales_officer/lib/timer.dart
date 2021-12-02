@@ -50,17 +50,17 @@ fireAlarm() {
       "activity");
 }
 
-runAlarm() {
-  AndroidAlarmManager.oneShot(Duration(seconds: 0), 1, fireAlarm);
-}
+// runAlarm() {
+//  // AndroidAlarmManager.oneShot(Duration(seconds: 0), 1, fireAlarm);
+// }
 
-listenForNotification(refresh) {
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  NotificationService.onNotifications.stream.listen((String? payload) {
-    // runApp(MaterialApp(navigatorKey: navigatorKey,));
-    navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
-      // isNotificationClicked = true;
-      return ActivitiesScreen(refresh);
-    }));
-  });
-}
+// listenForNotification(refresh) {
+//   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+//   NotificationService.onNotifications.stream.listen((String? payload) {
+//     // runApp(MaterialApp(navigatorKey: navigatorKey,));
+//     navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
+//       // isNotificationClicked = true;
+//       return ActivitiesScreen(refresh);
+//     }));
+//   });
+// }

@@ -86,7 +86,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
           startForegroundTask();
         });
       });
-      //runAlarm();
+      fireAlarm();
     } else {
       stopWatch();
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
