@@ -31,16 +31,18 @@ class NotificationService {
   Future showNotificationEveryTwoHours(
       int id, String title, String body, String payload) {
     return notifications.periodicallyShow(
-        id,
-        title,
-        body,
-        RepeatInterval.everyMinute,
-        NotificationDetails(
-            android: AndroidNotificationDetails("activity", "activity",
-                importance: Importance.max,
-                color: Colors.blue,
-                visibility: NotificationVisibility.public),
-            iOS: IOSNotificationDetails()));
+      id,
+      title,
+      body,
+      RepeatInterval.everyMinute,
+      NotificationDetails(
+          android: AndroidNotificationDetails("activity", "activity",
+              importance: Importance.max,
+              color: Colors.blue,
+              visibility: NotificationVisibility.public),
+          iOS: IOSNotificationDetails()),
+      payload: payload,
+    );
   }
 
   static Future initializeNotification() async {

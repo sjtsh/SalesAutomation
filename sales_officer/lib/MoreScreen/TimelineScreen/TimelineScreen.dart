@@ -182,24 +182,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        DeliveryProcesses(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            Expanded(child: DeliveryProcesses()),
           ],
         ),
       ),

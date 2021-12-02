@@ -48,7 +48,7 @@ fireAlarm() {
       0,
       "Update Activity",
       "Click the message to update what your recent activity will be.",
-      "activity");
+      "");
 }
 
 runAlarm() {

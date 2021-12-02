@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/MoreScreen/ViewStockScreen/SingularStockScreen.dart';
+import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
+import 'package:sales_officer/PendingScreen/SingularPending.dart';
 
 class LogInOutActivity extends StatelessWidget {
   final bool isLogIn;
@@ -16,7 +19,6 @@ class LogInOutActivity extends StatelessWidget {
   }
 }
 
-
 class ActivityUpdate extends StatelessWidget {
   final String distributorName;
   final String remark;
@@ -29,6 +31,7 @@ class ActivityUpdate extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("$distributorName - $taskName"),
           Text("$remark"),
@@ -42,10 +45,12 @@ class OrderStockActivity extends StatelessWidget {
   final bool isOrder;
   final String distributorName;
   final double amount;
-  final int quantity;
+  final int primaryQuantity;
+  final int alternativeQuantity;
+  final distributorOrder;
 
-  OrderStockActivity(
-      this.isOrder, this.distributorName, this.amount, this.quantity);
+  OrderStockActivity(this.isOrder, this.distributorName, this.amount,
+      this.primaryQuantity, this.alternativeQuantity, this.distributorOrder);
 
   @override
   Widget build(BuildContext context) {
@@ -61,51 +66,77 @@ class OrderStockActivity extends StatelessWidget {
           ),
           Row(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${isOrder ? "Order" : "Stock"} Value"),
-                  Text(amount.toString()),
-                ],
-              ),
-              Expanded(child: Container()),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Qty"),
-                  Text(quantity.toString()),
-                ],
-              ),
-              Expanded(child: Container()),
-              Container(
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.white,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Color(0xff9b9b9b),
-                        ),
+              isOrder
+                  ? Expanded(
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${isOrder ? "Order" : "Stock"} Value"),
+                              Text(amount.toString()),
+                            ],
+                          ),
+                          Expanded(child: Container()),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Qty"),
+                              Text(
+                                  "${primaryQuantity}PU ${alternativeQuantity}AU"),
+                            ],
+                          ),
+                          Expanded(child: Container()),
+                        ],
                       ),
-                      child: Center(
-                        child: Text(
-                          "View Details",
+                    )
+                  : Container(),
+              Expanded(
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 3,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        if (isOrder) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) {
+                              return ApproveOrderScreen(
+                                  distributorOrder, () {});
+                            }),
+                          );
+                        } else {
+                          Navigator.push(context, MaterialPageRoute(builder: (_){
+                            return SingularStockScreen(
+                                distributorOrder[0], distributorOrder[1]);
+                          }));
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Color(0xff9b9b9b),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "View Details",
+                          ),
                         ),
                       ),
                     ),
