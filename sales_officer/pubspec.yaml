@@ -38,6 +38,7 @@ dependencies:
   flutter_native_timezone:
   device_info_plus:
   timezone: ^0.8.0
+  flutter_foreground_task: ^3.4.1
 
 #  slider_button:
 #  sliding_switch: ^1.0.0

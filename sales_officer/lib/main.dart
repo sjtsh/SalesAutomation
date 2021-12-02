@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:sales_officer/timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +25,7 @@ Future<void> main() async {
   tz.initializeTimeZones();
   AndroidAlarmManager.initialize();
 }
+
 
 class Fusers extends StatefulWidget {
   @override

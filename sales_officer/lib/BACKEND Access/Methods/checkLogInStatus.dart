@@ -1,5 +1,8 @@
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/DidnotEndDay.dart';
+import 'package:sales_officer/LogInScreen/LogInScreen.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Database.dart';
@@ -24,24 +27,30 @@ void checkLogInStatus(context) {
         }
         value.setBool("isRetailing", false);
         isRetailing = false;
-        watch.milliseconds = 0;
-        elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+        LogInScreenState.watch.milliseconds = 0;
+        elapsedTime = transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
       } else {
         soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
         isRetailing = value.getBool("isRetailing") ?? false;
         if (isRetailing!) {
-          watch.milliseconds = DateTime.parse(date)
+          LogInScreenState.watch.milliseconds = DateTime.parse(date)
               .difference(
                   DateTime.parse(value.getString("logInDateTime") ?? date))
               .inMilliseconds;
-          watch.milliseconds =
-              watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
-          elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+          LogInScreenState.watch.milliseconds =
+              LogInScreenState.watch.elapsedMillis + value.getInt("retailingTime") ?? 0;
+          elapsedTime = transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
         } else {
-          watch.milliseconds = value.getInt("retailingTime") ?? 0;
-          elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+          LogInScreenState.watch.milliseconds = value.getInt("retailingTime") ?? 0;
+          elapsedTime = transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
         }
       }
+
+      FlutterForegroundTask.isRunningService.then((value) {
+        if (value) {
+          FlutterForegroundTask.restartService();
+        }
+      });
     });
   });
 }

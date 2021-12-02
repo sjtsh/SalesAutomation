@@ -22,7 +22,6 @@ import 'MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'Profile/SliderPersonal.dart';
 
 SharedPreferences? timerPrefs;
-StopWatchPersonal watch = StopWatchPersonal();
 String elapsedTime = '';
 final ReceivePort port = ReceivePort();
 bool isNotificationClicked = false;

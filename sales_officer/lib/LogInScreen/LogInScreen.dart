@@ -20,6 +20,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/TaskService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
 import 'package:sales_officer/DidnotEndDay.dart';
 import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
+import 'package:sales_officer/Profile/SliderPersonal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
@@ -28,12 +29,13 @@ import '../timer.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
-  _LogInScreenState createState() => _LogInScreenState();
+  LogInScreenState createState() => LogInScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class LogInScreenState extends State<LogInScreen> {
   bool isSelected = false;
   int percentage = 0;
+  static StopWatchPersonal watch = StopWatchPersonal();
 
   select() {
     setState(() {

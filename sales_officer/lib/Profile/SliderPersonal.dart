@@ -1,13 +1,18 @@
 import 'dart:async';
+import 'dart:isolate';
 
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter/material.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NotificationService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SOLogInDetailService.dart';
+import 'package:sales_officer/LogInScreen/LogInScreen.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,7 +20,6 @@ import '../Database.dart';
 import '../timer.dart';
 import 'Header/Online.dart';
 
-String elapsedTime = '';
 
 class SliderPersonal extends StatefulWidget {
   final Function refreshChart;
@@ -44,6 +48,21 @@ class _SliderPersonalState extends State<SliderPersonal> {
     });
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initForegroundTask();
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _receivePort?.close();
+  //   super.dispose();
+  // }
+  /// for ground task ..............................
+  ///
+  ///
+
   startOrStop() async {
     if (startStop) {
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
@@ -55,13 +74,19 @@ class _SliderPersonalState extends State<SliderPersonal> {
             timerPrefs = prefs;
             prefs.setBool("isRetailing", true);
             prefs.setString("logInDateTime", value);
-            prefs.setInt("retailingTime", watch.elapsedMillis);
+            prefs.setInt("retailingTime", LogInScreenState.watch.elapsedMillis);
             prefs.setInt("soLogInDetailID", id);
           });
         });
       });
       startWatch();
-      runAlarm();
+      initForegroundTask().then((value) {
+        FlutterForegroundTask.isRunningService.then((value) {
+          stopForegroundTask();
+          startForegroundTask();
+        });
+      });
+      //runAlarm();
     } else {
       stopWatch();
       SOLogInDetailService soLogInDetailService = SOLogInDetailService();
@@ -71,21 +96,22 @@ class _SliderPersonalState extends State<SliderPersonal> {
         SharedPreferences.getInstance().then((prefs) {
           prefs.setBool("isRetailing", false);
           prefs.setString("logOutDateTime", value);
-          prefs.setInt("retailingTime", watch.elapsedMillis);
+          prefs.setInt("retailingTime", LogInScreenState.watch.elapsedMillis);
         });
       });
       NotificationService().cancelAllNotifications();
+      stopForegroundTask();
     }
   }
 
   startWatch() {
     setState(() {
       startStop = false;
-      watch.start();
+      LogInScreenState.watch.start();
       timer = Timer.periodic(Duration(milliseconds: 100), (Timer timer) {
-        if (watch.isRunning && mounted) {
+        if (LogInScreenState.watch.isRunning && mounted) {
           setState(() {
-            elapsedTime = transformMilliSeconds(watch.elapsedMillis);
+            elapsedTime = transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
           });
         }
       });
@@ -95,13 +121,13 @@ class _SliderPersonalState extends State<SliderPersonal> {
   stopWatch() {
     setState(() {
       startStop = true;
-      watch.stop();
+      LogInScreenState.watch.stop();
       setTime();
     });
   }
 
   setTime() {
-    var timeSoFar = watch.elapsedMillis;
+    var timeSoFar = LogInScreenState.watch.elapsedMillis;
     setState(() {
       elapsedTime = transformMilliSeconds(timeSoFar);
     });
@@ -118,6 +144,8 @@ class _SliderPersonalState extends State<SliderPersonal> {
 
   @override
   void dispose() {
+    receivePort?.close();
+
     // TODO: implement dispose
     if (timer != null) {
       timer.cancel();
@@ -369,5 +397,9 @@ class StopWatchPersonal extends Stopwatch {
 
   set milliseconds(int timeInMilliseconds) {
     this._starterMilliseconds = timeInMilliseconds;
+  }
+
+  getMyTime() {
+    return this.elapsedMilliseconds + _starterMilliseconds;
   }
 }
