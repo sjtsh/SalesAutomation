@@ -30,51 +30,54 @@ class _ActivateButtonState extends State<ActivateButton> {
           borderRadius: BorderRadius.circular(20),
           color: widget._isTyped ? Colors.red : Colors.black.withOpacity(0.1),
         ),
-        child: isLoaded ?  MaterialButton(
-          onPressed: () {
-            setState(() {
-              isLoaded = false;
-            });
-            ActivationCodeService activationCodeService =
-                ActivationCodeService();
-            activationCodeService.fetchActivationCodes().then((codes) {
-              try {
-                meSOID = codes
-                    .firstWhere((element) =>
-                        element.codeID == widget.codeHere &&
-                        element.post == "SO")
-                    .postID;
+        child: isLoaded
+            ? MaterialButton(
+                onPressed: () {
+                  if (isLoaded && widget.codeHere.toString().length ==5) {
+                    setState(() {
+                      isLoaded = false;
+                    });
+                    ActivationCodeService activationCodeService =
+                        ActivationCodeService();
+                    activationCodeService.fetchActivationCodes().then((codes) {
+                      try {
+                        meSOID = codes
+                            .firstWhere((element) =>
+                                element.codeID == widget.codeHere &&
+                                element.post == "SO")
+                            .postID;
 
-                SharedPreferences.getInstance().then(((prefs) {
-                  prefs.setInt('meSOID', meSOID!);
-                }));
+                        SharedPreferences.getInstance().then(((prefs) {
+                          prefs.setInt('meSOID', meSOID ?? 0);
+                        }));
 
-                logIn(context);
-              } catch (e) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Incorrect code")));
-              }
+                        logIn(context);
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Incorrect code")));
+                      }
 
-              setState(() {
-                isLoaded = true;
-              });
-            });
-          },
-          child: Center(
-            child: Text(
-              "Activate",
-              style: TextStyle(
-                  color: widget._isTyped ? Colors.white : Colors.black,
-                  fontSize: 16),
-            ),
-          ),
-        ): MaterialButton(
-          onPressed: () {
-          },
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ),
+                      setState(() {
+                        isLoaded = true;
+                      });
+                    });
+                  }
+                },
+                child: Center(
+                  child: Text(
+                    "Activate",
+                    style: TextStyle(
+                        color: widget._isTyped ? Colors.white : Colors.black,
+                        fontSize: 16),
+                  ),
+                ),
+              )
+            : MaterialButton(
+                onPressed: () {},
+                child: Center(
+                  child: CircularProgressIndicator(color: Colors.white, backgroundColor: Colors.white.withOpacity(0.5),),
+                ),
+              ),
       ),
     );
   }

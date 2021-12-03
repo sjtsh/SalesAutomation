@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SO.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/checkLogInStatus.dart';
@@ -21,6 +23,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
 import 'package:sales_officer/DidnotEndDay.dart';
 import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:sales_officer/Profile/SliderPersonal.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
@@ -50,9 +53,54 @@ class LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    checkLogInStatus(context).then((value){
-      print("the function returned");
-      if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
+
+    NepaliDateService().fetchNepaliDate().then((date) {
+      SharedPreferences.getInstance().then((value) {
+        if ((value.getString("logInDateTime") ?? "0000-00-00 00:00:00")
+                .substring(0, 10) !=
+            date.substring(0, 10)) {
+          if (DateTime.parse(
+                  (value.getString("logInDateTime") ?? "0000-00-00 00:00:00"))
+              .isAfter(DateTime.parse((value.getString("logOutDateTime") ??
+                  "0000-00-00 00:00:00")))) {
+            print("the day ended without a logout");
+            didnotEndDay = true;
+          }
+          value.setBool("isRetailing", false);
+          isRetailing = false;
+          LogInScreenState.watch.milliseconds = 0;
+          elapsedTime =
+              transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+        } else {
+          soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
+          isRetailing = value.getBool("isRetailing") ?? false;
+          if (isRetailing!) {
+            LogInScreenState.watch.milliseconds = DateTime.parse(date)
+                .difference(
+                    DateTime.parse(value.getString("logInDateTime") ?? date))
+                .inMilliseconds;
+            LogInScreenState.watch.milliseconds =
+                LogInScreenState.watch.elapsedMillis +
+                        value.getInt("retailingTime") ??
+                    0;
+            elapsedTime =
+                transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+          } else {
+            LogInScreenState.watch.milliseconds =
+                value.getInt("retailingTime") ?? 0;
+            elapsedTime =
+                transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+          }
+        }
+
+        // if (value.getBool("isRetailing") ?? false) {
+        //   initForegroundTask().then((value) {
+        //     FlutterForegroundTask.isRunningService.then((value) {
+        //       startForegroundTask();
+        //     });
+        //   });
+        // }
+      }).then((value) {
         SubGroupService subGroupService = SubGroupService();
         subGroupService.fetchSubGroups(context).then((value) {
           allSubGroupsLocal = value;
@@ -83,7 +131,14 @@ class LogInScreenState extends State<LogInScreen> {
                 soService.fetchSOs().then((value) {
                   allSOLocal = value;
                   try {
-                    meSO = value.firstWhere((element) => element.SOID == meSOID);
+                    SO aSO =
+                        value.firstWhere((element) => element.SOID == meSOID);
+                    if (meSO!.deactivated) {
+                      SharedPreferences.getInstance()
+                          .then((prefs) => prefs.setInt("meSOID", 0));
+                    } else {
+                      meSO = aSO;
+                    }
                   } catch (e) {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return LogInScreen();
@@ -94,23 +149,24 @@ class LogInScreenState extends State<LogInScreen> {
                       ),
                     );
                   }
-                  SODistributorConnectionService soDistributorConnectionService =
-                  SODistributorConnectionService();
+                  SODistributorConnectionService
+                      soDistributorConnectionService =
+                      SODistributorConnectionService();
                   soDistributorConnectionService
                       .fetchSODistributorConnections()
                       .then((newValue) {
                     allSODistributorConnectionsLocal = newValue;
                     personalDistributorsLocal =
                         allDistributorsLocal.where((element) {
-                          bool condition = false;
-                          allSODistributorConnectionsLocal.forEach((element1) {
-                            if (element1.SOID == meSO?.SOID &&
-                                element1.distributorID == element.distributorID) {
-                              condition = true;
-                            }
-                          });
-                          return condition;
-                        }).toList();
+                      bool condition = false;
+                      allSODistributorConnectionsLocal.forEach((element1) {
+                        if (element1.SOID == meSO?.SOID &&
+                            element1.distributorID == element.distributorID) {
+                          condition = true;
+                        }
+                      });
+                      return condition;
+                    }).toList();
                     setState(() {
                       loadingText = "Calculating Sales...";
                       percentage = 40;
@@ -118,7 +174,7 @@ class LogInScreenState extends State<LogInScreen> {
                     calculateWeeklySales(context);
                     calculateSales(context);
                     SKUDistributorWiseService skuDistributorWiseService =
-                    SKUDistributorWiseService();
+                        SKUDistributorWiseService();
                     skuDistributorWiseService
                         .fetchSKUDistributorWises()
                         .then((value) {
@@ -129,7 +185,7 @@ class LogInScreenState extends State<LogInScreen> {
                       });
                     }).then((value) {
                       BillingCompanyService billingCompanyService =
-                      BillingCompanyService();
+                          BillingCompanyService();
                       billingCompanyService
                           .fetchBillingCompanys(context)
                           .then((value) {
@@ -146,22 +202,26 @@ class LogInScreenState extends State<LogInScreen> {
                             percentage = 70;
                           });
                           ProductGroupService productGroupService =
-                          ProductGroupService();
-                          productGroupService.fetchProductGroups().then((value) {
+                              ProductGroupService();
+                          productGroupService
+                              .fetchProductGroups()
+                              .then((value) {
                             allProductGroupsLocal = value;
                             setState(() {
                               loadingText = "Loading Districts...";
                               percentage = 80;
                             });
                             DistrictService districtService = DistrictService();
-                            districtService.fetchDistricts(context).then((value) {
+                            districtService
+                                .fetchDistricts(context)
+                                .then((value) {
                               allDistrictsLocal = value;
                               setState(() {
                                 loadingText = "Almost Done...";
                                 percentage = 90;
                               });
                               FamiliarityService familiarityService =
-                              FamiliarityService();
+                                  FamiliarityService();
                               familiarityService
                                   .fetchFamiliaritys(context)
                                   .then((value) {
@@ -170,11 +230,12 @@ class LogInScreenState extends State<LogInScreen> {
                                   loadingText = "Thank You for your patience";
                                   percentage = 100;
                                   SharedPreferences.getInstance().then((prefs) {
-                                    isNotificationClicked =
-                                        prefs.getBool("isNotificationClicked") ??
-                                            false;
+                                    isNotificationClicked = prefs
+                                            .getBool("isNotificationClicked") ??
+                                        false;
                                     isLoaded = true;
-                                    prefs.setBool("isNotificationClicked", true);
+                                    prefs.setBool(
+                                        "isNotificationClicked", true);
                                   });
                                 });
                               });
@@ -189,9 +250,7 @@ class LogInScreenState extends State<LogInScreen> {
             });
           });
         });
-      } else {
-        isLoaded = true;
-      }
+      });
     });
   }
 
@@ -242,7 +301,7 @@ class LogInScreenState extends State<LogInScreen> {
                     // Text("($percentage%)")
                     Expanded(child: Container()),
                     Text(
-                      "Version 1.0.0.1",
+                      "Version 0.0.0.2",
                       style: TextStyle(color: Colors.red.withOpacity(0.5)),
                     ),
                     SizedBox(

@@ -31,7 +31,7 @@ class NotificationService {
       id,
       title,
       body,
-      RepeatInterval.everyMinute,
+      RepeatInterval.hourly,
       NotificationDetails(
           android: AndroidNotificationDetails("activity", "activity",
               importance: Importance.max,

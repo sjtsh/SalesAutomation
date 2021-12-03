@@ -63,12 +63,11 @@ class _SliderPersonalState extends State<SliderPersonal> {
         });
       });
       startWatch();
-      initForegroundTask().then((value) {
-        FlutterForegroundTask.isRunningService.then((value) {
-          stopForegroundTask();
-          startForegroundTask();
-        });
-      });
+      // initForegroundTask().then((value) {
+      // //   FlutterForegroundTask.isRunningService.then((value) {
+      //     startForegroundTask();
+      // //   });
+      // });
       fireAlarm();
     } else {
       stopWatch();
@@ -82,8 +81,8 @@ class _SliderPersonalState extends State<SliderPersonal> {
           prefs.setInt("retailingTime", LogInScreenState.watch.elapsedMillis);
         });
       });
-      NotificationService().cancelAllNotifications();
-      stopForegroundTask();
+      // NotificationService().cancelAllNotifications();
+      // stopForegroundTask();
     }
   }
 
@@ -376,11 +375,6 @@ class StopWatchPersonal extends Stopwatch {
   }
 
   get elapsedMillis {
-    return this.elapsedMilliseconds + this._starterMilliseconds;
-  }
-
-  get am {
-    print("from the watch " + (this.elapsedMilliseconds + this._starterMilliseconds).toString());
     return this.elapsedMilliseconds + this._starterMilliseconds;
   }
 
