@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SO.dart';
