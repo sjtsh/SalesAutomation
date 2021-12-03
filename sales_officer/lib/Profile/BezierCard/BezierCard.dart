@@ -107,8 +107,8 @@ class _BezierCardState extends State<BezierCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 10,
-              width: 10,
+              height: 8,
+              width: 8,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isMTD
@@ -119,8 +119,8 @@ class _BezierCardState extends State<BezierCard> {
               width: 5,
             ),
             Container(
-              height: 10,
-              width: 10,
+              height: 8,
+              width: 8,
               decoration: BoxDecoration(
                   shape: BoxShape.circle, color:isMTD ? Colors.black.
               withOpacity(0.3) :Colors.black.withOpacity(0.5)),

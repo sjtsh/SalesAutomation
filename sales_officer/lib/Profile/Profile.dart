@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
 import 'package:sales_officer/Profile/Header/Online.dart';
@@ -40,7 +41,19 @@ class _ProfileState extends State<Profile> {
         //     ),
         //   ),
         // ),
-        SliderPersonal(refreshChart),
+        Row(
+          children: [
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_){
+                  return ActivitiesScreen(widget.refresh);
+                }));
+              },
+                child: Online()),
+            Expanded(child: SliderPersonal(refreshChart,widget.refresh)),
+          ],
+        ),
         StatScreen(),
         BezierCard(isRetailing?? false, widget.refresh),
         Achievements(),

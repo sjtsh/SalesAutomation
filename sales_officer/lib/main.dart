@@ -7,6 +7,7 @@ import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:sales_officer/ActivationCode/ActivationCode.dart';
 import 'package:sales_officer/foreground/foreground.dart';
 import 'package:sales_officer/timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +59,8 @@ class _FusersState extends State<Fusers> {
                 return SafeArea(
                   child: Scaffold(
                     backgroundColor: Color(0xffF5F5F5),
-                    body: SignIn(),
+                    // body: SignIn(),
+                    body: ActivationCode(),
                   ),
                 );
               }

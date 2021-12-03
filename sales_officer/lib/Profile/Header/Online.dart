@@ -8,9 +8,10 @@ class Online extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          clipBehavior: Clip.hardEdge,
-          height: 58,
-          width: 58,
+          margin: EdgeInsets.only(top: 12,bottom: 6),
+         clipBehavior: Clip.hardEdge,
+          height:75,
+          width: 68,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.black,

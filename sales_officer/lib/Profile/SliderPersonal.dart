@@ -21,8 +21,8 @@ import 'Header/Online.dart';
 
 class SliderPersonal extends StatefulWidget {
   final Function refreshChart;
-
-  SliderPersonal(this.refreshChart);
+  final Function refresh;
+  SliderPersonal(this.refreshChart, this.refresh);
 
   @override
   State<SliderPersonal> createState() => _SliderPersonalState();
@@ -176,40 +176,40 @@ class _SliderPersonalState extends State<SliderPersonal> {
                         right: 0,
                         child: Row(
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "STATUS",
-                                  style: TextStyle(
-                                    fontFamily: "lato",
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  "Retailing",
-                                  style: TextStyle(
-                                      fontFamily: "lato",
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              width: 1,
-                              height: 60,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            // Column(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: [
+                            //     Text(
+                            //       "STATUS",
+                            //       style: TextStyle(
+                            //         fontFamily: "lato",
+                            //         fontSize: 12,
+                            //         color: Colors.white,
+                            //       ),
+                            //     ),
+                            //     Text(
+                            //       "Retailing",
+                            //       style: TextStyle(
+                            //           fontFamily: "lato",
+                            //           fontSize: 18,
+                            //           color: Colors.white,
+                            //           fontWeight: FontWeight.bold),
+                            //     ),
+                            //   ],
+                            // ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            // Container(
+                            //   margin: EdgeInsets.all(10),
+                            //   width: 1,
+                            //   height: 60,
+                            //   color: Colors.white,
+                            // ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,40 +263,40 @@ class _SliderPersonalState extends State<SliderPersonal> {
                                 Icons.arrow_forward_ios_rounded,
                                 color: Colors.white,
                               ),
-                              Expanded(child: Container()),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "STATUS",
-                                    style: TextStyle(
-                                      fontFamily: "lato",
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Not Retailing",
-                                    style: TextStyle(
-                                        fontFamily: "lato",
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
+                              // Expanded(child: Container()),
+                              // Column(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       "STATUS",
+                              //       style: TextStyle(
+                              //         fontFamily: "lato",
+                              //         fontSize: 12,
+                              //         color: Colors.white,
+                              //       ),
+                              //     ),
+                              //     Text(
+                              //       "Not Retailing",
+                              //       style: TextStyle(
+                              //           fontFamily: "lato",
+                              //           fontSize: 18,
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.bold),
+                              //     ),
+                              //   ],
+                              // ),
                               elapsedTime != ""
                                   ? Expanded(child: Container())
                                   : Container(),
-                              elapsedTime != ""
-                                  ? Container(
-                                      margin: EdgeInsets.all(10),
-                                      width: 1,
-                                      height: 60,
-                                      color: Colors.white,
-                                    )
-                                  : Container(),
+                              // elapsedTime != ""
+                              //     ? Container(
+                              //         margin: EdgeInsets.all(10),
+                              //         width: 1,
+                              //         height: 60,
+                              //         color: Colors.white,
+                              //       )
+                              //     : Container(),
                               elapsedTime != ""
                                   ? Expanded(child: Container())
                                   : Container(),
@@ -339,20 +339,21 @@ class _SliderPersonalState extends State<SliderPersonal> {
               alignment:
                   isRetailing! ? Alignment.centerRight : Alignment.centerLeft,
               child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return Header();
-                      });
-                },
                 onHorizontalDragEnd: (a) {
                   toggleButton();
                   startOrStop();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Online(),
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    height: 58,
+                    width: 58,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ),

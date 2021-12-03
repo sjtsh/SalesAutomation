@@ -178,53 +178,56 @@ class _EditSettingsState extends State<EditSettings> {
                                   ),
                                 ),
                                 data.length > 3
-                                    ? Center(
-                                        child: Container(
-                                          child: TextField(
-                                            controller:
-                                                soDetail.textEditingController,
-                                            cursorWidth: 1,
-                                            keyboardType: g[1] ==
-                                                    "Phone Number: "
-                                                ? TextInputType.phone
-                                                : g[1] == "PAN: " ||
-                                                        g[1] ==
-                                                            "Bank Account Number: "
-                                                    ? TextInputType.number
-                                                    : g[1] == "Email: "
-                                                        ? TextInputType
-                                                            .emailAddress
-                                                        : TextInputType.text,
-                                            cursorColor: Colors.blue,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                            ),
-                                            decoration: InputDecoration(
-                                              hintText: g[2].toString(),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color:
-                                                        emptyDetails.contains(
-                                                                soDetail.title)
-                                                            ? Colors.red
-                                                            : Colors.grey),
+                                    ? Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Center(
+                                          child: Container(
+                                            child: TextField(
+                                              controller:
+                                                  soDetail.textEditingController,
+                                              cursorWidth: 1,
+                                              keyboardType: g[1] ==
+                                                      "Phone Number: "
+                                                  ? TextInputType.phone
+                                                  : g[1] == "PAN: " ||
+                                                          g[1] ==
+                                                              "Bank Account Number: "
+                                                      ? TextInputType.number
+                                                      : g[1] == "Email: "
+                                                          ? TextInputType
+                                                              .emailAddress
+                                                          : TextInputType.text,
+                                              cursorColor: Colors.blue,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
                                               ),
-                                              disabledBorder: InputBorder.none,
-                                              focusedBorder: OutlineInputBorder(
+                                              decoration: InputDecoration(
+                                                hintText: g[2].toString(),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12.0),
+                                                enabledBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: emptyDetails
-                                                              .contains(soDetail
-                                                                  .title)
-                                                          ? Colors.red
-                                                          : Colors.grey)),
+                                                      color:
+                                                          emptyDetails.contains(
+                                                                  soDetail.title)
+                                                              ? Colors.red
+                                                              : Colors.grey),
+                                                ),
+                                                disabledBorder: InputBorder.none,
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: emptyDetails
+                                                                .contains(soDetail
+                                                                    .title)
+                                                            ? Colors.red
+                                                            : Colors.grey)),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      )
+                                    )
                                     : SettingsDropDown()
                               ],
                             ));

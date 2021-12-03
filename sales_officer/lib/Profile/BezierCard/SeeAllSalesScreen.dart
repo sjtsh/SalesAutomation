@@ -20,7 +20,7 @@ class SeeAllSalesScreen extends StatefulWidget {
 class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
   int pageNumber = 0;
   PageController _pageController = PageController();
-
+  bool setArrow = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +31,10 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
               child: PageView(
                   reverse: !widget.isMTD,
                   onPageChanged: (int i) {
-                    pageNumber = i;
+                    setState(() {
+                      pageNumber = i;
+                      setArrow = !setArrow;
+                    });
                   },
                   controller: _pageController,
                   scrollDirection: Axis.horizontal,
@@ -217,20 +220,21 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Material(
-                      color: Colors.white,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: widget.toggleValue
-                                ? Color(0xff129C8D)
-                                : Color(0xffFD5B11),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: widget.toggleValue
+                            ? Color(0xff129C8D)
+                            : Color(0xffFD5B11),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                           child: Center(
                             child: Text(
                               "Back",
@@ -268,7 +272,7 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                           child: Center(
                             child: Icon(
                               Icons.arrow_back_ios_outlined,
-                              color: Colors.black,
+                              color: setArrow == widget.isMTD ? Colors.black : Colors.grey,
                             ),
                           ),
                         ),
@@ -298,13 +302,14 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.easeInOut);
                           }
+
                         },
                         child: Container(
                           height: 50,
                           child: Center(
                             child: Icon(
                               Icons.arrow_forward_ios_outlined,
-                              color: Colors.black,
+                              color: setArrow == widget.isMTD ? Colors.grey : Colors.black,
                             ),
                           ),
                         ),

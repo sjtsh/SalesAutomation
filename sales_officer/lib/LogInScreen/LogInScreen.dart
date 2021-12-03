@@ -5,7 +5,6 @@ import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SO.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
-import 'package:sales_officer/BACKEND%20Access/Methods/checkLogInStatus.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/BillingCompanyService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/DistrictService.dart';
@@ -132,7 +131,7 @@ class LogInScreenState extends State<LogInScreen> {
                   try {
                     SO aSO =
                         value.firstWhere((element) => element.SOID == meSOID);
-                    if (meSO!.deactivated) {
+                    if (aSO.deactivated) {
                       SharedPreferences.getInstance()
                           .then((prefs) => prefs.setInt("meSOID", 0));
                     } else {

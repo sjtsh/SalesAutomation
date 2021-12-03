@@ -63,14 +63,15 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
               ),
               child: BreadCrum3(
                 "Distributor",
-                widget.currentDistributor.distributorName,"Edit Details",
+                widget.currentDistributor.distributorName,
+                "Edit Details",
               ),
             ),
             Expanded(
               child: ListView(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
@@ -135,49 +136,56 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
                                   ),
                                 ),
                                 data.length > 3
-                                    ? Center(
-                                        child: Container(
-                                          child: TextField(
-                                            controller: distributorDetail
-                                                .textEditingController,
-                                            cursorWidth: 1,
-                                            keyboardType: g[0] ==
-                                                    "Phone Number: "
-                                                ? TextInputType.phone
-                                                : g[0] == "PAN: " ||
-                                                        g[0] ==
-                                                            "Bank Account Number: "
-                                                    ? TextInputType.number
-                                                    : g[0] == "Email: "
-                                                        ? TextInputType
-                                                            .emailAddress
-                                                        : TextInputType.text,
-                                            cursorColor: Colors.blue,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                            ),
-                                            decoration: InputDecoration(
-                                              hintText: g[1].toString(),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12.0),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: emptyDetails.contains(
-                                                            distributorDetail
-                                                                .title)
-                                                        ? Colors.red
-                                                        : Colors.grey),
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        // padding: const EdgeInsets.only(left: 12.0,right: 12,bottom: 12),
+                                        child: Center(
+                                          child: Container(
+                                            child: TextField(
+                                              controller: distributorDetail
+                                                  .textEditingController,
+                                              cursorWidth: 1,
+                                              keyboardType: g[0] ==
+                                                      "Phone Number: "
+                                                  ? TextInputType.phone
+                                                  : g[0] == "PAN: " ||
+                                                          g[0] ==
+                                                              "Bank Account Number: "
+                                                      ? TextInputType.number
+                                                      : g[0] == "Email: "
+                                                          ? TextInputType
+                                                              .emailAddress
+                                                          : TextInputType.text,
+                                              cursorColor: Colors.blue,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
                                               ),
-                                              disabledBorder: InputBorder.none,
-                                              focusedBorder: OutlineInputBorder(
+                                              decoration: InputDecoration(
+                                                hintText: g[1].toString(),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12.0),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
                                                   borderSide: BorderSide(
                                                       color: emptyDetails.contains(
                                                               distributorDetail
                                                                   .title)
                                                           ? Colors.red
-                                                          : Colors.grey)),
+                                                          : Colors.grey),
+                                                ),
+                                                disabledBorder:
+                                                    InputBorder.none,
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: emptyDetails
+                                                                .contains(
+                                                                    distributorDetail
+                                                                        .title)
+                                                            ? Colors.red
+                                                            : Colors.grey)),
+                                              ),
                                             ),
                                           ),
                                         ),

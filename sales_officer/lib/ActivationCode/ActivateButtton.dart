@@ -46,9 +46,9 @@ class _ActivateButtonState extends State<ActivateButton> {
                                 element.codeID == widget.codeHere &&
                                 element.post == "SO")
                             .postID;
-
+                        print(meSOID);
                         SharedPreferences.getInstance().then(((prefs) {
-                          prefs.setInt('meSOID', meSOID ?? 0);
+                          prefs.setInt('meSOID', meSOID!);
                         }));
 
                         logIn(context);
