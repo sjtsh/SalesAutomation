@@ -30,14 +30,14 @@ dependencies:
   location:
   flutter_isolate: ^2.0.0
   flutter_local_notifications: ^9.1.4
-  android_alarm_manager_plus:
   timelines: ^0.1.0
 #  syncfusion_flutter_calendar: ^18.4.46
   nepali_date_picker: ^5.0.0
-  rxdart:
+#  rxdart:
   flutter_native_timezone:
   device_info_plus:
-  timezone: ^0.8.0
+#  timezone: ^0.8.0
+  flutter_foreground_task: ^3.4.1
 
 #  slider_button:
 #  sliding_switch: ^1.0.0

@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUStockService.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/SKUStockTrackService.dart';
 import 'package:sales_officer/NavBar/NavBar.dart';
 import 'package:sales_officer/StocksScreen/StocksScreen.dart';
 
@@ -72,7 +73,12 @@ Future<bool> updateStock(List recieptData, int distributorID,
               updatedDate: time,
               lat: value.latitude,
               lng: value.longitude,
-            )),
+            )).then((value){
+              if(value){
+                SKUStockTrackService().insertSKUStockTrack(meSOID!, distributorID, time);
+              }
+              return value;
+            }),
           );
           return conditionOnly;
         });

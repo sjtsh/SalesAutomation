@@ -9,6 +9,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
 import '../../Database.dart';
 
 calculateSales(context) async {
+  products = {};
   NepaliDateService nepaliDateService = NepaliDateService();
   await nepaliDateService.fetchNepaliDate().then((time) async {
     DistributorOrderService distributorOrderService = DistributorOrderService();

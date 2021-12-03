@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/DistributorSale.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/SO.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateSales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/calculateWeeklySales.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/checkLogInStatus.dart';
@@ -19,6 +21,9 @@ import 'package:sales_officer/BACKEND%20Access/Services/SubGroupService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/TaskService.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/UnitService.dart';
 import 'package:sales_officer/DidnotEndDay.dart';
+import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
+import 'package:sales_officer/Profile/SliderPersonal.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Database.dart';
@@ -27,12 +32,13 @@ import '../timer.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
-  _LogInScreenState createState() => _LogInScreenState();
+  LogInScreenState createState() => LogInScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class LogInScreenState extends State<LogInScreen> {
   bool isSelected = false;
   int percentage = 0;
+  static StopWatchPersonal watch = StopWatchPersonal();
 
   select() {
     setState(() {
@@ -47,126 +53,191 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // listenForNotification(() {}, navigatorKey);
-    checkLogInStatus(context);
-    if (allDistributorsLocal.length == 0 || allSubGroupsLocal.length == 0) {
-      SubGroupService subGroupService = SubGroupService();
-      subGroupService.fetchSubGroups(context).then((value) {
-        allSubGroupsLocal = value;
 
-        setState(() {
-          loadingText = "Loading SKUs...";
-          percentage = 10;
-        });
-        TaskService taskService = TaskService();
-        taskService.fetchTasks().then((value) {
-          allTaskLocal = value;
-          SKUService skuService = SKUService();
-          skuService.fetchSKUs().then((value) {
-            allSKULocal = value;
-            allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
-            setState(() {
-              loadingText = "Loading Distributors...";
-              percentage = 20;
-            });
-            DistributorService distributorService = DistributorService();
-            distributorService.fetchDistributors().then((value) {
-              allDistributorsLocal = value;
+    NepaliDateService().fetchNepaliDate().then((date) {
+      SharedPreferences.getInstance().then((value) {
+        if ((value.getString("logInDateTime") ?? "0000-00-00 00:00:00")
+                .substring(0, 10) !=
+            date.substring(0, 10)) {
+          if (DateTime.parse(
+                  (value.getString("logInDateTime") ?? "0000-00-00 00:00:00"))
+              .isAfter(DateTime.parse((value.getString("logOutDateTime") ??
+                  "0000-00-00 00:00:00")))) {
+            print("the day ended without a logout");
+            didnotEndDay = true;
+          }
+          value.setBool("isRetailing", false);
+          isRetailing = false;
+          LogInScreenState.watch.milliseconds = 0;
+          elapsedTime =
+              transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+        } else {
+          soLogInDetailID = value.getInt("soLogInDetailID") ?? 0;
+          isRetailing = value.getBool("isRetailing") ?? false;
+          if (isRetailing!) {
+            LogInScreenState.watch.milliseconds = DateTime.parse(date)
+                .difference(
+                    DateTime.parse(value.getString("logInDateTime") ?? date))
+                .inMilliseconds;
+            LogInScreenState.watch.milliseconds =
+                LogInScreenState.watch.elapsedMillis +
+                        value.getInt("retailingTime") ??
+                    0;
+            elapsedTime =
+                transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+          } else {
+            LogInScreenState.watch.milliseconds =
+                value.getInt("retailingTime") ?? 0;
+            elapsedTime =
+                transformMilliSeconds(LogInScreenState.watch.elapsedMillis);
+          }
+        }
+
+        // if (value.getBool("isRetailing") ?? false) {
+        //   initForegroundTask().then((value) {
+        //     FlutterForegroundTask.isRunningService.then((value) {
+        //       startForegroundTask();
+        //     });
+        //   });
+        // }
+      }).then((value) {
+        SubGroupService subGroupService = SubGroupService();
+        subGroupService.fetchSubGroups(context).then((value) {
+          allSubGroupsLocal = value;
+
+          setState(() {
+            loadingText = "Loading SKUs...";
+            percentage = 10;
+          });
+          TaskService taskService = TaskService();
+          taskService.fetchTasks().then((value) {
+            allTaskLocal = value;
+            SKUService skuService = SKUService();
+            skuService.fetchSKUs().then((value) {
+              allSKULocal = value;
+              allSKULocal.sort((a, b) => a.subGroupID.compareTo(b.subGroupID));
               setState(() {
-                loadingText = "Loading Profile...";
-                percentage = 30;
+                loadingText = "Loading Distributors...";
+                percentage = 20;
               });
-              SOService soService = SOService();
-              soService.fetchSOs().then((value) {
-                allSOLocal = value;
-                try {
-                  meSO = value.firstWhere((element) => element.SOID == meSOID);
-                } catch (e) {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return LogInScreen();
-                  }));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("NO SOID FOUND"),
-                    ),
-                  );
-                }
-                SODistributorConnectionService soDistributorConnectionService =
-                    SODistributorConnectionService();
-                soDistributorConnectionService
-                    .fetchSODistributorConnections()
-                    .then((newValue) {
-                  allSODistributorConnectionsLocal = newValue;
-                  personalDistributorsLocal =
-                      allDistributorsLocal.where((element) {
-                    bool condition = false;
-                    allSODistributorConnectionsLocal.forEach((element1) {
-                      if (element1.SOID == meSO?.SOID &&
-                          element1.distributorID == element.distributorID) {
-                        condition = true;
-                      }
-                    });
-                    return condition;
-                  }).toList();
-                  setState(() {
-                    loadingText = "Calculating Sales...";
-                    percentage = 40;
-                  });
-                  calculateWeeklySales(context);
-                  calculateSales(context);
-                  SKUDistributorWiseService skuDistributorWiseService =
-                      SKUDistributorWiseService();
-                  skuDistributorWiseService
-                      .fetchSKUDistributorWises()
-                      .then((value) {
-                    allSKUDistributorWiseLocal = value;
-                    setState(() {
-                      loadingText = "Loading Billing Companies...";
-                      percentage = 50;
-                    });
-                  }).then((value) {
-                    BillingCompanyService billingCompanyService =
-                        BillingCompanyService();
-                    billingCompanyService
-                        .fetchBillingCompanys(context)
-                        .then((value) {
-                      allBillingCompanysLocal = value;
-                      setState(() {
-                        loadingText = "Loading Units...";
-                        percentage = 60;
+              DistributorService distributorService = DistributorService();
+              distributorService.fetchDistributors().then((value) {
+                allDistributorsLocal = value;
+                setState(() {
+                  loadingText = "Loading Profile...";
+                  percentage = 30;
+                });
+                SOService soService = SOService();
+                soService.fetchSOs().then((value) {
+                  allSOLocal = value;
+                  try {
+                    SO aSO =
+                        value.firstWhere((element) => element.SOID == meSOID);
+                    if (meSO!.deactivated) {
+                      SharedPreferences.getInstance()
+                          .then((prefs) => prefs.setInt("meSOID", 0));
+                    } else {
+                      meSO = aSO;
+                    }
+                  } catch (e) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return LogInScreen();
+                    }));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("NO SOID FOUND"),
+                      ),
+                    );
+                  }
+                  SODistributorConnectionService
+                      soDistributorConnectionService =
+                      SODistributorConnectionService();
+                  soDistributorConnectionService
+                      .fetchSODistributorConnections()
+                      .then((newValue) {
+                    allSODistributorConnectionsLocal = newValue;
+                    personalDistributorsLocal =
+                        allDistributorsLocal.where((element) {
+                      bool condition = false;
+                      allSODistributorConnectionsLocal.forEach((element1) {
+                        if (element1.SOID == meSO?.SOID &&
+                            element1.distributorID == element.distributorID) {
+                          condition = true;
+                        }
                       });
-                      UnitService unitService = UnitService();
-                      unitService.fetchUnits().then((value) {
-                        allUnitsLocal = value;
+                      return condition;
+                    }).toList();
+                    setState(() {
+                      loadingText = "Calculating Sales...";
+                      percentage = 40;
+                    });
+                    calculateWeeklySales(context);
+                    calculateSales(context);
+                    SKUDistributorWiseService skuDistributorWiseService =
+                        SKUDistributorWiseService();
+                    skuDistributorWiseService
+                        .fetchSKUDistributorWises()
+                        .then((value) {
+                      allSKUDistributorWiseLocal = value;
+                      setState(() {
+                        loadingText = "Loading Billing Companies...";
+                        percentage = 50;
+                      });
+                    }).then((value) {
+                      BillingCompanyService billingCompanyService =
+                          BillingCompanyService();
+                      billingCompanyService
+                          .fetchBillingCompanys(context)
+                          .then((value) {
+                        allBillingCompanysLocal = value;
                         setState(() {
-                          loadingText = "Loading Product Groups...";
-                          percentage = 70;
+                          loadingText = "Loading Units...";
+                          percentage = 60;
                         });
-                        ProductGroupService productGroupService =
-                            ProductGroupService();
-                        productGroupService.fetchProductGroups().then((value) {
-                          allProductGroupsLocal = value;
+                        UnitService unitService = UnitService();
+                        unitService.fetchUnits().then((value) {
+                          allUnitsLocal = value;
                           setState(() {
-                            loadingText = "Loading Districts...";
-                            percentage = 80;
+                            loadingText = "Loading Product Groups...";
+                            percentage = 70;
                           });
-                          DistrictService districtService = DistrictService();
-                          districtService.fetchDistricts(context).then((value) {
-                            allDistrictsLocal = value;
+                          ProductGroupService productGroupService =
+                              ProductGroupService();
+                          productGroupService
+                              .fetchProductGroups()
+                              .then((value) {
+                            allProductGroupsLocal = value;
                             setState(() {
-                              loadingText = "Almost Done...";
-                              percentage = 90;
+                              loadingText = "Loading Districts...";
+                              percentage = 80;
                             });
-                            FamiliarityService familiarityService =
-                                FamiliarityService();
-                            familiarityService
-                                .fetchFamiliaritys(context)
+                            DistrictService districtService = DistrictService();
+                            districtService
+                                .fetchDistricts(context)
                                 .then((value) {
-                              allFamiliaritysLocal = value;
+                              allDistrictsLocal = value;
                               setState(() {
-                                loadingText = "Thank You for your patience";
-                                percentage = 100;
-                                isLoaded = true;
+                                loadingText = "Almost Done...";
+                                percentage = 90;
+                              });
+                              FamiliarityService familiarityService =
+                                  FamiliarityService();
+                              familiarityService
+                                  .fetchFamiliaritys(context)
+                                  .then((value) {
+                                allFamiliaritysLocal = value;
+                                setState(() {
+                                  loadingText = "Thank You for your patience";
+                                  percentage = 100;
+                                  SharedPreferences.getInstance().then((prefs) {
+                                    isNotificationClicked = prefs
+                                            .getBool("isNotificationClicked") ??
+                                        false;
+                                    isLoaded = true;
+                                    prefs.setBool(
+                                        "isNotificationClicked", true);
+                                  });
+                                });
                               });
                             });
                           });
@@ -180,9 +251,7 @@ class _LogInScreenState extends State<LogInScreen> {
           });
         });
       });
-    } else {
-      isLoaded = true;
-    }
+    });
   }
 
   setLoaded() {
@@ -232,7 +301,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     // Text("($percentage%)")
                     Expanded(child: Container()),
                     Text(
-                      "Version 1.0.0.1",
+                      "Version 0.0.0.2",
                       style: TextStyle(color: Colors.red.withOpacity(0.5)),
                     ),
                     SizedBox(

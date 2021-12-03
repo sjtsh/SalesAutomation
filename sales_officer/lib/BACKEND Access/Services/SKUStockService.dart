@@ -22,7 +22,7 @@ class SKUStockService {
 
   Future<bool> updateSKUStock(SKUStock skuStock) async {
     return Geolocator.getCurrentPosition().then((value) async {
-      try{
+      try {
         final response = await http.post(
           Uri.parse(
               "https://asia-south1-hilifedb.cloudfunctions.net/updateSKUStock"),
@@ -49,9 +49,9 @@ class SKUStockService {
         } else {
           return false;
         }
-      } on SocketException{
+      } on SocketException {
         throw Exception("failed to load post");
-      }on TimeoutException{
+      } on TimeoutException {
         throw Exception("failed to load post");
       }
     });

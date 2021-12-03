@@ -4,8 +4,9 @@ class SOActivity {
   final int distributorID;
   final int taskID;
   final String remark;
+  final String dateAndTime;
 
-  SOActivity(this.SOActivityID, this.SOID, this.distributorID, this.taskID, this.remark);
+  SOActivity(this.SOActivityID, this.SOID, this.distributorID, this.taskID, this.remark, this.dateAndTime);
 
   factory SOActivity.fromJson(Map<String, dynamic> json) {
     return SOActivity(
@@ -14,6 +15,7 @@ class SOActivity {
       int.parse(json['distributorID'].toStringAsFixed(0)),
       int.parse(json['taskID'].toStringAsFixed(0)),
       json['remark'],
+      json['dateAndTime']
     );
   }
 }

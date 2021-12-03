@@ -44,7 +44,6 @@ class IndividualConfirmationVariation extends StatelessWidget {
           ],
         ),
       );
-      throw Exception("SKUID or DistributorID not found");
     }
 
     return Material(
@@ -127,7 +126,7 @@ class IndividualConfirmationVariation extends StatelessWidget {
                           } catch (e) {
                             return Text("Unnamed");
                           }
-                          ;
+
                         }),
                         Text(
                           " ${allUnitsLocal.firstWhere((element) => element.unitID == sku.primaryUnitID).unitName}",
