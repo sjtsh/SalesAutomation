@@ -43,12 +43,13 @@ class ProductsDetail extends StatelessWidget {
                         height: 300,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            image: DecorationImage(
-                          image: AssetImage(
-                            "products/Rectangle 135.png",
+                          image: DecorationImage(
+                            image: AssetImage(
+                              "products/Rectangle 135.png",
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
-                        )),
+                        ),
                         // color: Colors.blue,
                       ),
                     ),

@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/mapsIntent.dart';
+import 'package:sales_officer/DistributorList/MoreFieldScreen.dart';
 import 'package:sales_officer/MoreScreen/GoogleMap.dart';
 import 'BACKEND Access/Entities/Distributor.dart';
 import 'BACKEND Access/Entities/DistributorOrder.dart';
@@ -404,7 +405,11 @@ class DistributorInfo extends StatelessWidget {
                       child: Material(
                         color: Colors.white,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return MoreFieldScreen(currentDistributor,refresh);
+                            }));
+                          },
                           child: Container(
                             height: 50,
                             color: Color(0xffF5F5F5),

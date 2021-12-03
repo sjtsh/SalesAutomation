@@ -3,6 +3,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKU.dart';
 import 'package:sales_officer/BACKEND%20Access/Entities/SKUStock.dart';
 import 'package:sales_officer/BACKEND%20Access/Services/SKUStockService.dart';
+import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 
 import '../../Database.dart';
 import '../../Header.dart';
@@ -20,6 +21,31 @@ class SingularStockScreen extends StatelessWidget {
         body: Column(
           children: [
             Header(15, false, () {}),
+            Container(
+                padding: EdgeInsets.only(left: 12),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                    bottom: BorderSide(
+                      color: Colors.black.withOpacity(0.1),
+                    ),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 3,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: BreadCrum3(
+                    "Distributor", distributor.distributorName,"View Stock")),
             Expanded(
               child: ListView(
                 children: [

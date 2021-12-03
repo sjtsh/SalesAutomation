@@ -8,13 +8,14 @@ import 'EditSettings.dart';
 
 class Settings extends StatefulWidget {
   final Function refresh;
+
   Settings(this.refresh);
+
   @override
   State<Settings> createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
-  bool isEditing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _SettingsState extends State<Settings> {
                 children: [
                   Container(
                     height: 100,
-                    margin: EdgeInsets.only(top: 12, right: 12,left: 12),
+                    margin: EdgeInsets.only(top: 12, right: 12, left: 12),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -69,12 +70,14 @@ class _SettingsState extends State<Settings> {
                                 meSO!.SOName,
                                 style: TextStyle(fontSize: 20),
                               ),
-                              meSO!.email != null ? Text(
-                                meSO!.email.toString(),
-                                style: TextStyle(
-                                    color: Colors.black.withOpacity(0.5),
-                                    fontSize: 15),
-                              ): Container(),
+                              meSO!.email != null
+                                  ? Text(
+                                      meSO!.email.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.5),
+                                          fontSize: 15),
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -87,17 +90,13 @@ class _SettingsState extends State<Settings> {
                           child: Material(
                             color: Colors.white,
                             child: InkWell(
-                              onTap: (){
-
+                              onTap: () {
+                               Navigator.push(context, MaterialPageRoute(builder: (_){
+                                 return EditSettings( widget.refresh);
+                               }));
                               },
-                              // onTap: () {
-                              //   setState(() {
-                              //     isEditing = true;
-                              //   });
-                              // },
-                              child: isEditing
-                                  ? Container()
-                                  : Padding(
+                              child:
+                                  Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Icon(
                                         Icons.edit,
@@ -130,19 +129,20 @@ class _SettingsState extends State<Settings> {
                           Icons.location_on_rounded,
                           "Home Location: ",
                           meSO!.homeLocation
-
                         ],
                         [Icons.add_business_outlined, "PAN: ", meSO!.PAN],
                         [
                           Icons.my_location_outlined,
                           "District Name: ",
-                          allDistrictsLocal.firstWhere((element) => element.districtID == meSO!.districtID).districtName,
+                          allDistrictsLocal
+                              .firstWhere((element) =>
+                                  element.districtID == meSO!.districtID)
+                              .districtName,
                         ],
                         [
                           Icons.account_balance,
                           "Bank Account Name: ",
                           meSO!.bankAccountName
-
                         ],
                         [
                           Icons.account_balance_wallet_sharp,
@@ -167,11 +167,11 @@ class _SettingsState extends State<Settings> {
                           "yes"
                         ]
                       ]
-                    ].asMap().entries
+                    ]
+                        .asMap()
+                        .entries
                         .map(
-                          (e) => isEditing
-                              ? EditSettings(e.value)
-                              : Container(
+                          (e) => Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: 12, vertical: 12),
                                   decoration: BoxDecoration(
@@ -192,7 +192,8 @@ class _SettingsState extends State<Settings> {
                                                 border: Border(
                                                     bottom: BorderSide(
                                                         color: e.key !=
-                                                                e.value.length - 1
+                                                                e.value.length -
+                                                                    1
                                                             ? Colors.black
                                                                 .withOpacity(
                                                                     0.1)
@@ -202,45 +203,47 @@ class _SettingsState extends State<Settings> {
                                               padding: EdgeInsets.symmetric(
                                                 horizontal: 12,
                                               ),
-                                              child: f[2] == "null" || f[2] == "-1" ? Container():
-
-
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    f[0] as IconData,
-                                                    color: Colors.blueGrey,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 12,
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 20.0),
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            f[1] as String,
-                                                          ),
-                                                          Expanded(
-                                                              child:
-                                                                  Container()),
-                                                          Text(
-                                                            f[2].toString(),
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.5)),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              child:
+                                                  f[2] == "null" || f[2] == "-1"
+                                                      ? Container()
+                                                      : Row(
+                                                          children: [
+                                                            Icon(
+                                                              f[0] as IconData,
+                                                              color: Colors
+                                                                  .blueGrey,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 12,
+                                                            ),
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    vertical:
+                                                                        20.0),
+                                                                child: Row(
+                                                                  children: [
+                                                                    Text(
+                                                                      f[1]
+                                                                          as String,
+                                                                    ),
+                                                                    Expanded(
+                                                                        child:
+                                                                            Container()),
+                                                                    Text(
+                                                                      f[2].toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black
+                                                                              .withOpacity(0.5)),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                             ),
                                           ),
                                         )
@@ -253,35 +256,7 @@ class _SettingsState extends State<Settings> {
                 ],
               ),
             ),
-            isEditing
-                ? Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Color(0xffF2B200),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            isEditing = false;
-                          });
-                        },
-                        child: Center(
-                          child: Text(
-                            "Request for Approval",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
+            Container(),
           ],
         ),
       ),

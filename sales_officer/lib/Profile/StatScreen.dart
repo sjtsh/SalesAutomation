@@ -46,7 +46,8 @@ class _StatScreenState extends State<StatScreen> {
                   ),
                   Expanded(child: Container()),
                   Container(
-                    width: 50,
+
+                    width: 70,
                     child: DropdownButton<String>(
                       icon: Icon(Icons.keyboard_arrow_down_rounded),
                       isExpanded: true,
@@ -68,8 +69,11 @@ class _StatScreenState extends State<StatScreen> {
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(
-                            value,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              value,
+                            ),
                           ),
                         );
                       }).toList(),

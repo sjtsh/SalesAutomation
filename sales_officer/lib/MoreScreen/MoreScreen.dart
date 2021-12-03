@@ -28,13 +28,13 @@ class MoreScreen extends StatelessWidget {
       child: GridView.count(
         crossAxisCount: 3,
         children: [
-          [Icons.tour, Colors.green, "Tour Plan", TourPlanScreen(refresh)],
+          [Icons.tour, Colors.green, "Tour", TourPlanScreen(refresh)],
           [Icons.settings, Colors.blueGrey, "Settings", Settings(refresh)],
           [Icons.trending_up, Colors.deepPurple, "Performance", Container()],
           [Icons.timeline, Colors.blueAccent, "Timeline", TimelineScreen()],
           [Icons.question_answer, Colors.pink, "FAQ", FAQScreen(refresh)],
-          [Icons.trending_down, Colors.red, "View Stock", ViewStock(refresh)],
-          [Icons.message, Colors.blue, "Objection", FAQScreen(refresh)],
+          [Icons.trending_down, Colors.red, "Stocks", ViewStock(refresh)],
+          [Icons.message, Colors.blue, "Complain", FAQScreen(refresh)],
           [
             Icons.work_outline_sharp,
             Colors.pinkAccent,
@@ -44,7 +44,7 @@ class MoreScreen extends StatelessWidget {
           [
             Icons.production_quantity_limits,
             Colors.yellow,
-            "Our Products",
+            "Products",
             OurProductsScreen(refresh),
           ]
         ]

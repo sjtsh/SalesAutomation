@@ -99,7 +99,7 @@ class _BezierDataState extends State<BezierData> {
             }));
           },
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15),
             child: Text("SEE ALL"),
           ),
         ),

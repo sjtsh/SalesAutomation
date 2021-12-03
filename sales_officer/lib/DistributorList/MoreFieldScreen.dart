@@ -1,50 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
-import 'package:sales_officer/BACKEND%20Access/Services/NepaliDateService.dart';
-import 'package:sales_officer/BACKEND%20Access/Services/SOService.dart';
+import 'package:sales_officer/BACKEND%20Access/Entities/Distributor.dart';
+import 'package:sales_officer/BACKEND%20Access/Services/DistributorService.dart';
+import 'package:sales_officer/BreadCrum/BreadCrum.dart';
 import 'package:sales_officer/MoreScreen/Settings/SettingsDropDown.dart';
 
-import '../../Database.dart';
-import '../../Header.dart';
+import '../Database.dart';
+import '../Header.dart';
 
-class SODetail {
+class DistributorDetail {
   final String title;
   final TextEditingController textEditingController;
 
-  SODetail(this.title, this.textEditingController);
+  DistributorDetail(this.title, this.textEditingController);
 }
 
-class EditSettings extends StatefulWidget {
+class MoreFieldScreen extends StatefulWidget {
+  final Distributor currentDistributor;
   final Function refresh;
 
-  EditSettings(this.refresh);
+  MoreFieldScreen(this.currentDistributor, this.refresh);
 
   @override
-  State<EditSettings> createState() => _EditSettingsState();
+  _MoreFieldScreenState createState() => _MoreFieldScreenState();
 }
 
-class _EditSettingsState extends State<EditSettings> {
+class _MoreFieldScreenState extends State<MoreFieldScreen> {
   List<String> emptyDetails = [];
-  List<SODetail> soDetails = [];
+  List<DistributorDetail> distributorDetails = [];
   int maritalStatus = 0;
-  List data = [
-    [
-      Icons.person,
-      "Name: ",
-      meSO!.SOName,
-    ],
-    [Icons.email, "Email: ", meSO!.email],
-    [Icons.phone, "Phone Number: ", meSO!.phone],
-    [Icons.domain_verification, "Reporting Manager: ", meSO!.reportingManager],
-    [Icons.location_on_rounded, "Home Location: ", meSO!.homeLocation],
-    [Icons.add_business_outlined, "PAN: ", meSO!.PAN],
-    [Icons.account_balance, "Bank Account Name: ", meSO!.bankAccountName],
-    [
-      Icons.account_balance_wallet_sharp,
-      "Bank Account Number: ",
-      meSO!.bankAccountNumber
-    ],
-  ];
+
+  List data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -53,66 +38,37 @@ class _EditSettingsState extends State<EditSettings> {
         body: Column(
           children: [
             Header(18, false, widget.refresh),
+            Container(
+              padding: EdgeInsets.only(left: 12),
+              alignment: Alignment.centerLeft,
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                  bottom: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: BreadCrum3(
+                "Distributor",
+                widget.currentDistributor.distributorName,"Edit Details",
+              ),
+            ),
             Expanded(
               child: ListView(
                 children: [
-                  Container(
-                    height: 100,
-                    margin: EdgeInsets.only(top: 12, right: 12, left: 12),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 3,
-                            offset: Offset(0, 2))
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: ShapeDecoration(
-                            color: Colors.green,
-                            shape: CircleBorder(),
-                          ),
-                          child: Center(
-                            child: Text(
-                              getInitials(meSO!.SOName),
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                meSO!.SOName,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              meSO!.email != null
-                                  ? Text(
-                                      meSO!.email.toString(),
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.5),
-                                          fontSize: 15),
-                                    )
-                                  : Container(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
@@ -129,8 +85,9 @@ class _EditSettingsState extends State<EditSettings> {
                         children: data.map((g) {
                       try {
                         print(g);
-                        SODetail soDetail = soDetails.firstWhere((element) {
-                          return element.title == g[1];
+                        DistributorDetail distributorDetail =
+                            distributorDetails.firstWhere((element) {
+                          return element.title == g[0];
                         });
                         return Container(
                             decoration: BoxDecoration(
@@ -150,17 +107,17 @@ class _EditSettingsState extends State<EditSettings> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 20.0),
-                                        child: Icon(
-                                          g[0] as IconData,
-                                          color: Colors.blueGrey,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 12,
-                                      ),
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(top: 20.0),
+                                      //   child: Icon(
+                                      //     g[0] as IconData,
+                                      //     color: Colors.blueGrey,
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   width: 12,
+                                      // ),
                                       Expanded(
                                         child: Padding(
                                           padding:
@@ -168,7 +125,7 @@ class _EditSettingsState extends State<EditSettings> {
                                           child: Row(
                                             children: [
                                               Text(
-                                                g[1] as String,
+                                                g[0] as String,
                                               ),
                                             ],
                                           ),
@@ -181,17 +138,17 @@ class _EditSettingsState extends State<EditSettings> {
                                     ? Center(
                                         child: Container(
                                           child: TextField(
-                                            controller:
-                                                soDetail.textEditingController,
+                                            controller: distributorDetail
+                                                .textEditingController,
                                             cursorWidth: 1,
-                                            keyboardType: g[1] ==
+                                            keyboardType: g[0] ==
                                                     "Phone Number: "
                                                 ? TextInputType.phone
-                                                : g[1] == "PAN: " ||
-                                                        g[1] ==
+                                                : g[0] == "PAN: " ||
+                                                        g[0] ==
                                                             "Bank Account Number: "
                                                     ? TextInputType.number
-                                                    : g[1] == "Email: "
+                                                    : g[0] == "Email: "
                                                         ? TextInputType
                                                             .emailAddress
                                                         : TextInputType.text,
@@ -201,23 +158,23 @@ class _EditSettingsState extends State<EditSettings> {
                                               fontSize: 14,
                                             ),
                                             decoration: InputDecoration(
-                                              hintText: g[2].toString(),
+                                              hintText: g[1].toString(),
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 12.0),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color:
-                                                        emptyDetails.contains(
-                                                                soDetail.title)
-                                                            ? Colors.red
-                                                            : Colors.grey),
+                                                    color: emptyDetails.contains(
+                                                            distributorDetail
+                                                                .title)
+                                                        ? Colors.red
+                                                        : Colors.grey),
                                               ),
                                               disabledBorder: InputBorder.none,
                                               focusedBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: emptyDetails
-                                                              .contains(soDetail
+                                                      color: emptyDetails.contains(
+                                                              distributorDetail
                                                                   .title)
                                                           ? Colors.red
                                                           : Colors.grey)),
@@ -249,7 +206,7 @@ class _EditSettingsState extends State<EditSettings> {
                 child: MaterialButton(
                   onPressed: () {
                     setState(() {
-                      _soApprove();
+                      _distributorApprove();
                       // isEditing = false;
                     });
                   },
@@ -272,152 +229,197 @@ class _EditSettingsState extends State<EditSettings> {
 
   @override
   void initState() {
+    data = [
+      ["Name: ", widget.currentDistributor.distributorName],
+      ["Distributor Type: ", widget.currentDistributor.distributorType],
+      ["Owner Name: ", widget.currentDistributor.ownerName],
+      ["Phone Number: ", widget.currentDistributor.phone],
+      ["Mobile Number: ", widget.currentDistributor.mobileNumber],
+      ["Email: ", widget.currentDistributor.email],
+      ["PAN: ", widget.currentDistributor.PAN],
+      ["Address: ", widget.currentDistributor.location],
+      ["Bank Account Name: ", widget.currentDistributor.bankAccountName],
+      ["Bank Account Number: ", widget.currentDistributor.bankAccountNumber],
+      ["Bank Address: ", widget.currentDistributor.bankAddress],
+      ["VAT Number: ", widget.currentDistributor.VAT],
+      ["Latitude: ", widget.currentDistributor.lat],
+      ["Longitude: ", widget.currentDistributor.lng],
+    ];
     data.forEach((element) {
-      soDetails.add(SODetail(element[1].toString(), TextEditingController()));
+      distributorDetails.add(
+          DistributorDetail(element[0].toString(), TextEditingController()));
     });
-    print(soDetails);
+    print(distributorDetails);
     // TODO: implement initState
     super.initState();
   }
 
-  _soApprove() {
+  _distributorApprove() {
     emptyDetails = [];
 
     setState(() {
-      soDetails.forEach((element) {
+      distributorDetails.forEach((element) {
         if (element.title == "Name: " &&
+            element.textEditingController.text.length == 0) {
+          emptyDetails.add(element.title);
+        }
+        if (element.title == "Distributor Type: " &&
             element.textEditingController.text.length == 0) {
           emptyDetails.add(element.title);
         }
       });
     });
     if (emptyDetails.length == 0) {
-      SOService soService = SOService();
-      soService
-          .updateSO(
-        meSOID!,
-        meSO!.ASMID,
-        meSO!.districtID,
-        meSO!.SOName,
-        meSO!.joiningDate,
-        homeLocation: soDetails
-                    .firstWhere((element) => element.title == "homeLocation")
+      DistributorService distributorService = DistributorService();
+      distributorService
+          .updateDistributor(
+        widget.currentDistributor.distributorID,
+        widget.currentDistributor.distributorName,
+        widget.currentDistributor.distributorType,
+        widget.currentDistributor.townID,
+        distributorERPID: distributorDetails
+                    .firstWhere(
+                        (element) => element.title == "distributorERPID")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
-                .firstWhere((element) => element.title == "homeLocation")
+            : distributorDetails
+                .firstWhere((element) => element.title == "distributorERPID")
                 .textEditingController
                 .text,
-        PAN: soDetails
-                    .firstWhere((element) => element.title == "PAN")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : int.parse(soDetails
-                .firstWhere((element) => element.title == "PAN")
-                .textEditingController
-                .text),
-        phone: soDetails
-                    .firstWhere((element) => element.title == "phone")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : int.parse(soDetails
-                .firstWhere((element) => element.title == "phone")
-                .textEditingController
-                .text),
-        img: "img",
-        email: soDetails
+        email: distributorDetails
                     .firstWhere((element) => element.title == "email")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
+            : distributorDetails
                 .firstWhere((element) => element.title == "email")
                 .textEditingController
                 .text,
-        bankAccountName: soDetails
+        mobileNumber: distributorDetails
+                    .firstWhere((element) => element.title == "mobileNumber")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : int.parse(distributorDetails
+                .firstWhere((element) => element.title == "mobileNumber")
+                .textEditingController
+                .text),
+        phone: distributorDetails
+                    .firstWhere((element) => element.title == "phone")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : int.parse(distributorDetails
+                .firstWhere((element) => element.title == "phone")
+                .textEditingController
+                .text),
+        ownerName: distributorDetails
+                    .firstWhere((element) => element.title == "ownerName")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : distributorDetails
+                .firstWhere((element) => element.title == "ownerName")
+                .textEditingController
+                .text,
+        PAN: distributorDetails
+                    .firstWhere((element) => element.title == "PAN")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : int.parse(distributorDetails
+                .firstWhere((element) => element.title == "PAN")
+                .textEditingController
+                .text),
+        bankName: distributorDetails
+                    .firstWhere((element) => element.title == "bankName")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : distributorDetails
+                .firstWhere((element) => element.title == "bankName")
+                .textEditingController
+                .text,
+        bankAddress: distributorDetails
+                    .firstWhere((element) => element.title == "bankAddress")
+                    .textEditingController
+                    .text ==
+                ""
+            ? null
+            : distributorDetails
+                .firstWhere((element) => element.title == "bankAddress")
+                .textEditingController
+                .text,
+        bankAccountName: distributorDetails
                     .firstWhere((element) => element.title == "bankAccountName")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
+            : distributorDetails
                 .firstWhere((element) => element.title == "bankAccountName")
                 .textEditingController
                 .text,
-        bankAccountNumber: soDetails
+        bankAccountNumber: distributorDetails
                     .firstWhere(
                         (element) => element.title == "bankAccountNumber")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
+            : distributorDetails
                 .firstWhere((element) => element.title == "bankAccountNumber")
                 .textEditingController
                 .text,
-        bankName: soDetails
-                    .firstWhere((element) => element.title == "bankName")
+        location: distributorDetails
+                    .firstWhere((element) => element.title == "location")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
-                .firstWhere((element) => element.title == "bankName")
+            : distributorDetails
+                .firstWhere((element) => element.title == "location")
                 .textEditingController
                 .text,
-        bankAddress: soDetails
-                    .firstWhere((element) => element.title == "bankAddress")
+        img: "img",
+        VAT: distributorDetails
+                    .firstWhere((element) => element.title == "VAT")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
-                .firstWhere((element) => element.title == "bankAddress")
+            : int.parse(distributorDetails
+                .firstWhere((element) => element.title == "VAT")
                 .textEditingController
-                .text,
-        reportingManager: soDetails
-                    .firstWhere(
-                        (element) => element.title == "reportingManager")
+                .text),
+        lat: distributorDetails
+                    .firstWhere((element) => element.title == "PAN")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
-                .firstWhere((element) => element.title == "reportingManager")
+            : double.parse(distributorDetails
+                .firstWhere((element) => element.title == "PAN")
                 .textEditingController
-                .text,
-        maritalStatus: maritalStatus == 0
-            ? null
-            : maritalStatus == 1
-                ? true
-                : false,
-        gender: soDetails
-                    .firstWhere((element) => element.title == "gender")
+                .text),
+        lng: distributorDetails
+                    .firstWhere((element) => element.title == "PAN")
                     .textEditingController
                     .text ==
                 ""
             ? null
-            : soDetails
-                .firstWhere((element) => element.title == "gender")
+            : double.parse(distributorDetails
+                .firstWhere((element) => element.title == "PAN")
                 .textEditingController
-                .text,
-        DOB: soDetails
-                    .firstWhere((element) => element.title == "DOB")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : soDetails
-                .firstWhere((element) => element.title == "DOB")
-                .textEditingController
-                .text,
+                .text),
       )
           .then((value) {
         if (value != null) {
@@ -429,7 +431,9 @@ class _EditSettingsState extends State<EditSettings> {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("The creation was unsuccessful")));
         }
-        soService.fetchSOs().then((value) => allSOLocal = value);
+        distributorService
+            .fetchDistributors()
+            .then((value) => allDistributorsLocal = value);
       });
     }
   }
