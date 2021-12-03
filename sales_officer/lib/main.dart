@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:sales_officer/foreground/foreground.dart';
 import 'package:sales_officer/timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,9 +20,10 @@ import 'package:timezone/data/latest.dart' as tz;
 Future<void> main() async {
   runApp(Fusers());
   NotificationService.initializeNotification();
-  tz.initializeTimeZones();
-  AndroidAlarmManager.initialize();
+  // tz.initializeTimeZones();
+  // AndroidAlarmManager.initialize();
 }
+
 
 class Fusers extends StatefulWidget {
   @override

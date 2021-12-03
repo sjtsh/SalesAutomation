@@ -214,7 +214,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                             widget._scrollController,
                                             _textEditingControllers,
                                             widget.currentDistributor,
-                                          );;
+                                          );
                                         },
                                       )
                                     : ProductList(

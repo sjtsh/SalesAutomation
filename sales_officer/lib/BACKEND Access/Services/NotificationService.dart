@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/standalone.dart' as tz;
@@ -11,8 +10,6 @@ FlutterLocalNotificationsPlugin notifications =
     FlutterLocalNotificationsPlugin();
 
 class NotificationService {
-  static final onNotifications = BehaviorSubject<String?>();
-
   Future showNotification(
       {int id = 0, String? title, String? body, String? payload}) {
     return notifications.show(
@@ -55,7 +52,6 @@ class NotificationService {
     //     onSelectNotification: (String? payload)=> print("selected a notification $payload"));
     await notifications.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
-      onNotifications.add(payload);
       if (navigatorKey.currentState != null) {
         navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) {
           return ActivitiesScreen(() {});
