@@ -60,7 +60,6 @@ class _StockSingularProductState extends State<StockSingularProduct> {
                         widget.currentDistributor.distributorID &&
                     element.SKUID == item.SKUID);
               } catch (e) {
-                print("here");
                 return Text("NO STOCKS AVAILABLE");
               }
               return StockSingularProductVariation(

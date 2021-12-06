@@ -21,7 +21,7 @@ calculateSales(context) async {
       await distributorOrderItemService
           .fetchDistributorOrderItems(context)
           .then((distributorOrderItem) {
-        personalDistributorsLocal.forEach((aDistributor) {
+        allDistributorsLocal.forEach((aDistributor) {
           double mtd = 0;
           double ytd = 0;
           distributorOrder

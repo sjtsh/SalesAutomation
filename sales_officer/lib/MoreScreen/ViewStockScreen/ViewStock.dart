@@ -29,17 +29,27 @@ class ViewStock extends StatelessWidget {
                     return Expanded(
                       child: ListView(
                         children: personalDistributorsLocal
-                            .where((element) => element.distributorName != "null")
+                            .where(
+                                (element) => element.distributorName != "null")
                             .map((item) {
                           List<SKUStock> myDistributorStocks = allSKUStocksLocal
                               .where((element) =>
                                   element.distributorID == item.distributorID)
                               .toList();
+                          int so;
+                          try{
+                            so = allSKUStocksLocal
+                                .firstWhere((element) =>
+                                    element.distributorID == item.distributorID)
+                                .SOID;
+                          }catch(e){
+                            so = 0;
+                          }
                           double totalValue = 0;
                           int totalPrimaryUnit = 0;
                           int totalAlternativeUnit = 0;
                           DateTime lastUpdatedDate = DateTime(0);
-                          int so = 0;
+
                           myDistributorStocks.forEach((stock) {
                             try {
                               SKU mySKU = allSKULocal.firstWhere(
@@ -52,8 +62,8 @@ class ViewStock extends StatelessWidget {
                                       mySKU.alternativeCF;
                               totalPrimaryUnit += stock.primaryStock;
                               totalAlternativeUnit += stock.alternativeStock;
-                              if (lastUpdatedDate
-                                  .isBefore(DateTime.parse(stock.updatedDate))) {
+                              if (lastUpdatedDate.isBefore(
+                                  DateTime.parse(stock.updatedDate))) {
                                 lastUpdatedDate =
                                     DateTime.parse(stock.updatedDate);
                               }
@@ -61,7 +71,7 @@ class ViewStock extends StatelessWidget {
                           });
                           return Padding(
                             padding: const EdgeInsets.only(
-                                left: 12, right: 12.0,top: 12.0),
+                                left: 12, right: 12.0, top: 12.0),
                             child: Container(
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -107,7 +117,8 @@ class ViewStock extends StatelessWidget {
                                                       item.distributorName),
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 18),
                                                 ),
                                               ),
@@ -120,13 +131,16 @@ class ViewStock extends StatelessWidget {
                                                 children: [
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         "${item.distributorName}",
-                                                        textAlign: TextAlign.left,
+                                                        textAlign:
+                                                            TextAlign.left,
                                                         style: TextStyle(
                                                           fontSize: 16,
                                                         ),
@@ -134,7 +148,8 @@ class ViewStock extends StatelessWidget {
                                                       item.location == null
                                                           ? Text("")
                                                           : Text(
-                                                              item.location.toString(),
+                                                              item.location
+                                                                  .toString(),
                                                               style: TextStyle(
                                                                   fontSize: 12,
                                                                   color: Colors
@@ -173,7 +188,13 @@ class ViewStock extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              "Taken by: "+ (so == 0?"": allSOLocal.firstWhere((e)=>e.SOID == so).SOName),
+                                              "Taken by: " +
+                                                  (so == 0
+                                                      ? ""
+                                                      : allSOLocal
+                                                          .firstWhere((e) =>
+                                                              e.SOID == so)
+                                                          .SOName),
                                               style: TextStyle(
                                                   color: Colors.black
                                                       .withOpacity(0.5)),
@@ -266,7 +287,8 @@ class ViewStock extends StatelessWidget {
                                                   item.location == null
                                                       ? Text("")
                                                       : Text(
-                                                          item.location.toString(),
+                                                          item.location
+                                                              .toString(),
                                                           style: TextStyle(
                                                               fontSize: 12,
                                                               color: Colors

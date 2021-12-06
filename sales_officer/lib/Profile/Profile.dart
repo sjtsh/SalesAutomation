@@ -54,7 +54,6 @@ class _ProfileState extends State<Profile> {
             Expanded(child: SliderPersonal(refreshChart,widget.refresh)),
           ],
         ),
-        StatScreen(),
         BezierCard(isRetailing?? false, widget.refresh),
         Achievements(),
       ],

@@ -57,7 +57,7 @@ class _SeeAllSalesScreenState extends State<SeeAllSalesScreen> {
                                 ],
                               ),
                               child: Hero(
-                                tag: "sajat",
+                                tag: "chart",
                                 child: BezierChartPersonal(
                                     e == widget.isMTD
                                         ? weeklySalesLocal

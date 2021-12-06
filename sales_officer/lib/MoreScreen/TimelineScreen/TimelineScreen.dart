@@ -13,24 +13,31 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  NepaliDateTime _date = NepaliDateTime.now();
+  NepaliDateTime? _newdate;
 
   Future<Null> _selectDatePicker() async {
     NepaliDateTime? _selectedDateTime = await picker.showMaterialDatePicker(
       textDirection: TextDirection.ltr,
       initialEntryMode: DatePickerEntryMode.calendar,
       context: context,
-      initialDate: NepaliDateTime.now(),
-      firstDate: NepaliDateTime(2000),
-      lastDate: NepaliDateTime(2090),
+      initialDate: _newdate!,
+      firstDate: NepaliDateTime.now().subtract(Duration(days: 30)),
+      lastDate: NepaliDateTime.now(),
+      currentDate: NepaliDateTime.now(),
       initialDatePickerMode: DatePickerMode.day,
     );
-    if (_selectedDateTime != null && _selectedDateTime != _date) {
+    if (_selectedDateTime != null && _selectedDateTime != _newdate) {
       setState(() {
-        _date = _selectedDateTime;
-        print(_date.toString());
+        _newdate = _selectedDateTime;
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _newdate = NepaliDateTime.now();
+    super.initState();
   }
 
   @override
@@ -104,7 +111,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     width: 10,
                   ),
                   Text(
-                    _date.day.toString(),
+                    _newdate!.day.toString(),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42),
                   ),
                   SizedBox(
@@ -115,7 +122,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        weekday[_date.weekday],
+                        weekday[_newdate!.weekday],
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontWeight: FontWeight.bold,
@@ -125,7 +132,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                         height: 5,
                       ),
                       Text(
-                        "${month[_date.month]}, ${_date.year.toString()}",
+                        "${month[_newdate!.month]}, ${_newdate!.year.toString()}",
                         style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontWeight: FontWeight.bold,
@@ -182,7 +189,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 ],
               ),
             ),
-            Expanded(child: DeliveryProcesses()),
+            Expanded(
+              child: DeliveryProcesses(
+                _newdate.toString().substring(0, 10),
+              ),
+            ),
           ],
         ),
       ),

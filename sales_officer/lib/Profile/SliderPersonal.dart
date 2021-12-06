@@ -81,7 +81,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
           prefs.setInt("retailingTime", LogInScreenState.watch.elapsedMillis);
         });
       });
-      // NotificationService().cancelAllNotifications();
+      NotificationService().cancelAllNotifications();
       // stopForegroundTask();
     }
   }
@@ -334,7 +334,7 @@ class _SliderPersonalState extends State<SliderPersonal> {
                       )
                 : Container(),
             AnimatedContainer(
-              duration: Duration(milliseconds: 1000),
+              duration: Duration(seconds: 1),
               curve: Curves.easeInOut,
               alignment:
                   isRetailing! ? Alignment.centerRight : Alignment.centerLeft,

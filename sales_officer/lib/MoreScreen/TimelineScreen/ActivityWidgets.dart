@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/mapsIntent.dart';
 import 'package:sales_officer/MoreScreen/ViewStockScreen/SingularStockScreen.dart';
 import 'package:sales_officer/PendingScreen/OrderItemsScreen.dart';
 import 'package:sales_officer/PendingScreen/SingularPending.dart';
@@ -14,7 +15,60 @@ class LogInOutActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Text("Location . Sukedhara, Kathmandu"),
+      child:
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Row(
+          children: [
+            Text("Geo: "),
+            SizedBox(width: 12,),
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Material(
+                color: Colors.white,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.blue),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      if (lat != null &&
+                          lat != null) {
+                        MapUtils.openMap(lat,
+                            lng, context);
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(
+                            content:
+                            Text("Unable to open Maps")));
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: 3, bottom: 3, right: 8, left: 8),
+                      child: Builder(builder: (context) {
+                        return Center(
+                          child: Text(
+                            "View on Maps",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(child: Container()),
+          ],
+        ),
+      ),
     );
   }
 }

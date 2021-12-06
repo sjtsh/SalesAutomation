@@ -90,6 +90,8 @@ class _BezierChartPersonalState extends State<BezierChartPersonal> {
           show: false,
         ),
       ),
+      swapAnimationCurve: Curves.easeInOut,
+      swapAnimationDuration: Duration(seconds: 1),
     );
   }
 }

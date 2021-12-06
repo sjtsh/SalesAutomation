@@ -4,6 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
 import 'package:sales_officer/Profile/BezierCard/BezierChartPersonal.dart';
+import 'package:sales_officer/Profile/StatScreen.dart';
 
 import '../../Database.dart';
 import 'BezierData.dart';
@@ -41,11 +42,12 @@ class _BezierCardState extends State<BezierCard> {
       children: [
         SizedBox(
           height: !aCondition
-              ? 382.0
-              : 382.0 +
+              ? 520.0
+              : 520.0 +
                   41 *
                       (products.entries
-                              .where((element) => !(element.value[pageNumber] == 0))
+                              .where((element) =>
+                                  !(element.value[pageNumber] == 0))
                               .length -
                           4),
           child: PageView(
@@ -63,46 +65,51 @@ class _BezierCardState extends State<BezierCard> {
             scrollDirection: Axis.horizontal,
             children: [true, false]
                 .map(
-                  (e) => Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 3,
-                            offset: Offset(0, 2))
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 6,
+                  (e) => Column(
+                    children: [
+                      StatScreen(e, widget.toggleValue),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 3,
+                                offset: Offset(0, 2))
+                          ],
                         ),
-                        BezierHeading(e ? "MTD Sales" : "YTD Sales"),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                          height: 100,
-                          child: Hero(
-                            tag: "sajat",
-                            child: BezierChartPersonal(
-                                e ? weeklySalesLocal : monthlySalesLocal,
-                                widget.toggleValue),
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 6,
+                            ),
+                            BezierHeading(e ? "MTD Sales" : "YTD Sales"),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 16),
+                              height: 100,
+                              child: Hero(
+                                tag: "chart",
+                                child: BezierChartPersonal(
+                                    e ? weeklySalesLocal : monthlySalesLocal,
+                                    widget.toggleValue),
+                              ),
+                            ),
+                            BezierData(changeExpanded, e, widget.toggleValue,
+                                widget.refresh),
+                          ],
                         ),
-                        BezierData(changeExpanded, e, widget.toggleValue,
-                            widget.refresh),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 )
                 .toList(),
           ),
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -122,8 +129,10 @@ class _BezierCardState extends State<BezierCard> {
               height: 8,
               width: 8,
               decoration: BoxDecoration(
-                  shape: BoxShape.circle, color:isMTD ? Colors.black.
-              withOpacity(0.3) :Colors.black.withOpacity(0.5)),
+                  shape: BoxShape.circle,
+                  color: isMTD
+                      ? Colors.black.withOpacity(0.3)
+                      : Colors.black.withOpacity(0.5)),
             ),
           ],
         ),
