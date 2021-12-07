@@ -10,7 +10,7 @@ import 'package:sales_officer/BACKEND%20Access/Entities/DistributorOrder.dart';
 import '../../Database.dart';
 
 class DistributorOrderService {
-  Future<List<DistributorOrder>> fetchDistributorOrders(context) async {
+  Future<List<DistributorOrder>> fetchDistributorOrder(context) async {
     try {
       final response = await http.post(
         Uri.parse(
@@ -39,6 +39,39 @@ class DistributorOrderService {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content:
               Text("Sorry, Failed to Load Data", textAlign: TextAlign.center)));
+      throw Exception("failed to load post");
+    }
+  }
+
+  Future<List<DistributorOrder>> fetchDistributorOrders(context) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            "https://asia-south1-hilifedb.cloudfunctions.net/getDistributorOrders"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{"SOID": meSOID.toString()}),
+      );
+      if (response.statusCode == 200) {
+        List<dynamic> values = jsonDecode(response.body);
+        List<DistributorOrder> distributorOrders =
+        values.map((e) => DistributorOrder.fromJson(e)).toList();
+        return distributorOrders;
+      } else {
+        throw Exception("failed to load post");
+      }
+    } on SocketException {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            "No Internet Connection",
+            textAlign: TextAlign.center,
+          )));
+      throw Exception("failed to load post");
+    } on TimeoutException {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+          Text("Sorry, Failed to Load Data", textAlign: TextAlign.center)));
       throw Exception("failed to load post");
     }
   }

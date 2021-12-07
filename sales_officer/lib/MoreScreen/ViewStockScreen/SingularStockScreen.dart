@@ -22,191 +22,231 @@ class SingularStockScreen extends StatelessWidget {
           children: [
             Header(15, false, () {}),
             Container(
-                padding: EdgeInsets.only(left: 12),
-                alignment: Alignment.centerLeft,
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    bottom: BorderSide(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
+              padding: EdgeInsets.only(left: 12),
+              alignment: Alignment.centerLeft,
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 3,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+                  bottom: BorderSide(
+                    color: Colors.black.withOpacity(0.1),
+                  ),
                 ),
-                child: BreadCrum3(
-                    "Distributor", distributor.distributorName,"View Stock")),
-            Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0, 2),
-                            blurRadius: 3),
-                      ],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: BreadCrum3(
+                  "Distributor", distributor.distributorName, "View Stock"),
+            ),
+            myDistributorStocks.length == 0
+                ? Expanded(
+                    child: Center(
+                      child: Text(
+                        "No Stocks",
+                      ),
                     ),
-                    child: Column(
+                  )
+                : Expanded(
+                    child: ListView(
                       children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          children: allSubGroupsLocal
-                              .where((element) =>
-                                  allSKULocal
-                                      .where((e) =>
+                        Container(
+                          margin: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: Offset(0, 2),
+                                  blurRadius: 3),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                children: allSubGroupsLocal
+                                    .where((element) =>
+                                        allSKULocal
+                                            .where((e) =>
+                                                element.subGroupID ==
+                                                e.subGroupID)
+                                            .length !=
+                                        0)
+                                    .map((e) {
+                                  List<SKU> mySubGroupSKUs = allSKULocal
+                                      .where((element) =>
                                           element.subGroupID == e.subGroupID)
-                                      .length !=
-                                  0)
-                              .map((e) {
-                            List<SKU> mySubGroupSKUs = allSKULocal
-                                .where((element) =>
-                                    element.subGroupID == e.subGroupID)
-                                .toList();
-                            if (mySubGroupSKUs.length == 0) {
-                              return Container();
-                            } else {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.black.withOpacity(0.1),
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                        right: 12,
-                                        left: 12,
+                                      .toList();
+                                  if (mySubGroupSKUs.length == 0) {
+                                    return Container();
+                                  } else {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.1),
+                                            width: 1,
+                                          ),
+                                        ),
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Builder(builder: (context) {
-                                            return Text(
-                                              e.subGroupName,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                      child: Builder(builder: (context) {
+                                        bool toShow = false;
+                                        mySubGroupSKUs.forEach((f) {
+                                          SKUStock skuStock;
+                                          try {
+                                            skuStock = myDistributorStocks
+                                                .firstWhere((element) =>
+                                                    element.SKUID == f.SKUID &&
+                                                    element.distributorID ==
+                                                        distributor
+                                                            .distributorID);
+                                          } catch (e) {
+                                            skuStock = SKUStock(
+                                                0,
+                                                f.SKUID,
+                                                distributor.distributorID,
+                                                meSOID!,
+                                                true);
+                                          }
+                                          if (skuStock.primaryStock != 0 &&
+                                              skuStock.alternativeStock != 0) {
+                                            toShow = true;
+                                          }
+                                        });
+                                        if (toShow) {
+                                          return Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
                                               ),
-                                            );
-                                          }),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: mySubGroupSKUs.map((f) {
-                                        SKUStock skuStock;
-                                        try {
-                                          skuStock = myDistributorStocks
-                                              .firstWhere((element) =>
-                                                  element.SKUID == f.SKUID &&
-                                                  element.distributorID ==
-                                                      distributor
-                                                          .distributorID);
-                                        } catch (e) {
-                                          skuStock = SKUStock(
-                                              0,
-                                              f.SKUID,
-                                              distributor.distributorID,
-                                              meSOID!,
-                                              true);
-                                        }
-
-                                        return skuStock.primaryStock != 0 ||
-                                                skuStock.alternativeStock != 0
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.all(12.0),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                  right: 12,
+                                                  left: 12,
+                                                ),
                                                 child: Row(
                                                   children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        child: Text(
-                                                          f.SKUName,
-                                                          maxLines: 3,
-                                                          style: TextStyle(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.5),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Center(
-                                                              child: skuStock
-                                                                          .primaryStock !=
-                                                                      0
-                                                                  ? Text(
-                                                                      skuStock.primaryStock
-                                                                              .toString() +
-                                                                          allUnitsLocal
-                                                                              .firstWhere((z) => z.unitID == f.primaryUnitID)
-                                                                              .unitName,
-                                                                    )
-                                                                  : Container(),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Center(
-                                                              child: skuStock
-                                                                          .primaryStock !=
-                                                                      0
-                                                                  ? Text(
-                                                                      skuStock.alternativeStock
-                                                                              .toString() +
-                                                                          allUnitsLocal
-                                                                              .firstWhere((z) => z.unitID == f.alternativeUnitID)
-                                                                              .unitName,
-                                                                    )
-                                                                  : Container(),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                    Text(
+                                                      e.subGroupName,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              )
-                                            : Container();
-                                      }).toList(),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          }).toList(),
+                                              ),
+                                              Column(
+                                                children:
+                                                    mySubGroupSKUs.map((f) {
+                                                  SKUStock skuStock;
+                                                  try {
+                                                    skuStock = myDistributorStocks
+                                                        .firstWhere((element) =>
+                                                            element.SKUID ==
+                                                                f.SKUID &&
+                                                            element.distributorID ==
+                                                                distributor
+                                                                    .distributorID);
+                                                  } catch (e) {
+                                                    skuStock = SKUStock(
+                                                        0,
+                                                        f.SKUID,
+                                                        distributor
+                                                            .distributorID,
+                                                        meSOID!,
+                                                        true);
+                                                  }
+
+                                                  return skuStock.primaryStock !=
+                                                              0 ||
+                                                          skuStock.alternativeStock !=
+                                                              0
+                                                      ? Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(12.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    Container(
+                                                                  child: Text(
+                                                                    f.SKUName,
+                                                                    maxLines: 3,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.5),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Row(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Center(
+                                                                        child: skuStock.primaryStock !=
+                                                                                0
+                                                                            ? Text(
+                                                                                skuStock.primaryStock.toString() + allUnitsLocal.firstWhere((z) => z.unitID == f.primaryUnitID).unitName,
+                                                                              )
+                                                                            : Container(),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Center(
+                                                                        child: skuStock.primaryStock !=
+                                                                                0
+                                                                            ? Text(
+                                                                                skuStock.alternativeStock.toString() + allUnitsLocal.firstWhere((z) => z.unitID == f.alternativeUnitID).unitName,
+                                                                              )
+                                                                            : Container(),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container();
+                                                }).toList(),
+                                              ),
+                                            ],
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      }),
+                                    );
+                                  }
+                                }).toList(),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

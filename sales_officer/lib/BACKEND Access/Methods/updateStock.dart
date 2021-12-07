@@ -12,6 +12,7 @@ import '../../Database.dart';
 Future<bool> updateStock(List recieptData, int distributorID,
     List<TextEditingController> _textEditingControllers) {
   Future<bool> conditionOnly = Future<bool>.value(false);
+  bool isInserted = true;
   _textEditingControllers.forEach((textEditingController) {
     if (_textEditingControllers.indexOf(textEditingController) % 2 == 0) {
       int myPrimaryCount = 0;
@@ -61,7 +62,8 @@ Future<bool> updateStock(List recieptData, int distributorID,
         NepaliDateService nepaliDateService = NepaliDateService();
         conditionOnly = nepaliDateService.fetchNepaliDate().then((time) {
           conditionOnly = Geolocator.getCurrentPosition().then(
-            (value) => skuStockService.updateSKUStock(SKUStock(
+            (value) => skuStockService
+                .updateSKUStock(SKUStock(
               mySKUStock.SKUStockID,
               mySKUStock.SKUID,
               mySKUStock.distributorID,
@@ -73,9 +75,14 @@ Future<bool> updateStock(List recieptData, int distributorID,
               updatedDate: time,
               lat: value.latitude,
               lng: value.longitude,
-            )).then((value){
-              if(value){
-                SKUStockTrackService().insertSKUStockTrack(meSOID!, distributorID, time);
+            ))
+                .then((value) {
+              if (value) {
+                if (isInserted) {
+                  SKUStockTrackService()
+                      .insertSKUStockTrack(meSOID!, distributorID, time);
+                  isInserted = false;
+                }
               }
               return value;
             }),

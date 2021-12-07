@@ -17,8 +17,7 @@ import 'package:sales_officer/MoreScreen/TimelineScreen/ActivityWidgets.dart';
 
 import '../../Database.dart';
 
-Future<List> calculateTimeline(context) async {
-  String date = await NepaliDateService().fetchNepaliDate();
+Future<List> calculateTimeline(context, date) async {
   List<DistributorOrderItem> distributorOrderItems =
       await DistributorOrderItemService().fetchDistributorOrderItems(context);
   List<DistributorOrder> allOrders =

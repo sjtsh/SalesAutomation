@@ -152,7 +152,7 @@ class _PendingScreenState extends State<PendingScreen> {
         Expanded(
           child: FutureBuilder(
               future: widget.distributorOrderService
-                  .fetchDistributorOrders(context),
+                  .fetchDistributorOrder(context),
               builder: (BuildContext context,
                   AsyncSnapshot<List<DistributorOrder>> snapshot) {
                 if (snapshot.hasData) {
