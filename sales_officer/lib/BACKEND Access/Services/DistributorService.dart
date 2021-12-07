@@ -56,6 +56,7 @@ class DistributorService {
         double? lat,
         double? lng,
       }) async {
+    print("updte");
     Map<String, String> aMap = {};
       aMap['distributorID'] = distributorID.toString();
       aMap['distributorName'] = distributorName.toString();
@@ -84,7 +85,8 @@ class DistributorService {
           ? aMap['lat'] = lat.toString()
           : 2;
       lng != null ? aMap['lng'] = lng.toString() : 2;
-      print(aMap);
+      print("this is dis");
+
       final res = await http.post(
         Uri.parse("https://asia-south1-hilifedb.cloudfunctions.net/updateDistributor"),
         headers: <String, String>{
@@ -92,9 +94,12 @@ class DistributorService {
         },
         body: jsonEncode(aMap),
       );
+      print(res.body);
       if (res.statusCode == 200) {
+        print(true);
         return true;
       }
+      print(false);
       return false;
   }
 }

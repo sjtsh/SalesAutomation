@@ -11,6 +11,7 @@ class DistributorDetail {
   final String title;
   final TextEditingController textEditingController;
 
+
   DistributorDetail(this.title, this.textEditingController);
 }
 
@@ -138,12 +139,15 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
                                 data.length > 3
                                     ? Padding(
                                         padding: const EdgeInsets.all(12),
-                                        // padding: const EdgeInsets.only(left: 12.0,right: 12,bottom: 12),
                                         child: Center(
                                           child: Container(
                                             child: TextField(
+
                                               controller: distributorDetail
                                                   .textEditingController,
+
+
+
                                               cursorWidth: 1,
                                               keyboardType: g[0] ==
                                                       "Phone Number: "
@@ -162,7 +166,7 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
                                                 fontSize: 14,
                                               ),
                                               decoration: InputDecoration(
-                                                hintText: g[1].toString(),
+                                                // hintText: g[1].toString(),
                                                 contentPadding:
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 12.0),
@@ -237,6 +241,7 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
 
   @override
   void initState() {
+
     data = [
       ["Name: ", widget.currentDistributor.distributorName],
       ["Distributor Type: ", widget.currentDistributor.distributorType],
@@ -248,14 +253,16 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
       ["Address: ", widget.currentDistributor.location],
       ["Bank Account Name: ", widget.currentDistributor.bankAccountName],
       ["Bank Account Number: ", widget.currentDistributor.bankAccountNumber],
+      ["Bank Name: ",widget.currentDistributor.bankName],
       ["Bank Address: ", widget.currentDistributor.bankAddress],
       ["VAT Number: ", widget.currentDistributor.VAT],
       ["Latitude: ", widget.currentDistributor.lat],
       ["Longitude: ", widget.currentDistributor.lng],
     ];
+
     data.forEach((element) {
       distributorDetails.add(
-          DistributorDetail(element[0].toString(), TextEditingController()));
+          DistributorDetail(element[0].toString(), TextEditingController(text: element[1].toString())));
     });
     print(distributorDetails);
     // TODO: implement initState
@@ -282,150 +289,145 @@ class _MoreFieldScreenState extends State<MoreFieldScreen> {
       distributorService
           .updateDistributor(
         widget.currentDistributor.distributorID,
-        widget.currentDistributor.distributorName,
-        widget.currentDistributor.distributorType,
+        distributorDetails
+            .firstWhere((element) => element.title == "Name: ")
+            .textEditingController
+            .text,
+        distributorDetails
+            .firstWhere((element) => element.title == "Distributor Type: ")
+            .textEditingController
+            .text,
         widget.currentDistributor.townID,
-        distributorERPID: distributorDetails
-                    .firstWhere(
-                        (element) => element.title == "distributorERPID")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : distributorDetails
-                .firstWhere((element) => element.title == "distributorERPID")
-                .textEditingController
-                .text,
         email: distributorDetails
-                    .firstWhere((element) => element.title == "email")
+                    .firstWhere((element) => element.title == "Email: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "email")
+                .firstWhere((element) => element.title == "Email: ")
                 .textEditingController
                 .text,
         mobileNumber: distributorDetails
-                    .firstWhere((element) => element.title == "mobileNumber")
+                    .firstWhere((element) => element.title == "Mobile Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(distributorDetails
-                .firstWhere((element) => element.title == "mobileNumber")
+                .firstWhere((element) => element.title == "Mobile Number: ")
                 .textEditingController
                 .text),
         phone: distributorDetails
-                    .firstWhere((element) => element.title == "phone")
+                    .firstWhere((element) => element.title == "Phone Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(distributorDetails
-                .firstWhere((element) => element.title == "phone")
+                .firstWhere((element) => element.title == "Phone Number: ")
                 .textEditingController
                 .text),
         ownerName: distributorDetails
-                    .firstWhere((element) => element.title == "ownerName")
+                    .firstWhere((element) => element.title == "Owner Name: ")
                     .textEditingController
-                    .text ==
-                ""
+                    .text==""
+
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "ownerName")
+                .firstWhere((element) => element.title == "Owner Name: ")
                 .textEditingController
                 .text,
         PAN: distributorDetails
-                    .firstWhere((element) => element.title == "PAN")
+                    .firstWhere((element) => element.title == "PAN: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(distributorDetails
-                .firstWhere((element) => element.title == "PAN")
+                .firstWhere((element) => element.title == "PAN: ")
                 .textEditingController
                 .text),
         bankName: distributorDetails
-                    .firstWhere((element) => element.title == "bankName")
+                    .firstWhere((element) => element.title == "Bank Name: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "bankName")
+                .firstWhere((element) => element.title == "Bank Name: ")
                 .textEditingController
                 .text,
         bankAddress: distributorDetails
-                    .firstWhere((element) => element.title == "bankAddress")
+                    .firstWhere((element) => element.title == "Bank Address: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "bankAddress")
+                .firstWhere((element) => element.title == "Bank Address: ")
                 .textEditingController
                 .text,
         bankAccountName: distributorDetails
-                    .firstWhere((element) => element.title == "bankAccountName")
+                    .firstWhere((element) => element.title == "Bank Account Name: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "bankAccountName")
+                .firstWhere((element) => element.title == "Bank Account Name: ")
                 .textEditingController
                 .text,
         bankAccountNumber: distributorDetails
                     .firstWhere(
-                        (element) => element.title == "bankAccountNumber")
+                        (element) => element.title == "Bank Account Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "bankAccountNumber")
+                .firstWhere((element) => element.title == "Bank Account Number: ")
                 .textEditingController
                 .text,
         location: distributorDetails
-                    .firstWhere((element) => element.title == "location")
+                    .firstWhere((element) => element.title == "Address: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : distributorDetails
-                .firstWhere((element) => element.title == "location")
+                .firstWhere((element) => element.title == "Address: ")
                 .textEditingController
                 .text,
         img: "img",
         VAT: distributorDetails
-                    .firstWhere((element) => element.title == "VAT")
+                    .firstWhere((element) => element.title == "VAT Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(distributorDetails
-                .firstWhere((element) => element.title == "VAT")
+                .firstWhere((element) => element.title == "VAT Number: ")
                 .textEditingController
                 .text),
         lat: distributorDetails
-                    .firstWhere((element) => element.title == "PAN")
+                    .firstWhere((element) => element.title == "Latitude: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : double.parse(distributorDetails
-                .firstWhere((element) => element.title == "PAN")
+                .firstWhere((element) => element.title == "Latitude: ")
                 .textEditingController
                 .text),
         lng: distributorDetails
-                    .firstWhere((element) => element.title == "PAN")
+                    .firstWhere((element) => element.title == "Longitude: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : double.parse(distributorDetails
-                .firstWhere((element) => element.title == "PAN")
+                .firstWhere((element) => element.title == "Longitude: ")
                 .textEditingController
                 .text),
       )

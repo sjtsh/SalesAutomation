@@ -30,10 +30,10 @@ class MoreScreen extends StatelessWidget {
         children: [
           [Icons.tour, Colors.green, "Tour", TourPlanScreen(refresh)],
           [Icons.settings, Colors.blueGrey, "Settings", Settings(refresh)],
-          [Icons.trending_up, Colors.deepPurple, "Performance", Container()],
+          [Icons.bar_chart, Colors.deepPurple, "Performance", Container()],
           [Icons.timeline, Colors.blueAccent, "Timeline", TimelineScreen()],
           [Icons.question_answer, Colors.pink, "FAQ", FAQScreen(refresh)],
-          [Icons.trending_down, Colors.red, "Stocks", ViewStock(refresh)],
+          [Icons.trending_up, Colors.red, "Stocks", ViewStock(refresh)],
           [Icons.message, Colors.blue, "Complain", FAQScreen(refresh)],
           [
             Icons.work_outline_sharp,

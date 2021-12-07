@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import '../../Database.dart';
@@ -8,12 +9,12 @@ class Online extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 12,bottom: 6),
-         clipBehavior: Clip.hardEdge,
-          height:75,
-          width: 68,
+          margin: EdgeInsets.only(top: 6, bottom: 6),
+          clipBehavior: Clip.hardEdge,
+          height: 58,
+          width: 58,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            shape: BoxShape.circle,
             color: Colors.black,
           ),
           child: Center(
@@ -23,18 +24,18 @@ class Online extends StatelessWidget {
             ),
           ),
         ),
-        // Positioned(
-        //   bottom: 6,
-        //   right: 2,
-        //   child: Container(
-        //     height: 15,
-        //     width: 15,
-        //     decoration: BoxDecoration(
-        //       shape: BoxShape.circle,
-        //       color: Colors.green,
-        //     ),
-        //   ),
-        // ),
+        Positioned(
+          bottom: 5,
+          right: -2,
+          child: Container(
+            height: 25,
+            width: 25,
+            child: Image.asset(
+              "assets/BestEmployeeTrophy.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ],
     );
   }

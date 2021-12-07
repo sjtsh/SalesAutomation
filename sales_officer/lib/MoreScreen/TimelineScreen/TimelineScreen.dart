@@ -59,7 +59,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 onTap: () {},
                 child: Container(
                   height: 50,
-                  width: 180,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(12),

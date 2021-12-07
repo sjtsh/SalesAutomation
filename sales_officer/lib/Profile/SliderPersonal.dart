@@ -10,6 +10,7 @@ import 'package:sales_officer/BACKEND%20Access/Services/NotificationService.dart
 import 'package:sales_officer/BACKEND%20Access/Services/SOLogInDetailService.dart';
 import 'package:sales_officer/LogInScreen/LogInScreen.dart';
 import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
+import 'package:sales_officer/MoreScreen/TimelineScreen/TimelineScreen.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
 import 'package:sales_officer/foreground/foreground.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,7 @@ import 'Header/Online.dart';
 class SliderPersonal extends StatefulWidget {
   final Function refreshChart;
   final Function refresh;
+
   SliderPersonal(this.refreshChart, this.refresh);
 
   @override
@@ -83,6 +85,10 @@ class _SliderPersonalState extends State<SliderPersonal> {
       });
       // NotificationService().cancelAllNotifications();
       // stopForegroundTask();
+
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return TimelineScreen();
+      }));
     }
   }
 
@@ -344,17 +350,10 @@ class _SliderPersonalState extends State<SliderPersonal> {
                   startOrStop();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Container(
-                    clipBehavior: Clip.hardEdge,
-                    height: 58,
-                    width: 58,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.black,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0,
                     ),
-                  ),
-                ),
+                    child: Online()),
               ),
             ),
           ],

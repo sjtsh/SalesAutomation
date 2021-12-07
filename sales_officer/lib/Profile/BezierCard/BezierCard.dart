@@ -45,7 +45,8 @@ class _BezierCardState extends State<BezierCard> {
               : 382.0 +
                   41 *
                       (products.entries
-                              .where((element) => !(element.value[pageNumber] == 0))
+                              .where((element) =>
+                                  !(element.value[pageNumber] == 0))
                               .length -
                           4),
           child: PageView(
@@ -64,7 +65,7 @@ class _BezierCardState extends State<BezierCard> {
             children: [true, false]
                 .map(
                   (e) => Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    margin: EdgeInsets.only(top: 6, left: 12,right: 12,bottom: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
@@ -102,30 +103,34 @@ class _BezierCardState extends State<BezierCard> {
                 .toList(),
           ),
         ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isMTD
-                      ? Colors.black.withOpacity(0.5)
-                      : Colors.black.withOpacity(0.3)),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Container(
-              height: 8,
-              width: 8,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color:isMTD ? Colors.black.
-              withOpacity(0.3) :Colors.black.withOpacity(0.5)),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 3.0,bottom: 3.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 8,
+                width: 8,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isMTD
+                        ? Colors.black.withOpacity(0.5)
+                        : Colors.black.withOpacity(0.3)),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                height: 8,
+                width: 8,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isMTD
+                        ? Colors.black.withOpacity(0.3)
+                        : Colors.black.withOpacity(0.5)),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -248,6 +248,7 @@ class DistributorInfo extends StatelessWidget {
                           "Bank Account Number: ",
                           currentDistributor.bankAccountNumber.toString()
                         ],
+                        ["Bank Name: ", currentDistributor.bankName.toString()],
                         ["Bank Address: ", currentDistributor.bankAddress],
                         ["VAT Number: ", currentDistributor.VAT.toString()],
                         // [
@@ -406,8 +407,10 @@ class DistributorInfo extends StatelessWidget {
                         color: Colors.white,
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_){
-                              return MoreFieldScreen(currentDistributor,refresh);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return MoreFieldScreen(
+                                  currentDistributor, refresh);
                             }));
                           },
                           child: Container(

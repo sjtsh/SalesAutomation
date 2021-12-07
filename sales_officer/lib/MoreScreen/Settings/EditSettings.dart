@@ -203,7 +203,7 @@ class _EditSettingsState extends State<EditSettings> {
                                                 fontSize: 14,
                                               ),
                                               decoration: InputDecoration(
-                                                hintText: g[2].toString(),
+                                                // hintText: g[2].toString(),
                                                 contentPadding:
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 12.0),
@@ -276,7 +276,7 @@ class _EditSettingsState extends State<EditSettings> {
   @override
   void initState() {
     data.forEach((element) {
-      soDetails.add(SODetail(element[1].toString(), TextEditingController()));
+      soDetails.add(SODetail(element[1].toString(), TextEditingController(text: element[2].toString())));
     });
     print(soDetails);
     // TODO: implement initState
@@ -301,124 +301,82 @@ class _EditSettingsState extends State<EditSettings> {
         meSOID!,
         meSO!.ASMID,
         meSO!.districtID,
-        meSO!.SOName,
+        soDetails
+            .firstWhere((element) => element.title == "Name: ")
+            .textEditingController
+            .text,
         meSO!.joiningDate,
         homeLocation: soDetails
-                    .firstWhere((element) => element.title == "homeLocation")
+                    .firstWhere((element) => element.title == "Home Location: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : soDetails
-                .firstWhere((element) => element.title == "homeLocation")
+                .firstWhere((element) => element.title == "Home Location: ")
                 .textEditingController
                 .text,
         PAN: soDetails
-                    .firstWhere((element) => element.title == "PAN")
+                    .firstWhere((element) => element.title == "PAN: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(soDetails
-                .firstWhere((element) => element.title == "PAN")
+                .firstWhere((element) => element.title == "PAN: ")
                 .textEditingController
                 .text),
         phone: soDetails
-                    .firstWhere((element) => element.title == "phone")
+                    .firstWhere((element) => element.title == "Phone Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : int.parse(soDetails
-                .firstWhere((element) => element.title == "phone")
+                .firstWhere((element) => element.title == "Phone Number: ")
                 .textEditingController
                 .text),
         img: "img",
         email: soDetails
-                    .firstWhere((element) => element.title == "email")
+                    .firstWhere((element) => element.title == "Email: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : soDetails
-                .firstWhere((element) => element.title == "email")
+                .firstWhere((element) => element.title == "Email: ")
                 .textEditingController
                 .text,
         bankAccountName: soDetails
-                    .firstWhere((element) => element.title == "bankAccountName")
+                    .firstWhere((element) => element.title == "Bank Account Name: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : soDetails
-                .firstWhere((element) => element.title == "bankAccountName")
+                .firstWhere((element) => element.title == "Bank Account Name: ")
                 .textEditingController
                 .text,
         bankAccountNumber: soDetails
                     .firstWhere(
-                        (element) => element.title == "bankAccountNumber")
+                        (element) => element.title == "Bank Account Number: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : soDetails
-                .firstWhere((element) => element.title == "bankAccountNumber")
-                .textEditingController
-                .text,
-        bankName: soDetails
-                    .firstWhere((element) => element.title == "bankName")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : soDetails
-                .firstWhere((element) => element.title == "bankName")
-                .textEditingController
-                .text,
-        bankAddress: soDetails
-                    .firstWhere((element) => element.title == "bankAddress")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : soDetails
-                .firstWhere((element) => element.title == "bankAddress")
+                .firstWhere((element) => element.title == "Bank Account Number: ")
                 .textEditingController
                 .text,
         reportingManager: soDetails
                     .firstWhere(
-                        (element) => element.title == "reportingManager")
+                        (element) => element.title == "Reporting Manager: ")
                     .textEditingController
                     .text ==
                 ""
             ? null
             : soDetails
-                .firstWhere((element) => element.title == "reportingManager")
-                .textEditingController
-                .text,
-        maritalStatus: maritalStatus == 0
-            ? null
-            : maritalStatus == 1
-                ? true
-                : false,
-        gender: soDetails
-                    .firstWhere((element) => element.title == "gender")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : soDetails
-                .firstWhere((element) => element.title == "gender")
-                .textEditingController
-                .text,
-        DOB: soDetails
-                    .firstWhere((element) => element.title == "DOB")
-                    .textEditingController
-                    .text ==
-                ""
-            ? null
-            : soDetails
-                .firstWhere((element) => element.title == "DOB")
+                .firstWhere((element) => element.title == "Reporting Manager: ")
                 .textEditingController
                 .text,
       )

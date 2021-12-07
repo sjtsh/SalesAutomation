@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sales_officer/BACKEND%20Access/Methods/method.dart';
 import 'package:sales_officer/MoreScreen/ActivitiesScreen/ActivitiesScreen.dart';
 import 'package:sales_officer/Profile/Achievements/Achievements.dart';
 import 'package:sales_officer/Profile/Header/Header.dart';
@@ -50,7 +51,19 @@ class _ProfileState extends State<Profile> {
                   return ActivitiesScreen(widget.refresh);
                 }));
               },
-                child: Online()),
+                child: Container(
+                  margin: EdgeInsets.only(top: 12,bottom: 6),
+                  clipBehavior: Clip.hardEdge,
+                  height:75,
+                  width: 68,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.black,
+                  ),
+                  child: Center(
+                    child: Icon(Icons.add,color: Colors.white,)
+                  ),
+                ),),
             Expanded(child: SliderPersonal(refreshChart,widget.refresh)),
           ],
         ),
