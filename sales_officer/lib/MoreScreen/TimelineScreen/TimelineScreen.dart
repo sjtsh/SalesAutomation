@@ -45,44 +45,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffF5F5F5),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12),
-          child: Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 3,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.white,
-              child: InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Builder(builder: (context) {
-                    return Center(
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ),
-          ),
-        ),
         body: Column(
           children: [
             Container(
@@ -193,6 +155,38 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 _newdate.toString().substring(0, 10),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Container(
+                clipBehavior: Clip.hardEdge,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.red),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "SUBMIT",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

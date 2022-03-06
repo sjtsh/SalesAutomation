@@ -44,30 +44,36 @@ class _ProfileState extends State<Profile> {
         // ),
         Row(
           children: [
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_){
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return ActivitiesScreen(widget.refresh);
                 }));
               },
-                child: Container(
-                  margin: EdgeInsets.only(top: 12,bottom: 6),
-                  clipBehavior: Clip.hardEdge,
-                  height:75,
-                  width: 68,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.black,
+              child: Container(
+                margin: EdgeInsets.only(top: 12, bottom: 6),
+                clipBehavior: Clip.hardEdge,
+                height: 75,
+                width: 68,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.black,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
                   ),
-                  child: Center(
-                    child: Icon(Icons.add,color: Colors.white,)
-                  ),
-                ),),
-            Expanded(child: SliderPersonal(refreshChart,widget.refresh)),
+                ),
+              ),
+            ),
+            Expanded(child: SliderPersonal(refreshChart, widget.refresh)),
           ],
         ),
-        BezierCard(isRetailing?? false, widget.refresh),
+        BezierCard(isRetailing ?? false, widget.refresh),
         Achievements(),
       ],
     );

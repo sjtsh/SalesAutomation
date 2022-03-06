@@ -48,7 +48,7 @@ class _PendingScreenState extends State<PendingScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      page =0;
+                      page = 0;
                       pageController.animateToPage(0,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
@@ -82,7 +82,7 @@ class _PendingScreenState extends State<PendingScreen> {
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                     page = 1;
+                      page = 1;
                       pageController.animateToPage(1,
                           duration: Duration(milliseconds: 200),
                           curve: Curves.easeIn);
@@ -93,7 +93,7 @@ class _PendingScreenState extends State<PendingScreen> {
                       border: Border(
                         top: BorderSide(color: Colors.black.withOpacity(0.1)),
                         bottom: BorderSide(
-                          color:  page == 1
+                          color: page == 1
                               ? Colors.blue
                               : Colors.black.withOpacity(0.1),
                           width: 2,
@@ -127,7 +127,7 @@ class _PendingScreenState extends State<PendingScreen> {
                       border: Border(
                         top: BorderSide(color: Colors.black.withOpacity(0.1)),
                         bottom: BorderSide(
-                          color:  page == 2
+                          color: page == 2
                               ? Colors.blue
                               : Colors.black.withOpacity(0.1),
                           width: 2,
@@ -151,8 +151,8 @@ class _PendingScreenState extends State<PendingScreen> {
         ),
         Expanded(
           child: FutureBuilder(
-              future: widget.distributorOrderService
-                  .fetchDistributorOrder(context),
+              future:
+                  widget.distributorOrderService.fetchDistributorOrder(context),
               builder: (BuildContext context,
                   AsyncSnapshot<List<DistributorOrder>> snapshot) {
                 if (snapshot.hasData) {
@@ -170,7 +170,7 @@ class _PendingScreenState extends State<PendingScreen> {
                     children: [
                       OrdersList(distributorOrders, page, widget.refresh, 0),
                       OrdersList(distributorOrders, page, widget.refresh, 1),
-                      OrdersList(distributorOrders, page, widget.refresh, 2)
+                      OrdersList(distributorOrders, page, widget.refresh, 2),
                     ],
                   );
                 }
@@ -178,16 +178,16 @@ class _PendingScreenState extends State<PendingScreen> {
                   onPageChanged: (int i) {
                     setState(() {
                       if (i == 0) {
-                        page =0;
+                        page = 0;
                       } else if (i == 1) {
                         page = 1;
-                      }else if (i == 2){
+                      } else if (i == 2) {
                         page = 2;
                       }
                     });
                   },
                   controller: pageController,
-                  children: ["", "",""]
+                  children: ["", "", ""]
                       .map((e) => ListView(
                           children: List.generate(
                               7,

@@ -15,7 +15,8 @@ class Online extends StatelessWidget {
           width: 58,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.black,
+            border: Border.all(color: Colors.white,width: 5),
+            color: Color(0xff00000)
           ),
           child: Center(
             child: Text(
@@ -25,8 +26,8 @@ class Online extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 5,
-          right: -2,
+          bottom: 3,
+          right: -3,
           child: Container(
             height: 25,
             width: 25,
